@@ -42,7 +42,7 @@ function LoginForm() {
 
   // moveSignUpPage
   const moveToSignup =  () => {
-    navigate("/signUp")
+    navigate("/signup")
   };
 
 //8글자 미만일경우
