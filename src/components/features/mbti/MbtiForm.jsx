@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MbtiForm = () => {
+  const navigate = useNavigate();
   const [myMbti, setMyMbti] = useState();
   const mbtiList = [
     "ISTJ",
@@ -24,6 +26,7 @@ const MbtiForm = () => {
 
   const onSetMbti = (e) => {
     e.preventDefault();
+    navigate("/");
   };
 
   // const onSubmit = () => {
