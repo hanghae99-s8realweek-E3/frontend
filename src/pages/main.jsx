@@ -1,9 +1,16 @@
+import Footer from "../components/common/footer";
+import Header from "../components/common/header";
+import MainContainer from "../components/features/main/MainContainer";
+import Layout from "../layout/layout";
 
 
 function Main () {
   return (
-    <div>
-    </div>
+    <Layout>
+      <Header />
+      <MainContainer />
+      <Footer />
+    </Layout>
   )
 }
 
