@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import {emailFormat,passwordFormat} from "../../../utils/reqList"
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
     
   const initialState = {
     email: "",
@@ -15,26 +17,25 @@ const SignUpForm = () => {
 
   const onChangeSignupData = (e) => {
     const { name, value } = e.target;
-    console.log(value)
+    // console.log(value)
     setSignupData({ ...signupData, [name]: value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(signupData);
+    // console.log(signupData);
     // 이메일 길이가 0이 아니고, 이메일형식이 맞으면 true
         if (signupData.email.length === 0 || emailFormat.test(signupData.email)===false) {
-              alert("이메일 형식을 확인해주세요.")
+              return alert("이메일 형식을 확인해주세요.")
             } else if  (signupData.password.length === 0 || passwordFormat.test(signupData.password)===false || signupData.password.length <= 8){
-                alert('비밀번호 형식을 확인해주세요')
+              return alert('비밀번호 형식을 확인해주세요')
             } else if (signupData.confirmPassword.length === 0 || signupData.password !== signupData.confirmPassword){
-                alert('비밀번호2 형식을 확인해주세요')
+              return alert('비밀번호2 형식을 확인해주세요')
             }
             else if (signupData.nickname.length ===0) {
-                alert('닉네임 형식을 확인해주세요 ')
+              return alert('닉네임 형식을 확인해주세요 ')
             }
-            //중복검사 버튼만들기 
-            //인증번호, 인증버튼 만들기
+            navigate('/mbti');
   };
 
   return (
