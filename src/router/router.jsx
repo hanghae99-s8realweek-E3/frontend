@@ -16,7 +16,7 @@ function Router () {
         <Route path="/mbti" element={<Mbti />} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/todoLists" element={<WriteTodo/>}/>
-        <Route path="/selectLogin" element={<MyPage/>}/>
+        <Route path="/myPage" element={<MyPage/>}/>
       </Routes>
     </BrowserRouter>
   )
