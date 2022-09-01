@@ -39,9 +39,9 @@ function LoginForm() {
     navigate("/")
   };
 
-
+// 8월31일 1227 moveTosignup -> Up ....
   // moveSignUpPage
-  const moveToSignup =  () => {
+  const moveToSignUp =  () => {
     navigate("/signup")
   };
 
@@ -75,16 +75,16 @@ function LoginForm() {
       </StForm>
 
         {/* <button>카카오톡 계정연동</button> */}
-        <button onClick={moveToSignup}>회원가입</button>
+        <button onClick={moveToSignUp}>회원가입</button>
         </StTotalWrap>
     </>
   );
 }
 
 const StTotalWrap = styled.div`
-width: 500px;
-margin: 0 auto;
-margin-top: 120px;
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
 `
