@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "../pages/main";
 import Login from "../pages/login";
 import SignUp from "../pages/signUp";
+import Mbti from "../pages/mbti";
 
 function Router () {
 
@@ -11,6 +12,7 @@ function Router () {
         <Route path="/" element={<Main/>} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/mbti" element={<Mbti />} />
       </Routes>
     </BrowserRouter>
   )
