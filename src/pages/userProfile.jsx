@@ -1,15 +1,16 @@
-import Error from "../components/features/error/Error";
+
+import UserProfileContainer from "../components/features/myPage/UserProfileContainer";
 import Layout from "../layout/layout";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-function ErrorPage() {
+function UserProfile() {
   return (
     <Layout>
       <Header />
-      <Error />
+      <UserProfileContainer/>
       <Footer />
     </Layout>
   );
 }
 
-export default ErrorPage;
+export default UserProfile;
