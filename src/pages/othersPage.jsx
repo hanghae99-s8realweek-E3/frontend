@@ -3,7 +3,8 @@ import UserProfileContainer from "../components/features/myPage/UserProfileConta
 import Layout from "../layout/layout";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-function UserProfile() {
+
+function OthersPage() {
   return (
     <Layout>
       <Header />
@@ -13,4 +14,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default OthersPage;

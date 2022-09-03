@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // 나중에 코드 추가정리 필요!
-function WriteTodo() {
+function WriteTodoForm() {
   // mbti들어가야할 곳에 값을 받아오기위해서 미리 작성해놓음
   //   const[mbti,setMbti] =  useState({
   //     todo: "",
@@ -103,4 +103,4 @@ border-radius: 6px;
   cursor: pointer;
 `;
 
-export default WriteTodo;
+export default WriteTodoForm;

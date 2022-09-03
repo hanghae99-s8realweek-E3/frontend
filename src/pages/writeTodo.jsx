@@ -1,16 +1,17 @@
+import React from "react";
 import Layout from "../layout/layout";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import ErrorPageContainer from "../components/features/error/ErrorPageContainer";
+import WriteTodoForm from "../components/features/todo/WriteTodoForm";
 
-function ErrorPage() {
+const WriteTodo = () => {
   return (
     <Layout>
       <Header />
-      <ErrorPageContainer />
+      <WriteTodoForm/>
       <Footer />
     </Layout>
   );
-}
+};
 
-export default ErrorPage;
+export default WriteTodo;

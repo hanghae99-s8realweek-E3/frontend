@@ -1,9 +1,18 @@
 import React from "react";
-import SignUpForm from "../components/features/signUp/signUpForm";
+import Footer from "../components/common/footer";
+import Header from "../components/common/header";
+import SignUpForm from "../components/features/signUp/SignUpForm";
+import Layout from "../layout/layout";
 
 const SignUp = () => {
 
-    return <SignUpForm/>
+    return (
+        <Layout>
+            <Header />
+            <SignUpForm/>
+            <Footer />
+        </Layout>
+    )
 }
 
 export default SignUp;
