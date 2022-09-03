@@ -32,10 +32,10 @@ const SignUpForm = () => {
             } else if (signupData.confirmPassword.length === 0 || signupData.password !== signupData.confirmPassword){
               return alert('비밀번호2 형식을 확인해주세요')
             }
-            else if (signupData.nickname.length ===0) {
+            else if (signupData.nickname.length === 0) {
               return alert('닉네임 형식을 확인해주세요 ')
             }
-            navigate('/mbti');
+            navigate('/welcome');
   };
 
   return (
@@ -95,10 +95,10 @@ const SignUpForm = () => {
 export default SignUpForm;
 
 const StOutLine = styled.form`
-width:500px;
-display:flex;
-flex-direction: column;
-margin: 100px auto;
-justify-content: space-around;
+  width:500px;
+  display:flex;
+  flex-direction: column;
+  margin: 100px auto;
+  justify-content: space-around;
 `
 

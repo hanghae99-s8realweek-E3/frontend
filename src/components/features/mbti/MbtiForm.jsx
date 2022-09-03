@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
-  const [myMbti, setMyMbti] = useState();
+  const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [
     "ISTJ",
     "ISFJ",
@@ -45,11 +45,11 @@ const MbtiForm = () => {
             <p>선택한 MBTI: <h2>{myMbti}</h2></p>
             <StGrid>
             {mbtiList.map((x, index) => {
-                return (<StButton key={index} value={mbtiList[index]} onClick={(e) => setMyMbti(e.target.value)}> {mbtiList[index]}</StButton>);
+                return (<StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} onClick={(e) => setMyMbti((e.target.value))}> {mbtiList[index]}</StButton>);
                 })}
             </StGrid>
         </div>
-        <StButton color="#87cefa" height="50px" type="submit" onClick={onSetMbti}>MBTI 설정</StButton>
+        <StButton color="black" height="50px" type="submit" onClick={onSetMbti}>MBTI 설정</StButton>
     </StDiv>
     );
 
@@ -108,7 +108,7 @@ const StButton = styled.button`
   }
 
   &:active {
-    background: ${(props) => props.color || "#228be6"};
+    background: black;
     color: white;
   }
 `;
