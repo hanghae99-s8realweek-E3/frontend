@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 
@@ -30,69 +30,117 @@ function LoginForm() {
       return false;
     } else if (
       userData.password === "" ||
-      !passwordFormat.test(userData.password) || userData.password.length < 8
+      !passwordFormat.test(userData.password) ||
+      userData.password.length < 8
     ) {
       alert("올바른 비밀번호를 입력하세요");
       return false;
     }
     alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
-    navigate("/")
+    navigate("/");
   };
 
-// 8월31일 1227 moveTosignup -> Up ....
+  // 8월31일 1227 moveTosignup -> Up ....
   // moveSignUpPage
-  const moveToSignUp =  () => {
-    navigate("/signup")
+  const moveToSignUp = () => {
+    navigate("/signup");
   };
 
-//8글자 미만일경우
+  //8글자 미만일경우
   //test match
   return (
-    <>
     <StTotalWrap>
       <StForm onSubmit={submitLoginData}>
-        <label> 이메일 </label>
-          <input
-            //   id="inputemail"
-            name="email"
-            type="email"
-            value={userData.email}
-            placeholder="abcdef@gmail.com"
-            onChange={onChange}
-          />
-    
-        <label> 비밀번호 </label>
-          <input
-            //id="inputpassword"
-            name="password"
-            type="password"
-            value={userData.password}
-            placeholder="비밀번호 입력"
-            onChange={onChange}
-          />
-      
-        <button type="submit">로그인</button>
+        <StEmail> 이메일 </StEmail>
+        <StEmailInput
+          //   id="inputemail"
+          name="email"
+          type="email"
+          value={userData.email}
+          placeholder="abcdef@gmail.com"
+          onChange={onChange}
+          StEmailInput
+        />
+
+        <StPassword> 비밀번호 </StPassword>
+        <StPasswordInput
+          //id="inputpassword"
+          name="password"
+          type="password"
+          value={userData.password}
+          placeholder="비밀번호 입력"
+          onChange={onChange}
+          StPasswordInput
+        />
+
+        <StLoginBtn type="submit">로그인</StLoginBtn>
       </StForm>
 
-        {/* <button>카카오톡 계정연동</button> */}
-        <button onClick={moveToSignUp}>회원가입</button>
-        </StTotalWrap>
-    </>
+      {/* <button>카카오톡 계정연동</button> */}
+      <StSignupBtn onClick={moveToSignUp}>회원가입</StSignupBtn>
+    </StTotalWrap>
   );
 }
 
 const StTotalWrap = styled.div`
-  width: 500px;
-  margin: 0 auto;
-  margin-top: 120px;
-  display: flex;
-  flex-direction: column;
-`
+  /* width: 500px; */
+  /* margin-top: 120px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+`;
 
 const StForm = styled.form`
   display: flex;
   flex-direction: column;
-`
+`;
+const StEmail = styled.div`
+  /* display: flex; */
+  margin: 154px 426px 8px 25px;
+  width: 49px;
+  height: 32px;
+  font-family: IBM Plex Sans KR;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+`;
+
+const StEmailInput = styled.input`
+  display: flex;
+  box-sizing: border-box;
+  margin-top: 8px;
+  width: 450px;
+  height: 55px;
+  border: 1px solid #979797;
+  border-radius: 6px;
+  margin: 0px 25px 30px 25px;
+`;
+const StPassword = styled.div`
+  display: flex;
+  width: 65px;
+  height: 32px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  /* identical to box height, or 178% */
+
+  color: #000000;
+
+  margin: 0px 410px 8px 25px;
+`;
+
+const StPasswordInput = styled.input`
+  display: flex;
+  box-sizing: border-box;
+  height: 55px;
+  border: 1px solid #979797;
+  border-radius: 6px;
+  display: flex;
+  margin: 0px 25px 130px 25px;
+`;
 const SocialWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,7 +148,44 @@ const SocialWrap = styled.div`
   margin: 0 45%;
 `;
 
+const StLoginBtn = styled.button`
+  display: flex;
+  height: 70px;
+  background: #979797;
+
+  border-radius: 6px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  /* identical to box height, or 145% */
+
+  text-align: center;
+
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  margin: 0px 25px 36px 25px;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 36px; */
+`;
+
+const StSignupBtn = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  width: 65px;
+  height: 32px;
+  /* identical to box height, or 178% */
+  color: #000000;
+  cursor: pointer;
+  margin: 0px 217px 439px 217px;
+`;
 export default LoginForm;
 
-
-// em rem 
+// em rem

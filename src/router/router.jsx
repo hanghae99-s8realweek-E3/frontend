@@ -5,8 +5,10 @@ import SignUp from "../pages/signUp";
 import Mbti from "../pages/mbti";
 import WriteTodo from "../components/features/todo/writeTodo";
 import MyPage from "../pages/myPage";
+import ErrorPage from "../pages/errorPage";
+import UserProfile from "../pages/userProfile";
 import WelcomePage from "../pages/welcomePage";
-import HojinTest from "../pages/hojinTest";
+
 
 function Router () {
 
@@ -20,7 +22,8 @@ function Router () {
         <Route path="/todoLists" element={<WriteTodo/>}/>
         <Route path="/myPage" element={<MyPage/>}/>
         <Route path="/welcome" element={<WelcomePage/>}/>
-        <Route path="/hojintest" element={<HojinTest/>}/>
+        <Route path="/userprofile" element={<UserProfile/>}/>
+        <Route path="/error" element={<ErrorPage/>}/>
       </Routes>
     </BrowserRouter>
   )

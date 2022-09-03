@@ -1,15 +1,17 @@
-import Error from "../components/features/error/Error";
+import React from "react";
+import WriteTodo from "../components/features/todo/WriteTodo";
 import Layout from "../layout/layout";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-function ErrorPage() {
+
+const TodoPage = () => {
   return (
     <Layout>
       <Header />
-      <Error />
+      <WriteTodo/>
       <Footer />
     </Layout>
   );
-}
+};
 
-export default ErrorPage;
+export default TodoPage;

@@ -46,13 +46,13 @@ function WriteTodo() {
   };
 
   return (
-    <>
       <StTotalWrap>
-        <span>mbti들어가야함</span>
+        <StMbti>mbti들어가야함</StMbti>
+        <StLine></StLine>
         <StWriteTodoForm onSubmit={submitTodoData}>
           <StWriteTodoTextArea
             // onInput={handleResizeHeight}
-            ref={todoRef} placeholder="내용을 입력하세요" maxLength={200} name="todo" value={todo.todo} onChange={onChange}
+            ref={todoRef} placeholder="내가만드는 TO DO내용" maxLength={200} name="todo" value={todo.todo} onChange={onChange}
           />
           {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌 */}
           <span>입력할 수 있는 글자 수 :  <StTextCount color={200-todo.todo.length < 10 ? "red" : "black"}>{200-todo.todo.length}</StTextCount></span>
@@ -60,18 +60,27 @@ function WriteTodo() {
           <Stbutton type="submit">등록하기</Stbutton>
         </StWriteTodoForm>
       </StTotalWrap>
-    </>
   );
 }
 
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
-  margin: 0 auto;
-  margin-top: 120px;
-`;
 
+`;
+const StMbti = styled.span`
+display: flex;
+margin : 177px 414px 9px 27px;
+`
+
+const StLine = styled.div`
+display: flex;
+margin:0px 25px 17px 25px;
+background-color:  #BDC5CD;
+transform: matrix(1, 0, 0, -1, 0, 0);
+  height: 1px;
+
+`
 const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -86,7 +95,11 @@ const StTextCount = styled.span`
   color:${(props) => (props.color)};
 `;
 const Stbutton = styled.button`
-  margin-top: 500px;
+width: 450px;
+height: 70px;
+background: #979797;
+border-radius: 6px;
+  margin:565px 25px 177px 25px;
   cursor: pointer;
 `;
 
