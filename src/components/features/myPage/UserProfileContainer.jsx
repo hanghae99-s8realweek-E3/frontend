@@ -1,33 +1,54 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import dy from "../../common/dy.jpg";
+
 function UserProfileContainer() {
+  const navigate = useNavigate();
+
+  const goFollow = () => {
+    navigate("/");
+  };
+
+  const goFollowing = () => {
+    navigate("/");
+  };
   return (
     <StTotalWrap>
       <StTopWrap>
         <StProfileImg src={dy} width="44" height="44" alt="dy" />
         <StFriendNameMbti>
-          <div>둘리님</div>
-          <div>INFP</div>
+          <StFriendName>둘리님</StFriendName>
+          <StMbti>INFP</StMbti>
         </StFriendNameMbti>
-        <StFollowWrap>
-          <div>10</div>
-          <div>팔로우</div>
+        <StFollowWrap onClick={goFollow}>
+          <StFollowNumber>10</StFollowNumber>
+          <StFollowWord>팔로우</StFollowWord>
         </StFollowWrap>
-        <StFollowWrap>
-          <div>10</div>
-          <div>팔로우</div>
-        </StFollowWrap>
+        <StFollowingWrap onClick={goFollowing}>
+          <StFollowingNumber>10</StFollowingNumber>
+          <StFollowingWord>팔로잉</StFollowingWord>
+        </StFollowingWrap>
       </StTopWrap>
+
+      <StMiddleLine></StMiddleLine>
+      <StTodoWrap>
+        <StChallengeTodo>도전한 TO DO</StChallengeTodo>
+        <StSuggestionTodo>제안한 TO DO</StSuggestionTodo>
+      </StTodoWrap>
+      <StLineWrap>
+      <StMiddleLeftLine></StMiddleLeftLine>
+      <StMiddleRightLine></StMiddleRightLine>
+      </StLineWrap>
 
       <StBottomWrap>
         <StTodayMyCardWrap>
           <StTodayMy>오늘의 투두</StTodayMy>
           <StCardSmallWrap>
-          <StCard> 공원에서 비눗방울 불기</StCard>
+            <StCard> 공원에서 비눗방울 불기</StCard>
             <StCounterBox>
-              <span>댓글</span>
-              <span>도전</span>
+              <StCommentCount>댓글</StCommentCount>
+              <StChallengeCount>도전</StChallengeCount>
             </StCounterBox>
           </StCardSmallWrap>
         </StTodayMyCardWrap>
@@ -37,9 +58,9 @@ function UserProfileContainer() {
           <StCardSmallWrap>
             <StCard>공원에서 비눗방울 불기</StCard>
             <StCounterBox>
-              <span>댓글</span> 
-              <span>도전</span>
-              </StCounterBox>
+              <StCommentCount>댓글</StCommentCount>
+              <StChallengeCount>도전</StChallengeCount>
+            </StCounterBox>
           </StCardSmallWrap>
         </StTodayMyCardWrap>
       </StBottomWrap>
@@ -72,14 +93,88 @@ const StFriendNameMbti = styled.div`
   width: 38px;
   align-items: flex-start;
 `;
-
+const StFriendName = styled.div`
+  display: flex;
+`;
+const StMbti = styled.div`
+  display: flex;
+`;
 const StFollowWrap = styled.div`
   display: flex;
   flex-direction: column;
   /* border: 1px solid red; */
   width: 380px;
 `;
+const StFollowNumber = styled.div`
+  display: flex;
+`;
+const StFollowWord = styled.div`
+  display: flex;
+`;
+const StFollowingWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  width: 380px;
+`;
+const StFollowingNumber = styled.div`
+  display: flex;
+`;
+const StFollowingWord = styled.div`
+  display: flex;
+`;
+const StMiddleLine = styled.div`
+  display: flex;
+  height: 1px;
+  background: #bdc5cd;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+  width: 500px;
+  margin-bottom: 10px;
+`;
 
+const StTodoWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 10px;
+`;
+const StChallengeTodo = styled.div`
+  width: 105px;
+  display: flex;
+`;
+const StSuggestionTodo = styled.div`
+  width: 105px;
+  display: flex;
+`;
+
+const StLineWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 25px;
+  margin-right: 25px;
+`
+const StMiddleLeftLine = styled.div`
+height: 1px;
+width: 225px;
+  background: #BDC5CD;
+transform: matrix(1, 0, 0, -1, 0, 0);
+&:hover {
+  background-color: black;
+  }
+
+`
+
+const StMiddleRightLine = styled.div`
+height: 1px;
+width: 225px;
+  background: #BDC5CD;
+transform: matrix(1, 0, 0, -1, 0, 0);
+&:hover {
+  background-color: black;
+  }
+`
 const StBottomWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -104,15 +199,21 @@ const StCardSmallWrap = styled.div`
   border: 1px solid red;
   width: 380px;
   border-radius: 20px;
-  padding:5px
+  padding: 5px;
 `;
 
 const StCard = styled.div`
   display: flex;
-
-`
+`;
 const StCounterBox = styled.div`
   display: flex;
   justify-content: end;
+`;
+
+const StCommentCount = styled.div`
+  display: flex;
+`;
+const StChallengeCount = styled.div`
+  display: flex;
 `;
 export default UserProfileContainer;
