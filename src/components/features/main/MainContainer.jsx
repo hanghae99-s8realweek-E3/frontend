@@ -25,11 +25,12 @@ function MainContainer () {
 
   return (
     <StContainer>
+      <StHeadTitle>미믹님! <br /> 오늘은 누구를 따라해볼까요?</StHeadTitle>
       <BannerSlideBox>
         <Swiper modules={[Pagination, Navigation, Autoplay]} spaceBetween={0} slidesPerView={1} speed={500} scrollbar={{ draggable: true }} allowTouchMove autoplay={{ delay: 3000 }} navigation={true} pagination={{ clickable: true }}>
           {bannerSlide.map((elem, idx) =>
             <SwiperSlide key={idx} style={SwiperImageCSSData}>
-              <SildeImage width="500px" src={elem} />
+              <SildeImage width="450px" src={elem} />
             </SwiperSlide>)}
         </Swiper>
       </BannerSlideBox>
@@ -39,40 +40,40 @@ function MainContainer () {
         {/* 슬라이드 목록 구간 */}
         {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
         {/* 문제는 해결했는데 왜 해결된건지 모르겠다. width를 정밀하게 주니까 해결. */}
-        <Swiper width={250} slidesPerView={2} spaceBetween={10} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
+        <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
           <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[0]} />
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[0]} />
             </PostImageBox>
-            <PostText>테스트 1</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
           <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[1]} />
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[1]} />
             </PostImageBox>
-            <PostText>테스트 2</PostText>
+            <PostText>Lorem ipsum dolor </PostText>
           </SwiperSlide>
 
           <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[2]} />
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[2]} />
             </PostImageBox>
-            <PostText>테스트 3</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
           <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[3]} />
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[3]} />
             </PostImageBox>
-            <PostText>테스트 4</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
           <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[4]} />
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[4]} />
             </PostImageBox>
-            <PostText>테스트 5</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
         </Swiper>
 
@@ -81,40 +82,40 @@ function MainContainer () {
         <SildeTitle>한 주 간의 레포트!</SildeTitle>
 
         {/* 슬라이드 목록 구간 */}
-        <Swiper width={250} slidesPerView={2} spaceBetween={10} style={{margin:"0.5rem 0"}}>
-          <SwiperSlide style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[0]} />
+        <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
+          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[0]} />
             </PostImageBox>
-            <PostText>테스트 1</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
-          <SwiperSlide style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[1]} />
+          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[1]} />
             </PostImageBox>
-            <PostText>테스트 2</PostText>
+            <PostText>Lorem ipsum dolor </PostText>
           </SwiperSlide>
 
-          <SwiperSlide style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[2]} />
+          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[2]} />
             </PostImageBox>
-            <PostText>테스트 3</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
-          <SwiperSlide style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[3]} />
+          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[3]} />
             </PostImageBox>
-            <PostText>테스트 4</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
 
-          <SwiperSlide style={SwiperPostCSSData}>
-            <PostImageBox width="120px" height="80px">
-              <SildeImage width="140px" src={bannerSlide[4]} />
+          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <PostImageBox width="170px" height="110px">
+              <SildeImage width="170px" src={bannerSlide[4]} />
             </PostImageBox>
-            <PostText>테스트 5</PostText>
+            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
           </SwiperSlide>
         </Swiper>
 
@@ -134,20 +135,28 @@ const StContainer = styled.div`
   width: 500px;
   overflow: hidden;
 
-  margin:80px 0;
+  margin:80px 0 120px 0;
+  padding: 0 25px;
   box-sizing: border-box;
 `
+
+const StHeadTitle = styled.h1`
+  text-align: left;
+  font-size: 24px;
+  font-weight:500;
+  margin:0 auto 20px 0;
+`
+
 
 const BannerSlideBox = styled.div`
   display: flex;
   flex-direction: row;
 
-  width: 500px;
-  height: 300px;
+  width: 450px;
+  height: 230px;
   
-  border: 1px solid blue;
-  margin-bottom: 30px;
-  
+  border-radius: 6px;
+
   overflow: hidden;
   box-sizing: border-box;
 `
@@ -155,10 +164,10 @@ const BannerSlideBox = styled.div`
 const InfomationSlideBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
-  height: 160px;
+  width: 450px;
+  height: 250px;
   
-  margin: 10px 0;
+  /* margin: 10px 0; */
   overflow:hidden;
 `
 
@@ -171,8 +180,7 @@ const SildeTitle = styled.h4`
   font-size: 16px;
   text-align: left;
 
-  margin:0;
-  margin-left: 1rem;
+  margin:32px 0 20px 0;
 `
 
 const PostImageBox = styled.div`
@@ -182,10 +190,10 @@ const PostImageBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: ${props => props.width};
-  height: ${props => props.height};
+  width: 170px;
+  height: 110px;
 
-  border-radius: 5px 5px 0 0;
+  border-radius: 6px;
   margin:0;
   padding:0;
   overflow: hidden;
@@ -194,9 +202,10 @@ const PostImageBox = styled.div`
 const PostText = styled.p`
   font-size: 16px;
   text-align: left;
-  margin:0.3rem 0;
-  padding-left: 0.3rem;
-  width: 120px;
+  margin-top:20px;
+  /* padding-left: 0.3rem; */
+  width: 170px;
+  height: 32px;
 `
 
 const SwiperImageCSSData = {
@@ -213,13 +222,11 @@ const SwiperImageCSSData = {
 const SwiperPostCSSData = {
   display: "flex",
   flexDirection: "column",
-  margin: "0.5rem",
-  marginBottom: "0.7rem",
+  margin: "0 0.5rem",
 
-  height: "110px",
-  width: "120px",
+  width: "170px",
+  height: "170px",
 
-  border: "2px solid gray",
   borderRadius: "5px",
   cursor:"pointer"
 }

@@ -12,11 +12,10 @@ function Layout ({ children }) {
 
 export default Layout;
 
+
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center; //하위컴포넌트 영향(팔로우페이지-호진)
-  align-items: center;
   position: relative;
 
   margin: auto;
