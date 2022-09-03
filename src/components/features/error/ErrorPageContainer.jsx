@@ -3,7 +3,7 @@ import dy from "../../common/dy.jpg";
 
 import styled from "styled-components";
 
-function Error() {
+function ErrorPageContainer() {
   const navigate = useNavigate();
 
   //새로고침하기
@@ -113,4 +113,4 @@ const StMainBtn = styled.button`
 
   color: #ffffff;
 `;
-export default Error;
+export default ErrorPageContainer;
