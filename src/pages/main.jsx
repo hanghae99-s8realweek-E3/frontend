@@ -6,11 +6,13 @@ import Layout from "../layout/layout";
 
 function Main () {
   return (
+    <>
     <Layout>
       <Header />
       <MainContainer />
       <Footer />
     </Layout>
+    </>
   )
 }
 

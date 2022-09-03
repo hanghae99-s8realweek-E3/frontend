@@ -1,10 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 
 function Header() {
+  const navigate = useNavigate();
+
+  function moveToPrevPage () {
+    navigate(-1);
+  }
 
   return (
     <HeaderContainer>
+      {/* <button type="button" onClick={moveToPrevPage}>〈 </button> */}
       <LogoImage />
     </HeaderContainer>
   )
@@ -13,16 +20,16 @@ function Header() {
 export default Header;
 
 const HeaderContainer = styled.div`
-  background: gray;
+  background: #ffffff;
 
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   position: fixed;
 
   height:60px;
-  width:501px;
+  width:500px;
 
   border: 1px solid black;
   margin: 0;

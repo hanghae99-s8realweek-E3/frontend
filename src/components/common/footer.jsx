@@ -22,10 +22,13 @@ function Footer() {
 
   return (
     <FooterContainer>
-      <StButton onClick={moveToHome}>홈</StButton>
-      <StButton onClick={moveToFeed}>피드</StButton>
-      <StButton onClick={moveToTodo}>TO DO</StButton>
-      <StButton onClick={moveToMyPage}>MY</StButton>
+      <FooterButtonBox>
+        <StButton onClick={moveToHome}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />홈</StButton>
+        <StButton onClick={moveToFeed}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />피드</StButton>
+        <StButton onClick={moveToTodo}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />TO DO</StButton>
+        <StButton onClick={moveToMyPage}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />MY</StButton>
+      </FooterButtonBox>
+      <StCommonBar />
     </FooterContainer>
   )
 }
@@ -33,39 +36,53 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  background: white;
+  background: #FAFAFA;
 
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  gap:3rem;
   position: fixed;
 
-  height:60px;
-  width:501px;
+  height:108px;
+  width:500px;
 
-  border: 1px solid blue;
-  margin: 0;
+  padding-top: 15px;
 
   bottom:0;
-  z-index: 5;
+  z-index: 6;
 `
 
+const FooterButtonBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap:5rem;
+`
 const StButton = styled.button`
   background: none;
 
-  border: 2px solid blue;
-  outline: none;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  height: 50px;
-  width: 70px;
+  font-size: 16px;
+  font-weight: 400;
+
+  border: none;
+  outline: none;
+  padding:0;
 
   cursor: pointer;
+`
+  
+const StCommonBar = styled.div`
+  background: #000000;
 
-  &:hover {
-    background: gray;
-    color:white;  
-  }
+  margin-top: 15px;
+  border-radius: 133.005px;
+
+  width: 178.23px;
+  height: 6.65px;
+
 `
