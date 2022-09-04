@@ -5,13 +5,16 @@ import styled from "styled-components";
 function Header() {
   const navigate = useNavigate();
 
+  // 이전 페이지로 이동
   function moveToPrevPage () {
     navigate(-1);
   }
 
   return (
     <HeaderContainer>
-      <button type="button" onClick={moveToPrevPage}>〈 </button>
+      <StBackBtn type="button" onClick={moveToPrevPage}>
+        <img style={{height:"20px", pointerEvents:"none", transform:"rotateY(180deg)"}} src="https://www.freeiconspng.com/thumbs/arrow-icon/arrow-icon--myiconfinder-23.png" alt="button for move to previous page" />
+      </StBackBtn>
       <LogoImage />
     </HeaderContainer>
   )
@@ -36,6 +39,20 @@ const HeaderContainer = styled.div`
 
   top:0;
   z-index: 5;
+`
+
+const StBackBtn = styled.button`
+  background: none;
+
+  height:17px;
+
+  border: none;
+  outline:none;
+
+  margin-right:auto;
+  margin-left: 35px;
+
+  cursor: pointer;
 `
 
 const LogoImage = styled.img`
