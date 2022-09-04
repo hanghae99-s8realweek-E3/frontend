@@ -11,7 +11,7 @@ function Header() {
 
   return (
     <HeaderContainer>
-      {/* <button type="button" onClick={moveToPrevPage}>〈 </button> */}
+      <button type="button" onClick={moveToPrevPage}>〈 </button>
       <LogoImage />
     </HeaderContainer>
   )
