@@ -11,19 +11,23 @@ function FeedDetailContainer () {
 
 
    const initialState = [{ 
-    "commentId": "",
-    "userId":"",
-    "comment": "", 
-    "nickname": "",
+    commentId: "",
+    userId:"",
+    comment: "", 
+    nickname: "",
 }]
 
     //인풋(댓글)담을 그릇
     const[feedComment, setFeedComment] =useState(initialState);
    
+    const onChange = (e)=> {
+        const {value} = e.target;
+        setFeedComment({...feedComment, })
+    }
     const onSubmit = (e) => {
         e.preventDefault();
-        const newComment = {POST : feedComment}
-        dispatch(postComment(newComment))
+        // const newComment = { commentId ,}
+        // dispatch(postComment(newComment))
     }
 
 
@@ -38,7 +42,7 @@ return (
         type="text"
         name="comment"
         value={feedComment}
-        onChange={(e)=> setFeedComment(e.target.value)}
+        onChange={onChange}
     /><button type="submit">추가</button>
     </form>
     {/* <div>
