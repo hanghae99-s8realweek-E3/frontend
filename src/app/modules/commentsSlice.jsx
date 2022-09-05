@@ -38,7 +38,7 @@ const initialState = {
     error:""
 }
 
-const followCommentSlice = createSlice({
+const commentsSlice = createSlice({
     name:"comm",
     initialState,
     reducers:{},
@@ -82,4 +82,4 @@ const followCommentSlice = createSlice({
 //     },
 //   });
 
-export default followCommentSlice;
+export default commentsSlice;
