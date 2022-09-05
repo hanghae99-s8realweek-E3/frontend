@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import  followCommentSlice  from './modules/followCommentSlice';
-import usersSlice from './modules/usersSlice';
+import accountsSlice from './modules/accountsSlice';
 
 export const store = configureStore({
   reducer: {
-    users: usersSlice.reducer,
+    accounts: accountsSlice.reducer,
     comments:followCommentSlice.reducer 
   },
 });
