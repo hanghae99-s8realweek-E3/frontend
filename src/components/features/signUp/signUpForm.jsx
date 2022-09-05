@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import {emailFormat,passwordFormat} from "../../../utils/reqList"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { postSignUpFetch } from "../../../app/modules/accountsSlice";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-    
+  
   const initialState = {
     email: "",
     password: "",
@@ -35,7 +38,8 @@ const SignUpForm = () => {
             else if (signupData.nickname.length === 0) {
               return alert('닉네임 형식을 확인해주세요 ')
             }
-            navigate('/welcome');
+            dispatch(postSignUpFetch(signupData))
+            // navigate('/welcome');
   };
 
   return (
