@@ -4,18 +4,22 @@ import styled from "styled-components";
 function Footer() {
   const navigate = useNavigate();
 
+  // 메인 페이지로 이동
   function moveToHome() {
     return navigate("/")
   }
 
+  // 피드 페이지로 이동
   function moveToFeed() {
     return navigate("/feed")
   }
 
+  // TODO 페이지로 이동
   function moveToTodo() {
-    return navigate("/todo")
+    return navigate("/setuptodo")
   }
 
+  // 내 정보 페이지로 이동
   function moveToMyPage() {
     return navigate("/myPage")
   }

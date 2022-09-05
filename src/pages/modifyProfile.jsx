@@ -1,18 +1,18 @@
+import React from "react";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import SetToDoContainer from "../components/features/setToDo/SetToDoContainer";
+import ProfileModifyForm from "../components/features/myPage/ProfileModifyForm";
 import Layout from "../layout/layout";
 
-
-function SetUpTodo() {
+const ModifyProfile = () => {
 
   return (
     <Layout>
       <Header />
-        <SetToDoContainer />
+        <ProfileModifyForm />
       <Footer />
     </Layout>
   )
 }
 
-export default SetUpTodo;
+export default ModifyProfile;

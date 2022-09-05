@@ -1,18 +1,16 @@
+import React from "react";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import SetToDoContainer from "../components/features/setToDo/SetToDoContainer";
 import Layout from "../layout/layout";
 
-
-function SetUpTodo() {
+const ChangePW = () => {
 
   return (
     <Layout>
       <Header />
-        <SetToDoContainer />
       <Footer />
     </Layout>
   )
 }
 
-export default SetUpTodo;
+export default ChangePW;

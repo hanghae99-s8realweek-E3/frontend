@@ -1,9 +1,36 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function MyPageContainer ({ setMyPageState }) {
+function MyPageContainer () {
+  const navigate = useNavigate();
 
+  // 프로필 수정 화면으로 이동
   function changeMyProfileData () {
-    setMyPageState("modify")
+    navigate("/modifyprofile")
+  }
+
+  // 비밀번호 변경 화면으로 이동
+  function changeMyPasswordData () {
+    navigate("/changepw")
+  }
+
+  // 고객센터(회원 탈퇴) 페이지로 이동
+  function moveToHelpDeskPage () {
+    navigate("/helpdesk")
+  }
+
+  // 내 활동 페이지로 이동
+  function moveToActivity () {
+    navigate("/activity")
+  }
+
+  // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력
+  function moveToFollowList () {
+    navigate('/follow')
+  }
+
+  // 로그아웃 버튼 클릭 시, 로그아웃 진행
+  function logOutToSite() {
   }
 
   return (
@@ -16,32 +43,37 @@ function MyPageContainer ({ setMyPageState }) {
           <h3 style={{margin:0, marginBottom:"0.5rem"}}>신도윤 님</h3>
           <p style={{margin:0, color:"gray"}}>ENFP</p>
         </StMyProfileDiv>
-        <StMyFollowingStat>
-          <div style={{display:"flex", flexDirection:"column", margin:"0 37px", textAlign:"center"}}>
+        <StMyFollowStat>
+          <StFollowStatBtn onClick={moveToFollowList}>
             <span style={{marginBottom:"6px", fontSize:"20px"}}>10</span>
             <span style={{fontSize:"13px"}}>팔로잉</span>
-          </div>
-          <div style={{display:"flex", flexDirection:"column", margin:"0 37px",   textAlign:"center"}}>
+          </StFollowStatBtn>
+          <StFollowStatBtn onClick={moveToFollowList}>
             <span style={{marginBottom:"6px", fontSize:"20px"}}>15</span>
             <span style={{fontSize:"13px"}}>팔로워</span>
-          </div>
-        </StMyFollowingStat>
+          </StFollowStatBtn>
+        </StMyFollowStat>
       </StMyProfileSec>
+
       <StMatchCheckDiv>
         <StMatchCheckBtn>궁합 알아보기</StMatchCheckBtn>
       </StMatchCheckDiv>
+
       <StCommonBorder />
+
       <div style={{display:"flex", flexDirection:"column", paddingLeft:"35px", paddingBottom:"25px"}}>
         <StMyPageMenu>나의 정보</StMyPageMenu>
         <StMyPageButton onClick={changeMyProfileData}>프로필 변경</StMyPageButton>
-        <StMyPageButton>나의 활동</StMyPageButton>
+        <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
       </div>
+
       <StCommonBorder />
+
       <div style={{display:"flex", flexDirection:"column", paddingLeft:"35px", paddingBottom:"25px"}}>
         <StMyPageMenu>설정</StMyPageMenu>
-        <StMyPageButton>로그아웃</StMyPageButton>
-        <StMyPageButton>비밀번호 변경</StMyPageButton>
-        <StMyPageButton>고객센터</StMyPageButton>
+        <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
+        <StMyPageButton onClick={changeMyPasswordData}>비밀번호 변경</StMyPageButton>
+        <StMyPageButton onClick={moveToHelpDeskPage}>고객센터</StMyPageButton>
       </div>
 
     </StMyPageContainer>
@@ -103,9 +135,25 @@ const StMyProfileDiv = styled.div`
   margin-right: 38px;
 `
 
-const StMyFollowingStat = styled.div`
+const StMyFollowStat = styled.div`
   display: flex;
   flex-direction: row;
+`
+
+const StFollowStatBtn = styled.button`
+  background: none;
+
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+
+  text-align:center;
+
+  border: none;
+  outline: none;
+  margin:0 37px;
+
+  cursor:pointer;
 `
 
 const StCommonBorder = styled.div`
