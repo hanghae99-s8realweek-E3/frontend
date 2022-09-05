@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import jwtDecode from "jwt-decode";
 import { setCookie } from "../../utils/cookie";
 import instance from "./instance";
 
 const initialState = {
   message: "",
+  errorMessage: "",
   token: "",
-  userId: 0,
-  nickname: "",
-  mbti: "",
+  userInfo: {}
 }
 
 //예시
@@ -51,6 +49,49 @@ export const postSignUpFetch = createAsyncThunk(
   }
 )
 
+// 프로필 정보 받아올 시에 사용되는 thunk action creater 
+export const getMyPageFetch = createAsyncThunk(
+  'users/getMyPageFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.get("/accounts")
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
+
+// 프로필 수정 시에 사용되는 thunk action creater 
+export const putModifyProfileFetch = createAsyncThunk(
+  'users/putProfileFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.post("/accounts", payload)
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
+
+// 회원 탈퇴 시에 사용되는 thunk action creater 
+export const deleteHelpDeskFetch = createAsyncThunk(
+  'users/deleteHelpDeskFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.delete("/accounts", payload)
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
+
+
 const accountsSlice = createSlice({
   name:"accounts",
   initialState,
@@ -79,14 +120,6 @@ const accountsSlice = createSlice({
       newState.message = action.payload.message;
       setCookie("token", action.payload.token);
       console.log(newState);
-      
-      // 로그인 시, token의 payload값을 jwtDecode를 통해 해독,
-      // 이후, 해독된 내용에 담긴 데이터들을 state에 저장
-      const myData = jwtDecode(action.payload.token);
-      newState.nickname = myData.nickname;
-      newState.userId = myData.userId;
-      newState.mbti = myData.mbti;
-
       return newState;
       // state = action.payload;
       // setCookie("token",action.payload.token);
@@ -111,20 +144,57 @@ const accountsSlice = createSlice({
       const newState = {...state}
       newState.message = action.payload.message;
       setCookie("token", action.payload.token )
-
-      // 로그인 시, token의 payload값을 jwtDecode를 통해 해독,
-      // 이후, 해독된 내용에 담긴 데이터들을 state에 저장
-      const myData = jwtDecode(action.payload.token);
-      newState.nickname = myData.nickname;
-      newState.userId = myData.userId;
-      newState.mbti = myData.mbti;
-
       return newState;
     })
     builder.addCase(postSignUpFetch.rejected, (state,action)=> {
       console.log(action)
       const newState = { ...state };
       newState.message = action.payload.message;
+      return newState;
+    })
+
+    // getMyPageFetch Creater 작동 시 적용되는 내용들
+    builder.addCase(getMyPageFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(getMyPageFetch.fulfilled, (state,action)=> {
+      const newState = {...state}
+      newState.userInfo = action.payload.userInfo;
+      return newState;
+    })
+    builder.addCase(getMyPageFetch.rejected, (state,action)=> {
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
+    // putModifyProfileFetch Creater 작동 시 적용되는 내용들
+    builder.addCase(putModifyProfileFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(putModifyProfileFetch.fulfilled, (state,action)=> {
+      const newState = {...state}
+      newState.message = action.payload.message;
+      return newState;
+    })
+    builder.addCase(putModifyProfileFetch.rejected, (state,action)=> {
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
+    // deleteHelpDeskFetch Creater 작동 시 적용되는 내용들
+    builder.addCase(deleteHelpDeskFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(deleteHelpDeskFetch.fulfilled, (state,action)=> {
+      const newState = {...state}
+      newState.message = action.payload.message;
+      return newState;
+    })
+    builder.addCase(deleteHelpDeskFetch.rejected, (state,action)=> {
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
   }
