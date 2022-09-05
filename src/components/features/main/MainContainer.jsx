@@ -27,6 +27,7 @@ function MainContainer () {
     <StContainer>
       <StHeadTitle>미믹님! <br /> 오늘은 누구를 따라해볼까요?</StHeadTitle>
       <BannerSlideBox>
+        {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
         <Swiper modules={[Pagination, Navigation, Autoplay]} spaceBetween={0} slidesPerView={1} speed={500} scrollbar={{ draggable: true }} allowTouchMove autoplay={{ delay: 3000 }} navigation={true} pagination={{ clickable: true }}>
           {bannerSlide.map((elem, idx) =>
             <SwiperSlide key={idx} style={SwiperImageCSSData}>

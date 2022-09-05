@@ -15,6 +15,9 @@ import SignUp from "../pages/signUp";
 import Teaser from "../pages/teaser";
 import WelcomePage from "../pages/welcomePage";
 import WriteTodo from "../pages/writeTodo";
+import ModifyProfile from "../pages/modifyProfile";
+import ChangePW from "../pages/changePW";
+import HelpDesk from "../pages/helpDesk";
 
 
 
@@ -40,6 +43,9 @@ function Router () {
         <Route path="/teaser" element={<Teaser/>} />
         <Route path="/welcomepage" element={<WelcomePage/>} />
         <Route path="/writetodo" element={<WriteTodo/>} />
+        <Route path="/modifyprofile" element={<ModifyProfile/>} />
+        <Route path="/changepw" element={<ChangePW/>} />
+        <Route path="/helpdesk" element={<HelpDesk/>} />
       </Routes>
     </BrowserRouter>
   )

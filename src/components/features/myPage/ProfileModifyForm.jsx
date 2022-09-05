@@ -3,15 +3,19 @@ import styled from "styled-components";
 
 
 function ProfileModifyForm () {
+  // 내가 선택한 MBTI 값을 설정하는 상태
   const [myMBTISide, setMyMBTISide] = useState("");
+  // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
   const [selectMBTI, setSelectMBTI] = useState(false);
+  // mbti 16개 리스트
   const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
 
-  console.log(myMBTISide)
+  // 선택한 MBTI의 값으로 상태를 변경
   function changeMBTIProfile(event) {
     setMyMBTISide(event.target.value)
   }
 
+  // MBTI 선택창을 띄울지 말지 설정
   function toggleMBTISelectPopUp() {
     setSelectMBTI(!selectMBTI)
   }
