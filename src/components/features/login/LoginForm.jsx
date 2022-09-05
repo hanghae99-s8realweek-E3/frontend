@@ -94,9 +94,8 @@ const StForm = styled.form`
   flex-direction: column;
 `;
 const StEmail = styled.div`
-  /* display: flex; */
-  margin: 154px 426px 8px 25px;
-  width: 49px;
+  display: flex;
+  margin: 154px 0px 8px 25px;
   height: 32px;
   font-family: IBM Plex Sans KR;
   font-size: 18px;
@@ -109,29 +108,27 @@ const StEmail = styled.div`
 const StEmailInput = styled.input`
   display: flex;
   box-sizing: border-box;
-  margin-top: 8px;
   width: 450px;
   height: 55px;
   border: 1px solid #979797;
   border-radius: 6px;
   margin: 0px 25px 30px 25px;
+  text-align: left;
 `;
 const StPassword = styled.div`
-  display: flex;
-  width: 65px;
-  height: 32px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 32px;
-  /* identical to box height, or 178% */
+display: flex;
+margin-left: 25px;
+margin-bottom: 8px;
+font-family: 'IBM Plex Sans KR';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 32px;
+/* identical to box height, or 178% */
 
-  color: #000000;
 
-  margin: 0px 410px 8px 25px;
+color: #000000;
 `;
-
 const StPasswordInput = styled.input`
   display: flex;
   box-sizing: border-box;
@@ -179,12 +176,12 @@ const StSignupBtn = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
-  width: 65px;
   height: 32px;
   /* identical to box height, or 178% */
   color: #000000;
   cursor: pointer;
-  margin: 0px 217px 439px 217px;
+  /* margin: 0 auto; */
+  margin: 0px 0px 439px 218px;
 `;
 export default LoginForm;
 
