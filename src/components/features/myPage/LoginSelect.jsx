@@ -30,13 +30,10 @@ function LoginSelect(){
   );
 }
 
-
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 1080px; */
   width: 500px;
-
 `
 const StTopMsg = styled.div`
 display: flex;
@@ -46,7 +43,6 @@ font-style: normal;
 font-weight: 500;
 font-size: 24px;
 line-height: 32px;
-/* or 133% */
 color: #000000;
 margin:154px 0px 17px 25px;
 text-align: left;
@@ -60,7 +56,6 @@ font-style: normal;
 font-weight: 500;
 font-size: 18px;
 line-height: 32px;
-/* identical to box height, or 178% */
 color: #979797;
 margin: 0px 265px 130px 25px;
 `
@@ -73,7 +68,6 @@ font-style: normal;
 font-weight: 500;
 font-size: 22px;
 line-height: 32px;
-/* identical to box height, or 145% */
 text-align: center;
 color: #FFFFFF;
 display: flex;
@@ -91,7 +85,6 @@ font-style: normal;
 font-weight: 500;
 font-size: 22px;
 line-height: 32px;
-/* identical to box height, or 145% */
 text-align: center;
 color: #FFFFFF;
 margin: 0px 25px 407.61px 25px ;

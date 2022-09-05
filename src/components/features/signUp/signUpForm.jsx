@@ -6,9 +6,8 @@ import { useDispatch } from "react-redux";
 import { postSignUpFetch } from "../../../app/modules/accountsSlice";
 
 const SignUpForm = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-    
+  const navigate = useNavigate();
   const initialState = {
     email: "",
     password: "",
