@@ -13,7 +13,7 @@ function Footer() {
   }
 
   function moveToTodo() {
-    return navigate("/todo")
+    return navigate("/setuptodo")
   }
 
   function moveToMyPage() {

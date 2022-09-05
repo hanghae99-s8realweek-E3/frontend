@@ -48,7 +48,8 @@ const StErrorImg = styled.img`
   height: 169px;
   background: #d9d9d9;
   border-radius: 5px;
-  margin-bottom: 38px;
+  margin-top: 213.33px;
+  margin-bottom: 5px;
 `;
 const StContent = styled.div`
   height: 32px;
@@ -78,7 +79,7 @@ const StBtnWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0 auto;
-  gap: 20px;
+  gap: 26px;
 `;
 const StRefreshBtn = styled.button`
   width: 162px;
