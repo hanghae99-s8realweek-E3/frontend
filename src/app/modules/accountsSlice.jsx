@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { setCookie } from "../../utils/cookie";
 import instance from "./instance";
 
@@ -52,9 +52,17 @@ export const postSignUpFetch = createAsyncThunk(
 )
 
 const accountsSlice = createSlice({
-  name:"users",
+  name:"accounts",
   initialState,
   reducers:{
+    // 새로고침 시, 유저 정보를 잃지 않고 바로 사용할 수 있도록 reducer로 저장
+    currentUsers: (state, action) => {
+      const newState = { ...state }
+      newState.mbti = action.payload.mbti
+      newState.nickname = action.payload.nickname
+      newState.userId = Number(action.payload.userId)
+      return newState;
+    }
   },
   
   extraReducers: builder => { 
@@ -69,8 +77,16 @@ const accountsSlice = createSlice({
       const newState = {...state };
       // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
       newState.message = action.payload.message;
-      setCookie("token",action.payload.token);
+      setCookie("token", action.payload.token);
       console.log(newState);
+      
+      // 로그인 시, token의 payload값을 jwtDecode를 통해 해독,
+      // 이후, 해독된 내용에 담긴 데이터들을 state에 저장
+      const myData = jwtDecode(action.payload.token);
+      newState.nickname = myData.nickname;
+      newState.userId = myData.userId;
+      newState.mbti = myData.mbti;
+
       return newState;
       // state = action.payload;
       // setCookie("token",action.payload.token);
@@ -95,6 +111,14 @@ const accountsSlice = createSlice({
       const newState = {...state}
       newState.message = action.payload.message;
       setCookie("token", action.payload.token )
+
+      // 로그인 시, token의 payload값을 jwtDecode를 통해 해독,
+      // 이후, 해독된 내용에 담긴 데이터들을 state에 저장
+      const myData = jwtDecode(action.payload.token);
+      newState.nickname = myData.nickname;
+      newState.userId = myData.userId;
+      newState.mbti = myData.mbti;
+
       return newState;
     })
     builder.addCase(postSignUpFetch.rejected, (state,action)=> {

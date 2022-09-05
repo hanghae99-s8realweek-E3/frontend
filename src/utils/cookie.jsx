@@ -14,3 +14,13 @@ export const getCookie = (name) => {
 export const removeCookies = (name) => {
     return cookies.remove(name)
 ;}
+
+
+//페이지별로 현재 로그인 상태인지를 체크하게 만들어주는 쿠키 체크 함수
+export function cookieChecker() {
+    const myCookie = getCookie("token");
+    if (myCookie === null || myCookie === undefined) {
+        return false
+    }
+    return true
+}
