@@ -148,6 +148,7 @@ const StWrapBtn = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top:60px;
+    cursor: pointer;
 `
 const StWrapBtnFollow = styled.div`
     border-style: inset;
@@ -175,6 +176,7 @@ const StProfileBox = styled.div`
     :hover{
         background-color:gainsboro;
     }
+    cursor: pointer;
 
 `
 
@@ -205,7 +207,6 @@ const StMbti = styled.h6`
     /* align-items:left; */
     text-align: left;
     margin-top:0px;
-
 `
 const StDeleteFollowBtn = styled.button`
     width: 65px;
@@ -216,5 +217,6 @@ const StDeleteFollowBtn = styled.button`
     :hover{
         background-color:red;
     }
+    cursor: pointer;
 
 `

@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getComment, postComment } from "../../../app/modules/followCommentSlice";
+import { getComment, postComment } from "../../../app/modules/commentsSlice";
 
 function FeedDetailContainer () {
 
