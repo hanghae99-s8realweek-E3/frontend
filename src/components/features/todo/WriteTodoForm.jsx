@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { postmytodosFetch } from "../../../app/modules/mytodosSlice";
 
 // 나중에 코드 추가정리 필요!
 function WriteTodoForm() {
@@ -8,7 +10,7 @@ function WriteTodoForm() {
   //   const[mbti,setMbti] =  useState({
   //     todo: "",
   // });
-
+  const dispatch = useDispatch();
   const [todo, setTodo] = useState({
     todo: "",
   });
@@ -41,8 +43,10 @@ function WriteTodoForm() {
 
   // 스타일드 컴포넌트 프롭스 활용해보자
   // suggestion finish go todopage
-  const submitTodoData = () => {
-    navigate("/todoList?date=");
+  const submitTodoData = (e) => {
+    e.preventDefault();
+    dispatch(postmytodosFetch(todo));
+    // navigate("/todoList?date=");
   };
 
   return (
@@ -85,11 +89,8 @@ const StMbti = styled.span`
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
-  /* identical to box height, or 133% */
-
   color: #979797;
 `;
-
 const StLine = styled.div`
   display: flex;
   margin: 0px 25px 17px 25px;
@@ -100,11 +101,20 @@ const StLine = styled.div`
 const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const StWriteTodoTextArea = styled.textarea`
+  display: flex;
   resize: none; // 크기 조절하는 커서 안뜨게할려고
-  height: 50px;
+  height: 150px;
+  width: 450px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #979797;
 `;
 
 const StTextCount = styled.span`
@@ -122,10 +132,7 @@ const Stbutton = styled.button`
   font-weight: 500;
   font-size: 22px;
   line-height: 32px;
-  /* identical to box height, or 145% */
-
   text-align: center;
-
   color: #ffffff;
 `;
 
