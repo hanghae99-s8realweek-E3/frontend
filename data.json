@@ -1,0 +1,16 @@
+{
+    "comment": [
+        { 
+            "commentId": 1,
+            "userId":10,
+            "comment": "world", 
+            "nickname": "hello"
+        },
+        { 
+            "commentId": 2,
+            "userId":20,
+            "comment": "moring", 
+            "nickname": "good"
+        }
+    ]
+}
