@@ -1,3 +1,4 @@
+
 import jwtDecode from "jwt-decode";
 import { Cookies } from "react-cookie";
 
@@ -7,7 +8,7 @@ const cookies = new Cookies();
 export const setCookie = (name, content, option) => {
     return cookies.set(name,content,{...option});
 };
-//쿠키에 있는 값을 꺼낼때 
+
 export const getCookie = (name) => {
     return cookies.get(name);
 } ;
