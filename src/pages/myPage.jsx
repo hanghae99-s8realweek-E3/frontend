@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
 import LoginSelect from "../components/features/myPage/LoginSelect";
