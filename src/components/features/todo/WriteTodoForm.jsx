@@ -1,15 +1,23 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postmytodosFetch } from "../../../app/modules/mytodosSlice";
+import { cookieChecker, decodeMyCookieData } from "../../../utils/cookie";
 
 // 나중에 코드 추가정리 필요!
 function WriteTodoForm() {
-  // mbti들어가야할 곳에 값을 받아오기위해서 미리 작성해놓음
-  //   const[mbti,setMbti] =  useState({
-  //     todo: "",
-  // });
+
+  const navigate = useNavigate();
+
+  if (cookieChecker() === false){
+    alert("로그인 후 이용해주세요.");
+    navigate("/mypage");
+  }
+  //mbti를 찾기위해 decodeMyCookieData() 사용
+  const getMbti = decodeMyCookieData();
+  console.log(getMbti);
+
   const dispatch = useDispatch();
   const [todo, setTodo] = useState({
     todo: "",
@@ -39,7 +47,6 @@ function WriteTodoForm() {
   //   todoRef.current.style.height=todoRef.current.scrollHeight +"px" ;
   // },[]);
 
-  const navigate = useNavigate();
 
   // 스타일드 컴포넌트 프롭스 활용해보자
   // suggestion finish go todopage
@@ -51,7 +58,7 @@ function WriteTodoForm() {
 
   return (
     <StTotalWrap>
-      <StMbti>mbti들어가야함</StMbti>
+      <StMbti>mbti들어가야함{getMbti.mbti}</StMbti>
       <StLine></StLine>
       <StWriteTodoForm onSubmit={submitTodoData}>
         <StWriteTodoTextArea

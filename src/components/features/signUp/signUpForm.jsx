@@ -8,7 +8,6 @@ import { postSignUpFetch } from "../../../app/modules/accountsSlice";
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
   const initialState = {
     email: "",
     password: "",
@@ -38,7 +37,7 @@ const SignUpForm = () => {
             else if (signupData.nickname.length === 0) {
               return alert('닉네임 형식을 확인해주세요 ')
             }
-            dispatch(postSignUpFetch(signupData))
+            dispatch(postSignUpFetch(signupData))//!디스패치,모듈,페이로드 
             // navigate('/welcome');
   };
 

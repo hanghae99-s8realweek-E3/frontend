@@ -49,7 +49,6 @@ text-align: left;
 `
 const StHashMsg = styled.span`
 display: flex;
-width: 210px;
 height: 32px;
 font-family: 'IBM Plex Sans KR';
 font-style: normal;
@@ -57,7 +56,7 @@ font-weight: 500;
 font-size: 18px;
 line-height: 32px;
 color: #979797;
-margin: 0px 265px 130px 25px;
+margin: 0px 0px 130px 25px;
 `
 const StKakaoLoginBtn = styled.button`
 height: 70px;

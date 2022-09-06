@@ -1,21 +1,35 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Calendar } from "react-calendar";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import { getSetUpMyTodoFetch } from "../../../app/modules/mytodosSlice";
 
 function SetToDoContainer () {
-  // 날짜를 적용해주는 상태
-  const [calendar, setCalendar] = useState(new Date());
-
-  const navigate = useNavigate();
-
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
   const monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const weekOfDayList = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"]
 
+  // 날짜를 적용해주는 상태
+  const [calendar, setCalendar] = useState(new Date());
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // 선택한 날짜에 따라 내용들을 다시 불러올 수 있도록 함.
+  const myTodosState = useSelector(state => state.mytodos);
+
   // 기록 확인을 허용해주기 위해 필요한 3개월 전 날짜
   let mindate = new Date()
   mindate.setMonth(mindate.getMonth() -3)
+  //   date:”yyyy-mm-dd”
+  useEffect(() => {
+    const selectYear = calendar.getFullYear();
+    const selectMonth = calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1
+    const selectDay = calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate();
+    const selectDate = {date: `${selectYear}-${selectMonth}-${selectDay}` }
+    // dispatch(getSetUpMyTodoFetch(selectDate));
+  }, [calendar])
+
 
   // 도전하러 가기 클릭 시, 피드 선택 화면 출력
   function moveToSelectFeed () {
@@ -24,7 +38,7 @@ function SetToDoContainer () {
 
   // 작성하러 가기 클릭 시, TODO 작성 화면 출력
   function moveToWriteTodo () {
-    navigate('/writetodo')
+    navigate('/mytodos')
   }
 
   // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력

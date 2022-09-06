@@ -42,7 +42,7 @@ function Router () {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/teaser" element={<Teaser/>} />
         <Route path="/welcomepage" element={<WelcomePage/>} />
-        <Route path="/writetodo" element={<WriteTodo/>} />
+        <Route path="/mytodos" element={<WriteTodo/>} />
         <Route path="/modifyprofile" element={<ModifyProfile/>} />
         <Route path="/changepw" element={<ChangePW/>} />
         <Route path="/helpdesk" element={<HelpDesk/>} />
