@@ -10,7 +10,15 @@ import { useNavigate } from "react-router-dom";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
-  const [appear, hide] = useState(false);
+
+  //checkOn의  초기값은 false로 설정
+  const [checkOn, checkOff] = useState(false);
+
+  //check 이미지 변경state
+  const checkState = () => {
+    checkOff(!checkOn);
+  };
+
   const cardList = [
     { todo: "밥먹기1", nickname: "kdy1", commentCounts: 1, challengeConts: 1 },
     { todo: "밥먹기2", nickname: "kdy2", commentCounts: 2, challengeConts: 2 },
@@ -22,26 +30,32 @@ function FeedPageContainer() {
   //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
   // ));
 
-  const AppearHide = () => {
-    // src={Hide} width="17" height="17" alt="HideImg"
-  };
   const goFeedDetail = () => {
     navigate("/feeddetail");
   };
-  const goMbti = () => {
-    navigate("/mbti");
-  };
-  // console.log(card);
+
   return (
     <StTotalWrap>
       <StHideToggle>
-        <StHideImg
-          onClick={AppearHide}
-          src={Appear}
-          width="17"
-          height="17"
-          alt="AppearImg"
-        />
+        {/* 거짓이면 체크안한거 참이면 체크한거 */}
+        {checkOn === false ? (
+          <StHideImg
+            onClick={checkState}
+            src={Appear}
+            width="17"
+            height="17"
+            alt="AppearImg"
+          />
+        ) : (
+          <StHideImg
+            onClick={checkState}
+            src={Hide}
+            width="17"
+            height="17"
+            alt="AppearImg"
+          />
+        )}
+
         <StHide>도전완료 가리기</StHide>
         <StToggle>인기순</StToggle>
         <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
@@ -59,15 +73,8 @@ function FeedPageContainer() {
             </StNameCounterBox>
           </StCardSmallWrap>
         ))}
-        {/* <StCard> {card[0].todo}</StCard>
-          <StNameCounterBox>
-            <StName>{card[0].nickname}</StName>
-            <StCommentCount>댓글{card[0].commentCounts}</StCommentCount>
-            <StChallengeCount>도전{card[0].challengeConts}</StChallengeCount>
-          </StNameCounterBox> */}
       </StTodayMyCardWrap>
-
-      <StSelectMbti onClick={goMbti}>MBTI 선택</StSelectMbti>
+      <StSelectMbti>MBTI 선택</StSelectMbti>
     </StTotalWrap>
   );
 }
