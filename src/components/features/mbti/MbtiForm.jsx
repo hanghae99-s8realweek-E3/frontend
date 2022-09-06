@@ -48,7 +48,7 @@ const MbtiForm = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    const selectedMbti = {myMbti:myMbti}
+    const selectedMbti = {mbti:myMbti} //!api 명세서 키값 확인
     dispatch(postMbtifetch(selectedMbti))
   }
   
@@ -58,7 +58,8 @@ const MbtiForm = () => {
     <StDiv>
       <form onSubmit={onSubmit}>
           <div>
-              <p>선택한 MBTI: <h2>{myMbti}</h2></p>
+              <p>선택한 MBTI: </p>
+              <h2>{myMbti}</h2>
               <StGrid>
               {mbtiList.map((x, index) => {
                   return (<StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} 
