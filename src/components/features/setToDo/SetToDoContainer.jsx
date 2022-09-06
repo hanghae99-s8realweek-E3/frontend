@@ -38,7 +38,7 @@ function SetToDoContainer () {
 
   // 작성하러 가기 클릭 시, TODO 작성 화면 출력
   function moveToWriteTodo () {
-    navigate('/writetodo')
+    navigate('/mytodos')
   }
 
   // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력

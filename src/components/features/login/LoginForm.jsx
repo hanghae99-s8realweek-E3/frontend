@@ -50,7 +50,7 @@ function LoginForm() {
     // setCookies("token", loginState.token);
 
     alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
-    // navigate("/");
+    navigate("/");
   };
 
   // 8월31일 1227 moveTosignup -> Up ....

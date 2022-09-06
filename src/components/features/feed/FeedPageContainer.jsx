@@ -3,47 +3,78 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getComment, postComment } from "../../../app/modules/commentsSlice";
 import styled from "styled-components";
-import Hide from "../../common/Hide.png"
-import Appear from "../../common/Appear.png"
-import Toggle from "../../common/Toggle.png"
+import Hide from "../../common/Hide.png";
+import Appear from "../../common/Appear.png";
+import Toggle from "../../common/Toggle.png";
 import { useNavigate } from "react-router-dom";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
-  const [appear,hide] = useState(false);
 
-  const AppearHide = () => {
-  }
+  //checkOn의  초기값은 false로 설정
+  const [checkOn, checkOff] = useState(false);
 
-  const goMbti = () => {
-    navigate("/mbti")
-  }
+  //check 이미지 변경state
+  const checkState = () => {
+    checkOff(!checkOn);
+  };
+
+  const cardList = [
+    { todo: "밥먹기1", nickname: "kdy1", commentCounts: 1, challengeConts: 1 },
+    { todo: "밥먹기2", nickname: "kdy2", commentCounts: 2, challengeConts: 2 },
+    { todo: "밥먹기3", nickname: "kdy3", commentCounts: 3, challengeConts: 3 },
+    { todo: "밥먹기4", nickname: "kdy4", commentCounts: 4, challengeConts: 4 },
+    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
+  ];
+  // const cardList = card.map((number, index) => (
+  //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
+  // ));
+
+  const goFeedDetail = () => {
+    navigate("/feeddetail");
+  };
+
   return (
     <StTotalWrap>
       <StHideToggle>
-      {/* <StHideImg onClick={AppearHide} ? src={Appear} width="17" height="17" alt="AppearImg" : src={Hide} width="17" height="17" alt="HideImg" /> */}
+        {/* 거짓이면 체크안한거 참이면 체크한거 */}
+        {checkOn === false ? (
+          <StHideImg
+            onClick={checkState}
+            src={Appear}
+            width="17"
+            height="17"
+            alt="AppearImg"
+          />
+        ) : (
+          <StHideImg
+            onClick={checkState}
+            src={Hide}
+            width="17"
+            height="17"
+            alt="AppearImg"
+          />
+        )}
+
         <StHide>도전완료 가리기</StHide>
-        <StToggle>인기순 정렬바</StToggle>
-      <StToggleImg src = {Toggle} width="12" height="6" alt="ToggleImg"/>
+        <StToggle>인기순</StToggle>
+        <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
       </StHideToggle>
 
       <StTodayMyCardWrap>
         {/* <StTodayMy>오늘의 투두</StTodayMy> */}
-        <StCardSmallWrap>
-          <StCard> 공원에서 비눗방울 불기</StCard>
-          <StNameCounterBox>
-            <StName>아기공룡둘리님</StName>
-            <StCommentCount>댓글</StCommentCount>
-            <StChallengeCount>도전</StChallengeCount>
-          </StNameCounterBox>
-        </StCardSmallWrap>
-        {/* {StCardSmallWrap.map(v => {
-          
-          return  <StCardSmallWrap/>
-        })}; */}
-
+        {cardList?.map((it, idx) => (
+          <StCardSmallWrap onClick={goFeedDetail} key={idx}>
+            <StCard>{it.todo}</StCard>
+            <StNameCounterBox>
+              <StName>{it.nickname}</StName>
+              <StCommentCount>댓글{it.commentCounts}</StCommentCount>
+              <StChallengeCount>도전{it.challengeConts}</StChallengeCount>
+            </StNameCounterBox>
+          </StCardSmallWrap>
+        ))}
       </StTodayMyCardWrap>
-      <StSelectMbti onClick = {goMbti}>MBTI 선택</StSelectMbti>
+      <StSelectMbti>MBTI 선택</StSelectMbti>
     </StTotalWrap>
   );
 }
@@ -53,27 +84,34 @@ const StTotalWrap = styled.div`
   flex-direction: column;
 `;
 const StHideToggle = styled.div`
+  background-color: red;
   display: flex;
   flex-direction: row;
   margin: 154px 0px 18px;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const StHideImg = styled.img`
   display: flex;
-`
+  margin: 7px 8px 8px 25px;
+`;
 const StHide = styled.div`
   display: flex;
-  margin-left: 30px;
+  margin-right: 235px;
+  align-items: center;
+  justify-content: center;
 `;
 const StToggle = styled.div`
   display: flex;
-  margin-right: 25px;
+  margin-right: 8px;
 `;
 const StToggleImg = styled.img`
   display: flex;
-  margin: 13px 26px 0px 0px;
-`
+  margin: 13px 26px 13px 0px;
+  justify-content: center;
+  align-items: center;
+`;
 const StTodayMyCardWrap = styled.div`
   display: flex;
   /* align-items: start; */
@@ -99,6 +137,7 @@ const StCard = styled.div`
 `;
 const StNameCounterBox = styled.div`
   display: flex;
+  flex-direction: row;
 `;
 const StName = styled.div`
   display: flex;
@@ -111,15 +150,15 @@ const StName = styled.div`
   color: #979797;
 `;
 const StCommentCount = styled.div`
-  /* align-items: flex-end; */
   display: flex;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
   line-height: 32px;
-  margin:11px 25px 11px 179px;
+  margin: 11px 25px 11px 0px;
   color: #979797;
+  text-align: end;
 `;
 const StChallengeCount = styled.div`
   display: flex;
@@ -128,7 +167,7 @@ const StChallengeCount = styled.div`
   font-weight: 500;
   font-size: 13px;
   line-height: 32px;
-  margin:11px 25px 11px 25px;
+  margin: 11px 25px 11px 25px;
   color: #979797;
 `;
 const StSelectMbti = styled.button`
