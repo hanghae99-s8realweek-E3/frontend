@@ -5,6 +5,9 @@ import styled from "styled-components";
 function Header() {
   const navigate = useNavigate();
 
+  // 페이지 체크해서 프로필 페이지이면 완료 버튼 나오게 할 것.
+  console.log(window.location.pathname)
+
   // 이전 페이지로 이동
   function moveToPrevPage () {
     navigate(-1);

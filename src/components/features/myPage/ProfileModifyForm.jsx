@@ -1,31 +1,65 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import { cookieChecker, decodeMyCookieData } from "../../../utils/cookie";
 
 function ProfileModifyForm () {
-  // 내가 선택한 MBTI 값을 설정하는 상태
-  const [myMBTISide, setMyMBTISide] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const myData = decodeMyCookieData();
+  const profileState = useSelector(state => state.accounts);
+
+  useEffect(() => {
+    if (profileState.message !== "") {
+      if (profileState.message === "success") {
+        // 성공 팝업창 출력, 띄운 후 버튼 누르면 페이지 이동
+      } else {
+        // 에러 팝업창 출력
+      }
+    }
+  },[profileState])
+
+  if (cookieChecker() === false) {
+    alert("로그인 후 이용해주세요.")
+    navigate("/mypage")
+  }
+
+  console.log(myData.mbti)
+  // 변경할 프로필의 내용들을 설정하는 상태
+  const [changeProfile, setChangeProfile] = useState({profile:"", nickname: myData.nickname, mbti: myData.mbti});
   // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
   const [selectMBTI, setSelectMBTI] = useState(false);
   // mbti 16개 리스트
   const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
 
+  // 작성한 닉네임의 값으로 상태를 변경
+  function changeInputData (event) {
+    setChangeProfile({ ...changeProfile, nickname: event.target.value})
+  }
+
   // 선택한 MBTI의 값으로 상태를 변경
   function changeMBTIProfile(event) {
-    setMyMBTISide(event.target.value)
+    setChangeProfile({ ...changeProfile, mbti: event.target.value})
   }
 
   // MBTI 선택창을 띄울지 말지 설정
   function toggleMBTISelectPopUp() {
     setSelectMBTI(!selectMBTI)
   }
+
+  function submitModifyMyProfileData() {
+    dispatch()
+  } 
+
   return(
     <>
       {selectMBTI === true ?
         <StPopupBox>
           <StSlideDiv />
           {mbtiList.map((elem, idx) => 
-            <StMBTIBtn key={idx} background={myMBTISide === elem ? "skyblue" : "white"} onClick={changeMBTIProfile} value={elem}>
+            <StMBTIBtn key={idx} background={changeProfile.mbti === elem ? "skyblue" : "white"} onClick={changeMBTIProfile} value={elem}>
               {elem}
             </StMBTIBtn>)
           }
@@ -41,12 +75,12 @@ function ProfileModifyForm () {
         <StCommonBorder />
         <StInputSettingBox>
           <StCommonLabel>나의 정보</StCommonLabel>
-          <StCommonInput />
+          <StCommonInput type="text" value={changeProfile.nickname} onChange={changeInputData} />
         </StInputSettingBox>
         <StCommonBorder />
         <StInputSettingBox>
           <StCommonLabel>나의 MBTI</StCommonLabel>
-          <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>{myMBTISide === "" ? "선택하기" : myMBTISide}</StSelectMBTIBtn>
+          <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>{changeProfile.mbti === "" || changeProfile.mbti === null ? "선택하기" : changeProfile.mbti}</StSelectMBTIBtn>
         </StInputSettingBox>
         <StCommonBorder />
       </StContainer>
@@ -139,7 +173,7 @@ const StCommonInput = styled.input`
   border:none;
   outline: none;
 
-  margin-left:106px;
+  margin-left:104px;
   padding: 0;
   width:234px;
 `
@@ -217,4 +251,5 @@ const StCloseButton = styled.div`
   width: 450px;
   height:70px;
 
+  cursor:pointer;
 `

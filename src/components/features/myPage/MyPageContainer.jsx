@@ -1,8 +1,23 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getMyPageFetch } from "../../../app/modules/accountsSlice";
+import { cookieChecker, decodeMyCookieData, removeCookies } from "../../../utils/cookie";
 
 function MyPageContainer () {
   const navigate = useNavigate();
+  const myData = decodeMyCookieData();
+  const accountsState = useSelector(state => state.accounts)
+
+  useEffect(() => {
+    getMyPageFetch();
+  }, [])
+
+  if (cookieChecker() === false) {
+    alert("로그인 후 이용해주세요.")
+    navigate("/mypage")
+  }
 
   // 프로필 수정 화면으로 이동
   function changeMyProfileData () {
@@ -31,6 +46,8 @@ function MyPageContainer () {
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
+    removeCookies("token")
+    navigate('/')
   }
 
   return (
@@ -40,8 +57,8 @@ function MyPageContainer () {
           <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
         </StMyImageBox>
         <StMyProfileDiv>
-          <h3 style={{margin:0, marginBottom:"0.5rem"}}>신도윤 님</h3>
-          <p style={{margin:0, color:"gray"}}>ENFP</p>
+          <h3 style={{margin:0, marginBottom:"0.5rem"}}>{myData.nickname} 님</h3>
+          <p style={{margin:0, color:"gray"}}>{myData.mbti}</p>
         </StMyProfileDiv>
         <StMyFollowStat>
           <StFollowStatBtn onClick={moveToFollowList}>
@@ -151,7 +168,7 @@ const StFollowStatBtn = styled.button`
 
   border: none;
   outline: none;
-  margin:0 37px;
+  margin:0 25px;
 
   cursor:pointer;
 `
