@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {emailFormat,passwordFormat} from "../../../utils/reqList"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postSignUpFetch } from "../../../app/modules/accountsSlice";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector(state => state.accounts)
+
   const initialState = {
     email: "",
     password: "",
@@ -38,8 +40,13 @@ const SignUpForm = () => {
               return alert('닉네임 형식을 확인해주세요 ')
             }
             dispatch(postSignUpFetch(signupData))//!디스패치,모듈,페이로드 
-            navigate('/mbti');
   };
+
+  useEffect(()=> {
+    if (state.message === "success"){
+      navigate('/mbti')
+    }
+},[state])
 
   return (
     <div>
