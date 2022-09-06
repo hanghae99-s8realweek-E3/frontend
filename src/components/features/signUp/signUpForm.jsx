@@ -29,7 +29,7 @@ const SignUpForm = () => {
     // 이메일 길이가 0이 아니고, 이메일형식이 맞으면 true
         if (signupData.email.length === 0 || emailFormat.test(signupData.email)===false) {
               return alert("이메일 형식을 확인해주세요.")
-            } else if  (signupData.password.length === 0 || passwordFormat.test(signupData.password)===false || signupData.password.length <= 8){
+            } else if  (signupData.password.length === 0 || passwordFormat.test(signupData.password)===false || signupData.password.length <= 7){
               return alert('비밀번호 형식을 확인해주세요')
             } else if (signupData.confirmPassword.length === 0 || signupData.password !== signupData.confirmPassword){
               return alert('비밀번호2 형식을 확인해주세요')
@@ -38,7 +38,7 @@ const SignUpForm = () => {
               return alert('닉네임 형식을 확인해주세요 ')
             }
             dispatch(postSignUpFetch(signupData))//!디스패치,모듈,페이로드 
-            // navigate('/welcome');
+            navigate('/mbti');
   };
 
   return (

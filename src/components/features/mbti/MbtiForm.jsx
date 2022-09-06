@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { postMbtifetch } from "../../../app/modules/mbtiSlice";
+import { cookieChecker } from "../../../utils/cookie";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const state = useSelector (state => state.mbti)
+
+  if(cookieChecker() === false){
+    navigate('/mypage')
+  }
+
+  //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
+  useEffect(()=> {
+    if (state.message === "success"){
+      navigate('/')
+    }
+},[state])
+
   const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [
     "ISTJ",
@@ -23,33 +40,35 @@ const MbtiForm = () => {
     "ENFJ",
     "ENTJ",
   ];
-
-  const onSetMbti = (e) => {
+  
+  const onClick = (e) => {
     e.preventDefault();
-    navigate("/");
-  };
+    setMyMbti(e.target.value)
+  }
+  
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const selectedMbti = {myMbti:myMbti}
+    dispatch(postMbtifetch(selectedMbti))
+  }
+  
 
-  // const onSubmit = () => {
-  // }
 
   return (
     <StDiv>
-    {/* <form >
-    <input
-        type="text"
-    />
-    <button>저장(테스트)</button>
-    </form>
-    <hr></hr> */}
-        <div>
-            <p>선택한 MBTI: <h2>{myMbti}</h2></p>
-            <StGrid>
-            {mbtiList.map((x, index) => {
-                return (<StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} onClick={(e) => setMyMbti((e.target.value))}> {mbtiList[index]}</StButton>);
-                })}
-            </StGrid>
-        </div>
-        <StButton color="black" height="50px" type="submit" onClick={onSetMbti}>MBTI 설정</StButton>
+      <form onSubmit={onSubmit}>
+          <div>
+              <p>선택한 MBTI: <h2>{myMbti}</h2></p>
+              <StGrid>
+              {mbtiList.map((x, index) => {
+                  return (<StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} 
+                                    onClick={onClick}> {mbtiList[index]}  
+                          </StButton>);
+                  })}
+              </StGrid>
+          </div>
+              <StButton  color="black" height="50px" type="submit"  >MBTI 설정</StButton>
+      </form>
     </StDiv>
     );
 
