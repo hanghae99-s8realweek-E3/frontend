@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { setCookie } from "../../utils/cookie";
 import instance from "./instance"
 
 
@@ -13,6 +12,7 @@ export const postMbtifetch = createAsyncThunk(
     "mbti/postMbti",
     async (payload,thunkAPI) => {
         try {
+            console.log(payload)
             const response = await instance.post("/accounts/mbti", payload);
             console.log(response)
             return thunkAPI.fulfillWithValue(response.data)
@@ -32,10 +32,9 @@ const mbtiSlice = createSlice({
             return state;
         });
         builder.addCase(postMbtifetch.fulfilled, (state,action) => {
-        const newState = {...state};
-        console.log(newState)
-        newState.message = action.payload.message;
-        setCookie("token", action.payload.token);
+            const newState = {...state};
+            newState.message = action.payload.message;
+            window.localStorage.setItem("token", action.payload.token)
         return newState;
         });
         builder.addCase(postMbtifetch.rejected, (state,action) => {

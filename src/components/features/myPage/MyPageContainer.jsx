@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
-import { cookieChecker, decodeMyCookieData, removeCookies } from "../../../utils/cookie";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function MyPageContainer () {
   const navigate = useNavigate();
-  const myData = decodeMyCookieData();
+  const myData = decodeMyTokenData();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function MyPageContainer () {
 
   const accountsState = useSelector(state => state.accounts.userInfo)
 
-  if (cookieChecker() === false) {
+  if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
     navigate("/mypage")
   }
@@ -48,7 +48,7 @@ function MyPageContainer () {
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
-    removeCookies("token")
+    window.localStorage.clear();
     navigate('/')
   }
   console.log(accountsState)

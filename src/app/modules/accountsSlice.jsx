@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { setCookie } from "../../utils/cookie";
 import instance from "./instance";
 
 const initialState = {
@@ -101,21 +100,17 @@ const accountsSlice = createSlice({
       return state;
     });
     builder.addCase(postLoginFetch.fulfilled, (state, action) => {
-      // const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-      // setCookie("token",action.payload.token);
       const newState = {...state };
       // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
       newState.message = action.payload.message;
-      setCookie("token", action.payload.token);
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
       // state = action.payload;
-      // setCookie("token",action.payload.token);
-      // // setTimeout(()=>removeCookie("token"),3000);  
       // return state;
     });
     builder.addCase(postLoginFetch.rejected, (state, action) => {
       const newState = { ...state };
-      // newState.message = action.payload.message;
+      newState.errorMessage = action.payload.errorMessage;
       return newState;
     });
     
@@ -125,12 +120,12 @@ const accountsSlice = createSlice({
     builder.addCase(postSignUpFetch.fulfilled, (state,action)=> {
       const newState = {...state}
       newState.message = action.payload.message;
-      setCookie("token", action.payload.token )
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
     })
     builder.addCase(postSignUpFetch.rejected, (state,action)=> {
       const newState = { ...state };
-      newState.message = action.payload.message;
+      newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
 
@@ -156,7 +151,7 @@ const accountsSlice = createSlice({
     builder.addCase(putModifyProfileFetch.fulfilled, (state,action)=> {
       const newState = {...state}
       newState.message = action.payload.message;
-      setCookie("token", action.payload.token);
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
     })
     builder.addCase(putModifyProfileFetch.rejected, (state,action)=> {

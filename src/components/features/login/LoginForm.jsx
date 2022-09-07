@@ -9,7 +9,6 @@ import { postLoginFetch } from "../../../app/modules/accountsSlice";
 import { useCookies } from "react-cookie";
 
 function LoginForm() {
-  const [, setCookies] = useCookies(["token"]);
   const loginState = useSelector((state) => state.accounts);
 
   const [userData, setUserData] = useState({
@@ -47,7 +46,6 @@ function LoginForm() {
       return false;
     }
     dispatch(postLoginFetch(userData));
-    // setCookies("token", loginState.token);
 
     alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
     navigate("/");
