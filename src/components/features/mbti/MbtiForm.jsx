@@ -3,23 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postMbtifetch } from "../../../app/modules/mbtiSlice";
-import { cookieChecker } from "../../../utils/cookie";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const myCookie = decodeMyTokenData();
   const state = useSelector (state => state.mbti)
 
-  if(cookieChecker() === false){
+  if (tokenChecker() === false){
     navigate('/mypage')
   }
 
   //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
   useEffect(()=> {
-    if (state.message === "success"){
-      navigate('/')
-    }
-},[state])
+    if (state.message === "success")
+      if (myCookie.mbti !== null )
+        navigate('/')
+  },[state])
 
   const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [

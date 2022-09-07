@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postSignUpFetch } from "../../../app/modules/accountsSlice";
+import { tokenChecker } from "../../../utils/token";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const state = useSelector(state => state.accounts)
 
   const initialState = {
@@ -39,14 +39,16 @@ const SignUpForm = () => {
             else if (signupData.nickname.length === 0) {
               return alert('닉네임 형식을 확인해주세요 ')
             }
+            console.log("보내주세요")
             dispatch(postSignUpFetch(signupData))//!디스패치,모듈,페이로드 
   };
 
   useEffect(()=> {
-    if (state.message === "success"){
-      navigate('/mbti')
-    }
-},[state])
+    if (state.message === "success")
+    // 아직 회원가입이 되지 않아 
+      if (tokenChecker() === true)
+        window.location.assign('/mbti')
+  },[state])
 
   return (
     

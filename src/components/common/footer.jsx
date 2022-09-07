@@ -6,22 +6,22 @@ function Footer() {
 
   // 메인 페이지로 이동
   function moveToHome() {
-    return navigate("/")
+    window.location.assign('/')
   }
 
   // 피드 페이지로 이동
   function moveToFeed() {
-    return navigate("/feed")
+    window.location.assign('/feed')
   }
 
   // TODO 페이지로 이동
   function moveToTodo() {
-    return navigate("/setuptodo")
+    window.location.assign('/setuptodo')
   }
 
   // 내 정보 페이지로 이동
   function moveToMyPage() {
-    return navigate("/myPage")
+    window.location.assign('/myPage')
   }
 
   return (
