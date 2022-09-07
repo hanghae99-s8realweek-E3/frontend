@@ -7,9 +7,18 @@ import Hide from "../../common/Hide.png";
 import Appear from "../../common/Appear.png";
 import Toggle from "../../common/Toggle.png";
 import { useNavigate } from "react-router-dom";
+import { gettodolistsFetch } from "../../../app/modules/todolistsSlice";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const card = useSelector(state => state.todolists.data);
+  console.log(card);
+
+  useEffect(() => {
+    dispatch(gettodolistsFetch(card));
+  }, []);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -25,6 +34,8 @@ function FeedPageContainer() {
     { todo: "밥먹기3", nickname: "kdy3", commentCounts: 3, challengeConts: 3 },
     { todo: "밥먹기4", nickname: "kdy4", commentCounts: 4, challengeConts: 4 },
     { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
+    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
+    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 }
   ];
   // const cardList = card.map((number, index) => (
   //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
@@ -63,7 +74,7 @@ function FeedPageContainer() {
 
       <StTodayMyCardWrap>
         {/* <StTodayMy>오늘의 투두</StTodayMy> */}
-        {cardList?.map((it, idx) => (
+        {card?.map((it, idx) => (
           <StCardSmallWrap onClick={goFeedDetail} key={idx}>
             <StCard>{it.todo}</StCard>
             <StNameCounterBox>
@@ -173,11 +184,10 @@ const StChallengeCount = styled.div`
 const StSelectMbti = styled.button`
   display: flex;
   width: 200px;
-  position: absolute;
+  position: fixed;
   height: 60px;
-  left: 150px;
-  right: 150px;
   top: 850px;
+  margin-left: 150px;
   background: #979797;
   border-radius: 66px;
   font-family: "IBM Plex Sans KR";

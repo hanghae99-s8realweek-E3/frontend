@@ -56,6 +56,10 @@ function WriteTodoForm() {
     // navigate("/todoList?date=");
   };
 
+  const goMain = () => {
+    navigate("/")
+  }
+
   return (
     <StTotalWrap>
       <StMbti>mbti들어가야함{getMbti.mbti}</StMbti>
@@ -78,7 +82,7 @@ function WriteTodoForm() {
           </StTextCount>
         </span>
 
-        <Stbutton type="submit">등록하기</Stbutton>
+        <Stbutton type="submit" onClick={goMain}>등록하기</Stbutton>
       </StWriteTodoForm>
     </StTotalWrap>
   );
