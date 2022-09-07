@@ -47,7 +47,7 @@ const mytodosSlice = createSlice({
     builder.addCase(postmytodosFetch.fulfilled, (state,action)=> {
     const newState ={...state}
       newState.message = action.payload.message;
-      window.localStorage.getItem("token")
+      window.localStorage.setItem("token", action.payload.token);
       return newState;
     })
     builder.addCase(postmytodosFetch.rejected, (state,action)=> {
