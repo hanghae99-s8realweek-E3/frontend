@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postmytodosFetch } from "../../../app/modules/mytodosSlice";
-import { cookieChecker, decodeMyCookieData } from "../../../utils/cookie";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 // 나중에 코드 추가정리 필요!
 function WriteTodoForm() {
 
   const navigate = useNavigate();
 
-  if (cookieChecker() === false){
+  if (tokenChecker() === false){
     alert("로그인 후 이용해주세요.");
     navigate("/mypage");
   }
-  //mbti를 찾기위해 decodeMyCookieData() 사용
-  const getMbti = decodeMyCookieData();
+  //mbti를 찾기위해 decodeMyTokenData() 사용
+  const getMbti = decodeMyTokenData();
   console.log(getMbti);
 
   const dispatch = useDispatch();

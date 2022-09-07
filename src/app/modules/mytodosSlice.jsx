@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import instance from "./instance";
-import { setCookie } from "../../utils/cookie";
 
 const initialState = {
   message: "",
@@ -48,7 +47,7 @@ const mytodosSlice = createSlice({
     builder.addCase(postmytodosFetch.fulfilled, (state,action)=> {
     const newState ={...state}
       newState.message = action.payload.message;
-      setCookie("token",action.payload.token);
+      window.localStorage.getItem("token")
       return newState;
     })
     builder.addCase(postmytodosFetch.rejected, (state,action)=> {
