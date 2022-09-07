@@ -13,7 +13,7 @@ function FeedPageContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const card = useSelector(state => state.todolists.data);
+  const card = useSelector((state) => state.todolists.data);
   console.log(card);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function FeedPageContainer() {
     { todo: "밥먹기4", nickname: "kdy4", commentCounts: 4, challengeConts: 4 },
     { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
     { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
-    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 }
+    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
   ];
   // const cardList = card.map((number, index) => (
   //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
@@ -76,7 +76,7 @@ function FeedPageContainer() {
         {/* <StTodayMy>오늘의 투두</StTodayMy> */}
         {card?.map((it, idx) => (
           <StCardSmallWrap onClick={goFeedDetail} key={idx}>
-            <StCard>{it.todo}</StCard>
+            <StCard>{it.todo.length < 10 ? it.todo : it.todo.substring(0,10) + "..."}</StCard>
             <StNameCounterBox>
               <StName>{it.nickname}</StName>
               <StCommentCount>댓글{it.commentCounts}</StCommentCount>
@@ -145,6 +145,7 @@ const StCard = styled.div`
   line-height: 32px;
   color: #979797;
   margin: 16px 0px 11px 24px;
+  
 `;
 const StNameCounterBox = styled.div`
   display: flex;
