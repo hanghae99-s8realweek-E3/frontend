@@ -3,6 +3,7 @@ import  commentsSlice  from './modules/commentsSlice';
 import accountsSlice from './modules/accountsSlice';
 import mytodosSlice from './modules/mytodosSlice';
 import mbtiSlice from './modules/mbtiSlice';
+import detailSlice from './modules/detailSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     comments:commentsSlice.reducer,
     mytodos:mytodosSlice.reducer,
     mbti:mbtiSlice.reducer,
+    detail:detailSlice.reducer,
   },
 });

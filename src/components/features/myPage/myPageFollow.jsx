@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import styled from "styled-components";
 
 function MyPageFollow() {
-    const [followState, setFollowState] = useState("on")
+    const [followState, setFollowState] = useState(false)
 
     const initialState = [{
         profileImg:"https://develop-neoguri.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2facdb4c-2026-4411-b004-1eddb83f1051%2FP20200321_085229892_0D74E397-DC55-459E-8FB2-D5688E970AB4.jpg?table=block&id=d7677d1f-9d67-442f-8765-042730e36526&spaceId=c84d6d26-27db-41c4-97d3-b4249a4824d1&width=640&userId=&cache=v2",
@@ -49,9 +49,9 @@ function MyPageFollow() {
 
     const onClick = (e)=> {
         e.preventDefault();
-        if (followState === "on") {
-            return setFollowState("off")
-        } else setFollowState("on")
+        if (followState === false) {
+            return setFollowState(true)
+        } else setFollowState(false)
         
     }
 
@@ -66,7 +66,7 @@ function MyPageFollow() {
 
     return (
     <StOutline>
-    {followState === "on" ? 
+    {followState === false ? 
         <>
         <StContainer>
             <StWrapBtn>
