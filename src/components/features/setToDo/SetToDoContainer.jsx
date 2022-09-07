@@ -27,10 +27,10 @@ function SetToDoContainer () {
     const selectMonth = calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1
     const selectDay = calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate();
     const selectDate = {date: `${selectYear}-${selectMonth}-${selectDay}` }
-    // dispatch(getSetUpMyTodoFetch(selectDate));
+    dispatch(getSetUpMyTodoFetch(selectDate));
   }, [calendar])
 
-
+  console.log(myTodosState)
   // 도전하러 가기 클릭 시, 피드 선택 화면 출력
   function moveToSelectFeed () {
     navigate('/feed')

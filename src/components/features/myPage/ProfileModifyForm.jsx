@@ -3,17 +3,29 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { cookieChecker, decodeMyCookieData } from "../../../utils/cookie";
+import { putModifyProfileFetch } from "../../../app/modules/accountsSlice";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function ProfileModifyForm () {
+  // 장치가 하나 필요함. accounts.message를 처리할 수 있는 장치가 뭐가 있을까? [첫 렌더링만 체크 가능한?]
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const myData = decodeMyCookieData();
+  const myData = decodeMyTokenData();
   const profileState = useSelector(state => state.accounts);
 
+  // 변경할 프로필의 내용들을 설정하는 상태
+  const [changeProfile, setChangeProfile] = useState({profile:"https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg", nickname: myData.nickname, mbti: myData.mbti});
+  // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
+  const [selectMBTI, setSelectMBTI] = useState(false);
+  // 첫 렌더링 상태인지 아닌지를 체크하는 상태
+  const [render, setRender] = useState(false);
+  // mbti 16개 리스트
+  const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
+
   useEffect(() => {
-    if (profileState.message !== "") {
+    if (render !== false) {
       if (profileState.message === "success") {
+        navigate("/mypage")
         // 성공 팝업창 출력, 띄운 후 버튼 누르면 페이지 이동
       } else {
         // 에러 팝업창 출력
@@ -21,18 +33,10 @@ function ProfileModifyForm () {
     }
   },[profileState])
 
-  if (cookieChecker() === false) {
+  if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
     navigate("/mypage")
   }
-
-  console.log(myData.mbti)
-  // 변경할 프로필의 내용들을 설정하는 상태
-  const [changeProfile, setChangeProfile] = useState({profile:"", nickname: myData.nickname, mbti: myData.mbti});
-  // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
-  const [selectMBTI, setSelectMBTI] = useState(false);
-  // mbti 16개 리스트
-  const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
 
   // 작성한 닉네임의 값으로 상태를 변경
   function changeInputData (event) {
@@ -45,12 +49,16 @@ function ProfileModifyForm () {
   }
 
   // MBTI 선택창을 띄울지 말지 설정
-  function toggleMBTISelectPopUp() {
+  function toggleMBTISelectPopUp(event) {
+    event.preventDefault();
     setSelectMBTI(!selectMBTI)
   }
 
-  function submitModifyMyProfileData() {
-    dispatch()
+  function submitModifyMyProfileData(event) {
+    event.preventDefault();
+    console.log(changeProfile)
+    dispatch(putModifyProfileFetch(changeProfile))
+    setRender(true)
   } 
 
   return(
@@ -63,7 +71,7 @@ function ProfileModifyForm () {
               {elem}
             </StMBTIBtn>)
           }
-          <StCloseButton type="button" onClick={toggleMBTISelectPopUp}>선택하기</StCloseButton>
+          <StCommonButton  onClick={toggleMBTISelectPopUp}>선택하기</StCommonButton>
         </StPopupBox> : <></> }
       <StContainer>
         <StMyProfileSec>
@@ -83,6 +91,7 @@ function ProfileModifyForm () {
           <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>{changeProfile.mbti === "" || changeProfile.mbti === null ? "선택하기" : changeProfile.mbti}</StSelectMBTIBtn>
         </StInputSettingBox>
         <StCommonBorder />
+        <StCommonButton margin="25px auto" onClick={submitModifyMyProfileData}>완료</StCommonButton>
       </StContainer>
     </>
   )
@@ -90,7 +99,7 @@ function ProfileModifyForm () {
 
 export default ProfileModifyForm;
 
-const StContainer = styled.div`
+const StContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
@@ -105,7 +114,7 @@ const StContainer = styled.div`
   box-sizing: border-box;
 `
 
-const StMyProfileSec = styled.form`
+const StMyProfileSec = styled.div`
   display: flex;
   flex-direction: column;
   justify-content:center;
@@ -235,7 +244,7 @@ const StSlideDiv = styled.div`
 `
 
 
-const StCloseButton = styled.div`
+const StCommonButton = styled.div`
   background: #979797;
 
   display: flex;
@@ -246,7 +255,7 @@ const StCloseButton = styled.div`
   color: #FFFFFF;
 
   border-radius: 6px;
-  margin: 25px;
+  margin: ${props=>props.margin || "25px"};
 
   width: 450px;
   height:70px;

@@ -1,20 +1,22 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
-import { cookieChecker, decodeMyCookieData, removeCookies } from "../../../utils/cookie";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function MyPageContainer () {
   const navigate = useNavigate();
-  const myData = decodeMyCookieData();
-  const accountsState = useSelector(state => state.accounts)
+  const myData = decodeMyTokenData();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getMyPageFetch();
+    dispatch(getMyPageFetch());
   }, [])
 
-  if (cookieChecker() === false) {
+  const accountsState = useSelector(state => state.accounts.userInfo)
+
+  if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
     navigate("/mypage")
   }
@@ -46,35 +48,38 @@ function MyPageContainer () {
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
-    window.localStorage.removeItem("token")
+    window.localStorage.clear();
     navigate('/')
   }
-
+  console.log(accountsState)
   return (
     <StMyPageContainer>
-      <StMyProfileSec>
-        <StMyImageBox>
-          <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
-        </StMyImageBox>
-        <StMyProfileDiv>
-          <h3 style={{margin:0, marginBottom:"0.5rem"}}>{myData.nickname} 님</h3>
-          <p style={{margin:0, color:"gray"}}>{myData.mbti}</p>
-        </StMyProfileDiv>
-        <StMyFollowStat>
-          <StFollowStatBtn onClick={moveToFollowList}>
-            <span style={{marginBottom:"6px", fontSize:"20px"}}>10</span>
-            <span style={{fontSize:"13px"}}>팔로잉</span>
-          </StFollowStatBtn>
-          <StFollowStatBtn onClick={moveToFollowList}>
-            <span style={{marginBottom:"6px", fontSize:"20px"}}>15</span>
-            <span style={{fontSize:"13px"}}>팔로워</span>
-          </StFollowStatBtn>
-        </StMyFollowStat>
-      </StMyProfileSec>
+      {Object.keys(accountsState).length === 0 ? <div></div> : 
+      <>
+        <StMyProfileSec>
+          <StMyImageBox>
+            <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
+          </StMyImageBox>
+          <StMyProfileDiv>
+            <h3 style={{margin:0, marginBottom:"0.5rem"}}>{accountsState.nickname} 님</h3>
+            <p style={{margin:0, color:"gray"}}>{accountsState.mbti}</p>
+          </StMyProfileDiv>
+          <StMyFollowStat>
+            <StFollowStatBtn onClick={moveToFollowList}>
+              <span style={{marginBottom:"6px", fontSize:"20px"}}>{accountsState.following}</span>
+              <span style={{fontSize:"13px"}}>팔로잉</span>
+            </StFollowStatBtn>
+            <StFollowStatBtn onClick={moveToFollowList}>
+              <span style={{marginBottom:"6px", fontSize:"20px"}}>{accountsState.follower}</span>
+              <span style={{fontSize:"13px"}}>팔로워</span>
+            </StFollowStatBtn>
+          </StMyFollowStat>
+        </StMyProfileSec>
 
-      <StMatchCheckDiv>
-        <StMatchCheckBtn>궁합 알아보기</StMatchCheckBtn>
-      </StMatchCheckDiv>
+        <StMatchCheckDiv>
+          <StMatchCheckBtn>궁합 알아보기</StMatchCheckBtn>
+        </StMatchCheckDiv>
+      </>}
 
       <StCommonBorder />
 

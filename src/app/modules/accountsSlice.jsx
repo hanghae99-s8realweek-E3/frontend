@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { setCookie } from "../../utils/cookie";
 import instance from "./instance";
 
 const initialState = {
@@ -20,15 +19,10 @@ export const postLoginFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       //get,delete요청에서 /:postid같은 경우랑 일반적인 /follow같은 경우의 차이점에 대해서 생각하고 있어야한다. 전자는 payload생각~~ `await axios.delete(server_url + `/api/posts/${value}`요런거,
-      console.log("서버와의 통신 시작");
       const response = await instance.post("/accounts/login", payload);
-      console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
-      
       return thunkAPI.fulfillWithValue(response.data);
       
     } catch (error) {
-      console.log("서버와의 통신 에러")
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -38,12 +32,9 @@ export const postSignUpFetch = createAsyncThunk(
   'users/postSignUp',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload)
       const response = await instance.post("/accounts/signup", payload)  //('API경로에는 서버와 통신하는 경로값', payload 자리에는 서버로 보내줘야할 값이 들어간다)
-      console.log(response)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error)
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -57,7 +48,6 @@ export const getMyPageFetch = createAsyncThunk(
       const response = await instance.get("/accounts")
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error)
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -68,10 +58,9 @@ export const putModifyProfileFetch = createAsyncThunk(
   'users/putProfileFetch',
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.post("/accounts", payload)
+      const response = await instance.put("/accounts", payload)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error)
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -85,7 +74,6 @@ export const deleteHelpDeskFetch = createAsyncThunk(
       const response = await instance.delete("/accounts", payload)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error)
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -112,44 +100,32 @@ const accountsSlice = createSlice({
       return state;
     });
     builder.addCase(postLoginFetch.fulfilled, (state, action) => {
-      // const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-      // setCookie("token",action.payload.token);
-      // console.log(action);
       const newState = {...state };
       // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
       newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token);
-      console.log(newState);
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
       // state = action.payload;
-      // setCookie("token",action.payload.token);
-      // console.log(state);
-      // // setTimeout(()=>removeCookie("token"),3000);  
-      // console.log("토큰삭제");
       // return state;
     });
     builder.addCase(postLoginFetch.rejected, (state, action) => {
-      console.log(action);
       const newState = { ...state };
-      // newState.message = action.payload.message;
+      newState.errorMessage = action.payload.errorMessage;
       return newState;
     });
     
     builder.addCase(postSignUpFetch.pending , (state, action)=> {
-      console.log(action)
       return state;
     })
     builder.addCase(postSignUpFetch.fulfilled, (state,action)=> {
-      console.log(action)
       const newState = {...state}
       newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token);
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
     })
     builder.addCase(postSignUpFetch.rejected, (state,action)=> {
-      console.log(action)
       const newState = { ...state };
-      newState.message = action.payload.message;
+      newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
 
@@ -175,6 +151,7 @@ const accountsSlice = createSlice({
     builder.addCase(putModifyProfileFetch.fulfilled, (state,action)=> {
       const newState = {...state}
       newState.message = action.payload.message;
+      window.localStorage.setItem("token", action.payload.token)
       return newState;
     })
     builder.addCase(putModifyProfileFetch.rejected, (state,action)=> {
