@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import instance from "./instance";
 
 //댓글 GET
 export const getComment = createAsyncThunk(
@@ -19,23 +20,22 @@ export const getComment = createAsyncThunk(
 //     return response.data;
 // });
 
-export const postComment = createAsyncThunk(
-    "POST_COMMENT",
-    async(newComment)=> {
+export const postCommentFetch = createAsyncThunk(
+    "posts/postCommentFetch",
+    async(payload, thunkAPI)=> {
         try {
-            const response = await axios.post("http://localhost:8001/comment", newComment);
-        return response.data;
+            const response = await instance.post(`/comments/${payload.todoId}`,{comment:payload.comment});
+            return thunkAPI.fulfillWithValue(response.data);
         } 
         catch (error) {
-            return error.message;
+            return thunkAPI.rejectWithValue(error.data);
         }
     }
 )
 
 const initialState = {
-    loading:false,
-    comm:"",
-    error:""
+  message:"",
+  errorMessage:"",
 }
 
 const commentsSlice = createSlice({
@@ -57,18 +57,19 @@ const commentsSlice = createSlice({
             state.error = action.error.message;
           });
           //!post
-          builder.addCase(postComment.pending, (state) => {
-            state.loading = true;
+          builder.addCase(postCommentFetch.pending, (state,action) => {
+            return state;
           });
-          builder.addCase(postComment.fulfilled, (state, action) => {
-            state.loading = false;
-            state.comm = [...state.comm, action.payload];
-            state.error = "";
+          builder.addCase(postCommentFetch.fulfilled, (state, action) => {
+            const newState = {...state}
+            newState.message = action.payload.message;
+            return newState;
+
           });
-          builder.addCase(postComment.rejected, (state, action) => {
-            state.loading = false;
-            state.comm = [];
-            state.error = action.error.message;
+          builder.addCase(postCommentFetch.rejected, (state, action) => {
+            const newState = { ...state };
+            newState.errorMessage = action.payload.errorMessage;
+            return newState;
           });
     }
 })

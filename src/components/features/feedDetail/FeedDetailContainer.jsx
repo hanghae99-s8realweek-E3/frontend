@@ -1,39 +1,38 @@
 import React,{useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getComment, postComment } from "../../../app/modules/commentsSlice";
+import { getComment, postComment, postCommentFetch } from "../../../app/modules/commentsSlice";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 
-
+let number = 100;
 function FeedDetailContainer () {
+
+  const params=useParams();
+  console.log(params)
 
    const dispatch=useDispatch();
    const comment = useSelector((state) => state.comments.comm);
    console.log(comment)
 
+  const detailState = useSelector((state) =>  state.detail)
+  console.log(detailState)
    const cardList = [
     { todo: "밥먹기1", nickname: "kdy1", commentCounts: 1, challengeConts: 1 },
   ];
 
-    
-    const [sampleComment,  setSampleComment] = useState([{
-        comment: "깔아두는댓글1-이거 없앨 수있나?",
-        commentId: "1",
-        userId:"10",
-        nickname: "aaaaaaa",
-    },{
-        comment: "깔아두는댓글2-여기 사람있어요ㅠㅠ",
-        commentId: "2",
-        userId:"11",
-        nickname: "gggggggg",
-    }]);
+  
+  useEffect(() => {
+    dispatch(getFeedDetailFetch({todoId:params.todoId}));
+  }, []);
 
-   const initialState = [{ 
+    
+    const [sampleComment,  setSampleComment] = useState([]);  //[]배열 넣어야한다.(리액트에서 map 함수 사용시 배열이 초기값으로 존재해야한다)
+
+   const initialState = { 
     comment: "",
-    commentId: "",
-    userId:"",
-    nickname: "",
-}]
+}
 
     //인풋(댓글)담을 그릇
     const[feedComment, setFeedComment] =useState(initialState);
@@ -53,48 +52,45 @@ function FeedDetailContainer () {
         console.log(newComment)
     }
 
-
+    console.log({...feedComment , todoId:params.todoId })
     const onSubmit = (e) => {
         e.preventDefault();
-        setSampleComment([...sampleComment, {...feedComment}])
-        console.log(sampleComment)
-
+        // if(feedComment.comment.trim() === "") return;//빈칸입력막기-사용시 중복되는 코멘트입력시 오류
+        setSampleComment([...sampleComment, {...feedComment, userId:number}])
+        number++;//컴포넌트에 임포트된 number값에 1씩 더해준다.
+        setFeedComment();
+        dispatch(postCommentFetch({...feedComment , todoId:params.todoId }))
         // const newComment = { commentId ,}
-        // dispatch(postComment(newComment))
-    }
+    } 
 
-
-    // useEffect(() => {
-    //     dispatch(getComment());
-    //   }, []);
 
 return (
     <div>
-            {cardList?.map((it, idx) => (
-            <StCardSmallWrap key={idx} >
-            <StCard>{it.todo}</StCard>
-            <StNameCounterBox>
-                <StName>{it.nickname}</StName>
-                <StCommentCount>댓글{it.commentCounts}</StCommentCount>
-                <StChallengeCount>도전{it.challengeConts}</StChallengeCount>
-            </StNameCounterBox>
-            </StCardSmallWrap>
-            ))}
-    <form onSubmit={onSubmit}>
-    <input
-        type="text"
-        name="comment"
-      
-        onChange={onChange}
-    /><button type="submit">댓글추가하기</button>
-    </form>
-    <div>
-    {sampleComment&&sampleComment.map((x, index)=> {
-        return <div key={index}>{x.comment}
-                <button type="submit" onClick={()=>onClickDeleteComment(x.userId)}>삭제하기</button>
-                </div>
-    })}
-    </div>
+      {Object.keys(detailState.data).length === 0 ? <></> :  
+      <div>    
+        <StCardSmallWrap>
+          <StNameCounterBox>
+              <StName>{detailState.data.nickname}</StName>
+              <StCommentCount></StCommentCount>
+              <StChallengeCount></StChallengeCount>
+          </StNameCounterBox>
+        </StCardSmallWrap>
+        <div>
+        {sampleComment&&sampleComment.map((x,index)=> {
+            return <div key={x.userId}>{x.comment}
+                    <button type="submit" onClick={()=>onClickDeleteComment(x.userId)}>삭제하기</button>
+                    </div>
+        })}
+        </div>
+        <form onSubmit={onSubmit}>
+            <input
+            type="text"
+            name="comment"
+          
+            onChange={onChange}/>
+            <button type="submit">댓글추가하기</button>
+        </form>
+      </div>}
     </div>
     )
 }
