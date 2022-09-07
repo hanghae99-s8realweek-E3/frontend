@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import  commentsSlice  from './modules/commentsSlice';
 import accountsSlice from './modules/accountsSlice';
 import mytodosSlice from './modules/mytodosSlice';
+import mbtiSlice from './modules/mbtiSlice';
 import todolistsSlice from './modules/todolistsSlice';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     accounts: accountsSlice.reducer,
     comments:commentsSlice.reducer,
     mytodos:mytodosSlice.reducer,
+    mbti:mbtiSlice.reducer,
     todolists:todolistsSlice.reducer,
   },
 });
