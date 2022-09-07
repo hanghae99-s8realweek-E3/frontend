@@ -35,7 +35,7 @@ const mbtiSlice = createSlice({
         const newState = {...state};
         console.log(newState)
         newState.message = action.payload.message;
-        setCookie("token", action.payload.token);
+        window.localStorage.setItem("token", action.payload.token);
         return newState;
         });
         builder.addCase(postMbtifetch.rejected, (state,action) => {

@@ -118,7 +118,7 @@ const accountsSlice = createSlice({
       const newState = {...state };
       // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
       newState.message = action.payload.message;
-      setCookie("token", action.payload.token);
+      window.localStorage.setItem("token", action.payload.token);
       console.log(newState);
       return newState;
       // state = action.payload;
@@ -143,7 +143,7 @@ const accountsSlice = createSlice({
       console.log(action)
       const newState = {...state}
       newState.message = action.payload.message;
-      setCookie("token", action.payload.token )
+      window.localStorage.setItem("token", action.payload.token);
       return newState;
     })
     builder.addCase(postSignUpFetch.rejected, (state,action)=> {

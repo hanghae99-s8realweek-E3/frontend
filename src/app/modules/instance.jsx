@@ -6,7 +6,7 @@ import { getCookie } from "../../utils/cookie";
 // 기지국을 세워야함 변수명을 instance해서 create를 이용해 기지국을 만들자 (다른거도 가능)
 const instance = axios.create({
   headers: {
-    Authorization: `Bearer ${getCookie("token")}`
+    Authorization: `Bearer ${window.localStorage.getItem("token")}`
   },
   baseURL: process.env.REACT_APP_API,
   withCredentials:true,

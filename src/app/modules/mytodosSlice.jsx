@@ -55,7 +55,7 @@ const mytodosSlice = createSlice({
       console.log(action)
     const newState ={...state}
       newState.message = action.payload.message;
-      setCookie("token",action.payload.token);
+      window.localStorage.setItem("token", action.payload.token);
       return newState;
     })
     builder.addCase(postmytodosFetch.rejected, (state,action)=> {
