@@ -49,54 +49,80 @@ const SignUpForm = () => {
 },[state])
 
   return (
+    
     <div>
       <StOutLine type="submit" onSubmit={onSubmit}>
+      <h4>회원가입 페이지</h4>
+      <StContainer>
+      <StItem>
         <label>이메일</label>
-        <div>
-        <input
+        <StInputWrap>
+        <StInput
           onChange={onChangeSignupData}
           type="text"
           name="email"
           value={signupData.email}
+          placeholder="이메일"
         />
-        <button>중복검사</button>
-        </div>
-
+        <StInsideBtn>중복검사</StInsideBtn>
+        </StInputWrap>
+        </StItem>
+        
+        <StItem>
         <label>인증번호</label>
-        <div>
-        <input
+        <StInputWrap>
+        <StInput
           onChange={onChangeSignupData}
           type="text"
           name="confirmNumber"
+          placeholder="인증번호"
         />
-        <button>인증</button>
-        </div>
+        <StInsideBtn>인증</StInsideBtn>
+        </StInputWrap>
+        </StItem>
 
+        <StItem>
         <label>비밀번호</label>
-        <input
+        <StInputWrap>
+        <StInput
           onChange={onChangeSignupData}
           type="password"
           name="password"
           value={signupData.password}
+          placeholder="비밀번호"
         />
+        </StInputWrap>
+        </StItem>
 
-        <label>비밀번호 확인</label>
-        <input
+        <StItem>
+        {/* <label>비밀번호 확인</label> */}
+        <StInputWrap>
+        <StInput
           onChange={onChangeSignupData}
           type="password"
           name="confirmPassword"
           value={signupData.confirmPassword}
+          placeholder="비밀번호 확인"
         />
+        </StInputWrap>
+        </StItem>
 
+        <StItem>
+        
         <label>닉네임</label>
-        <input
+        <StInputWrap>
+        <StInput
           onChange={onChangeSignupData}
           type="nickname"
           name="nickname"
           value={signupData.nickname}
+          placeholder="닉네임"
         />
+        </StInputWrap>
+        </StItem>
 
-        <button>회원가입</button>
+        <StSignUpBtn>회원가입</StSignUpBtn>
+        </StContainer>
       </StOutLine>
     </div>
   );
@@ -105,10 +131,64 @@ const SignUpForm = () => {
 export default SignUpForm;
 
 const StOutLine = styled.form`
-  width:500px;
+  width:450px;
   display:flex;
   flex-direction: column;
-  margin: 100px auto;
-  justify-content: space-around;
+  height:800px;
+  margin:50px auto;
+
 `
 
+const StContainer=styled.div`
+/* background-color:beige; */
+/* justify-content: flex-start; */
+width:450px;
+    display: grid;
+    display: inline-grid;
+    text-align: start;
+    gap:10px;
+
+
+`
+
+const StItem=styled.div`
+position: relative;
+    display: grid;
+    display: inline-grid;
+`
+
+const StInputWrap = styled.div`
+    margin-top: 5px;
+    margin-bottom:80px;
+
+`
+const StInput = styled.input `
+  border: 1px solid #979797;
+border-radius: 6px;
+    width: 450px;
+    height:55px;
+    position: absolute;
+    padding-left:10px;
+`
+const StInsideBtn = styled.button`
+position: absolute;
+margin-top :10px;
+width: 80px;
+height: 32px;
+left: 371px;
+z-index: 1;
+background-color:white;
+border:none;
+
+`
+
+const StSignUpBtn = styled.button`
+height: 70px;
+left: 25px;
+right: 25px;
+top: 825px;
+background: #979797;
+border-radius: 6px;
+border:none;
+color:white;
+`
