@@ -14,6 +14,8 @@ function ChallengeCard ({ data }) {
     setChallengeComplete(!challengeComplete)
   }
 
+  // 이용 시, <ChallengeCard id={id값} data={객체값} onClick={상세페이지 이동해주는 함수} key={idx} />로 작성해줄 것
+  // map을 쓰지 않는 경우, key는 예외.
   return (
     <StChallengeCardDiv  id={data.todoId}>
       {window.location.pathname !== "/feed" ?
@@ -30,14 +32,14 @@ function ChallengeCard ({ data }) {
           </StMenuBtn>
         </StCommonRowBox>
         <StCommonRowBox alignItems="center">
-          <StNickNameSpan>낙낙 님</StNickNameSpan>
+          <StNickNameSpan>{data.nickname}</StNickNameSpan>
           <StCommonRowBox alignItems="center" style={{marginRight:"5px"}}>
             <FontAwesomeIcon style={{color:"#979797", margin:"0 4px"}} icon={faMessage} />
             <StCountSpan>{data.commentCounts}</StCountSpan>
           </StCommonRowBox>
           <StCommonRowBox alignItems="center" style={{marginLeft:"5px"}}>
             <FontAwesomeIcon style={{color:"#979797", margin:"0 0 0 0"}} icon={faStar} />
-            <StCountSpan style={{marginRight:"4px"}}>{data.challengeConts}</StCountSpan>
+            <StCountSpan style={{marginRight:"4px"}}>{data.challengedCounts}</StCountSpan>
           </StCommonRowBox>
         </StCommonRowBox>
         
