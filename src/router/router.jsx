@@ -32,7 +32,7 @@ function Router () {
         <Route path="/errorpage" element={<ErrorPage/>}/>
         <Route path="/feed" element={<Feed/>}/>
         <Route path="/feeddetail/:todoId" element={<FeedDetail/>}/>
-        <Route path="/follow" element={<Follow/>}/>
+        <Route path="/follow/:userId" element={<Follow/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/mbti" element={<Mbti/>}/>
         <Route path="/mypage" element={<MyPage/>} />
