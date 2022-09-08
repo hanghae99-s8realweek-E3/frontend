@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function MyPageContainer () {
-  const navigate = useNavigate();
   const myData = decodeMyTokenData();
   const dispatch = useDispatch();
 
@@ -18,40 +16,40 @@ function MyPageContainer () {
 
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
-    navigate("/mypage")
+    window.location.assign("/mypage")
   }
 
   // 프로필 수정 화면으로 이동
   function changeMyProfileData () {
-    navigate("/modifyprofile")
+    window.location.assign("/modifyprofile")
   }
 
   // 비밀번호 변경 화면으로 이동
   function changeMyPasswordData () {
-    navigate("/changepw")
+    window.location.assign("/changepw")
   }
 
   // 고객센터(회원 탈퇴) 페이지로 이동
   function moveToHelpDeskPage () {
-    navigate("/helpdesk")
+    window.location.assign("/helpdesk")
   }
 
   // 내 활동 페이지로 이동
   function moveToActivity () {
-    navigate("/activity")
+    window.location.assign("/activity")
   }
 
   // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력
   function moveToFollowList () {
-    navigate('/follow')
+    window.location.assign('/follow')
   }
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
     window.localStorage.clear();
-    navigate('/')
+    window.location.assign('/')
   }
-  console.log(accountsState)
+
   return (
     <StMyPageContainer>
       {Object.keys(accountsState).length === 0 ? <div></div> : 

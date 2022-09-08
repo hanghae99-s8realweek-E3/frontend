@@ -84,16 +84,7 @@ const accountsSlice = createSlice({
   name:"accounts",
   initialState,
   reducers:{
-    // 새로고침 시, 유저 정보를 잃지 않고 바로 사용할 수 있도록 reducer로 저장
-    currentUsers: (state, action) => {
-      const newState = { ...state }
-      newState.mbti = action.payload.mbti
-      newState.nickname = action.payload.nickname
-      newState.userId = Number(action.payload.userId)
-      return newState;
-    }
-  },
-  
+  },  
   extraReducers: builder => { 
     builder.addCase(postLoginFetch.pending, (state, action) => {
       state = action.payload;
