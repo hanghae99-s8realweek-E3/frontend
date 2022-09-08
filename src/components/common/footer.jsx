@@ -11,7 +11,7 @@ function Footer() {
 
   // 피드 페이지로 이동
   function moveToFeed() {
-    window.location.assign('/feed')
+    window.location.assign('/todolists')
   }
 
   // TODO 페이지로 이동
