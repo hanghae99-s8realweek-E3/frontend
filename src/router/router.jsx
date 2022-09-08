@@ -34,7 +34,7 @@ function Router () {
         {/* <Route path="/todolists?filter=challengedCounts" element={<Feed/>}/>
         <Route path="/todolists?filter=commentsCounts" element={<Feed/>}/> */}
         <Route path="/feeddetail/:todoId" element={<FeedDetail/>}/>
-        <Route path="/follow" element={<Follow/>}/>
+        <Route path="/follow/:userId" element={<Follow/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/mbti" element={<Mbti/>}/>
         <Route path="/mypage" element={<MyPage/>} />

@@ -2,26 +2,9 @@ import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
 
-//댓글 GET
-export const getComment = createAsyncThunk(
-    "GET_COMMENT", 
-    async(thunkApi)=> {
-        try{ 
-            const response = await axios.get("http://localhost:8001/comment");
-            return response.data
-        }
-        catch (error) {
-            return error.message;
-        }
-})
-
-// export const getList = createAsyncThunk("GET_TODO", async () => {
-//     const response = await axios.get("http://localhost:8001/comment");
-//     return response.data;
-// });
-
+//!댓글 post
 export const postCommentFetch = createAsyncThunk(
-    "posts/postCommentFetch",
+    "comments/postCommentFetch",
     async(payload, thunkAPI)=> {
         try {
             const response = await instance.post(`/comments/${payload.todoId}`,{comment:payload.comment});
@@ -33,29 +16,30 @@ export const postCommentFetch = createAsyncThunk(
     }
 )
 
+//!댓글삭제 
+export const deleteCommentFetch = createAsyncThunk(
+  'comments/deleteCommentFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.delete(`/comments/${payload}` )
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
+
+
 const initialState = {
   message:"",
   errorMessage:"",
 }
 
 const commentsSlice = createSlice({
-    name:"comm",
+    name:"comments",
     initialState,
     reducers:{},
     extraReducers:(builder) => {
-        builder.addCase(getComment.pending, (state) => {
-            state.loading = true;
-          });
-          builder.addCase(getComment.fulfilled, (state, action) => {
-            state.loading = false;
-            state.comm = action.payload;
-            state.error = "";
-          });
-          builder.addCase(getComment.rejected, (state, action) => {
-            state.loading = false;
-            state.comm = [];
-            state.error = action.error.message;
-          });
           //!post
           builder.addCase(postCommentFetch.pending, (state,action) => {
             return state;
@@ -71,6 +55,20 @@ const commentsSlice = createSlice({
             newState.errorMessage = action.payload.errorMessage;
             return newState;
           });
+          //!delete
+          builder.addCase(deleteCommentFetch.pending , (state, action)=> {
+            return state;
+          })
+          builder.addCase(deleteCommentFetch.fulfilled, (state,action)=> {
+            const newState = {...state}
+            newState.message = action.payload.message;
+            return newState;
+          })
+          builder.addCase(deleteCommentFetch.rejected, (state,action)=> {
+            const newState = { ...state };
+            newState.errorMessage = action.payload.errorMessage;
+            return newState;
+          })
     }
 })
 

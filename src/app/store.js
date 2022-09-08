@@ -5,6 +5,7 @@ import mytodosSlice from './modules/mytodosSlice';
 import mbtiSlice from './modules/mbtiSlice';
 import todolistsSlice from './modules/todolistsSlice';
 import detailSlice from './modules/detailSlice';
+import followSlice from './modules/followSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     mbti:mbtiSlice.reducer,
     todolists:todolistsSlice.reducer,
     detail:detailSlice.reducer,
+    follow:followSlice.reducer,
   },
 });

@@ -69,7 +69,7 @@ const MbtiForm = () => {
                   })}
               </StGrid>
           </div>
-              <StButton  color="black" height="50px" type="submit"  >MBTI 설정</StButton>
+              <StButton  color="black" height="50px" type="submit"  >설정완료</StButton>
       </form>
     </StDiv>
     );
@@ -97,7 +97,8 @@ const MbtiForm = () => {
 export default MbtiForm;
 
 const StDiv = styled.div`
-  margin-top: 100px;
+height:100%;
+  overflow:scroll;
 `;
 
 const StGrid = styled.div`
@@ -115,9 +116,9 @@ const StButton = styled.button`
   color: white;
   border-radius: 10px;
 
-  height: ${(props) => props.height || "100px"};
-  width: 100px;
-  font-size: 1rem;
+  height: ${(props) => props.height || "80px"};
+  width: 80px;
+  font-size: 0.8rem;
 
   cursor: pointer;
 
