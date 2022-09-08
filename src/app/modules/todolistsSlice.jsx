@@ -14,13 +14,12 @@ export const getTodoListsFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      
       let response;
       if (payload === false){
         response = await axios.get("http://3.36.126.158:3000/api/todolists");
       console.log(response)}
       else if (payload === true) {response = await instance.get("/todolists");
-      console.log(response)}
+      }
       
       // const response = await instance.get("/todolists")
       console.log(response);
@@ -38,10 +37,13 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("서버와의 통신 시작");
-      // axios.ins
-      const response = await axios.get(
-        `http://3.36.126.158:3000/api/todolists?filter=challengedCounts`
-      );
+      console.log(payload);
+      let response;
+      if (payload === false){
+        response = await axios.get("http://3.36.126.158:3000/api/todolists?filter=challengedCounts");
+      console.log(response)}
+      else if (payload === true) {response = await instance.get("/todolists?filter=challengedCounts");
+      }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
@@ -59,9 +61,12 @@ export const getTodoListsCommentFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      const response = await axios.get(
-        `http://3.36.126.158:3000/api/todolists?filter=commentCounts`
-      );
+      let response;
+      if (payload === false){
+        response = await axios.get("http://3.36.126.158:3000/api/todolists?filter=commentCounts");
+      console.log(response)}
+      else if (payload === true) {response = await instance.get("/todolists?filter=commentCounts");
+      }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
