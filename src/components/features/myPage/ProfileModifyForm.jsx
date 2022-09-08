@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { putModifyProfileFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function ProfileModifyForm () {
-  // 장치가 하나 필요함. accounts.message를 처리할 수 있는 장치가 뭐가 있을까? [첫 렌더링만 체크 가능한?]
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const myData = decodeMyTokenData();
   const profileState = useSelector(state => state.accounts);
@@ -25,7 +22,7 @@ function ProfileModifyForm () {
   useEffect(() => {
     if (render !== false) {
       if (profileState.message === "success") {
-        navigate("/mypage")
+        window.location.assign("/mypage")
         // 성공 팝업창 출력, 띄운 후 버튼 누르면 페이지 이동
       } else {
         // 에러 팝업창 출력
@@ -35,7 +32,7 @@ function ProfileModifyForm () {
 
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
-    navigate("/mypage")
+    window.location.assign("/mypage")
   }
 
   // 작성한 닉네임의 값으로 상태를 변경
