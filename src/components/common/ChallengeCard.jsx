@@ -8,8 +8,8 @@ import { useState } from "react";
 function ChallengeCard ({ id, data }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
 
-  function moveToFeedDetail (event) {
-    if (id !== "null" && id !== undefined && window.location.pathname === "todolists")
+  function moveToFeedDetail () {
+    if (id !== "null" && id !== undefined && window.location.pathname === "/todolists")
       window.location.assign(`/feeddetail/${id}`);
   };
 
@@ -21,7 +21,7 @@ function ChallengeCard ({ id, data }) {
   // 이용 시, <ChallengeCard id={id값} data={객체값} key={idx} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
-    <StChallengeCardDiv  id={data.todoId} onClick={moveToFeedDetail}>
+    <StChallengeCardDiv width={window.location.pathname === "/todolists" ? "90%" : "100%"} id={data.todoId} onClick={moveToFeedDetail}>
       {window.location.pathname !== "/todolists" ?
       <StChallengeStateBtn onClick={changeStateChallenge}>
         {challengeComplete === false ?
@@ -61,7 +61,7 @@ const StChallengeCardDiv = styled.div`
   display:flex;
   flex-direction: row;
 
-  width: 100%;
+  width: ${props=>props.width || "100%"};
   border:1px solid gray;
   border-radius: 6px;
   padding: 14px 20px 7px 20px;
