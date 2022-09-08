@@ -36,7 +36,7 @@ function Router () {
         <Route path="/login" element={<Login/>}/>
         <Route path="/mbti" element={<Mbti/>}/>
         <Route path="/mypage" element={<MyPage/>} />
-        <Route path="/otherspage" element={<OthersPage/>} />
+        <Route path="/otherspage/:userId" element={<OthersPage/>} />
         <Route path="/selectmbtifeed" element={<SelectMBTIFeed/>} />
         <Route path="/setuptodo" element={<SetUpTodo/>} />
         <Route path="/signup" element={<SignUp/>} />

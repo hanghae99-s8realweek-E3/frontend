@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import dy from "../../common/dy.jpg";
 
 function UserProfileContainer() {
@@ -12,9 +14,19 @@ function UserProfileContainer() {
     setIsOpen((isOpen) => !isOpen);
   };
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  console.log(params);
+
+  useEffect(() => {
+    dispatch(getOthersTodoFetch(params));
+  }, []);
+  const card = useSelector((state) => state.mytodos.data);
+  console.log(card);
 
   const goFollow = () => {
-    navigate("/");
+    navigate("/follow");
   };
 
   const goFollowing = () => {
@@ -22,60 +34,55 @@ function UserProfileContainer() {
   };
   return (
     <StTotalWrap>
-      <StTopWrap>
-        <StProfileImg src={dy} width="80" height="80" alt="dy" />
-        <StFriendNameMbti>
-          <StFriendName>둘리님</StFriendName>
-          <StMbti>INFP</StMbti>
-        </StFriendNameMbti>
-        <StFollowWrap onClick={goFollow}>
-          <StFollowNumber>10</StFollowNumber>
-          <StFollowWord>팔로워</StFollowWord>
-        </StFollowWrap>
-        <StFollowingWrap onClick={goFollowing}>
-          <StFollowingNumber>10</StFollowingNumber>
-          <StFollowingWord>팔로잉</StFollowingWord>
-        </StFollowingWrap>
-      </StTopWrap>
+      {Object.keys(card).length === 0 ? (
+        <></>
+      ) : (
+        <>
+          <StTopWrap>
+            <StProfileImg src={dy} width="80" height="80" alt="dy" />
+            <StFriendNameMbti>
+              <StFriendName>{card.userInfo.nickname}</StFriendName>
+              <StMbti>{card.userInfo.mbti}</StMbti>
+            </StFriendNameMbti>
+            <StFollowWrap onClick={goFollow}>
+              <StFollowNumber>{card.userInfo.followerCount}</StFollowNumber>
+              <StFollowWord>팔로워</StFollowWord>
+            </StFollowWrap>
+            <StFollowingWrap onClick={goFollowing}>
+              <StFollowingNumber>{card.userInfo.followingCount}</StFollowingNumber>
+              <StFollowingWord>팔로잉</StFollowingWord>
+            </StFollowingWrap>
+          </StTopWrap>
 
-      <StMiddleLine></StMiddleLine>
-      <StTodoWrap>
-        <StChallengeTodo>도전한 TO DO</StChallengeTodo>
-        <StSuggestionTodo>제안한 TO DO</StSuggestionTodo>
-      </StTodoWrap>
-      <StLineWrap>
-        <StMiddleLeftLine></StMiddleLeftLine>
-        <StMiddleRightLine></StMiddleRightLine>
-      </StLineWrap>
+          <StMiddleLine></StMiddleLine>
+          <StTodoWrap>
+            <StChallengeTodo>도전한 TO DO</StChallengeTodo>
+            <StSuggestionTodo>제안한 TO DO</StSuggestionTodo>
+          </StTodoWrap>
+          <StLineWrap>
+            <StMiddleLeftLine></StMiddleLeftLine>
+            <StMiddleRightLine></StMiddleRightLine>
+          </StLineWrap>
 
-      <StBottomWrap>
-        {/* <StSort onClick={() => toggleMenu()} >인기순<ul className={isOpen ? "show-toggle" : "hide-toggle"}>
+          <StBottomWrap>
+            {/* <StSort onClick={() => toggleMenu()} >인기순<ul className={isOpen ? "show-toggle" : "hide-toggle"}>
           <li>1</li><li>2</li><li>3</li><li>4</li></ul></StSort> */}
-        <StSort onClick={() => toggleMenu()}>인기순</StSort>
-        <StTodayMyCardWrap>
-          {/* <StTodayMy>오늘의 투두</StTodayMy> */}
-          <StCardSmallWrap>
-            <StCard> 공원에서 비눗방울 불기</StCard>
-            <StNameCounterBox>
-              <StName>아기공룡둘리님</StName>
-              <StCommentCount>댓글</StCommentCount>
-              <StChallengeCount>도전</StChallengeCount>
-            </StNameCounterBox>
-          </StCardSmallWrap>
-        </StTodayMyCardWrap>
-
-        <StTodayMyCardWrap>
-          {/* <StTodayMy>내가만든 투두</StTodayMy> */}
-          <StCardSmallWrap>
-            <StCard>공원에서 비눗방울 불기</StCard>
-            <StNameCounterBox>
-              <StName>아기공룡둘리님</StName>
-              <StCommentCount>댓글</StCommentCount>
-              <StChallengeCount>도전</StChallengeCount>
-            </StNameCounterBox>
-          </StCardSmallWrap>
-        </StTodayMyCardWrap>
-      </StBottomWrap>
+            <StSort onClick={() => toggleMenu()}>인기순</StSort>
+            <StTodayMyCardWrap>
+              {card.createdTodo?.map((it,idx)=> (
+              <StCardSmallWrap key={idx}>
+                <StCard>{it.todo}</StCard>
+                <StNameCounterBox>
+                  <StName>{it.nickname}</StName>
+                  <StCommentCount>댓글{it.commentCounts}</StCommentCount>
+                  <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
+                </StNameCounterBox>
+              </StCardSmallWrap>
+              ))}
+            </StTodayMyCardWrap>
+          </StBottomWrap>
+        </>
+      )}
     </StTotalWrap>
   );
 }
@@ -270,6 +277,8 @@ const StCard = styled.div`
 const StNameCounterBox = styled.div`
   display: flex;
 `;
+
+//댓글이나 도전이 3자리 수이면 width 285px 1,2자리 수이면 292px
 const StName = styled.div`
   display: flex;
   margin: 11px 0px 11px 25px;
@@ -279,19 +288,16 @@ const StName = styled.div`
   font-size: 16px;
   line-height: 32px;
   color: #979797;
+  width: 292px;
 `;
 const StCommentCount = styled.div`
-  /* align-items: flex-end; */
   display: flex;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
   line-height: 32px;
-  margin-top: 11px;
-  margin-bottom: 11px;
-  margin-left: 179px;
-  margin-right: 25px;
+  margin: 11px 0px 11px 0px;
   color: #979797;
 `;
 const StChallengeCount = styled.div`
@@ -301,10 +307,7 @@ const StChallengeCount = styled.div`
   font-weight: 500;
   font-size: 13px;
   line-height: 32px;
-  margin-top: 11px;
-  margin-bottom: 11px;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin: 11px 25px 11px 25px;
   color: #979797;
 `;
 export default UserProfileContainer;

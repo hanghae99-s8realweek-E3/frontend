@@ -51,14 +51,17 @@ function WriteTodoForm() {
   // 스타일드 컴포넌트 프롭스 활용해보자
   // suggestion finish go todopage
   const submitTodoData = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(postmytodosFetch(todo));
+    navigate("/")
     // navigate("/todoList?date=");
   };
 
+
+
   return (
     <StTotalWrap>
-      <StMbti>mbti들어가야함{getMbti.mbti}</StMbti>
+      <StMbti>{getMbti.mbti}</StMbti>
       <StLine></StLine>
       <StWriteTodoForm onSubmit={submitTodoData}>
         <StWriteTodoTextArea
@@ -77,8 +80,7 @@ function WriteTodoForm() {
             {200 - todo.todo.length}
           </StTextCount>
         </span>
-
-        <Stbutton type="submit">등록하기</Stbutton>
+        <Stbutton type="submit" >등록하기</Stbutton>
       </StWriteTodoForm>
     </StTotalWrap>
   );

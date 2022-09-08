@@ -10,11 +10,13 @@ const initialState = {
 export const postmytodosFetch = createAsyncThunk(
   "users/postLogin",
   async (payload, thunkAPI) => {
-    
     try {
+      console.log("통신시작");
       const response = await instance.post("/mytodos", payload);
+      console.log("통신완료 값 반환")
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      console.log("에러발생")
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -33,9 +35,24 @@ export const getSetUpMyTodoFetch = createAsyncThunk(
   }
 )
 
+// 타인의 todo 피드 조회
+export const getOthersTodoFetch = createAsyncThunk(
+  'otherstodos/getOthersTodoFetch',
+  async (payload, thunkAPI) => {
+    try {
+      console.log(payload)
+      const response = await instance.get(`/mytodos/${payload.userId}`);
+      console.log(response)
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
 
 const mytodosSlice = createSlice({
-  name:"users",
+  name:"myTodos",
   initialState,
   reducers:{
   },
@@ -47,7 +64,6 @@ const mytodosSlice = createSlice({
     builder.addCase(postmytodosFetch.fulfilled, (state,action)=> {
     const newState ={...state}
       newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token);
       return newState;
     })
     builder.addCase(postmytodosFetch.rejected, (state,action)=> {
@@ -71,6 +87,25 @@ const mytodosSlice = createSlice({
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
+    
+    //타인의 todo
+    builder.addCase(getOthersTodoFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(getOthersTodoFetch.fulfilled, (state, action)=> {
+      const newState ={...state}
+      newState.message = action.payload.message;
+      newState.data = action.payload.data;
+      console.log(newState.data);
+      return newState;
+    })
+    builder.addCase(getOthersTodoFetch.rejected, (state, action)=> {
+      const newState = {...state };
+      console.log(newState.data);
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
   }
 })
 

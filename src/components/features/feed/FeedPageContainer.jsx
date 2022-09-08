@@ -7,9 +7,19 @@ import Hide from "../../common/Hide.png";
 import Appear from "../../common/Appear.png";
 import Toggle from "../../common/Toggle.png";
 import { useNavigate } from "react-router-dom";
+import { gettodolistsFetch, gettodolistsFetch2 } from "../../../app/modules/todolistsSlice";
+import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const card = useSelector((state) => state.todolists.data);
+  console.log(card);
+
+  useEffect(() => {
+    dispatch(gettodolistsFetch(card));
+  }, []);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -19,20 +29,29 @@ function FeedPageContainer() {
     checkOff(!checkOn);
   };
 
-  const cardList = [
-    { todo: "밥먹기1", nickname: "kdy1", commentCounts: 1, challengeConts: 1 },
-    { todo: "밥먹기2", nickname: "kdy2", commentCounts: 2, challengeConts: 2 },
-    { todo: "밥먹기3", nickname: "kdy3", commentCounts: 3, challengeConts: 3 },
-    { todo: "밥먹기4", nickname: "kdy4", commentCounts: 4, challengeConts: 4 },
-    { todo: "밥먹기5", nickname: "kdy5", commentCounts: 5, challengeConts: 5 },
-  ];
   // const cardList = card.map((number, index) => (
   //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
   // ));
 
-  const goFeedDetail = () => {
-    navigate("/feeddetail");
+  const goFeedDetail = (e) => {
+    const todoId = e.target.id;
+    if (todoId !== "null" && todoId !== undefined)
+      navigate(`/feeddetail/${todoId}`);
   };
+
+  const goUserProfile = (e) => {
+    const userId = e.target.id;
+    console.log(userId);
+    // dispatch(getOthersTodoFetch(card));
+    if (userId !== "null" && userId !== undefined)
+      navigate(`/otherspage/${userId}`);
+  };
+
+  const testbutton = () => {
+    dispatch(gettodolistsFetch2(card))
+  }
+  
+
 
   return (
     <StTotalWrap>
@@ -55,19 +74,22 @@ function FeedPageContainer() {
             alt="AppearImg"
           />
         )}
-
         <StHide>도전완료 가리기</StHide>
+        <button onClick = {testbutton}>댓글술</button>
         <StToggle>인기순</StToggle>
         <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
       </StHideToggle>
-
       <StTodayMyCardWrap>
         {/* <StTodayMy>오늘의 투두</StTodayMy> */}
-        {cardList?.map((it, idx) => (
-          <StCardSmallWrap onClick={goFeedDetail} key={idx}>
-            <StCard>{it.todo}</StCard>
+        {card?.map((it, idx) => (
+          <StCardSmallWrap  key={idx}>
+            <StCard id={it.todoId} onClick={goFeedDetail}>
+              {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
+            </StCard>
             <StNameCounterBox>
-              <StName>{it.nickname}</StName>
+              <StName id={it.userId} onClick={goUserProfile}>
+                {it.nickname}
+              </StName>
               <StCommentCount>댓글{it.commentCounts}</StCommentCount>
               <StChallengeCount>도전{it.challengeConts}</StChallengeCount>
             </StNameCounterBox>
@@ -134,11 +156,13 @@ const StCard = styled.div`
   line-height: 32px;
   color: #979797;
   margin: 16px 0px 11px 24px;
+  cursor: pointer;
 `;
 const StNameCounterBox = styled.div`
   display: flex;
-  flex-direction: row;
 `;
+
+//여기 width를 설정안했을때 약간 문제가생김 9/8 확인
 const StName = styled.div`
   display: flex;
   margin: 11px 0px 11px 25px;
@@ -148,6 +172,8 @@ const StName = styled.div`
   font-size: 16px;
   line-height: 32px;
   color: #979797;
+  width: 275px;
+  cursor: pointer;
 `;
 const StCommentCount = styled.div`
   display: flex;
@@ -173,11 +199,10 @@ const StChallengeCount = styled.div`
 const StSelectMbti = styled.button`
   display: flex;
   width: 200px;
-  position: absolute;
+  position: fixed;
   height: 60px;
-  left: 150px;
-  right: 150px;
   top: 850px;
+  margin-left: 150px;
   background: #979797;
   border-radius: 66px;
   font-family: "IBM Plex Sans KR";
