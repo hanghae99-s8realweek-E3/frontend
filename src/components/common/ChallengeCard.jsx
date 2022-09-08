@@ -5,20 +5,24 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 
-function ChallengeCard ({ data }) {
+function ChallengeCard ({ id, data }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
-  // const navigate = useNavigate();
+
+  function moveToFeedDetail (event) {
+    if (id !== "null" && id !== undefined && window.location.pathname === "todolists")
+      window.location.assign(`/feeddetail/${id}`);
+  };
 
   function changeStateChallenge (event) {
     event.stopPropagation();
     setChallengeComplete(!challengeComplete)
   }
 
-  // 이용 시, <ChallengeCard id={id값} data={객체값} onClick={상세페이지 이동해주는 함수} key={idx} />로 작성해줄 것
+  // 이용 시, <ChallengeCard id={id값} data={객체값} key={idx} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
-    <StChallengeCardDiv  id={data.todoId}>
-      {window.location.pathname !== "/feed" ?
+    <StChallengeCardDiv  id={data.todoId} onClick={moveToFeedDetail}>
+      {window.location.pathname !== "/todolists" ?
       <StChallengeStateBtn onClick={changeStateChallenge}>
         {challengeComplete === false ?
           <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircleCheck} /> :
