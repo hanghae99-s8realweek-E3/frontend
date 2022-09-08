@@ -96,12 +96,6 @@ function FeedPageContainer() {
         <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
       </StHideToggle>
       <StTodayMyCardWrap>
-        {Object.keys(card).length === 0 ? (
-          <></>
-        ):  card?.map((it,idx)=> (
-          <li key={idx}>{Number(it.isChallenged)}</li> 
-        ))}
-
         {checkOn === true
           ? 
           //isChallenged가 true이면 화면에 띄우면 안된다.
