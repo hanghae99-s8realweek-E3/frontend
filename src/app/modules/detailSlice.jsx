@@ -7,6 +7,18 @@ const initialState = {
     data:[],
 }
 
+export const postFeedDetailFetch = createAsyncThunk(
+    'detail/postFeedDetailFetch',
+    async (payload, thunkAPI) => {
+        try {
+            const response = await instance.post(`/mytodos/${payload}/challenged`)
+            return thunkAPI.fulfillWithValue(response.data);
+        }catch(error) {
+            return thunkAPI.rejectWithValue(error.data)
+        }
+    }
+)
+
 export const getFeedDetailFetch = createAsyncThunk(
     'detail/getFeedDetailFetch',
     async (payload, thunkAPI) => {
@@ -25,6 +37,7 @@ const detailSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: builder => {
+        //!get
         builder.addCase(getFeedDetailFetch.pending , (state, action)=> {
             return state;
           })
@@ -35,6 +48,20 @@ const detailSlice = createSlice({
             return newState;
           })
           builder.addCase(getFeedDetailFetch.rejected, (state, action)=> {
+            const newState = {...state };
+            newState.errorMessage = action.payload.errorMessage;
+            return newState;
+        })
+        //!post
+        builder.addCase(postFeedDetailFetch.pending, (state,action)=> {
+            return state;
+        })
+        builder.addCase(postFeedDetailFetch.fulfilled, (state, action)=> {
+            const newState = {...state}
+            newState.message = action.payload.message;
+            return newState;
+        })
+        builder.addCase(postFeedDetailFetch.rejected, (state, action)=> {
             const newState = {...state };
             newState.errorMessage = action.payload.errorMessage;
             return newState;
