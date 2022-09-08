@@ -8,8 +8,8 @@ import { useState } from "react";
 function ChallengeCard ({ id, data }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
 
-  function moveToFeedDetail (event) {
-    if (id !== "null" && id !== undefined && window.location.pathname === "todolists")
+  function moveToFeedDetail () {
+    if (id !== "null" && id !== undefined && window.location.pathname === "/todolists")
       window.location.assign(`/feeddetail/${id}`);
   };
 
