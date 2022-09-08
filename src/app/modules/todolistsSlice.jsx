@@ -14,10 +14,14 @@ export const getTodoListsFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      // axios.ins
-      const response = await axios.get(
-        "http://3.36.126.158:3000/api/todolists"
-      );
+      
+      let response;
+      if (payload === false){
+        response = await axios.get("http://3.36.126.158:3000/api/todolists");
+      console.log(response)}
+      else if (payload === true) {response = await instance.get("/todolists");
+      console.log(response)}
+      
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
@@ -218,19 +222,25 @@ const todolistsSlice = createSlice({
       console.log(action);
       return state;
     });
-    builder.addCase(getMbtiTodoListsChallengeFetch.fulfilled, (state, action) => {
-      console.log(action);
-      const newState = { ...state };
-      newState.data = action.payload.data;
-      console.log(newState);
-      return newState;
-    });
-    builder.addCase(getMbtiTodoListsChallengeFetch.rejected, (state, action) => {
-      console.log(action);
-      // const newState = { ...state };
-      // newState.error = action.payload.error;
-      return state;
-    });
+    builder.addCase(
+      getMbtiTodoListsChallengeFetch.fulfilled,
+      (state, action) => {
+        console.log(action);
+        const newState = { ...state };
+        newState.data = action.payload.data;
+        console.log(newState);
+        return newState;
+      }
+    );
+    builder.addCase(
+      getMbtiTodoListsChallengeFetch.rejected,
+      (state, action) => {
+        console.log(action);
+        // const newState = { ...state };
+        // newState.error = action.payload.error;
+        return state;
+      }
+    );
     //피드 - 특정mbti의 댓글순
     builder.addCase(getMbtiTodoListsCommentFetch.pending, (state, action) => {
       console.log(action);
@@ -249,7 +259,6 @@ const todolistsSlice = createSlice({
       // newState.error = action.payload.error;
       return state;
     });
-
   },
 });
 
