@@ -1,8 +1,9 @@
 
 
-function ProfileCard () {
-  
-  return (
+
+function ProfileCard() {
+
+  return(
     <>
     </>
   )

@@ -30,7 +30,9 @@ function Router () {
         <Route path="/" element={<Main/>} />
         <Route path="/activity" element={<Activity/>}/>
         <Route path="/errorpage" element={<ErrorPage/>}/>
-        <Route path="/feed" element={<Feed/>}/>
+        <Route path="/todolists" element={<Feed/>}/>
+        {/* <Route path="/todolists?filter=challengedCounts" element={<Feed/>}/>
+        <Route path="/todolists?filter=commentsCounts" element={<Feed/>}/> */}
         <Route path="/feeddetail/:todoId" element={<FeedDetail/>}/>
         <Route path="/follow" element={<Follow/>}/>
         <Route path="/login" element={<Login/>}/>

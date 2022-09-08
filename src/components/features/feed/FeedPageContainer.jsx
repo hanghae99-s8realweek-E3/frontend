@@ -6,19 +6,22 @@ import styled from "styled-components";
 import Hide from "../../common/Hide.png";
 import Appear from "../../common/Appear.png";
 import Toggle from "../../common/Toggle.png";
-import { useNavigate } from "react-router-dom";
-import { gettodolistsFetch, gettodolistsFetch2 } from "../../../app/modules/todolistsSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getTodoListsChallengeFetch,
+  getTodoListsCommentFetch,
+  getTodoListsFetch,
+} from "../../../app/modules/todolistsSlice";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const card = useSelector((state) => state.todolists.data);
   console.log(card);
 
   useEffect(() => {
-    dispatch(gettodolistsFetch(card));
+    dispatch(getTodoListsFetch(card));
   }, []);
 
   //checkOn의  초기값은 false로 설정
@@ -28,10 +31,6 @@ function FeedPageContainer() {
   const checkState = () => {
     checkOff(!checkOn);
   };
-
-  // const cardList = card.map((number, index) => (
-  //   <StCardSmallWrap key={index}>{card[1].todo}{card[1].nickname}{card[1].commentCounts}{card[1].challengeConts}</StCardSmallWrap>
-  // ));
 
   const goFeedDetail = (e) => {
     const todoId = e.target.id;
@@ -47,11 +46,15 @@ function FeedPageContainer() {
       navigate(`/otherspage/${userId}`);
   };
 
-  const testbutton = () => {
-    dispatch(gettodolistsFetch2(card))
-  }
-  
+  const challengebutton = () => {
+    dispatch(getTodoListsChallengeFetch());
+    navigate("/todolists?filter=challengedCount");
+  };
 
+  const commentbutton = () => {
+    dispatch(getTodoListsCommentFetch());
+    navigate("/todolists?filter=commentsCounts");
+  };
 
   return (
     <StTotalWrap>
@@ -75,14 +78,15 @@ function FeedPageContainer() {
           />
         )}
         <StHide>도전완료 가리기</StHide>
-        <button onClick = {testbutton}>댓글술</button>
+        <button onClick={challengebutton}>도전순</button>
+        <button onClick={commentbutton}>댓글순</button>
         <StToggle>인기순</StToggle>
         <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
       </StHideToggle>
       <StTodayMyCardWrap>
         {/* <StTodayMy>오늘의 투두</StTodayMy> */}
         {card?.map((it, idx) => (
-          <StCardSmallWrap  key={idx}>
+          <StCardSmallWrap key={idx}>
             <StCard id={it.todoId} onClick={goFeedDetail}>
               {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
             </StCard>
@@ -91,7 +95,7 @@ function FeedPageContainer() {
                 {it.nickname}
               </StName>
               <StCommentCount>댓글{it.commentCounts}</StCommentCount>
-              <StChallengeCount>도전{it.challengeConts}</StChallengeCount>
+              <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
             </StNameCounterBox>
           </StCardSmallWrap>
         ))}
@@ -145,6 +149,7 @@ const StCardSmallWrap = styled.div`
   border: 1px solid red;
   margin: 18px 26px 14px 24px;
   border: 1px solid #979797;
+  background-color: green;
   border-radius: 6px;
 `;
 const StCard = styled.div`
