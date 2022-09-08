@@ -13,6 +13,8 @@ import {
   getTodoListsFetch,
 } from "../../../app/modules/todolistsSlice";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
+import ChallengeCard from "../../common/ChallengeCard";
+import { tokenChecker } from "../../../utils/token";
 
 function FeedPageContainer() {
   const navigate = useNavigate();
@@ -21,30 +23,40 @@ function FeedPageContainer() {
   console.log(card);
 
   useEffect(() => {
-    dispatch(getTodoListsFetch(card));
+    if(tokenChecker() === false) 
+      dispatch(getTodoListsFetch(false));
+      else if(tokenChecker() === true)
+      dispatch(getTodoListsFetch(true));
   }, []);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
 
-  //check 이미지 변경state
+  // check 이미지 변경state
   const checkState = () => {
+    if (tokenChecker() === false) {
+      alert("로그인 후 이용해주세요");
+    }
     checkOff(!checkOn);
+
+    // if(card.isChallenged==="false") ?  <></> : <ChallengeCard/>
   };
 
-  const goFeedDetail = (e) => {
-    const todoId = e.target.id;
-    if (todoId !== "null" && todoId !== undefined)
-      navigate(`/feeddetail/${todoId}`);
-  };
+  //컴포넌트 불러오기전 내가 임의로 지정했었음
+  // const goFeedDetail = (e) => {
+  //   console.log("1");
+  //   const todoId = e.target.id;
+  //   if (todoId !== "null" && todoId !== undefined)
+  //     navigate(`/feeddetail/${todoId}`);
+  // };
+  // const goUserProfile = (e) => {
+  //   const userId = e.target.id;
+  //   console.log(userId);
+  //   // dispatch(getOthersTodoFetch(card));
+  //   if (userId !== "null" && userId !== undefined)
+  //     navigate(`/otherspage/${userId}`);
+  // };
 
-  const goUserProfile = (e) => {
-    const userId = e.target.id;
-    console.log(userId);
-    // dispatch(getOthersTodoFetch(card));
-    if (userId !== "null" && userId !== undefined)
-      navigate(`/otherspage/${userId}`);
-  };
 
   const challengebutton = () => {
     dispatch(getTodoListsChallengeFetch());
@@ -84,33 +96,41 @@ function FeedPageContainer() {
         <StToggleImg src={Toggle} width="12" height="6" alt="ToggleImg" />
       </StHideToggle>
       <StTodayMyCardWrap>
-        {/* <StTodayMy>오늘의 투두</StTodayMy> */}
-        {card?.map((it, idx) => (
-          <StCardSmallWrap key={idx}>
-            <StCard id={it.todoId} onClick={goFeedDetail}>
-              {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
-            </StCard>
-            <StNameCounterBox>
-              <StName id={it.userId} onClick={goUserProfile}>
-                {it.nickname}
-              </StName>
-              <StCommentCount>댓글{it.commentCounts}</StCommentCount>
-              <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
-            </StNameCounterBox>
-          </StCardSmallWrap>
-        ))}
+        {checkOn === true
+          ? 
+          //isChallenged가 true이면 화면에 띄우면 안된다.
+          //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+           card?.filter(elem => elem.isChallenged === false).map
+            ((it, idx) => (
+              <ChallengeCard id={it.todoId} data={it} key={idx}></ChallengeCard>
+            ))
+          
+          : card?.map((it, idx) => (
+              <ChallengeCard id={it.todoId} data={it} key={idx}></ChallengeCard>
+            ))}
       </StTodayMyCardWrap>
       <StSelectMbti>MBTI 선택</StSelectMbti>
     </StTotalWrap>
   );
 }
-
+// <StCardSmallWrap key={idx}>
+//   <StCard id={it.todoId} onClick={goFeedDetail}>
+//     {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
+//   </StCard>
+//   <StNameCounterBox>
+//     <StName id={it.userId} onClick={goUserProfile}>
+//       {it.nickname}
+//     </StName>
+//     <StCommentCount>댓글{it.commentCounts}</StCommentCount>
+//     <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
+//   </StNameCounterBox>
+// </StCardSmallWrap>
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
 `;
 const StHideToggle = styled.div`
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-direction: row;
   margin: 154px 0px 18px;
