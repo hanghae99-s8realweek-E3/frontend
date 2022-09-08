@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode";
 
 export function tokenChecker() {
     const myToken = window.localStorage.getItem("token")
-    console.log(myToken)
     if (myToken === null || myToken === undefined) {
         return false
     }

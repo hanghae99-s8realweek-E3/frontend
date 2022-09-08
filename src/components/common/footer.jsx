@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Footer() {
-  const navigate = useNavigate();
-
   // 메인 페이지로 이동
   function moveToHome() {
     window.location.assign('/')
