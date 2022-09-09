@@ -35,8 +35,10 @@ function FeedPageContainer() {
   const checkState = () => {
     if (tokenChecker() === false) {
       alert("로그인 후 이용해주세요");
-    }
-    checkOff(!checkOn);
+      return;
+    } 
+    else 
+    return checkOff(!checkOn);
   };
 
   const toggleSortPopUp = (e) => {
@@ -70,6 +72,9 @@ function FeedPageContainer() {
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
+  const gotest = () => {
+    navigate(`/otherspage/${card.params}`)
+  }
 
   return (
     <>
@@ -138,7 +143,7 @@ function FeedPageContainer() {
                 ></ChallengeCard>
               ))}
         </StTodayMyCardWrap>
-        <StSelectMbti>MBTI 선택</StSelectMbti>
+        <StSelectMbti onClick={gotest}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
     </>
   );

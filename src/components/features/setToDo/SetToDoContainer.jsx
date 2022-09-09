@@ -54,7 +54,7 @@ function SetToDoContainer () {
   return (
     <StCommonColumnContainer>
       {Object.keys(myTodosState).length !== 0 ?
-        <ProfileCard card={myTodosState.userInfo} /> : <></> }  
+        <ProfileCard profileData={myTodosState} /> : <></> }  
       <CalendarContainer>
         {/* onchange를 통해 선택한 날짜를 저장 -> value를 통해 선택한 날짜를 받아옴. */}
         {/* maxDate를 통해 선택할 수 있는 최대 날짜(금일), minDate를 통해 선택할 수 있는 최소 날짜 설정 가능 */}

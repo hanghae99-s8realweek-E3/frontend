@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function ProfileCard({ card }) {
+function ProfileCard({ profileData }) {
   const navigate = useNavigate;
   const goFollow = () => {
     navigate("/follow");
@@ -20,15 +20,15 @@ function ProfileCard({ card }) {
           alt="dy"
         />
         <StFriendNameMbti>
-          <StFriendName>{card.userInfo.nickname}</StFriendName>
-          <StMbti>{card.userInfo.mbti}</StMbti>
+          <StFriendName>{profileData.userInfo.nickname}</StFriendName>
+          <StMbti>{profileData.userInfo.mbti}</StMbti>
         </StFriendNameMbti>
         <StFollowWrap onClick={goFollow}>
-          <StFollowNumber>{card.userInfo.followerCount}</StFollowNumber>
+          <StFollowNumber>{ window.location.pathname === "/mypage" ?profileData.userInfo.follower: profileData.userInfo.followerCount}</StFollowNumber>
           <StFollowWord>팔로워</StFollowWord>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingNumber>{card.userInfo.followingCount}</StFollowingNumber>
+          <StFollowingNumber>{window.location.pathname === "/mypage" ?profileData.userInfo.following: profileData.userInfo.followingCount}</StFollowingNumber>
           <StFollowingWord>팔로잉</StFollowingWord>
         </StFollowingWrap>
       </StTopWrap>
@@ -51,7 +51,7 @@ const StProfileImg = styled.img`
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 170.67px;
+
   margin-bottom: 48.33px;
   /* width: 380px; */
 `;

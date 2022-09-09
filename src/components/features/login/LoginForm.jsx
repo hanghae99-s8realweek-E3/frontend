@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 
 function LoginForm() {
   const loginState = useSelector((state) => state.accounts);
-
+  console.log(loginState);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -44,14 +44,13 @@ function LoginForm() {
     ) {
       alert("올바른 비밀번호를 입력하세요");
       return false;
+    } else {
+      dispatch(postLoginFetch(userData));
+      alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
+      navigate("/");
     }
-    dispatch(postLoginFetch(userData));
-
-    alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
-    navigate("/");
   };
 
-  // 8월31일 1227 moveTosignup -> Up ....
   // moveSignUpPage
   const moveToSignUp = () => {
     navigate("/signup");
@@ -146,13 +145,6 @@ const StPasswordInput = styled.input`
   margin: 0px 25px 130px 25px;
 `;
 
-const SocialWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: red;
-  margin: 0 45%;
-`;
-
 const StLoginBtn = styled.button`
   display: flex;
   height: 70px;
@@ -186,4 +178,3 @@ const StSignupBtn = styled.div`
 `;
 export default LoginForm;
 
-// em rem
