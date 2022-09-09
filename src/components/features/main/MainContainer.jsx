@@ -148,7 +148,6 @@ const StHeadTitle = styled.h1`
   margin:0 auto 20px 0;
 `
 
-
 const BannerSlideBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -166,7 +165,7 @@ const InfomationSlideBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 450px;
-  height: 250px;
+  height: 280px;
   
   /* margin: 10px 0; */
   overflow:hidden;

@@ -18,7 +18,7 @@ function Footer() {
 
   // 내 정보 페이지로 이동
   function moveToMyPage() {
-    window.location.assign('/myPage')
+    window.location.assign('/mypage')
   }
 
   return (
