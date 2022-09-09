@@ -12,9 +12,7 @@ export const postMbtifetch = createAsyncThunk(
     "mbti/postMbti",
     async (payload,thunkAPI) => {
         try {
-            console.log(payload)
             const response = await instance.post("/accounts/mbti", payload);
-            console.log(response)
             return thunkAPI.fulfillWithValue(response.data)
         } catch (error) {
             return thunkAPI.rejectWithValue(error.data);
@@ -35,10 +33,12 @@ const mbtiSlice = createSlice({
             const newState = {...state};
             newState.message = action.payload.message;
             window.localStorage.setItem("token", action.payload.token)
-        return newState;
+            return newState;
         });
         builder.addCase(postMbtifetch.rejected, (state,action) => {
-
+            const newState={...state};
+            newState.errorMessage=action.payload.errorMessage;
+            return newState;
         })
     }
 })

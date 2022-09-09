@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
 
@@ -71,14 +70,5 @@ const commentsSlice = createSlice({
           })
     }
 })
-
-// export const followCommentSlice = createSlice({
-//     name: "getComment",
-//     initialState: [],
-//     reducers: {},
-//     extraReducers: {
-//     [getComment.fulfilled]: (state, { payload }) => [...payload],
-//     },
-//   });
 
 export default commentsSlice;

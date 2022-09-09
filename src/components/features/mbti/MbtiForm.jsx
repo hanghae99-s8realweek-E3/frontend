@@ -24,25 +24,10 @@ const MbtiForm = () => {
 
   const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [
-    "ISTJ",
-    "ISFJ",
-    "INFJ",
-    "INTJ",
-    "ISTP",
-    "ISFP",
-    "INFP",
-    "INTP",
-    "ESTP",
-    "ESFP",
-    "ENFP",
-    "ENTP",
-    "ESTJ",
-    "ESFJ",
-    "ENFJ",
-    "ENTJ",
+    "ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ",
   ];
   
-  const onClick = (e) => {
+  const onClickSetMbti = (e) => {
     e.preventDefault();
     setMyMbti(e.target.value)
   }
@@ -54,50 +39,31 @@ const MbtiForm = () => {
   }
   
 
-
   return (
     <StDiv>
       <form onSubmit={onSubmit}>
           <div>
               <p>선택한 MBTI: </p>
               <h2>{myMbti}</h2>
-              <StGrid>
+            <StGrid>
               {mbtiList.map((x, index) => {
-                  return (<StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} 
-                                    onClick={onClick}> {mbtiList[index]}  
-                          </StButton>);
-                  })}
-              </StGrid>
+                return (
+                  <StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} onClick={onClickSetMbti}> 
+                  {mbtiList[index]}  
+                  </StButton>);
+                })}
+            </StGrid>
           </div>
               <StButton  color="black" height="50px" type="submit"  >설정완료</StButton>
       </form>
     </StDiv>
-    );
-
-    {
-    /* <button onClick={(e)=>setMbtiList(e.target.value)} value="ISTJ" >ISTJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ISFJ" >ISFJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="INFJ" >INFJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="INTJ" >INTJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ISTP" >ISTP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ISFP" >ISFP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="INFP" >INFP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="INTP" >INTP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ESTP" >ESTP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ESFP" >ESFP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ENFP" >ENFP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ENTP" >ENTP</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ESTJ" >ESTJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ESFJ" >ESFJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ENFJ" >ENFJ</button>
-    <button onClick={(e)=>setMbtiList(e.target.value)} value="ENTJ" >ENTJ</button> */
-  }
+  );
 };
 
 export default MbtiForm;
 
 const StDiv = styled.div`
-height:100%;
+  height:100%;
   overflow:scroll;
 `;
 

@@ -30,7 +30,7 @@ export const putMyPageFollowFetch= createAsyncThunk (
         try {
             const response = await instance.put(`/follows/${payload}`)
             return thunkAPI.fulfillWithValue(response.data)
-        } catch (error) {
+        }catch (error) {
             return thunkAPI.rejectWithValue(error.data);
         }
     }
