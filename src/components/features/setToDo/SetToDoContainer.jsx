@@ -4,6 +4,9 @@ import { Calendar } from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import { getSetUpMyTodoFetch } from "../../../app/modules/mytodosSlice";
+import ChallengeCard from "../../common/ChallengeCard";
+import { StCommonRowBox, StCommonText } from "../../interface/styledCommon";
+import ProfileCard from "../../common/ProfileCard";
 
 function SetToDoContainer () {
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
@@ -14,7 +17,7 @@ function SetToDoContainer () {
   const [calendar, setCalendar] = useState(new Date());
   const dispatch = useDispatch();
   // 선택한 날짜에 따라 내용들을 다시 불러올 수 있도록 함.
-  const myTodosState = useSelector(state => state.mytodos);
+  const myTodosState = useSelector(state => state.mytodos.data);
 
   // 기록 확인을 허용해주기 위해 필요한 3개월 전 날짜
   let mindate = new Date()
@@ -28,10 +31,9 @@ function SetToDoContainer () {
     dispatch(getSetUpMyTodoFetch(selectDate));
   }, [calendar])
 
-  console.log(myTodosState)
   // 도전하러 가기 클릭 시, 피드 선택 화면 출력
   function moveToSelectFeed () {
-    window.location.assign('/feed')
+    window.location.assign('/todolists')
   }
 
   // 작성하러 가기 클릭 시, TODO 작성 화면 출력
@@ -44,58 +46,58 @@ function SetToDoContainer () {
     window.location.assign('/follow')
   }
 
+  const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth()}-${calendar.getDate()}`
+  const nowDate = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+
+  console.log(myTodosState)
+
   return (
     <StCommonColumnContainer>
-      <StMyProfileSec>
-        <StMyImageBox>
-          <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
-        </StMyImageBox>
-        <StMyProfileDiv>
-          <h3 style={{margin:0, marginBottom:"0.5rem"}}>신도윤 님</h3>
-          <p style={{margin:0, color:"gray"}}>ENFP</p>
-        </StMyProfileDiv>
-        <StMyFollowStat>
-          <StFollowStatBtn onClick={moveToFollowList}>
-            <span style={{marginBottom:"6px", fontSize:"20px"}}>10</span>
-            <span style={{fontSize:"13px"}}>팔로잉</span>
-          </StFollowStatBtn>
-          <StFollowStatBtn onClick={moveToFollowList}>
-            <span style={{marginBottom:"6px", fontSize:"20px"}}>15</span>
-            <span style={{fontSize:"13px"}}>팔로워</span>
-          </StFollowStatBtn>
-        </StMyFollowStat>
-      </StMyProfileSec>
-      
+      {Object.keys(myTodosState).length !== 0 ?
+        <ProfileCard card={myTodosState.userInfo} /> : <></> }  
       <CalendarContainer>
         {/* onchange를 통해 선택한 날짜를 저장 -> value를 통해 선택한 날짜를 받아옴. */}
         {/* maxDate를 통해 선택할 수 있는 최대 날짜(금일), minDate를 통해 선택할 수 있는 최소 날짜 설정 가능 */}
-        <Calendar value={calendar} onChange={setCalendar} maxDate={new Date()} minDate={mindate}/>
+        <Calendar value={calendar} onChange={setCalendar} maxDate={new Date()} minDate={mindate} locale="en"/>
       </CalendarContainer>
 
-      <StTodayBox>
-        <StCommonText margin="28px 0 0 0" fontSize="15px">TODAY</StCommonText>
-        <StCommonRowBox>
-          {/* getDay()는 배열인 관계로 0 = 일요일이기 때문에 앞서 weekOfDayList 배열을 만들어 이렇게 받아옴. */}
-          <StDayWeekOfDaySpan>{weekOfDayList[calendar.getDay()]}</StDayWeekOfDaySpan>
-          <span style={{color:"#979797", margin:"0 12px", fontSize:"20px", fontWeight:"600"}} >·</span>
-          {/* 1~9는 숫자 앞에 0이 붙도록 설정 */}
-          <StDayDateSpan>{ calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate() }</StDayDateSpan>
-          {/* getMonth()는 배열인 관계로 0 = 1월이기 때문에 앞서 monthList 배열을 만들어 이렇게 받아옴. */}
-          <StDayMonthSpan>{monthList[calendar.getMonth()]}</StDayMonthSpan>
-        </StCommonRowBox>
-      </StTodayBox>
+      {Object.keys(myTodosState).length === 0 ? <div>로딩중입니다...</div> :
+      <>
+        <StTodayBox>
+          <StCommonRowBox>
+            {/* getDay()는 배열인 관계로 0 = 일요일이기 때문에 앞서 weekOfDayList 배열을 만들어 이렇게 받아옴. */}
+            <StDayWeekOfDaySpan>{weekOfDayList[calendar.getDay()]}</StDayWeekOfDaySpan>
+            <span style={{color:"#979797", margin:"0 12px", fontSize:"20px", fontWeight:"600"}} >·</span>
+            {/* 1~9는 숫자 앞에 0이 붙도록 설정 */}
+            <StDayDateSpan>{ calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate() }</StDayDateSpan>
+            {/* getMonth()는 배열인 관계로 0 = 1월이기 때문에 앞서 monthList 배열을 만들어 이렇게 받아옴. */}
+            <StDayMonthSpan>{monthList[calendar.getMonth()]}</StDayMonthSpan>
+          </StCommonRowBox>
+        </StTodayBox>
+        (typeof ["a", "b"])
+        <StCommonBorder margin="0 25px" />
 
-      <StCommonBorder margin="0 25px" />
+        <StChallengeToDoBox>
+          <StCommonText margin="0 auto 14px 25px" fontSize="18px">오늘의 TO DO</StCommonText>
+          {Object.keys(myTodosState.challengedTodo).length === 0 ?
+            selectingDate !== nowDate ?
+              <StNotifyNoSettingBox>진행한 도전이 없습니다.</StNotifyNoSettingBox> :
+                <StSetToDoBtn onClick={moveToSelectFeed}>도전하러 가기</StSetToDoBtn> :
+                  <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} state="myTodos" />
+          }
+        </StChallengeToDoBox>
 
-      <StChallengeToDoBox>
-        <StCommonText margin="0 0 14px 0" fontSize="18px">오늘의 TO DO</StCommonText>
-        <StSetToDoBtn onClick={moveToSelectFeed}>도전하러 가기</StSetToDoBtn>
-      </StChallengeToDoBox>
-
-      <StMakingToDoBox>
-        <StCommonText margin="0 0 14px 0" fontSize="18px">내가 만든 TO DO</StCommonText>
-        <StSetToDoBtn onClick={moveToWriteTodo}>제안하러 가기</StSetToDoBtn>
-      </StMakingToDoBox>
+        <StMakingToDoBox>
+          <StCommonText margin="0 auto 14px 25px" fontSize="18px">내가 만든 TO DO</StCommonText>
+          {Object.keys(myTodosState.createdTodo).length === 0 ?
+            selectingDate !== nowDate ?
+              <StNotifyNoSettingBox>제안한 도전이 없습니다.</StNotifyNoSettingBox> :
+                <StSetToDoBtn onClick={moveToWriteTodo}>제안하러 가기</StSetToDoBtn> :
+                  <ChallengeCard id={myTodosState.createdTodo.todoId} data={myTodosState.createdTodo} hideState="true" />
+          }
+        </StMakingToDoBox>
+      </>
+      }
 
     </StCommonColumnContainer>
   )
@@ -296,28 +298,14 @@ const CalendarContainer = styled.div`
 
 `
 
-const StCommonText = styled.div`
-  font-size: ${props=> props.fontSize};
-  font-weight: 500;
-  color: #000000;
-
-  margin: ${props => props.margin};
-  height: 32px;
-`
-
 const StTodayBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align:left;
 
+  margin-top: 26px;
   margin-left: 25px;
   margin-bottom: 10px;
-`
-
-const StCommonRowBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  
 `
 
 const StDayWeekOfDaySpan = styled.span`
@@ -361,18 +349,18 @@ const StCommonBorder = styled.div`
 const StChallengeToDoBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 
-  margin: 20px 25px;
+  margin: 20px 0 15px 0;
   
 `
 
 const StMakingToDoBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 
-  margin: 20px 25px;
+  margin: 20px 0 15px 0;
   
 `
 
@@ -391,6 +379,51 @@ const StSetToDoBtn = styled.button`
 
   width: 450px;
   height: 102px;
+  
+  margin: 5px 20px;
 
   cursor:pointer;
 `
+
+const StNotifyNoSettingBox = styled.div`
+  background: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: 600;
+  color: #979797;
+
+  border: 1px solid #979797;
+  border-radius: 6px;
+  outline: none;
+
+  width: 90%;
+  height: 102px;
+
+  margin: 5px 20px;
+
+  cursor:pointer;
+`
+
+      // {/* <StMyProfileSec>
+      //   <StMyImageBox>
+      //     <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
+      //   </StMyImageBox>
+      //   <StMyProfileDiv>
+      //     <h3 style={{margin:0, marginBottom:"0.5rem"}}>신도윤 님</h3>
+      //     <p style={{margin:0, color:"gray"}}>ENFP</p>
+      //   </StMyProfileDiv>
+      //   <StMyFollowStat>
+      //     <StFollowStatBtn onClick={moveToFollowList}>
+      //       <span style={{marginBottom:"6px", fontSize:"20px"}}>10</span>
+      //       <span style={{fontSize:"13px"}}>팔로잉</span>
+      //     </StFollowStatBtn>
+      //     <StFollowStatBtn onClick={moveToFollowList}>
+      //       <span style={{marginBottom:"6px", fontSize:"20px"}}>15</span>
+      //       <span style={{fontSize:"13px"}}>팔로워</span>
+      //     </StFollowStatBtn>
+      //   </StMyFollowStat>
+      // </StMyProfileSec> */}

@@ -4,25 +4,31 @@ import { faCircle, faCircleCheck, faMessage, faStar } from "@fortawesome/free-re
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-function ChallengeCard ({ id, data }) {
+function ChallengeCard ({ id, data, hideState }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
-
+  const params = useParams();
+  console.log(params)
   function moveToFeedDetail () {
-    if (id !== "null" && id !== undefined && window.location.pathname === "/todolists")
-      window.location.assign(`/feeddetail/${id}`);
+    if (id !== "null" && id !== undefined)
+      // if (window.location.pathname === "/todolists")
+        window.location.assign(`/feeddetail/${id}`);
   };
+
+
 
   function changeStateChallenge (event) {
     event.stopPropagation();
     setChallengeComplete(!challengeComplete)
   }
+  console.log(window.location.pathname)
 
-  // 이용 시, <ChallengeCard id={id값} data={객체값} key={idx} />로 작성해줄 것
+  // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
-    <StChallengeCardDiv width={window.location.pathname === "/todolists" ? "90%" : "100%"} id={data.todoId} onClick={moveToFeedDetail}>
-      {window.location.pathname !== "/todolists" ?
+    <StChallengeCardDiv width={window.location.pathname === "/todolists" || window.location.pathname === "/setuptodo" || window.location.pathname === `/feeddetail/${params.todoId}` ? "90%" : "100%"} id={data.todoId} onClick={moveToFeedDetail}>
+      {window.location.pathname !== "/todolists" && hideState !== "true" ?
       <StChallengeStateBtn onClick={changeStateChallenge}>
         {challengeComplete === false ?
           <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircleCheck} /> :
@@ -60,8 +66,10 @@ const StChallengeCardDiv = styled.div`
 
   display:flex;
   flex-direction: row;
+  align-items: center;
 
-  width: ${props=>props.width || "100%"};
+  width: ${props => props.width || "100%"};
+  height: 102px;
   border:1px solid gray;
   border-radius: 6px;
   padding: 14px 20px 7px 20px;

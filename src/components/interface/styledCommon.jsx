@@ -25,3 +25,13 @@ export const StCommonRowBox = styled.div`
   width: ${props=>props.width};
   height: ${props=>props.height};
 `
+
+export const StCommonText = styled.div`
+  font-size: ${props=> props.fontSize};
+  font-weight: 500;
+  
+  color: #000000;
+
+  margin: ${props => props.margin};
+  height: 32px;
+`
