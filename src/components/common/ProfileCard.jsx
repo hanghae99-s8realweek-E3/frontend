@@ -1,20 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function ProfileCard({ profileData }) {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
+  const params = useParams();
+  console.log(params);
   const goFollow = () => {
-    navigate("/follow");
+    navigate(`/follow/${params.userId}`);
   };
 
   const goFollowing = () => {
-    navigate("/follow");
+    navigate(`/follow/${params.userId}`);
   };
   return (
     <>
       <StTopWrap>
         <StProfileImg
-          src="https://img.lostark.co.kr/profile/1/99A280E5FAA837CE4AEB6292A8016E2663C8066EEBB72B7791DE42C893449258.PNG"
+          src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
           width="80"
           height="80"
           alt="dy"
@@ -24,11 +26,19 @@ function ProfileCard({ profileData }) {
           <StMbti>{profileData.userInfo.mbti}</StMbti>
         </StFriendNameMbti>
         <StFollowWrap onClick={goFollow}>
-          <StFollowNumber>{ window.location.pathname === "/mypage" ?profileData.userInfo.follower: profileData.userInfo.followerCount}</StFollowNumber>
+          <StFollowNumber>
+            {window.location.pathname === "/mypage"
+              ? profileData.userInfo.follower
+              : profileData.userInfo.followerCount}
+          </StFollowNumber>
           <StFollowWord>팔로워</StFollowWord>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingNumber>{window.location.pathname === "/mypage" ?profileData.userInfo.following: profileData.userInfo.followingCount}</StFollowingNumber>
+          <StFollowingNumber>
+            {window.location.pathname === "/mypage"
+              ? profileData.userInfo.following
+              : profileData.userInfo.followingCount}
+          </StFollowingNumber>
           <StFollowingWord>팔로잉</StFollowingWord>
         </StFollowingWrap>
       </StTopWrap>
@@ -38,31 +48,27 @@ function ProfileCard({ profileData }) {
 
 export default ProfileCard;
 
-const StTotalWrap = styled.div`
-  display: flex;
-  width: 500px;
-  flex-direction: column;
-`;
-const StProfileImg = styled.img`
-  margin-right: 26px;
-  margin-left: 35px;
-  border-radius: 9999px;
-`;
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-
   margin-bottom: 48.33px;
-  /* width: 380px; */
+  width: 500px;
 `;
+const StProfileImg = styled.img`
+  display: flex;
+  margin-left: 35px;
+  border-radius: 9999px;
+`;
+
 const StFriendNameMbti = styled.div`
   display: flex;
+  /* justify-content: center;
+  align-items: center; */
   flex-direction: column;
   margin-top: 12.33px;
-  margin-right: 75px;
+  margin-left: 26px;
 `;
 const StFriendName = styled.div`
-  display: flex;
   flex-direction: row;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -72,7 +78,6 @@ const StFriendName = styled.div`
   color: #000000;
 `;
 const StMbti = styled.div`
-  display: flex;
   width: 42px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -83,15 +88,12 @@ const StMbti = styled.div`
   color: #979797;
 `;
 const StFollowWrap = styled.div`
-  display: flex;
   flex-direction: column;
-  margin-top: 6.33px;
-  margin-right: 74px;
+  margin: 6.33px 70px 0px 32px;
   align-items: center;
 `;
 const StFollowNumber = styled.div`
   margin-bottom: 6px;
-  display: flex;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -101,7 +103,6 @@ const StFollowNumber = styled.div`
   color: #000000;
 `;
 const StFollowWord = styled.div`
-  display: flex;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -111,13 +112,11 @@ const StFollowWord = styled.div`
   color: #000000;
 `;
 const StFollowingWrap = styled.div`
-  display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 6.33px;
 `;
 const StFollowingNumber = styled.div`
-  display: flex;
   margin-bottom: 6px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -126,7 +125,6 @@ const StFollowingNumber = styled.div`
   line-height: 32px;
 `;
 const StFollowingWord = styled.div`
-  display: flex;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -134,4 +132,5 @@ const StFollowingWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+
 `;

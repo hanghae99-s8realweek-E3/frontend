@@ -1,16 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { useEffect } from "react";
 import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postLoginFetch } from "../../../app/modules/accountsSlice";
-import { useCookies } from "react-cookie";
 
 function LoginForm() {
   const loginState = useSelector((state) => state.accounts);
-  console.log(loginState);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -136,6 +133,9 @@ const StPassword = styled.div`
   color: #000000;
 `;
 const StPasswordInput = styled.input`
+::placeholder{
+  margin-left: 150px;
+}
   display: flex;
   box-sizing: border-box;
   height: 55px;
@@ -148,7 +148,8 @@ const StPasswordInput = styled.input`
 const StLoginBtn = styled.button`
   display: flex;
   height: 70px;
-  background: #979797;
+  border: 1px solid white;
+  background: #FF6D53;
   border-radius: 6px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -158,7 +159,6 @@ const StLoginBtn = styled.button`
   text-align: center;
   color: #ffffff;
   cursor: pointer;
-  display: flex;
   margin: 0px 25px 36px 25px;
   justify-content: center;
   align-items: center;

@@ -24,6 +24,6 @@ const LayoutContainer = styled.div`
   margin: auto;
   border: 1px solid red;
 
-  width:500px;
+  max-width:500px;
   min-height:100vh;
 `
