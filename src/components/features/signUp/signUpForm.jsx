@@ -39,7 +39,7 @@ const SignUpForm = () => {
             else if (signupData.nickname.length === 0) {
               return alert('닉네임 형식을 확인해주세요 ')
             }
-            console.log("보내주세요")
+            console.log("에러발생!!!!")
             dispatch(postSignUpFetch(signupData))//!디스패치,모듈,페이로드 
   };
 

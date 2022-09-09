@@ -23,7 +23,7 @@ export const getMyPageFollowFetch = createAsyncThunk(
     }
 )
 
-//!put 팔로우 지우기
+//!put 팔로우/언팔로우 하기
 export const putMyPageFollowFetch= createAsyncThunk (
     'follow/putMyPageFollowFetch',
     async (payload,thunkAPI) => {

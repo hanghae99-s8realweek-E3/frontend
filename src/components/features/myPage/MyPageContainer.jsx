@@ -43,7 +43,7 @@ function MyPageContainer () {
 
   // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력
   function moveToFollowList () {
-    window.location.assign('/follow')
+    window.location.assign(`/follow/${accountsState.userId}`)
   }
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행

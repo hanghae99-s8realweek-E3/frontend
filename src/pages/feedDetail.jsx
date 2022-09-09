@@ -7,7 +7,7 @@ function FeedDetail() {
 
   return (
     <Layout>
-      {/* <Header /> */}
+      <Header />
       <FeedDetailContainer/>
       <Footer />
     </Layout>
