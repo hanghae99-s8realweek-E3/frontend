@@ -40,14 +40,14 @@ const detailSlice = createSlice({
         //!get
         builder.addCase(getFeedDetailFetch.pending , (state, action)=> {
             return state;
-          })
-          builder.addCase(getFeedDetailFetch.fulfilled, (state, action)=> {
+        })
+        builder.addCase(getFeedDetailFetch.fulfilled, (state, action)=> {
             const newState ={...state}
             newState.message = action.payload.message;
             newState.data = action.payload.data;
             return newState;
-          })
-          builder.addCase(getFeedDetailFetch.rejected, (state, action)=> {
+        })
+        builder.addCase(getFeedDetailFetch.rejected, (state, action)=> {
             const newState = {...state };
             newState.errorMessage = action.payload.errorMessage;
             return newState;

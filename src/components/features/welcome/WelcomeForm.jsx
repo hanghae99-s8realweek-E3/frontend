@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 function WelcomeForm () {
     const navigate = useNavigate();
+    //modalState
     const [modalState, setModalState] = useState("on");
 
     const onClick = (e) => {
-
         setModalState("off")
         navigate('/')
     }
@@ -35,7 +35,6 @@ function WelcomeForm () {
                 </StContainer>
             </div>
             : <></>}
-            {/* <button style={{position:"relative"}} onClick={()=> setModalState("on")}>창열기</button> */}
         </>
         )
 }
@@ -47,8 +46,8 @@ border-radius: 5px;
 width:500px;
 `
 const StText=styled.div`
-    color: black;
-    display:block;
+color: black;
+display:block;
 align-items:left;
 justify-content:left;
 text-align: left;
