@@ -102,6 +102,7 @@ const accountsSlice = createSlice({
     builder.addCase(postLoginFetch.rejected, (state, action) => {
       const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
+      alert(newState);
       return newState;
     });
     
