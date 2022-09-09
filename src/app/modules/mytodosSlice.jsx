@@ -51,6 +51,19 @@ export const getOthersTodoFetch = createAsyncThunk(
   }
 )
 
+// 오늘의 미믹을 진행중/완료 처리하는 Creator
+export const putSetUpTodoFetch = createAsyncThunk(
+  'setuptodo/putSetUpTodoFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.put(`/mytodos/${payload.todoId}/challenged`, { date: payload.date });
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  }
+)
+
 const mytodosSlice = createSlice({
   name:"myTodos",
   initialState,
@@ -102,6 +115,21 @@ const mytodosSlice = createSlice({
     builder.addCase(getOthersTodoFetch.rejected, (state, action)=> {
       const newState = {...state };
       console.log(newState.data);
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
+    //타인의 todo
+    builder.addCase(putSetUpTodoFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(putSetUpTodoFetch.fulfilled, (state, action)=> {
+      const newState ={...state}
+      newState.message = action.payload.message;
+      return newState;
+    })
+    builder.addCase(putSetUpTodoFetch.rejected, (state, action)=> {
+      const newState = {...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })

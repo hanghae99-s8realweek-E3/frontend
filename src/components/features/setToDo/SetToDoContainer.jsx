@@ -41,15 +41,9 @@ function SetToDoContainer () {
     window.location.assign('/mytodos')
   }
 
-  // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력
-  function moveToFollowList () {
-    window.location.assign('/follow')
-  }
-
   const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth()}-${calendar.getDate()}`
   const nowDate = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
 
-  console.log(myTodosState)
 
   return (
     <StCommonColumnContainer>
@@ -74,7 +68,7 @@ function SetToDoContainer () {
             <StDayMonthSpan>{monthList[calendar.getMonth()]}</StDayMonthSpan>
           </StCommonRowBox>
         </StTodayBox>
-        (typeof ["a", "b"])
+
         <StCommonBorder margin="0 25px" />
 
         <StChallengeToDoBox>

@@ -5,30 +5,61 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { putSetUpTodoFetch } from "../../app/modules/mytodosSlice";
 
 function ChallengeCard ({ id, data, hideState }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
   const params = useParams();
-  console.log(params)
+  const dispatch = useDispatch();
+
+  // API 새로 요청해야하나?
+  // 결과값에 isCompleted 상태를 반환할 수 있으면 좋을텐데!
+
+  useEffect(() => {
+    if (window.location.pathname == "/setuptodo")
+      return
+  },[])
+
   function moveToFeedDetail () {
     if (id !== "null" && id !== undefined)
       // if (window.location.pathname === "/todolists")
         window.location.assign(`/feeddetail/${id}`);
   };
 
-
-
   function changeStateChallenge (event) {
     event.stopPropagation();
-    setChallengeComplete(!challengeComplete)
+    const selectYear = new Date().getFullYear();
+    const selectMonth = new Date().getMonth() < 9 ? "0" + (new Date().getMonth() +1) : new Date().getMonth() + 1
+    const selectDay = new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate();
+    dispatch(putSetUpTodoFetch({todoId: id, date: `${selectYear}-${selectMonth}-${selectDay}`}))
   }
-  console.log(window.location.pathname)
+
+  function locationSizeCheck () {
+    if ((window.location.pathname === `/todolists/${params.mbti}` ||
+          window.location.pathname === "/todolists" || 
+            window.location.pathname === "/setuptodo" || 
+              window.location.pathname === `/feeddetail/${params.todoId}`) === true)
+                return false
+    else
+      return true
+  }
+
+
+  function locationButtonCheck () {
+    if ((window.location.pathname === "/todolists" || 
+          window.location.pathname === `/todolists/${params.mbti}`) === true)
+            return false
+    else
+      return true
+  }
 
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
-    <StChallengeCardDiv width={window.location.pathname === "/todolists" || window.location.pathname === "/setuptodo" || window.location.pathname === `/feeddetail/${params.todoId}` ? "90%" : "100%"} id={data.todoId} onClick={moveToFeedDetail}>
-      {window.location.pathname !== "/todolists" && hideState !== "true" ?
+    <StChallengeCardDiv width={locationSizeCheck() === false ? "90%" : "100%"} id={data.todoId} onClick={moveToFeedDetail}>
+      {(locationButtonCheck() === true && hideState !== "true") ?
       <StChallengeStateBtn onClick={changeStateChallenge}>
         {challengeComplete === false ?
           <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircleCheck} /> :

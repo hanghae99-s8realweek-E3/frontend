@@ -1,6 +1,9 @@
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function Footer() {
+  const params = useParams();
+
   // 메인 페이지로 이동
   function moveToHome() {
     window.location.assign('/')
@@ -24,10 +27,10 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterButtonBox>
-        <StButton onClick={moveToHome}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />홈</StButton>
-        <StButton onClick={moveToFeed}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />피드</StButton>
-        <StButton onClick={moveToTodo}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />TO DO</StButton>
-        <StButton onClick={moveToMyPage}><span style={{background:"#E8E8E8", height:"30px", width:"30px", borderRadius: "133.005px", marginBottom:"5px"}} />MY</StButton>
+        <StButton onClick={moveToHome}><StCircle background={window.location.pathname === "/" ? "#E8644C" : "#E8E8E8"}/>홈</StButton>
+        <StButton onClick={moveToFeed}><StCircle background={window.location.pathname === "/todolists" || window.location.pathname === `/todolists/${params.mbti}` ? "#E8644C" : "#E8E8E8"}/>피드</StButton>
+        <StButton onClick={moveToTodo}><StCircle background={window.location.pathname === "/setuptodo" ? "#E8644C" : "#E8E8E8"}/>TO DO</StButton>
+        <StButton onClick={moveToMyPage}><StCircle background={window.location.pathname === "/mypage" ? "#E8644C" : "#E8E8E8"}/>MY</StButton>
       </FooterButtonBox>
       <StCommonBar />
     </FooterContainer>
@@ -86,4 +89,14 @@ const StCommonBar = styled.div`
   width: 178.23px;
   height: 6.65px;
 
+`
+
+const StCircle = styled.span`
+  background: ${props=>props.background || "#E8E8E8"};
+
+  border-radius: 133.005px; 
+  margin-bottom:5px;
+
+  height:30px;
+  width:30px;
 `
