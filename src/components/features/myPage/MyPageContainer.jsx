@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker } from "../../../utils/token";
@@ -7,6 +8,7 @@ import ProfileCard from "../../common/ProfileCard";
 
 function MyPageContainer () {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getMyPageFetch());
@@ -49,12 +51,14 @@ function MyPageContainer () {
     window.localStorage.clear();
     window.location.assign('/')
   }
-
+  const test = () => {
+    navigate(`/otherspage/${accountsState.userInfo.userId}`)
+  }
   return (
     <StMyPageContainer>
       {Object.keys(accountsState.userInfo).length === 0 ? <div></div> : 
       <>
-        <ProfileCard card={accountsState} />
+        <ProfileCard profileData={accountsState} />
         {/* <StMyProfileSec>
           <StMyImageBox>
             <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
@@ -91,7 +95,7 @@ function MyPageContainer () {
       <StCommonBorder />
 
       <div style={{display:"flex", flexDirection:"column", paddingLeft:"35px", paddingBottom:"25px"}}>
-        <StMyPageMenu>설정</StMyPageMenu>
+        <StMyPageMenu onClick ={test}>설정</StMyPageMenu>
         <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
         <StMyPageButton onClick={changeMyPasswordData}>비밀번호 변경</StMyPageButton>
         <StMyPageButton onClick={moveToHelpDeskPage}>고객센터</StMyPageButton>
