@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
-import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
+import { tokenChecker } from "../../../utils/token";
+import ProfileCard from "../../common/ProfileCard";
 
 function MyPageContainer () {
-  const myData = decodeMyTokenData();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMyPageFetch());
   }, [])
 
-  const accountsState = useSelector(state => state.accounts.userInfo)
+  const accountsState = useSelector(state => state.accounts)
 
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
@@ -52,9 +52,10 @@ function MyPageContainer () {
 
   return (
     <StMyPageContainer>
-      {Object.keys(accountsState).length === 0 ? <div></div> : 
+      {Object.keys(accountsState.userInfo).length === 0 ? <div></div> : 
       <>
-        <StMyProfileSec>
+        <ProfileCard card={accountsState} />
+        {/* <StMyProfileSec>
           <StMyImageBox>
             <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
           </StMyImageBox>
@@ -72,7 +73,7 @@ function MyPageContainer () {
               <span style={{fontSize:"13px"}}>팔로워</span>
             </StFollowStatBtn>
           </StMyFollowStat>
-        </StMyProfileSec>
+        </StMyProfileSec> */}
 
         <StMatchCheckDiv>
           <StMatchCheckBtn>궁합 알아보기</StMatchCheckBtn>
