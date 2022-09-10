@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import dy from "../../common/dy.jpg";
 
 import styled from "styled-components";
 
@@ -19,7 +18,7 @@ function ErrorPageContainer() {
   return (
     <>
       <TotalWrap>
-        <StErrorImg src={dy} alt="ErrorPageImg" />
+        <StErrorImg src={process.env.PUBLIC_URL+ `/images/Error.jpg`} alt="ErrorPageImg" />
         <StContent>문제가 생겼어요</StContent>
         <StErrorMsg>
           죄송합니다 <br />

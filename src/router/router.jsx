@@ -18,6 +18,7 @@ import WriteTodo from "../pages/writeTodo";
 import ModifyProfile from "../pages/modifyProfile";
 import ChangePW from "../pages/changePW";
 import HelpDesk from "../pages/helpDesk";
+import Withdraw from "../pages/withdraw";
 
 
 
@@ -49,6 +50,7 @@ function Router () {
         <Route path="/modifyprofile" element={<ModifyProfile/>} />
         <Route path="/changepw" element={<ChangePW/>} />
         <Route path="/helpdesk" element={<HelpDesk/>} />
+        <Route path="/withdraw" element={<Withdraw/>} />
       </Routes>
     </BrowserRouter>
   )
