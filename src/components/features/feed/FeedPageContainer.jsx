@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Hide from "../../common/Hide.png";
 import Appear from "../../common/Appear.png";
 import Toggle from "../../common/Toggle.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   getTodoListsChallengeFetch,
   getTodoListsCommentFetch,
@@ -22,8 +22,10 @@ function FeedPageContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const card = useSelector((state) => state.todolists.data);
+  const { mbti } = useParams();
   console.log(card);
 
+  console.log(mbti)
   useEffect(() => {
     if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
     else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
@@ -72,8 +74,8 @@ function FeedPageContainer() {
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
-  const gotest = () => {
-    navigate(`/otherspage/${card.params}`)
+  const moveToSelectMBTI = () => {
+    navigate('/selectmbtifeed')
   }
 
   return (
@@ -143,7 +145,7 @@ function FeedPageContainer() {
                 ></ChallengeCard>
               ))}
         </StTodayMyCardWrap>
-        <StSelectMbti onClick={gotest}>MBTI 선택</StSelectMbti>
+        <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
     </>
   );

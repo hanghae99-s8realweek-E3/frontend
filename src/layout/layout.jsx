@@ -1,12 +1,22 @@
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 
 function Layout ({ children }) {
-  const nowPath = window.location.pathname;
+  const params = useParams();
+
+  function locationCheck () {
+    if ((window.location.pathname === `/todolists/${params.mbti}` ||
+          window.location.pathname === "/todolists" || 
+            window.location.pathname === "/setuptodo" || 
+              window.location.pathname === `/feeddetail/${params.todoId}`) === true)
+                return true
+    else
+      return false
+  }
 
   return ( 
-    <LayoutContainer background={nowPath === "/todolists" || nowPath === "/setuptodo" || nowPath === "/feeddetail" ? "#EDECEC" : "#ffffff"} >
+    <LayoutContainer background={locationCheck() === true ? "#EDECEC" : "#ffffff"} >
       { children }
     </LayoutContainer>
   )

@@ -4,7 +4,10 @@ import instance from "./instance";
 import axios from "axios";
 
 const initialState = {
+  message: "",
+  errorMessage:"",
   data: [],
+  mbtiData: {}
 };
 
 // 전체 Feed조회 - 최신순(기본)
@@ -31,6 +34,7 @@ export const getTodoListsFetch = createAsyncThunk(
     }
   }
 );
+
 //피드 - 도전순
 export const getTodoListsChallengeFetch = createAsyncThunk(
   "todolists/getTodoListsChallengeFetch",
@@ -54,6 +58,7 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
     }
   }
 );
+
 //피드 - 댓글순
 export const getTodoListsCommentFetch = createAsyncThunk(
   "todolists/getTodoListsCommentFetch",
@@ -99,6 +104,7 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
     }
   }
 );
+
 //피드 - 특정 mbti의 도전 순
 export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsChallengeFetch",
@@ -120,6 +126,7 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
     }
   }
 );
+
 //피드 - 특정 mbti의 댓글 순
 export const getMbtiTodoListsCommentFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsCommentFetch",
@@ -141,8 +148,24 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
     }
   }
 );
+
+// 피드에서 내가 원하는 MBTI 피드만을 보고 싶을 때 설정하도록 해주는 Creator
+export const getSelectMBTITodoFetch = createAsyncThunk(
+  "get/getSelectMBTITodoFetch",
+  async(payload, thunkAPI) => {
+    try {
+      const response = await instance.get("/todolists/mbti")
+      return thunkAPI.fulfillWithValue(response.data)
+    } catch (error) {
+      console.log(error.data)
+      return thunkAPI.rejectWithValue(error.data)
+    }
+  }
+)
+
+
 const todolistsSlice = createSlice({
-  name: "users",
+  name: "todolists",
   initialState,
   reducers: {},
 
@@ -262,6 +285,24 @@ const todolistsSlice = createSlice({
       console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
+      return state;
+    });
+
+    //피드 - 특정mbti의 댓글순
+    builder.addCase(getSelectMBTITodoFetch.pending, (state, action) => {
+      return state;
+    });
+    builder.addCase(getSelectMBTITodoFetch.fulfilled, (state, action) => {
+      console.log(action)
+      const newState = { ...state };
+      newState.message = action.payload.message;
+      newState.mbtiData = action.payload.mbtiData;
+      console.log(newState)
+      return newState;
+    });
+    builder.addCase(getSelectMBTITodoFetch.rejected, (state, action) => {
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
       return state;
     });
   },
