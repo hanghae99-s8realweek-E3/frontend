@@ -23,7 +23,7 @@ export const postLoginFetch = createAsyncThunk(
       return thunkAPI.fulfillWithValue(response.data);
       
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -35,7 +35,7 @@ export const postSignUpFetch = createAsyncThunk(
       const response = await instance.post("/accounts/signup", payload)  //('API경로에는 서버와 통신하는 경로값', payload 자리에는 서버로 보내줘야할 값이 들어간다)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -48,7 +48,7 @@ export const getMyPageFetch = createAsyncThunk(
       const response = await instance.get("/accounts")
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -61,20 +61,22 @@ export const putModifyProfileFetch = createAsyncThunk(
       const response = await instance.put("/accounts", payload)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
 
 // 회원 탈퇴 시에 사용되는 thunk action creater 
-export const deleteHelpDeskFetch = createAsyncThunk(
+export const deleteWithdrawFetch = createAsyncThunk(
   'users/deleteHelpDeskFetch',
   async (payload, thunkAPI) => {
     try {
+      console.log(payload)
       const response = await instance.delete("/accounts", payload)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      console.log(error.response.data)
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -84,6 +86,12 @@ const accountsSlice = createSlice({
   name:"accounts",
   initialState,
   reducers:{
+    resetSuccessMessage: (state, action) => {
+      const newState = {...state };
+      newState.message = "";
+      newState.errorMessage = "";
+      return newState;
+    }
   },  
   extraReducers: builder => { 
     builder.addCase(postLoginFetch.pending, (state, action) => {
@@ -153,17 +161,18 @@ const accountsSlice = createSlice({
     })
 
     // deleteHelpDeskFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(deleteHelpDeskFetch.pending , (state, action)=> {
+    builder.addCase(deleteWithdrawFetch.pending , (state, action)=> {
       return state;
     })
-    builder.addCase(deleteHelpDeskFetch.fulfilled, (state,action)=> {
+    builder.addCase(deleteWithdrawFetch.fulfilled, (state,action)=> {
       const newState = {...state}
       newState.message = action.payload.message;
       return newState;
     })
-    builder.addCase(deleteHelpDeskFetch.rejected, (state,action)=> {
+    builder.addCase(deleteWithdrawFetch.rejected, (state,action)=> {
       const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
+      console.log(newState)
       return newState;
     })
   }

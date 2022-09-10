@@ -35,3 +35,12 @@ export const StCommonText = styled.div`
   margin: ${props => props.margin};
   height: 32px;
 `
+
+export const StCommonBorder = styled.div`
+  background: #BDC5CD;
+
+  display:block;
+
+  width: 100%;
+  height: 1px;
+`

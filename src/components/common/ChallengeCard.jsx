@@ -40,7 +40,8 @@ function ChallengeCard ({ id, data, hideState }) {
     if ((window.location.pathname === `/todolists/${params.mbti}` ||
           window.location.pathname === "/todolists" || 
             window.location.pathname === "/setuptodo" || 
-              window.location.pathname === `/feeddetail/${params.todoId}`) === true)
+              window.location.pathname === `/feeddetail/${params.todoId}` ||
+                window.location.pathname === `/otherspage/${params.userId}`) === true)
                 return false
     else
       return true
