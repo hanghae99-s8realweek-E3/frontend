@@ -4,7 +4,8 @@ import instance from "./instance";
 const initialState = {
   message: "",
   errorMessage: "",
-  data: {}
+  data: {},
+  isCompleted: ""
 }
 
 export const postmytodosFetch = createAsyncThunk(
@@ -17,7 +18,7 @@ export const postmytodosFetch = createAsyncThunk(
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("에러발생")
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -30,7 +31,7 @@ export const getSetUpMyTodoFetch = createAsyncThunk(
       const response = await instance.get(`/mytodos?date=${payload.date}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -46,7 +47,7 @@ export const getOthersTodoFetch = createAsyncThunk(
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log(error);
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -59,7 +60,33 @@ export const putSetUpTodoFetch = createAsyncThunk(
       const response = await instance.put(`/mytodos/${payload.todoId}/challenged`, { date: payload.date });
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.data);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
+// 내가 제안한 미믹을 삭제해주는 Creator
+export const deleteMyTodosFetch = createAsyncThunk(
+  'setuptodo/deleteMyTodosFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.delete(`mytodos/${payload}`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
+// 내가 도전하기로 한 투두를 포기시켜주는 Creator
+export const deleteSetUpTodoFetch = createAsyncThunk(
+  'setuptodo/deleteSetUpTodoFetch',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.delete(`/mytodos/${payload.todoId}/challenged`, { date: payload.date});
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 )
@@ -119,17 +146,48 @@ const mytodosSlice = createSlice({
       return newState;
     })
 
-    //타인의 todo
+    //putSetUpTodoFetch Creater 작동 시 적용되는 내용들
     builder.addCase(putSetUpTodoFetch.pending , (state, action)=> {
       return state;
     })
     builder.addCase(putSetUpTodoFetch.fulfilled, (state, action)=> {
-      const newState ={...state}
+      const newState ={ ...state }
       newState.message = action.payload.message;
+      newState.isCompleted = action.payload.isCompleted;
       return newState;
     })
     builder.addCase(putSetUpTodoFetch.rejected, (state, action)=> {
-      const newState = {...state };
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
+    //deleteMyTodosFetch Creater 작동 시 적용되는 내용들
+    builder.addCase(deleteMyTodosFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(deleteMyTodosFetch.fulfilled, (state, action)=> {
+      const newState ={ ...state }
+      newState.message = action.payload.message;
+      return newState;
+    })
+    builder.addCase(deleteMyTodosFetch.rejected, (state, action)=> {
+      const newState = { ...state };
+      newState.errorMessage = action.payload.errorMessage;
+      return newState;
+    })
+
+    //deleteSetUpTodoFetch Creater 작동 시 적용되는 내용들
+    builder.addCase(deleteSetUpTodoFetch.pending , (state, action)=> {
+      return state;
+    })
+    builder.addCase(deleteSetUpTodoFetch.fulfilled, (state, action)=> {
+      const newState ={ ...state }
+      newState.message = action.payload.message;
+      return newState;
+    })
+    builder.addCase(deleteSetUpTodoFetch.rejected, (state, action)=> {
+      const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })

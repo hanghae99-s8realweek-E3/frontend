@@ -1,18 +1,18 @@
-import React from "react";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import HelpDeskContainer from "../components/features/helpdesk/HelpDeskContainer";
+import WithdrawContainer from "../components/features/withdraw/WithdrawContainer";
 import Layout from "../layout/layout";
 
-const HelpDesk = () => {
+
+function Withdraw () {
 
   return (
     <Layout>
       <Header />
-        <HelpDeskContainer />
+      <WithdrawContainer />
       <Footer />
     </Layout>
   )
 }
 
-export default HelpDesk;
+export default Withdraw;

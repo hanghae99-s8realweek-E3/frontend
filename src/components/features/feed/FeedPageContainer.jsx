@@ -3,9 +3,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getComment, postComment } from "../../../app/modules/commentsSlice";
 import styled from "styled-components";
-import Hide from "../../common/Hide.png";
-import Appear from "../../common/Appear.png";
-import Toggle from "../../common/Toggle.png";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   getTodoListsChallengeFetch,
@@ -100,7 +97,7 @@ function FeedPageContainer() {
           {checkOn === false ? (
             <StHideImg
               onClick={checkState}
-              src={Appear}
+              src={process.env.PUBLIC_URL+ `/images/Appear.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -108,7 +105,7 @@ function FeedPageContainer() {
           ) : (
             <StHideImg
               onClick={checkState}
-              src={Hide}
+              src={process.env.PUBLIC_URL+ `/images/Hide.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -118,7 +115,7 @@ function FeedPageContainer() {
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
-            src={Toggle}
+            src={process.env.PUBLIC_URL+ `/images/Toggle.png`}
             width="12"
             height="6"
             alt="ToggleImg"
