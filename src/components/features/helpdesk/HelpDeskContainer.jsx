@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { fqaList, noticeList } from "../../../utils/helpList";
 import { StCommonBorder } from "../../interface/styledCommon";
 import FQAAccordionCard from "./FQAAccordionCard";
-import NoticeAccordionCard from "./NoticeAccordionCard copy";
+import NoticeAccordionCard from "./NoticeAccordionCard";
 
 function HelpDeskContainer () {
   const [selectTab, setSelectTab] = useState("notice");

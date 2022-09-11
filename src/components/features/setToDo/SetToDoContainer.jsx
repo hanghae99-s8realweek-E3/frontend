@@ -23,6 +23,7 @@ function SetToDoContainer () {
   let mindate = new Date()
   mindate.setMonth(mindate.getMonth() -3)
   //   date:”yyyy-mm-dd”
+  
   useEffect(() => {
     const selectYear = calendar.getFullYear();
     const selectMonth = calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1
@@ -41,9 +42,8 @@ function SetToDoContainer () {
     window.location.assign('/mytodos')
   }
 
-  const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth()}-${calendar.getDate()}`
-  const nowDate = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
-
+  const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1}-${calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate()}`
+  const nowDate = `${new Date().getFullYear()}-${new Date().getMonth() < 9 ? "0" + (new Date().getMonth() +1) : new Date().getMonth() + 1}-${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`
 
   return (
     <StCommonColumnContainer>
@@ -73,11 +73,16 @@ function SetToDoContainer () {
 
         <StChallengeToDoBox>
           <StCommonText margin="0 auto 14px 25px" fontSize="18px">오늘의 TO DO</StCommonText>
-          {Object.keys(myTodosState.challengedTodo).length === 0 ?
-            selectingDate !== nowDate ?
-              <StNotifyNoSettingBox>진행한 도전이 없습니다.</StNotifyNoSettingBox> :
-                <StSetToDoBtn onClick={moveToSelectFeed}>도전하러 가기</StSetToDoBtn> :
-                  <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} state="myTodos" />
+          {selectingDate !== nowDate ?
+            Object.keys(myTodosState.challengedTodo).length === 0 ?
+              <StNotifyNoSettingBox>진행한 도전이 없습니다.</StNotifyNoSettingBox>
+            :
+              <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} state="myTodos" />
+          :
+            Object.keys(myTodosState.challengedTodo).length === 0 ?
+              <StSetToDoBtn onClick={moveToSelectFeed}>도전하러 가기</StSetToDoBtn> 
+            :
+              <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} isTodayChallenge={true} state="myTodos" />
           }
         </StChallengeToDoBox>
 
@@ -92,7 +97,6 @@ function SetToDoContainer () {
         </StMakingToDoBox>
       </>
       }
-
     </StCommonColumnContainer>
   )
 }
@@ -109,66 +113,6 @@ const StCommonColumnContainer = styled.div`
 
   width:500px;
   box-sizing: border-box;
-`
-
-const StMyProfileSec = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content:flex-start;
-  align-items: center;
-  
-  margin: 1rem 0;
-`
-
-const StMyImageBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border: none;
-  border-radius: 50%;
-  margin: 0 26px;
-
-  height: 80px;
-  width: 80px;
-  overflow: hidden;
-`
-
-const StMyImage = styled.img`
-  height:96px;
-  width: 96px;
-
-`
-
-const StMyProfileDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  text-align: left;
-
-  margin-right: 38px;
-`
-
-const StMyFollowStat = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const StFollowStatBtn = styled.button`
-  background: none;
-
-  display:flex;
-  flex-direction:column;
-  align-items: center;
-
-  text-align:center;
-
-  border: none;
-  outline: none;
-  margin:0 37px;
-
-  cursor:pointer;
 `
 
 const CalendarContainer = styled.div`
@@ -289,7 +233,6 @@ const CalendarContainer = styled.div`
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
-
 `
 
 const StTodayBox = styled.div`
@@ -401,23 +344,3 @@ const StNotifyNoSettingBox = styled.div`
 
   cursor:pointer;
 `
-
-      // {/* <StMyProfileSec>
-      //   <StMyImageBox>
-      //     <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
-      //   </StMyImageBox>
-      //   <StMyProfileDiv>
-      //     <h3 style={{margin:0, marginBottom:"0.5rem"}}>신도윤 님</h3>
-      //     <p style={{margin:0, color:"gray"}}>ENFP</p>
-      //   </StMyProfileDiv>
-      //   <StMyFollowStat>
-      //     <StFollowStatBtn onClick={moveToFollowList}>
-      //       <span style={{marginBottom:"6px", fontSize:"20px"}}>10</span>
-      //       <span style={{fontSize:"13px"}}>팔로잉</span>
-      //     </StFollowStatBtn>
-      //     <StFollowStatBtn onClick={moveToFollowList}>
-      //       <span style={{marginBottom:"6px", fontSize:"20px"}}>15</span>
-      //       <span style={{fontSize:"13px"}}>팔로워</span>
-      //     </StFollowStatBtn>
-      //   </StMyFollowStat>
-      // </StMyProfileSec> */}
