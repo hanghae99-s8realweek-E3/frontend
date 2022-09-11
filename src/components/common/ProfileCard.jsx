@@ -89,8 +89,9 @@ const StMbti = styled.div`
 `;
 const StFollowWrap = styled.div`
   flex-direction: column;
-  margin: 6.33px 70px 0px 32px;
-  align-items: center;
+  margin: 6.33px 70px 0px 50px;
+  /* align-items: center; */
+
 `;
 const StFollowNumber = styled.div`
   margin-bottom: 6px;
