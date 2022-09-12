@@ -10,7 +10,8 @@ function Layout ({ children }) {
           window.location.pathname === "/todolists" || 
             window.location.pathname === "/setuptodo" || 
               window.location.pathname === `/feeddetail/${params.todoId}` ||
-                window.location.pathname === `/otherspage/${params.userId}`) === true)
+                window.location.pathname === `/otherspage/${params.userId}` ||
+                  window.location.pathname === `/activity`) === true)
                 return true
     else
       return false

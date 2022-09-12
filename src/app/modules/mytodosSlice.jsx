@@ -83,7 +83,10 @@ export const deleteSetUpTodoFetch = createAsyncThunk(
   'setuptodo/deleteSetUpTodoFetch',
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.delete(`/mytodos/${payload.todoId}/challenged`, { date: payload.date});
+      const response = await instance.delete(`/mytodos/${payload.todoId}/challenged`, { 
+        data: { 
+          date: payload.date
+        }});
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
