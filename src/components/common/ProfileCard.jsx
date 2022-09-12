@@ -51,7 +51,7 @@ export default ProfileCard;
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 48.33px;
+  /* margin-bottom: 48.33px; */
   width: 500px;
 `;
 const StProfileImg = styled.img`
@@ -89,8 +89,9 @@ const StMbti = styled.div`
 `;
 const StFollowWrap = styled.div`
   flex-direction: column;
-  margin: 6.33px 70px 0px 32px;
-  align-items: center;
+  margin: 6.33px 70px 0px 50px;
+  /* align-items: center; */
+
 `;
 const StFollowNumber = styled.div`
   margin-bottom: 6px;
