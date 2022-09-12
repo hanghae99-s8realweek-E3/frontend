@@ -41,11 +41,6 @@ function MyPageContainer () {
     window.location.assign("/activity")
   }
 
-  // 팔로잉, 팔로워 클릭 시, 팔로잉/팔로워 리스트 화면 출력
-  function moveToFollowList () {
-    window.location.assign(`/follow/${accountsState.userId}`)
-  }
-
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
     window.localStorage.clear();
@@ -59,25 +54,6 @@ function MyPageContainer () {
       {Object.keys(accountsState.userInfo).length === 0 ? <div></div> : 
       <>
         <ProfileCard profileData={accountsState} />
-        {/* <StMyProfileSec>
-          <StMyImageBox>
-            <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
-          </StMyImageBox>
-          <StMyProfileDiv>
-            <h3 style={{margin:0, marginBottom:"0.5rem"}}>{accountsState.nickname} 님</h3>
-            <p style={{margin:0, color:"gray"}}>{accountsState.mbti}</p>
-          </StMyProfileDiv>
-          <StMyFollowStat>
-            <StFollowStatBtn onClick={moveToFollowList}>
-              <span style={{marginBottom:"6px", fontSize:"20px"}}>{accountsState.following}</span>
-              <span style={{fontSize:"13px"}}>팔로잉</span>
-            </StFollowStatBtn>
-            <StFollowStatBtn onClick={moveToFollowList}>
-              <span style={{marginBottom:"6px", fontSize:"20px"}}>{accountsState.follower}</span>
-              <span style={{fontSize:"13px"}}>팔로워</span>
-            </StFollowStatBtn>
-          </StMyFollowStat>
-        </StMyProfileSec> */}
 
         <StMatchCheckDiv>
           <StMatchCheckBtn>궁합 알아보기</StMatchCheckBtn>
@@ -120,66 +96,6 @@ const StMyPageContainer = styled.div`
   width:500px;
   box-sizing: border-box;
 ` 
-
-const StMyProfileSec = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content:flex-start;
-  align-items: center;
-  
-  margin: 1rem 0;
-`
-
-const StMyImageBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border: none;
-  border-radius: 50%;
-  margin: 0 26px;
-
-  height: 80px;
-  width: 80px;
-  overflow: hidden;
-`
-
-const StMyImage = styled.img`
-  height:96px;
-  width: 96px;
-
-`
-
-const StMyProfileDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  text-align: left;
-
-  margin-right: 38px;
-`
-
-const StMyFollowStat = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const StFollowStatBtn = styled.button`
-  background: none;
-
-  display:flex;
-  flex-direction:column;
-  align-items: center;
-
-  text-align:center;
-
-  border: none;
-  outline: none;
-  margin:0 25px;
-
-  cursor:pointer;
-`
 
 const StCommonBorder = styled.div`
   height: 1px;

@@ -54,7 +54,8 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
           window.location.pathname === "/todolists" || 
             window.location.pathname === "/setuptodo" || 
               window.location.pathname === `/feeddetail/${params.todoId}` ||
-                window.location.pathname === `/otherspage/${params.userId}`) === true)
+                window.location.pathname === `/otherspage/${params.userId}` ||
+                  window.location.pathname === `/activity`) === true)
                 return false
     else
       return true
@@ -63,7 +64,8 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   // 경로에 따라 완료/진행중 버튼 출력을 유도할지 말지 결정함.
   function locationButtonCheck () {
     if ((window.location.pathname === "/todolists" || 
-      window.location.pathname === `/todolists/${params.mbti}`) === true)
+          window.location.pathname === `/todolists/${params.mbti}` ||
+            window.location.pathname === "/activity") === true)
         return false
     else
       return true
