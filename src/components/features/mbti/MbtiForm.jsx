@@ -10,6 +10,10 @@ const MbtiForm = () => {
   const dispatch = useDispatch();
   const myCookie = decodeMyTokenData();
   const state = useSelector (state => state.mbti)
+  const kakaoToken = new URL(window.location.href).searchParams.get("token");
+  if (kakaoToken !== null ) {
+    window.localStorage.setItem("token", kakaoToken)
+  }
 
   if (tokenChecker() === false){
     navigate('/mypage')
