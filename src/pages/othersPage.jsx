@@ -1,8 +1,8 @@
 
-import UserProfileContainer from "../components/features/myPage/UserProfileContainer";
 import Layout from "../layout/layout";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
+import UserProfileContainer from "../components/features/othersPage/UserProfileContainer";
 
 function OthersPage() {
   return (
