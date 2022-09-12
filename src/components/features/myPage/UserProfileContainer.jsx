@@ -425,8 +425,9 @@ const StCommonBar = styled.div`
   border-radius: 133.005px;
 `;
 const StToggle = styled.div`
-  height: 315px;
+  /* height: 315px; */
   display: flex;
-  margin-right: 8px;
+  margin-right: 26px;
+  justify-content: end;
 `;
 export default UserProfileContainer;

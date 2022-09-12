@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 
 function LoginSelect(){
-
   const navigate = useNavigate();
 
   //카카오 로그인 연동
@@ -26,14 +25,12 @@ function LoginSelect(){
       <StKakaoLoginBtn onClick={goKakaoLogin}>카카오 계정 로그인</StKakaoLoginBtn>
       <StNormalLoginBtn onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
     </StTotalWrap>
-
   );
 }
 
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
-  
 `
 const StTopMsg = styled.div`
 height: 64px;
@@ -71,9 +68,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 margin:0px 25px 25px 25px;
-
 `
-
 const StNormalLoginBtn = styled.button`
 height: 70px;
 background: #FF6D53;
@@ -87,7 +82,6 @@ line-height: 32px;
 text-align: center;
 color: #FFFFFF;
 margin: 0px 25px 407.61px 25px ;
-
 align-items: center;
 justify-content: center;
 `
