@@ -22,7 +22,7 @@ function SetToDoContainer () {
   // 기록 확인을 허용해주기 위해 필요한 3개월 전 날짜
   let mindate = new Date()
   mindate.setMonth(mindate.getMonth() -3)
-  //   date:”yyyy-mm-dd”
+  // date:”yyyy-mm-dd”
   
   useEffect(() => {
     const selectYear = calendar.getFullYear();

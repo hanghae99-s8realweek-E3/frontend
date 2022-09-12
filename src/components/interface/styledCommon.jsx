@@ -41,6 +41,9 @@ export const StCommonBorder = styled.div`
 
   display:block;
 
-  width: 100%;
+  width: ${props=>props.width || "100%"};
   height: 1px;
+
+  margin:${props => props.margin};
+
 `

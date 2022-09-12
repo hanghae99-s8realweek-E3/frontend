@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import ProfileModifyForm from "../components/features/myPage/ProfileModifyForm";
+import ProfileModifyForm from "../components/modifyProfile/ProfileModifyForm";
 import Layout from "../layout/layout";
 
 const ModifyProfile = () => {
