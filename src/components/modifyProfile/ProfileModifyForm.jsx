@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { putModifyProfileFetch } from "../../../app/modules/accountsSlice";
-import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
+import { putModifyProfileFetch } from "../../app/modules/accountsSlice";
+import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 
 function ProfileModifyForm () {
   const dispatch = useDispatch();

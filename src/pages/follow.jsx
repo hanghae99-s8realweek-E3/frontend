@@ -1,6 +1,6 @@
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import MyPageFollow from "../components/features/myPage/MyPageFollow";
+import MyPageFollow from "../components/features/follow/MyPageFollow";
 import Layout from "../layout/layout";
 
 
