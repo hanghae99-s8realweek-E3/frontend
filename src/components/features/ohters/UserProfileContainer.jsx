@@ -55,10 +55,9 @@ function UserProfileContainer() {
   };
   // 최신순
   const datebutton = () => {
-    if (tokenChecker() === false){
-    return dispatch(getTodoListsFetch(false)) 
-    }
-    else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
+    if (tokenChecker() === false) {
+      return dispatch(getTodoListsFetch(false));
+    } else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
@@ -162,7 +161,8 @@ const StProfileImg = styled.img`
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 170.67px;
+  /* margin-top: 170.67px; */
+  margin-top: 80px;
   margin-bottom: 48.33px;
   /* width: 380px; */
 `;
@@ -267,11 +267,23 @@ const StChallengeTodo = styled.div`
   width: 105px;
   display: flex;
   cursor: pointer;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #000000;
 `;
 const StSuggestionTodo = styled.div`
   width: 105px;
   display: flex;
   cursor: pointer;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #000000;
 `;
 
 const StLineWrap = styled.div`
@@ -379,7 +391,8 @@ const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
-  height: 683px;
+  /* height: 683px; */
+  height:335px;
   box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
@@ -418,10 +431,10 @@ const StChallenge = styled.div``;
 const StCommonBar = styled.div`
   position: absolute;
   width: 178.23px;
-  margin-top: 315px;
+  margin-top: 200px;
   height: 6.65px;
   left: calc(50% - 178.23px / 2 - 1.33px);
-  background: #000000;
+  background: red;
   border-radius: 133.005px;
 `;
 const StToggle = styled.div`

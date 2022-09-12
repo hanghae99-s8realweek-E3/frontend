@@ -1,18 +1,25 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { getKakaoLoginFetch } from '../../../app/modules/accountsSlice';
 
 
 function LoginSelect(){
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //카카오 로그인 연동
   const goKakaoLogin = () =>{
-    navigate("/kakao")
+    dispatch(getKakaoLoginFetch());
+    navigate("/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F3.36.126.158%252Fapi%252Faccounts%252Fauth%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3D6d38e857413484f790fca11de76d3626")
   };
+
+  // https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F3.36.126.158%252Fapi%252Faccounts%252Fauth%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3D6d38e857413484f790fca11de76d3626
   
   //일반 로그인 연동
   const goNormalLogin = () =>{
+    
     navigate("/login");
   };
 

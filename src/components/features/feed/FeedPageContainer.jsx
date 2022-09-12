@@ -22,7 +22,7 @@ function FeedPageContainer() {
   const { mbti } = useParams();
   console.log(card);
 
-  console.log(mbti)
+  console.log(mbti);
   useEffect(() => {
     if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
     else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
@@ -35,9 +35,7 @@ function FeedPageContainer() {
     if (tokenChecker() === false) {
       alert("로그인 후 이용해주세요");
       return;
-    } 
-    else 
-    return checkOff(!checkOn);
+    } else return checkOff(!checkOn);
   };
 
   const toggleSortPopUp = (e) => {
@@ -62,18 +60,19 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
 
-    //도전순
+  //도전순
   const challengebutton = () => {
     if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
-    else if (tokenChecker() === true) dispatch(getTodoListsChallengeFetch(true));
+    else if (tokenChecker() === true)
+      dispatch(getTodoListsChallengeFetch(true));
     // dispatch(getTodoListsChallengeFetch());
     // navigate("/todolists?filter=challengedCount");
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
   const moveToSelectMBTI = () => {
-    navigate('/selectmbtifeed')
-  }
+    navigate("/selectmbtifeed");
+  };
 
   return (
     <>
@@ -97,7 +96,7 @@ function FeedPageContainer() {
           {checkOn === false ? (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL+ `/images/Appear.png`}
+              src={process.env.PUBLIC_URL + `/images/Appear.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -105,7 +104,7 @@ function FeedPageContainer() {
           ) : (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL+ `/images/Hide.png`}
+              src={process.env.PUBLIC_URL + `/images/Hide.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -115,7 +114,7 @@ function FeedPageContainer() {
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
-            src={process.env.PUBLIC_URL+ `/images/Toggle.png`}
+            src={process.env.PUBLIC_URL + `/images/Toggle.png`}
             width="12"
             height="6"
             alt="ToggleImg"
@@ -165,32 +164,39 @@ const StTotalWrap = styled.div`
   flex-direction: column;
 `;
 const StHideToggle = styled.div`
-  /* background-color: red; */
   display: flex;
   flex-direction: row;
   margin: 154px 0px 18px;
-  justify-content: flex-end;
   align-items: center;
 `;
 
 const StHideImg = styled.img`
-  display: flex;
+  justify-content: left;
   margin: 7px 8px 8px 25px;
 `;
 const StHide = styled.div`
   display: flex;
   margin-right: 235px;
   align-items: center;
-  justify-content: center;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #000000;
 `;
 const StToggle = styled.div`
-  display: flex;
   margin-right: 8px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #000000;
 `;
 const StToggleImg = styled.img`
-  display: flex;
-  margin: 13px 26px 13px 0px;
-  justify-content: center;
+  margin: 13px 0px 13px 0px;
+
   align-items: center;
 `;
 const StTodayMyCardWrap = styled.div`

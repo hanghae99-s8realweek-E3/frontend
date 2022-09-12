@@ -51,7 +51,7 @@ export default ProfileCard;
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 48.33px;
+  /* margin-bottom: 48.33px; */
   width: 500px;
 `;
 const StProfileImg = styled.img`
