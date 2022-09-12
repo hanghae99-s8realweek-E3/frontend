@@ -18,7 +18,7 @@ function MyPageContainer () {
 
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
-    window.location.assign("/mypage")
+    navigate("/mypage")
   }
 
   // 프로필 수정 화면으로 이동

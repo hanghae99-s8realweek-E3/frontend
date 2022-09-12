@@ -76,7 +76,7 @@ function FeedDetailContainer () {
                     </StCommentBox>
                     </div>
 
-        })}
+          })}
         </div>
           <StWriteComment onSubmit={onSubmitComment}>
             <StItem>
