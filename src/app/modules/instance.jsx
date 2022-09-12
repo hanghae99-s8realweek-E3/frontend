@@ -11,4 +11,12 @@ const instance = axios.create({
   withCredentials:true,
 });
 
+export const preInstance = axios.create({
+  // headers: {
+  //   Authorization: `Bearer ${myToken}`
+  // },
+  baseURL: process.env.REACT_APP_API,
+  // withCredentials:true,
+});
+
 export default instance;
