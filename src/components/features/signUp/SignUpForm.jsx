@@ -42,12 +42,21 @@ const SignUpForm = () => {
     const payload = e.target.value
     //axios (instance.jsx을 import로 불러와서 사용)
     const emailCheck = async() => {
-      const response = await preInstance.post("/accounts/emailAuth", {email:payload});
-      if ( response.data.message === "success") {
-        return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
-      } else {
-        return alert(response.response.data.errorMessage)
+      try {
+        const response = await preInstance.post("/accounts/emailAuth", {email:payload});
+        if ( response.data.message === "success") {
+          return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
+        } 
+      } catch (error) {
+          return alert(error.response.data.errorMessage)
       }
+
+      // const response = await preInstance.post("/accounts/emailAuth", {email:payload});
+      // if ( response.data.message === "success") {
+      //   return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
+      // } else {
+      //   return alert(response.response.data.errorMessage)
+      // }
     }
     emailCheck(); // 최종 동작
   }
@@ -58,12 +67,14 @@ const SignUpForm = () => {
     e.preventDefault();
     //axios
     const certificate = async () => {
-        const response = await preInstance.post("/accounts/emailAuth/check", {email:signupData.email, emailAuthNumber:confirmNumberRef.current.value})
-        if (response.data.message === "success") {
+        try {
+          const response = await preInstance.post("/accounts/emailAuth/check", {email:signupData.email, emailAuthNumber:confirmNumberRef.current.value})
+          if (response.data.message === "success") {
             return alert('인증 성공 했습니다')
-        } else {
-            return alert(response.response.data.errorMessage)
-        }
+          }
+        } catch (error) {
+            return alert(error.response.data.errorMessage)
+      }
     }
     certificate();
   }
@@ -83,15 +94,17 @@ const SignUpForm = () => {
     }
     //axios
     const postSignUpFetch = async () => {
-        const response = await preInstance.post("/accounts/signup", signupData)
-        //request
-        if (response.data.message === "success") {
-            //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
-            window.localStorage.setItem("token", response.data.token)
-            window.location.assign('/mbti')
-        } else {
-            return alert(response.response.data.errorMessage)
+        try {
+          const response = await preInstance.post("/accounts/signup", signupData)
+          //request
+          if (response.data.message === "success") {
+              //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
+              window.localStorage.setItem("token", response.data.token)
+              window.location.assign('/mbti')
         }
+      } catch (error) {
+          return alert(error.response.data.errorMessage)
+      }
     }
     postSignUpFetch(); //함수 발동
   };

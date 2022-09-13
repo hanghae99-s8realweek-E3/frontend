@@ -26,15 +26,17 @@ function MyPageFollow() {
     const changeMyUnFollowState = (e) => {
         e.preventDefault();
         const putMyPageFollowFetch = async () => {
-            const response = await instance.put(`/follows/${e.target.id}`)
-            if (response.data.message === "success") {
-                dispatch(getMyPageFollowFetch({userId:params.userId}))
-            } else {
-                return alert(response.response.data.errorMessage)
+            try {
+                const response = await instance.put(`/follows/${e.target.id}`)
+                if (response.data.message === "success") {
+                    dispatch(getMyPageFollowFetch({userId:params.userId}))
+                }
+            } catch (error) {
+                return alert(error.response.data.errorMessage)
+                }
             }
-        }
             putMyPageFollowFetch();
-    }
+        }
 
     return (
         <StOutline>

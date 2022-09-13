@@ -43,55 +43,62 @@ function FeedDetailContainer () {
     const onClickDeleteComment = (e) => {
       e.preventDefault();
       const deleteCommentFetch = async () => {
-        const response = await instance.delete(`/comments/${e.target.id}`)
-        if (response.data.message === "success") {
-          return dispatch(getFeedDetailFetch({todoId:params.todoId}));
-        } else {
-          return alert(response.response.data.errorMessage)
+        try {
+          const response = await instance.delete(`/comments/${e.target.id}`);
+          if (response.data.message === "success") {
+            return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+          } 
+        } catch(error) {
+          return alert(error.response.data.errorMessage)
         }
-      }
-      deleteCommentFetch();
-        // dispatch(deleteCommentFetch(e.target.id))
     }
+    deleteCommentFetch()
+  }
 
     const setMyTodayChallenge = (e)=> {
       e.preventDefault();
       //payload
       //통신
       const postFeedDetailFetch = async () => {
-        const response = await instance.post(`/mytodos/${e.target.id}/challenged`);
-        if (response.data.message === "success") {
-          return navigate('/setuptodo')
-        } else {
-          return alert(response.response.data.errorMessage)
+        try {
+          const response = await instance.post(`/mytodos/${e.target.id}/challenged`);
+          if (response.data.message === "success") {
+            return navigate('/setuptodo')
+          } 
+        } catch(error) {
+          return alert(error.response.data.errorMessage)
         }
       }
       postFeedDetailFetch()
       // dispatch(postFeedDetailFetch(e.target.id))
-    }
+    };
 
     const upLoadCommentData = (e) => {
         e.preventDefault();
         const postCommentFetch = async () => {
-          const response = await instance.post(`/comments/${params.todoId }`,{comment:inputRef.current.value});
-          if (response.data.message === "success") {
-            return dispatch(getFeedDetailFetch({todoId:params.todoId}));
-          } else {
-            return alert(response.response.data.errorMessage)
+          try {
+            const response = await instance.post(`/comments/${params.todoId }`,{comment:inputRef.current.value});
+            if (response.data.message === "success") {
+              return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+            }
+          } catch(error) {
+              return alert(error.response.data.errorMessage)
           }
         }
         postCommentFetch();
         // dispatch(postCommentFetch({comment:inputRef.current.value, todoId:params.todoId }))
         inputRef.current.value="";
-    } 
+      };
 
     const changeFollowState = (e) => {
       const putMyPageFollowFetch = async () => {
-        const response = await instance.put(`/follows/${e.target.id}`);
-        if (response.data.message === "success") {
-          return dispatch(getFeedDetailFetch({todoId:params.todoId}));
-        } else {
-          return alert(response.response.data.errorMessage);
+        try {
+          const response = await instance.put(`/follows/${e.target.id}`);
+          if (response.data.message === "success") {
+            return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+          } 
+        }catch(error) {
+            return alert(error.response.data.errorMessage);
         }
       }
       putMyPageFollowFetch();
