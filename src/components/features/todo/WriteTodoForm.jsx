@@ -58,18 +58,21 @@ function WriteTodoForm() {
   //   submitTodoData();
   // };
 
-  const submitTodoData = async () => {
-    try {
-      const response = await instance.post("/mytodos", todo);
-      console.log(response);
-      if (response.data.message === "success") {
-        window.localStorage.setItem("token", response.data.token);
-        window.location.assign("/");
+  const submitTodoData = (e) => {
+    e.preventDefault();
+    const TodoDateFetchCheck = async () => {
+      try {
+        const response = await instance.post("/mytodos", todo);
+        console.log(response);
+        if (response.data.message === "success") {
+          console.log(response.data.message);
+          window.location.assign("/");
+        }
+      } catch (error) {
+        return alert(error);
       }
-    } catch (error) {
-      return alert(error);
-    }
-    submitTodoData();
+    };
+    TodoDateFetchCheck();
   };
 
   return (
