@@ -25,18 +25,6 @@ const initialState = {
 //   }
 // );
 
-export const postSignUpFetch = createAsyncThunk(
-  'users/postSignUp',
-  async (payload, thunkAPI) => {
-    try {
-      const response = await instance.post("/accounts/signup", payload)  //('API경로에는 서버와 통신하는 경로값', payload 자리에는 서버로 보내줘야할 값이 들어간다)
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-)
-
 // 프로필 정보 받아올 시에 사용되는 thunk action creater 
 export const getMyPageFetch = createAsyncThunk(
   'users/getMyPageFetch',
@@ -104,20 +92,7 @@ const accountsSlice = createSlice({
     //   alert(newState);
     //   return newState;
     // });
-    builder.addCase(postSignUpFetch.pending , (state, action)=> {
-      return state;
-    })
-    builder.addCase(postSignUpFetch.fulfilled, (state,action)=> {
-      const newState = {...state}
-      newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token)
-      return newState;
-    })
-    builder.addCase(postSignUpFetch.rejected, (state,action)=> {
-      const newState = { ...state };
-      newState.errorMessage = action.payload.errorMessage;
-      return newState;
-    })
+    
     // getMyPageFetch Creater 작동 시 적용되는 내용들
     builder.addCase(getMyPageFetch.pending , (state, action)=> {
       return state;

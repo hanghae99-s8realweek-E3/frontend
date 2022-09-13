@@ -23,18 +23,18 @@ export const getMyPageFollowFetch = createAsyncThunk(
     }
 )
 
-//!put 팔로우/언팔로우 하기
-export const putMyPageFollowFetch= createAsyncThunk (
-    'follow/putMyPageFollowFetch',
-    async (payload,thunkAPI) => {
-        try {
-            const response = await instance.put(`/follows/${payload}`)
-            return thunkAPI.fulfillWithValue(response.data)
-        }catch (error) {
-            return thunkAPI.rejectWithValue(error.data);
-        }
-    }
-)
+// //!put 팔로우/언팔로우 하기
+// export const putMyPageFollowFetch= createAsyncThunk (
+//     'follow/putMyPageFollowFetch',
+//     async (payload,thunkAPI) => {
+//         try {
+//             const response = await instance.put(`/follows/${payload}`)
+//             return thunkAPI.fulfillWithValue(response.data)
+//         }catch (error) {
+//             return thunkAPI.rejectWithValue(error.data);
+//         }
+//     }
+// )
 
 const followSlice = createSlice ({
     name:"follow",
@@ -54,20 +54,20 @@ const followSlice = createSlice ({
             newState.errorMessage=action.payload.errorMessage;
             return newState;
         })
-        //!put
-        builder.addCase(putMyPageFollowFetch.pending , (state,action)=> {
-            return state;
-        })
-        builder.addCase(putMyPageFollowFetch.fulfilled, (state,action)=> {
-            const newState = {...state};
-            newState.message=action.payload.message;
-            return newState;
-        })
-        builder.addCase(putMyPageFollowFetch.rejected, (state, action)=> {
-            const newState={...state};
-            newState.errorMessage=action.payload.errorMessage;
-            return newState;
-        })
+        // //!put
+        // builder.addCase(putMyPageFollowFetch.pending , (state,action)=> {
+        //     return state;
+        // })
+        // builder.addCase(putMyPageFollowFetch.fulfilled, (state,action)=> {
+        //     const newState = {...state};
+        //     newState.message=action.payload.message;
+        //     return newState;
+        // })
+        // builder.addCase(putMyPageFollowFetch.rejected, (state, action)=> {
+        //     const newState={...state};
+        //     newState.errorMessage=action.payload.errorMessage;
+        //     return newState;
+        // })
     }
 })
 
