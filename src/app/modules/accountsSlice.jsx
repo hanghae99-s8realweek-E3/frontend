@@ -50,20 +50,28 @@ export const getMyPageFetch = createAsyncThunk(
   }
 )
 
-// 회원 탈퇴 시에 사용되는 thunk action creater 
-export const deleteWithdrawFetch = createAsyncThunk(
-  'users/deleteHelpDeskFetch',
-  async (payload, thunkAPI) => {
-    try {
-      console.log(payload)
-      const response = await instance.delete("/accounts", payload)
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      console.log(error.response.data)
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-)
+// // // 소셜로그인 카카오
+// export const getKakaoLoginFetch = createAsyncThunk(
+//   'users/getKakaoLoginFetch',
+//   async (payload, thunkAPI) => {
+//     try {
+//       const response = await axios.get(`http://3.36.126.158/api/accounts/kakao`)
+//       console.log(response);
+//       return thunkAPI.fulfillWithValue(response.data);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response.data);
+//     }
+//   }
+// )
+
+// export const __kakaoSignIn = (code) => async (dispatch) => {
+//   const data = await axios.get(`/oauth/kakao/callback?code=${code}`);
+//   if (data.headers.authorization !== undefined) {
+//     localStorage.setItem("Authorization", data.headers.authorization);
+//   }
+//   dispatch(postLoginFetch(data.data));
+// };
+
 
 const accountsSlice = createSlice({
   name:"accounts",
@@ -124,21 +132,31 @@ const accountsSlice = createSlice({
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
-    // deleteHelpDeskFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(deleteWithdrawFetch.pending , (state, action)=> {
-      return state;
-    })
-    builder.addCase(deleteWithdrawFetch.fulfilled, (state,action)=> {
-      const newState = {...state}
-      newState.message = action.payload.message;
-      return newState;
-    })
-    builder.addCase(deleteWithdrawFetch.rejected, (state,action)=> {
-      const newState = { ...state };
-      newState.errorMessage = action.payload.errorMessage;
-      console.log(newState)
-      return newState;
-    })
+
+    // // 소셜로그인 카카오
+    // builder.addCase(getKakaoLoginFetch.pending, (state, action) => {
+    //   state = action.payload;
+    //   return state;
+    // });
+    // builder.addCase(getKakaoLoginFetch.fulfilled, (state, action) => {
+    //   const newState = {...state };
+    //   // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
+    //   newState.message = action.payload.message;
+    //   window.localStorage.setItem("token", action.payload.token)
+    //   return newState;
+    //   // state = action.payload;
+    //   // return state;
+    // });
+    // builder.addCase(getKakaoLoginFetch.rejected, (state, action) => {
+    //   // const newState = { ...state };
+    //   // newState.errorMessage = action.payload.errorMessage;
+    //   // alert(newState);
+    //   // return newState;
+    //   state = action.payload;
+    //   console.log(state);
+    //   return state;
+
+    // });
   }
 })
 
