@@ -1,14 +1,11 @@
-import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { putModifyProfileFetch } from "../../app/modules/accountsSlice";
 import instance from "../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 
 function ProfileModifyForm () {
-  const dispatch = useDispatch();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
 
@@ -43,12 +40,14 @@ function ProfileModifyForm () {
   function submitModifyMyProfileData(event) {
     event.preventDefault();
     const modifyConnect = async () => {
-      const response = await instance.put("/accounts", changeProfile)
-      if (response.data.message === "success") {
-        window.localStorage.setItem("token", response.data.token)
-        navigate("/mypage")
-      } else {
-        alert(response.response.data.errorMessage)
+      try {
+        const response = await instance.put("/accounts", changeProfile)
+        if (response.data.message === "success") {
+          window.localStorage.setItem("token", response.data.token)
+          navigate("/mypage")
+        }
+      } catch(error) {
+        alert(error.response.data.errorMessage)
       }
     }
     modifyConnect();

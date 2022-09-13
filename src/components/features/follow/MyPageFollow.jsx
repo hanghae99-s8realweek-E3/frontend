@@ -2,7 +2,8 @@ import React,{useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getMyPageFollowFetch, putMyPageFollowFetch } from "../../../app/modules/followSlice";
+import { getMyPageFollowFetch } from "../../../app/modules/followSlice";
+import instance from "../../../app/modules/instance"
 
 function MyPageFollow() {
     const dispatch = useDispatch();
@@ -12,8 +13,9 @@ function MyPageFollow() {
 
     useEffect(()=> {
         dispatch(getMyPageFollowFetch({userId:params.userId}))
-        },[followState]);
-    
+        },[]); //followState 삭제이유: 리덕스를 사용하지않기때문에 값을 갱신시켜줄필요가없다 (아래 함수자체애서 값을 갱신시켜주고있기때문)
+    console.log(followState)
+
     const onClick = (e)=> {
         e.preventDefault();
         if (followTab === false) {
@@ -21,8 +23,17 @@ function MyPageFollow() {
         } else setFollowTab(false)
     }
 
-    const onClickDelete = (e) => {
-        dispatch(putMyPageFollowFetch(e.target.id))
+    const changeMyUnFollowState = (e) => {
+        e.preventDefault();
+        const putMyPageFollowFetch = async () => {
+            const response = await instance.put(`/follows/${e.target.id}`)
+            if (response.data.message === "success") {
+                dispatch(getMyPageFollowFetch({userId:params.userId}))
+            } else {
+                return alert(response.response.data.errorMessage)
+            }
+        }
+            putMyPageFollowFetch();
     }
 
     return (
@@ -69,7 +80,7 @@ function MyPageFollow() {
                                         <StNickname>{x.nickname}</StNickname>
                                         <StMbti>{x.mbti}</StMbti>
                                     </StWrapNicknameMbti>
-                                        <StDeleteFollowBtn type="submit" id={x.userId} onClick={onClickDelete}>언팔로우</StDeleteFollowBtn>
+                                        <StDeleteFollowBtn type="submit" id={x.userId} onClick={changeMyUnFollowState}>언팔로우</StDeleteFollowBtn>
                             </StProfileBox>
                                 </div>)
                     })}</div>
