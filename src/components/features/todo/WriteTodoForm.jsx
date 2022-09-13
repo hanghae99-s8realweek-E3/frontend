@@ -1,3 +1,4 @@
+//대연
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -56,9 +57,6 @@ function WriteTodoForm() {
     navigate("/")
     // navigate("/todoList?date=");
   };
-
-
-
   return (
     <StTotalWrap>
       <StMbti>{getMbti.mbti}</StMbti>

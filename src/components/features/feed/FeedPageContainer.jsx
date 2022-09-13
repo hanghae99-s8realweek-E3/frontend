@@ -1,3 +1,4 @@
+//대연
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -54,8 +55,6 @@ function FeedPageContainer() {
   const commentbutton = () => {
     if (tokenChecker() === false) dispatch(getTodoListsCommentFetch(false));
     else if (tokenChecker() === true) dispatch(getTodoListsCommentFetch(true));
-    // dispatch(getTodoListsCommentFetch());
-    // navigate("/todolists?filter=commentsCounts");
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
@@ -65,8 +64,6 @@ function FeedPageContainer() {
     if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
     else if (tokenChecker() === true)
       dispatch(getTodoListsChallengeFetch(true));
-    // dispatch(getTodoListsChallengeFetch());
-    // navigate("/todolists?filter=challengedCount");
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
