@@ -23,11 +23,13 @@ function WithdrawContainer () {
   function sendToWithdrawData (event) {
     event.preventDefault();
     const withdrawApply = async() => {
-      const response = await instance.delete("/accounts", {password: passwordRef.current.value})
-      if (response.data.message === "success") {
-        navigate('/')
-      } else {
-        alert(response.response.data.errorMessage)
+      try {
+        const response = await instance.delete("/accounts", {password: passwordRef.current.value})
+        if (response.data.message === "success") {
+          navigate('/')
+        } 
+      } catch(error) {
+        alert(error.response.data.errorMessage)
       }
     }
     withdrawApply();

@@ -7,12 +7,13 @@ import { getSetUpMyTodoFetch } from "../../../app/modules/mytodosSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { StCommonRowBox, StCommonText } from "../../interface/styledCommon";
 import ProfileCard from "../../common/ProfileCard";
+import { useNavigate } from "react-router-dom";
 
 function SetToDoContainer () {
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
   const monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const weekOfDayList = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"]
-
+  const navigate = useNavigate();
   // 날짜를 적용해주는 상태
   const [calendar, setCalendar] = useState(new Date());
   const dispatch = useDispatch();
@@ -34,12 +35,12 @@ function SetToDoContainer () {
 
   // 도전하러 가기 클릭 시, 피드 선택 화면 출력
   function moveToSelectFeed () {
-    window.location.assign('/todolists')
+    navigate('/todolists')
   }
 
   // 작성하러 가기 클릭 시, TODO 작성 화면 출력
   function moveToWriteTodo () {
-    window.location.assign('/mytodos')
+    navigate('/mytodos')
   }
 
   const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1}-${calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate()}`
