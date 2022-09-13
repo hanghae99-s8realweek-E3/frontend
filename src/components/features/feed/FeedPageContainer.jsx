@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getComment, postComment } from "../../../app/modules/commentsSlice";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { postMbtifetch } from "../../../app/modules/mbtiSlice";
+import instance from "../../../app/modules/instance";
 import { setCookie } from "../../../utils/cookie";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const myCookie = decodeMyTokenData();
-  const state = useSelector (state => state.mbti)
+  // const dispatch = useDispatch();
+  const myToken = decodeMyTokenData();
+  // const state = useSelector (state => state.mbti)
   const kakaoToken = new URL(window.location.href).searchParams.get("token");
   if (kakaoToken !== null ) {
     window.localStorage.setItem("token", kakaoToken)
@@ -19,16 +19,20 @@ const MbtiForm = () => {
   if (tokenChecker() === false){
     navigate('/mypage')
   }
-
+  console.log(myToken,kakaoToken)
   //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
   useEffect(()=> {
-    if (state.message === "success"){
-      if (myCookie.mbti !== null ){
-        setCookie("firstLogin", "true", 300);
+    if (myToken !== undefined && myToken !== null) {
+      if (myToken.mbti !== null) {
         navigate('/')
       }
     }
-  },[state])
+    if (kakaoToken !== undefined && kakaoToken !== null) {
+      if (kakaoToken.mbti !== null) {
+        navigate('/')
+      }
+    }
+      },[])
 
   const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [
@@ -42,8 +46,21 @@ const MbtiForm = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
+    //payload
     const selectedMbti = {mbti:myMbti} //!api 명세서 키값 확인
-    dispatch(postMbtifetch(selectedMbti))
+    //post 만들기
+    const postMbtifetch = async ()=> {
+      const response = await instance.post("/accounts/mbti", selectedMbti);
+      if (response.data.message === "success") {
+        setCookie("firstLogin", "true", 300);
+        window.localStorage.setItem("token", response.data.token)
+        window.location.assign('/') //윈도우 어싸인과 네이게이터의 차이: 네이게이터는 리액트라우터돔과 관련,(현재 토큰갱신 문제때문에 윈도우어싸인을 사용하고있지만 해결중...)
+      } else {
+        return alert(response.response.data.errorMessage)
+      }
+    }
+    postMbtifetch();
+    // dispatch(postMbtifetch(selectedMbti))
   }
   
 
