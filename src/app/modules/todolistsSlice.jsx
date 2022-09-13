@@ -293,11 +293,9 @@ const todolistsSlice = createSlice({
       return state;
     });
     builder.addCase(getSelectMBTITodoFetch.fulfilled, (state, action) => {
-      console.log(action)
       const newState = { ...state };
       newState.message = action.payload.message;
       newState.mbtiData = action.payload.mbtiData;
-      console.log(newState)
       return newState;
     });
     builder.addCase(getSelectMBTITodoFetch.rejected, (state, action) => {

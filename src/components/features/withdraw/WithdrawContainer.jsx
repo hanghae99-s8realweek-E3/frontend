@@ -1,23 +1,17 @@
 import { useRef, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import accountsSlice, { deleteWithdrawFetch } from "../../../app/modules/accountsSlice";
 import ErrorPageContainer from "../error/ErrorPageContainer";
 import { StCommonRowBox } from "../../interface/styledCommon";
-
+import instance from "../../../app/modules/instance";
 
 function WithdrawContainer () {
-  const dispatch = useDispatch();
   const passwordRef = useRef();
   const inputRef = useRef();
   const navigate = useNavigate();
   const [pageState, setPageState] = useState("input");
   const accountState = useSelector(state=> state.accounts)
-
-  useEffect(() => {
-    dispatch(accountsSlice.actions.resetSuccessMessage());
-  },[])
 
   useEffect(() => {
     if (accountState.message === "success")
@@ -28,7 +22,15 @@ function WithdrawContainer () {
 
   function sendToWithdrawData (event) {
     event.preventDefault();
-    dispatch(deleteWithdrawFetch({password: passwordRef.current.value}))
+    const withdrawApply = async() => {
+      const response = await instance.delete("/accounts", {password: passwordRef.current.value})
+      if (response.data.message === "success") {
+        navigate('/')
+      } else {
+        alert(response.response.data.errorMessage)
+      }
+    }
+    withdrawApply();
   }
 
   function moveToMainPage (event) {

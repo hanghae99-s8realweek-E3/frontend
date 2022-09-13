@@ -3,34 +3,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCircleCheck, faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMyTodosFetch, deleteSetUpTodoFetch, putSetUpTodoFetch } from "../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../utils/token";
+import instance from "../../app/modules/instance";
 
 function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   const [challengeComplete, setChallengeComplete] = useState(false)
   const [menuModal, setMenuModal] = useState(false);
   const params = useParams();
-  const dispatch = useDispatch();
   const myData = decodeMyTokenData();
-  const myTodosState = useSelector(state => state.mytodos);
+  const navigate = useNavigate();
 
   // API 새로 요청해야하나?
   // 결과값에 isCompleted 상태를 반환할 수 있으면 좋을텐데!
   // 이거 말고 다르게 해결 가능한지를 확인해보자.
-  useEffect(() => {
-    if (window.location.pathname === "/setuptodo")
-      if (myTodosState === "success")
-        return window.location.reload();
-  },[myTodosState])
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail () {
     if (id !== "null" && id !== undefined)
-      // if (window.location.pathname === "/todolists")
-        window.location.assign(`/feeddetail/${id}`);
+    navigate(`/feeddetail/${id}`);
   };
 
   // 오늘 날짜를 yyyy-mm-dd로 반환해줌.
@@ -44,7 +37,19 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   // 오늘의 챌린지 완료/진행중 상태를 바꿔주도록 함. 
   function changeStateChallenge (event) {
     event.stopPropagation();
-    dispatch(putSetUpTodoFetch({todoId: id, date: settingTodayDate()}))
+    const stateChallenge = async () => {
+      const response = await instance.put(`/mytodos/${id}/challenged`, { date: settingTodayDate() })
+      if (response.data.message === "success") {
+        if (response.data.isCompleted === 1) {
+          setChallengeComplete(true)
+        } else {
+          setChallengeComplete(false)
+        }
+      } else {
+        alert(response.response.data.errorMessage)
+      }
+    }
+    stateChallenge();
   }
 
   // 경로에 따라 카드 사이즈를 조절할지 말지 결정함.
@@ -79,15 +84,32 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   // 오늘 도전하기 위해 등록한 미믹을 취소함.
   function cancelTodayChallenge(event) {
     event.stopPropagation();
-    dispatch(deleteSetUpTodoFetch({ todoId : data.todoId, date: settingTodayDate()}));
+    const cancelApply = async() => {
+      const response = await instance.delete(`/mytodos/${data.todoId}/challenged`, { data: { date: settingTodayDate() }});
+      if (response.data.message === "success") {
+        window.location.reload();
+      } else {
+        alert(response.response.data.errorMessage)
+      }
+    }
+    cancelApply();
   }
 
   // 내가 제안한 미믹을 삭제함.
   function deleteMyTodayMakingChallenge(event) {
     event.stopPropagation();
-    dispatch(deleteMyTodosFetch(data.todoId));
+    const deleteApply = async() => {
+      const response = await instance.delete(`mytodos/${data.todoId}`)
+      if (response.data.message === "success") {
+        window.location.reload();
+      } else {
+        alert(response.response.data.errorMessage)
+      }
+    }
+    deleteApply();
   }
-  console.log(myData)
+
+
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
@@ -106,8 +128,8 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
         {(locationButtonCheck() === true && hideState !== "true") ?
         <StChallengeStateBtn onClick={changeStateChallenge}>
           {challengeComplete === false ?
-            <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircleCheck} /> :
-              <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircle} />}
+            <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircle} /> :
+              <FontAwesomeIcon style={{fontSize:"46px", marginRight:"19px"}} icon={faCircleCheck} />}
         </StChallengeStateBtn> : <></>}
         <StCommonColumnBox width="100%">
           <StCommonRowBox>

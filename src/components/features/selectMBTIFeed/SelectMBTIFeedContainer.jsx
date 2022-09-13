@@ -22,7 +22,6 @@ function SelectMBTIFeedContainer () {
     if (MyData !== undefined)
       if (MyData.mbti !== "" && MyData.mbti !== null)
         dispatch(getSelectMBTITodoFetch());
-        // setRefresh(true);
   },[])
 
   // mbti 상성이나 로그인 상태에 따라 나타나는 색상을 다르게 적용.
@@ -54,6 +53,11 @@ function SelectMBTIFeedContainer () {
     navigate(`/todolists/${selectMBTI}`)
   }
 
+  // 도움말 팝업창 상태 열고 닫기 적용
+  function openToPopUpModal () {
+    setOpenModal(!openModal)
+  }
+
   return (
     <>
       <div style={{marginTop:"80px"}}>
@@ -71,7 +75,7 @@ function SelectMBTIFeedContainer () {
           })}
         </StGrid>
       </div>
-      <StHelpButton onClick={()=>setOpenModal(true)}>
+      <StHelpButton onClick={openToPopUpModal}>
         <FontAwesomeIcon icon={faQuestion} style={helpButton} /> 색상이 다른 이유는 무엇인가요?
       </StHelpButton>
       <StSelectFilterBtn onClick={moveToMBTIFeedPage}>확인</StSelectFilterBtn>
@@ -81,7 +85,6 @@ function SelectMBTIFeedContainer () {
 }
 
 export default SelectMBTIFeedContainer;
-
 
 const StGrid = styled.div`
   display: grid;
