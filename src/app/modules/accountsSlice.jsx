@@ -53,20 +53,6 @@ export const getMyPageFetch = createAsyncThunk(
   }
 )
 
-// 회원 탈퇴 시에 사용되는 thunk action creater 
-export const deleteWithdrawFetch = createAsyncThunk(
-  'users/deleteHelpDeskFetch',
-  async (payload, thunkAPI) => {
-    try {
-      console.log(payload)
-      const response = await instance.delete("/accounts", payload)
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      console.log(error.response.data)
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-)
 
 // // // 소셜로그인 카카오
 // export const getKakaoLoginFetch = createAsyncThunk(
@@ -150,22 +136,6 @@ const accountsSlice = createSlice({
     builder.addCase(getMyPageFetch.rejected, (state,action)=> {
       const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
-      return newState;
-    })
-
-    // deleteHelpDeskFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(deleteWithdrawFetch.pending , (state, action)=> {
-      return state;
-    })
-    builder.addCase(deleteWithdrawFetch.fulfilled, (state,action)=> {
-      const newState = {...state}
-      newState.message = action.payload.message;
-      return newState;
-    })
-    builder.addCase(deleteWithdrawFetch.rejected, (state,action)=> {
-      const newState = { ...state };
-      newState.errorMessage = action.payload.errorMessage;
-      console.log(newState)
       return newState;
     })
 
