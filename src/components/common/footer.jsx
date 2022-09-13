@@ -1,27 +1,28 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function Footer() {
   const params = useParams();
+  const navigate = useNavigate();
 
   // 메인 페이지로 이동
   function moveToHome() {
-    window.location.assign('/')
+    navigate('/')
   }
 
   // 피드 페이지로 이동
   function moveToFeed() {
-    window.location.assign('/todolists')
+    navigate('/todolists')
   }
 
   // TODO 페이지로 이동
   function moveToTodo() {
-    window.location.assign('/setuptodo')
+    navigate('/setuptodo')
   }
 
   // 내 정보 페이지로 이동
   function moveToMyPage() {
-    window.location.assign('/mypage')
+    navigate('/mypage')
   }
 
   return (

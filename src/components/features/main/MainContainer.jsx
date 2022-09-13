@@ -4,8 +4,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from "swiper";
+import { getCookie } from "../../../utils/cookie";
+import WelcomeForm from "../welcome/WelcomeForm";
 
 function MainContainer () {
+  const firstLoginCheck = getCookie("firstLogin")
   const bannerSlide = [
     "https://cdn.class101.net/images/ed70fb92-b8fb-42cd-83d0-db0761a60f37/1920xauto.webp",
     "https://cdn.class101.net/images/367bcbd9-1311-405f-bb5f-5737e4f9b43a",
@@ -14,7 +17,7 @@ function MainContainer () {
     "https://cdn.class101.net/images/63be45f8-20fa-47e4-b503-d2445799ddba/1920xauto.webp",
     "https://cdn.class101.net/images/dfb0bc2d-5a8a-4adc-9c44-6d5425c18a9d/1920xauto.webp"
   ]
-  
+
   function moveToPage0 () {
     window.location.assign('https://github.com/hanghae99-s8realweek-E3/frontend')
   }
@@ -24,104 +27,110 @@ function MainContainer () {
   }
 
   return (
-    <StContainer>
-      <StHeadTitle>미믹님! <br /> 오늘은 누구를 따라해볼까요?</StHeadTitle>
-      <BannerSlideBox>
-        {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
-        <Swiper modules={[Pagination, Navigation, Autoplay]} spaceBetween={0} slidesPerView={1} speed={500} scrollbar={{ draggable: true }} allowTouchMove autoplay={{ delay: 3000 }} navigation={true} pagination={{ clickable: true }}>
-          {bannerSlide.map((elem, idx) =>
-            <SwiperSlide key={idx} style={SwiperImageCSSData}>
-              <SildeImage width="450px" src={elem} />
-            </SwiperSlide>)}
-        </Swiper>
-      </BannerSlideBox>
-      <InfomationSlideBox>
-        <SildeTitle>알려드릴 것이 있어요!</SildeTitle>
+    <>
+      {firstLoginCheck !== undefined ? 
+        <WelcomeForm />
+      :
+        <></>}
+      <StContainer>
+        <StHeadTitle>미믹님! <br /> 오늘은 누구를 따라해볼까요?</StHeadTitle>
+        <BannerSlideBox>
+          {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
+          <Swiper modules={[Pagination, Navigation, Autoplay]} spaceBetween={0} slidesPerView={1} speed={500} scrollbar={{ draggable: true }} allowTouchMove autoplay={{ delay: 3000 }} navigation={true} pagination={{ clickable: true }}>
+            {bannerSlide.map((elem, idx) =>
+              <SwiperSlide key={idx} style={SwiperImageCSSData}>
+                <SildeImage width="450px" src={elem} />
+              </SwiperSlide>)}
+          </Swiper>
+        </BannerSlideBox>
+        <InfomationSlideBox>
+          <SildeTitle>알려드릴 것이 있어요!</SildeTitle>
 
-        {/* 슬라이드 목록 구간 */}
-        {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
-        {/* 문제는 해결했는데 왜 해결된건지 모르겠다. width를 정밀하게 주니까 해결. */}
-        <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[0]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+          {/* 슬라이드 목록 구간 */}
+          {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
+          {/* 문제는 해결했는데 왜 해결된건지 모르겠다. width를 정밀하게 주니까 해결. */}
+          <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[0]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[1]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor </PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[1]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor </PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[2]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[2]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[3]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[3]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[4]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
-        </Swiper>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[4]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
+          </Swiper>
 
-      </InfomationSlideBox>
-      <InfomationSlideBox>
-        <SildeTitle>한 주 간의 레포트!</SildeTitle>
+        </InfomationSlideBox>
+        <InfomationSlideBox>
+          <SildeTitle>한 주 간의 레포트!</SildeTitle>
 
-        {/* 슬라이드 목록 구간 */}
-        <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[0]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+          {/* 슬라이드 목록 구간 */}
+          <Swiper width={350} slidesPerView={2} spaceBetween={12} style={{margin:"0.5rem 0"}} scrollbar={{ draggable: true }}>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[0]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[1]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor </PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[1]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor </PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[2]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[2]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[3]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
+            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[3]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
 
-          <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-            <PostImageBox width="170px" height="110px">
-              <SildeImage width="170px" src={bannerSlide[4]} />
-            </PostImageBox>
-            <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-          </SwiperSlide>
-        </Swiper>
+            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+              <PostImageBox width="170px" height="110px">
+                <SildeImage width="170px" src={bannerSlide[4]} />
+              </PostImageBox>
+              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+            </SwiperSlide>
+          </Swiper>
 
-      </InfomationSlideBox>
-    </StContainer>
+        </InfomationSlideBox>
+      </StContainer>
+    </>
   )
 }
 
