@@ -23,28 +23,28 @@ function MyPageContainer () {
 
   // 프로필 수정 화면으로 이동
   function changeMyProfileData () {
-    window.location.assign("/modifyprofile")
+    navigate("/modifyprofile")
   }
 
   // 비밀번호 변경 화면으로 이동
   function changeMyPasswordData () {
-    window.location.assign("/changepw")
+    navigate("/changepw")
   }
 
   // 고객센터(회원 탈퇴) 페이지로 이동
   function moveToHelpDeskPage () {
-    window.location.assign("/helpdesk")
+    navigate("/helpdesk")
   }
 
   // 내 활동 페이지로 이동
   function moveToActivity () {
-    window.location.assign("/activity")
+    navigate("/activity")
   }
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
     window.localStorage.clear();
-    window.location.assign('/')
+    navigate('/')
   }
   const test = () => {
     navigate(`/otherspage/${accountsState.userInfo.userId}`)

@@ -5,7 +5,6 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { decodeMyTokenData } from "../../utils/token";
 import instance from "../../app/modules/instance";
 
@@ -38,15 +37,17 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   function changeStateChallenge (event) {
     event.stopPropagation();
     const stateChallenge = async () => {
-      const response = await instance.put(`/mytodos/${id}/challenged`, { date: settingTodayDate() })
-      if (response.data.message === "success") {
-        if (response.data.isCompleted === 1) {
-          setChallengeComplete(true)
-        } else {
-          setChallengeComplete(false)
+      try {
+        const response = await instance.put(`/mytodos/${id}/challenged`, { date: settingTodayDate() })
+        if (response.data.message === "success") {
+          if (response.data.isCompleted === 1) {
+            setChallengeComplete(true)
+          } else {
+            setChallengeComplete(false)
+          }
         }
-      } else {
-        alert(response.response.data.errorMessage)
+      } catch(error) {
+        alert(error.response.data.errorMessage)
       }
     }
     stateChallenge();
@@ -85,11 +86,13 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   function cancelTodayChallenge(event) {
     event.stopPropagation();
     const cancelApply = async() => {
-      const response = await instance.delete(`/mytodos/${data.todoId}/challenged`, { data: { date: settingTodayDate() }});
-      if (response.data.message === "success") {
-        window.location.reload();
-      } else {
-        alert(response.response.data.errorMessage)
+      try {
+        const response = await instance.delete(`/mytodos/${data.todoId}/challenged`, { data: { date: settingTodayDate() }});
+        if (response.data.message === "success") {
+          window.location.reload();
+        } 
+      } catch(error) {
+        alert(error.response.data.errorMessage)
       }
     }
     cancelApply();
@@ -99,11 +102,13 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   function deleteMyTodayMakingChallenge(event) {
     event.stopPropagation();
     const deleteApply = async() => {
-      const response = await instance.delete(`mytodos/${data.todoId}`)
-      if (response.data.message === "success") {
-        window.location.reload();
-      } else {
-        alert(response.response.data.errorMessage)
+      try {
+        const response = await instance.delete(`mytodos/${data.todoId}`)
+        if (response.data.message === "success") {
+          window.location.reload();
+        }
+      } catch(error) {
+        alert(error.response.data.errorMessage)
       }
     }
     deleteApply();
