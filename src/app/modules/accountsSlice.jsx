@@ -7,13 +7,9 @@ const initialState = {
   token: "",
   userInfo: {}
 }
-
 //예시
 // dispatch(postSignUpFetch(payload))
-
 // payload값이 서버에 payload를 전달하지 않더라도, 경로를 만들기 위해서 사용하는 경우도 있다 (예시-/api/todoLists/:todoId), ('api url /${payload.id값}' , payload값은 필요한 경우만 사용한다.)
-
-
 export const postLoginFetch = createAsyncThunk(
   "users/postLogin",
   async (payload, thunkAPI) => {
@@ -68,29 +64,6 @@ export const deleteWithdrawFetch = createAsyncThunk(
   }
 )
 
-// // // 소셜로그인 카카오
-// export const getKakaoLoginFetch = createAsyncThunk(
-//   'users/getKakaoLoginFetch',
-//   async (payload, thunkAPI) => {
-//     try {
-//       const response = await axios.get(`http://3.36.126.158/api/accounts/kakao`)
-//       console.log(response);
-//       return thunkAPI.fulfillWithValue(response.data);
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.response.data);
-//     }
-//   }
-// )
-
-// export const __kakaoSignIn = (code) => async (dispatch) => {
-//   const data = await axios.get(`/oauth/kakao/callback?code=${code}`);
-//   if (data.headers.authorization !== undefined) {
-//     localStorage.setItem("Authorization", data.headers.authorization);
-//   }
-//   dispatch(postLoginFetch(data.data));
-// };
-
-
 const accountsSlice = createSlice({
   name:"accounts",
   initialState,
@@ -122,7 +95,6 @@ const accountsSlice = createSlice({
       alert(newState);
       return newState;
     });
-    
     builder.addCase(postSignUpFetch.pending , (state, action)=> {
       return state;
     })
@@ -137,7 +109,6 @@ const accountsSlice = createSlice({
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
-
     // getMyPageFetch Creater 작동 시 적용되는 내용들
     builder.addCase(getMyPageFetch.pending , (state, action)=> {
       return state;
@@ -152,7 +123,6 @@ const accountsSlice = createSlice({
       newState.errorMessage = action.payload.errorMessage;
       return newState;
     })
-
     // deleteHelpDeskFetch Creater 작동 시 적용되는 내용들
     builder.addCase(deleteWithdrawFetch.pending , (state, action)=> {
       return state;
@@ -168,31 +138,6 @@ const accountsSlice = createSlice({
       console.log(newState)
       return newState;
     })
-
-    // // 소셜로그인 카카오
-    // builder.addCase(getKakaoLoginFetch.pending, (state, action) => {
-    //   state = action.payload;
-    //   return state;
-    // });
-    // builder.addCase(getKakaoLoginFetch.fulfilled, (state, action) => {
-    //   const newState = {...state };
-    //   // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
-    //   newState.message = action.payload.message;
-    //   window.localStorage.setItem("token", action.payload.token)
-    //   return newState;
-    //   // state = action.payload;
-    //   // return state;
-    // });
-    // builder.addCase(getKakaoLoginFetch.rejected, (state, action) => {
-    //   // const newState = { ...state };
-    //   // newState.errorMessage = action.payload.errorMessage;
-    //   // alert(newState);
-    //   // return newState;
-    //   state = action.payload;
-    //   console.log(state);
-    //   return state;
-
-    // });
   }
 })
 

@@ -19,7 +19,7 @@ export const getTodoListsFetch = createAsyncThunk(
       console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get("http://3.36.126.158:3000/api/todolists");
+        response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
       console.log(response)}
       else if (payload === true) {response = await instance.get("/todolists");
       }
@@ -44,7 +44,7 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
       console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get("http://3.36.126.158:3000/api/todolists?filter=challengedCounts");
+        response = await axios.get(`${process.env.REACT_APP_API}/todolists?filter=challengedCounts`);
       console.log(response)}
       else if (payload === true) {response = await instance.get("/todolists?filter=challengedCounts");
       }
@@ -68,7 +68,7 @@ export const getTodoListsCommentFetch = createAsyncThunk(
       console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get("http://3.36.126.158:3000/api/todolists?filter=commentCounts");
+        response = await axios.get(`${process.env.REACT_APP_API}/todolists?filter=commentCounts`);
       console.log(response)}
       else if (payload === true) {response = await instance.get("/todolists?filter=commentCounts");
       }
@@ -92,7 +92,7 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
       console.log(payload);
       // axios.ins
       const response = await axios.get(
-        `http://3.36.126.158:3000/api/todolists?mbti=${payload.mbti}`
+        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}`
       );
       // const response = await instance.get("/todolists")
       console.log(response);
@@ -114,7 +114,7 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
       console.log(payload);
       // axios.ins
       const response = await axios.get(
-        `http://3.36.126.158:3000/api/todolists?mbti=${payload.mbti}&filter=challengedCounts`
+        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}&filter=challengedCounts`
       );
       // const response = await instance.get("/todolists")
       console.log(response);
@@ -136,7 +136,7 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
       console.log(payload);
       // axios.ins
       const response = await axios.get(
-        `http://3.36.126.158:3000/api/todolists?mbti=${payload.mbti}&filter=commentCounts`
+        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}&filter=commentCounts`
       );
       // const response = await instance.get("/todolists")
       console.log(response);
