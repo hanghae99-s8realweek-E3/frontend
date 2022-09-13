@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../../app/modules/instance";
@@ -50,13 +50,15 @@ const MbtiForm = () => {
     const selectedMbti = {mbti:myMbti} //!api 명세서 키값 확인
     //post 만들기
     const postMbtifetch = async ()=> {
-      const response = await instance.post("/accounts/mbti", selectedMbti);
-      if (response.data.message === "success") {
-        setCookie("firstLogin", "true", 300);
-        window.localStorage.setItem("token", response.data.token)
-        window.location.assign('/') //윈도우 어싸인과 네이게이터의 차이: 네이게이터는 리액트라우터돔과 관련,(현재 토큰갱신 문제때문에 윈도우어싸인을 사용하고있지만 해결중...)
-      } else {
-        return alert(response.response.data.errorMessage)
+      try {
+        const response = await instance.post("/accounts/mbti", selectedMbti);
+          if (response.data.message === "success") {
+            setCookie("firstLogin", "true", 300);
+            window.localStorage.setItem("token", response.data.token)
+            window.location.assign('/')
+            } 
+        }catch (error) {
+            return alert(error.response.data.errorMessage)
       }
     }
     postMbtifetch();
