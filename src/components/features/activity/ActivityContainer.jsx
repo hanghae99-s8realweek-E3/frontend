@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
-import { getTodoListsChallengeFetch, getTodoListsCommentFetch, getTodoListsFetch } from "../../../app/modules/todolistsSlice";
 import { decodeMyTokenData } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
 import { StCommonBorder } from "../../interface/styledCommon";

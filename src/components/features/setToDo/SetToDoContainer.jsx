@@ -1,13 +1,12 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { getSetUpMyTodoFetch } from "../../../app/modules/mytodosSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { StCommonRowBox, StCommonText } from "../../interface/styledCommon";
 import ProfileCard from "../../common/ProfileCard";
 import { useNavigate } from "react-router-dom";
+import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 
 function SetToDoContainer () {
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
@@ -18,7 +17,7 @@ function SetToDoContainer () {
   const [calendar, setCalendar] = useState(new Date());
   const dispatch = useDispatch();
   // 선택한 날짜에 따라 내용들을 다시 불러올 수 있도록 함.
-  const myTodosState = useSelector(state => state.mytodos.data);
+  const myTodosState = useSelector(state => state.setuptodos.data);
 
   // 기록 확인을 허용해주기 위해 필요한 3개월 전 날짜
   let mindate = new Date()
@@ -46,6 +45,7 @@ function SetToDoContainer () {
   const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1}-${calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate()}`
   const nowDate = `${new Date().getFullYear()}-${new Date().getMonth() < 9 ? "0" + (new Date().getMonth() +1) : new Date().getMonth() + 1}-${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`
 
+  console.log(Object.keys(myTodosState).length)
 
   return (
     <StCommonColumnContainer>
