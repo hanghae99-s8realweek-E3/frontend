@@ -136,15 +136,15 @@ function UserProfileContainer() {
                 //   ></ChallengeCard>
                 // ))
                 sortState === sortList[0] ?
-                card.challengedTodos.map((elem, index) => 
+                card?.challengedTodos.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[1] ?
-                card.challengedTodos.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
+                card?.challengedTodos.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[2] ?
-                card.challengedTodos.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
+                card?.challengedTodos.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : <></>
@@ -152,15 +152,15 @@ function UserProfileContainer() {
               : todoTab === "making" ? 
               (
                 sortState === sortList[0] ?
-                card.createdTodo.map((elem, index) => 
+                card?.createdTodo.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[1] ?
-                card.createdTodo.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
+                card?.createdTodo.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[2] ?
-                card.createdTodo.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
+                card?.createdTodo.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : <></>
