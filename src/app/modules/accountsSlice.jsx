@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import instance from "./instance";
-import axios from "axios";
 
 const initialState = {
   message: "",
@@ -47,19 +46,6 @@ export const getMyPageFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await instance.get("/accounts")
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-)
-
-// 프로필 수정 시에 사용되는 thunk action creater 
-export const putModifyProfileFetch = createAsyncThunk(
-  'users/putProfileFetch',
-  async (payload, thunkAPI) => {
-    try {
-      const response = await instance.put("/accounts", payload)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -162,22 +148,6 @@ const accountsSlice = createSlice({
       return newState;
     })
     builder.addCase(getMyPageFetch.rejected, (state,action)=> {
-      const newState = { ...state };
-      newState.errorMessage = action.payload.errorMessage;
-      return newState;
-    })
-
-    // putModifyProfileFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(putModifyProfileFetch.pending , (state, action)=> {
-      return state;
-    })
-    builder.addCase(putModifyProfileFetch.fulfilled, (state,action)=> {
-      const newState = {...state}
-      newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token)
-      return newState;
-    })
-    builder.addCase(putModifyProfileFetch.rejected, (state,action)=> {
       const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;

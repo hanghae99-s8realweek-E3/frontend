@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postMbtifetch } from "../../../app/modules/mbtiSlice";
+import { setCookie } from "../../../utils/cookie";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 const MbtiForm = () => {
@@ -23,6 +24,7 @@ const MbtiForm = () => {
   useEffect(()=> {
     if (state.message === "success")
       if (myCookie.mbti !== null )
+        setCookie("firstLogin", "true", 300);
         navigate('/')
   },[state])
 

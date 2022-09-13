@@ -1,38 +1,27 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { putModifyProfileFetch } from "../../app/modules/accountsSlice";
+import instance from "../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 
 function ProfileModifyForm () {
   const dispatch = useDispatch();
   const myData = decodeMyTokenData();
-  const profileState = useSelector(state => state.accounts);
+  const navigate = useNavigate();
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({profile:"https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg", nickname: myData.nickname, mbti: myData.mbti});
   // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
   const [selectMBTI, setSelectMBTI] = useState(false);
-  // 첫 렌더링 상태인지 아닌지를 체크하는 상태
-  const [render, setRender] = useState(false);
   // mbti 16개 리스트
   const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
 
-  useEffect(() => {
-    if (render !== false) {
-      if (profileState.message === "success") {
-        window.location.assign("/mypage")
-        // 성공 팝업창 출력, 띄운 후 버튼 누르면 페이지 이동
-      } else {
-        // 에러 팝업창 출력
-      }
-    }
-  },[profileState])
-
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.")
-    window.location.assign("/mypage")
+    navigate("/mypage")
   }
 
   // 작성한 닉네임의 값으로 상태를 변경
@@ -53,9 +42,16 @@ function ProfileModifyForm () {
 
   function submitModifyMyProfileData(event) {
     event.preventDefault();
-    console.log(changeProfile)
-    dispatch(putModifyProfileFetch(changeProfile))
-    setRender(true)
+    const modifyConnect = async () => {
+      const response = await instance.put("/accounts", changeProfile)
+      if (response.data.message === "success") {
+        window.localStorage.setItem("token", response.data.token)
+        navigate("/mypage")
+      } else {
+        alert(response.response.data.errorMessage)
+      }
+    }
+    modifyConnect();
   } 
 
   return(
