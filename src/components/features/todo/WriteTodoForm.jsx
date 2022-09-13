@@ -134,7 +134,7 @@ const Stbutton = styled.button`
   height: 70px;
   background: #979797;
   border-radius: 6px;
-  margin: 565px 25px 177px 25px;
+  margin: 200px 25px 66.61px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;

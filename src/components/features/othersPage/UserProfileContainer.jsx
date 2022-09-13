@@ -55,10 +55,9 @@ function UserProfileContainer() {
   };
   // 최신순
   const datebutton = () => {
-    if (tokenChecker() === false){
-    return dispatch(getTodoListsFetch(false)) 
-    }
-    else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
+    if (tokenChecker() === false) {
+      return dispatch(getTodoListsFetch(false));
+    } else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
@@ -120,7 +119,14 @@ function UserProfileContainer() {
             ) : (
               <></>
             )}
-            <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+            <StToggle onClick={toggleSortPopUp}>
+              {sortState}
+              <img
+                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                alt="sort list button"
+                style={{ height: "8px", margin: "7px 26px 13px 8px" }}
+              />
+            </StToggle>
             <StTodayMyCardWrap>
               {todoTab === "challenge" ? (
                 card.challengedTodos?.map((it, idx) => (
@@ -154,97 +160,12 @@ const StTotalWrap = styled.div`
   width: 500px;
   flex-direction: column;
 `;
-const StProfileImg = styled.img`
-  margin-right: 26px;
-  margin-left: 35px;
-  border-radius: 9999px;
-`;
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 170.67px;
   margin-bottom: 48.33px;
   /* width: 380px; */
-`;
-const StFriendNameMbti = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 12.33px;
-  margin-right: 75px;
-`;
-const StFriendName = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 32px;
-  color: #000000;
-`;
-const StMbti = styled.div`
-  display: flex;
-  width: 42px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 32px;
-  text-align: left;
-  color: #979797;
-`;
-const StFollowWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 6.33px;
-  margin-right: 74px;
-  align-items: center;
-`;
-const StFollowNumber = styled.div`
-  margin-bottom: 6px;
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-`;
-const StFollowWord = styled.div`
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-`;
-const StFollowingWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 6.33px;
-`;
-const StFollowingNumber = styled.div`
-  display: flex;
-  margin-bottom: 6px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 32px;
-`;
-const StFollowingWord = styled.div`
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
 `;
 const StMiddleLine = styled.div`
   display: flex;
@@ -309,9 +230,10 @@ const StBottomWrap = styled.div`
 //   margin: 16px 46px 18px;
 // `;
 const StTodayMyCardWrap = styled.div`
-  display: flex;
+  /* display: flex; */
   /* align-items: start; */
-  flex-direction: column;
+  /* flex-direction: column; */
+  height: 500px;
 `;
 const StTodayMy = styled.div`
   display: flex;
@@ -425,8 +347,8 @@ const StCommonBar = styled.div`
   border-radius: 133.005px;
 `;
 const StToggle = styled.div`
-  height: 315px;
   display: flex;
-  margin-right: 8px;
+  margin: 16px 0 18px;
+  justify-content: end;
 `;
 export default UserProfileContainer;
