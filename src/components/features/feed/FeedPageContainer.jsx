@@ -163,7 +163,7 @@ const StTotalWrap = styled.div`
 const StHideToggle = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 154px 0px 18px;
+  margin: 85.33px 0px 18px;
   align-items: center;
 `;
 
@@ -264,7 +264,7 @@ const StSelectMbti = styled.button`
   width: 200px;
   position: fixed;
   height: 60px;
-  top: 850px;
+  top:65vh;
   margin-left: 150px;
   background: #979797;
   border-radius: 66px;

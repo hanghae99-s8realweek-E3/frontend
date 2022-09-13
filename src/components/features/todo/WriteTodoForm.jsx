@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postmytodosFetch } from "../../../app/modules/mytodosSlice";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
-
+import instance from "../../../app/modules/instance";
 // 나중에 코드 추가정리 필요!
 function WriteTodoForm() {
 
@@ -51,12 +51,23 @@ function WriteTodoForm() {
 
   // 스타일드 컴포넌트 프롭스 활용해보자
   // suggestion finish go todopage
-  const submitTodoData = (e) => {
-    // e.preventDefault();
-    dispatch(postmytodosFetch(todo));
-    navigate("/")
+  
+  //9월 13일 리팩토링
+  const submitTodoData = async() => {
+    const response = await instance.post("/mytodos", todo);
+    console.log(response);
+    if(response.data.message === "success" ){
+        window.localStorage.setItem("token", response.data.token)
+        navigate("/");
+    }else{
+      return alert(response.response.data.errorMessage)
+    }
+    submitTodoData();
+      // e.preventDefault();
+    // dispatch(postmytodosFetch(todo));
     // navigate("/todoList?date=");
   };
+
   return (
     <StTotalWrap>
       <StMbti>{getMbti.mbti}</StMbti>

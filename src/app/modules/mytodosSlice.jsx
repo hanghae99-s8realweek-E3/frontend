@@ -8,20 +8,21 @@ const initialState = {
   isCompleted: ""
 }
 
-export const postmytodosFetch = createAsyncThunk(
-  "users/postLogin",
-  async (payload, thunkAPI) => {
-    try {
-      console.log("통신시작");
-      const response = await instance.post("/mytodos", payload);
-      console.log("통신완료 값 반환")
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      console.log("에러발생")
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
+// 9/13 리팩토링
+// export const postmytodosFetch = createAsyncThunk(
+//   "users/postLogin",
+//   async (payload, thunkAPI) => {
+//     try {
+//       console.log("통신시작");
+//       const response = await instance.post("/mytodos", payload);
+//       console.log("통신완료 값 반환")
+//       return thunkAPI.fulfillWithValue(response.data);
+//     } catch (error) {
+//       console.log("에러발생")
+//       return thunkAPI.rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 // 나의 ToDo 피드를 조회할 때 사용되는 thunk action creater 
 export const getSetUpMyTodoFetch = createAsyncThunk(
@@ -59,19 +60,19 @@ const mytodosSlice = createSlice({
   },
   
   extraReducers: builder => { 
-    builder.addCase(postmytodosFetch.pending , (state, action)=> {
-      return state;
-    })
-    builder.addCase(postmytodosFetch.fulfilled, (state,action)=> {
-    const newState ={...state}
-      newState.message = action.payload.message;
-      return newState;
-    })
-    builder.addCase(postmytodosFetch.rejected, (state,action)=> {
-      const newState = {...state };
-      newState.message = action.payload.message;
-      return newState;
-    })
+    // builder.addCase(postmytodosFetch.pending , (state, action)=> {
+    //   return state;
+    // })
+    // builder.addCase(postmytodosFetch.fulfilled, (state,action)=> {
+    // const newState ={...state}
+    //   newState.message = action.payload.message;
+    //   return newState;
+    // })
+    // builder.addCase(postmytodosFetch.rejected, (state,action)=> {
+    //   const newState = {...state };
+    //   newState.message = action.payload.message;
+    //   return newState;
+    // })
 
     //getSetUpMyTodoFetch Creater 작동 시 적용되는 내용들
     builder.addCase(getSetUpMyTodoFetch.pending , (state, action)=> {

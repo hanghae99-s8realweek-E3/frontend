@@ -22,10 +22,12 @@ const MbtiForm = () => {
 
   //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
   useEffect(()=> {
-    if (state.message === "success")
-      if (myCookie.mbti !== null )
+    if (state.message === "success"){
+      if (myCookie.mbti !== null ){
         setCookie("firstLogin", "true", 300);
         navigate('/')
+      }
+    }
   },[state])
 
   const [myMbti, setMyMbti] = useState(false);
