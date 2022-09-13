@@ -1,3 +1,4 @@
+//대연
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -54,8 +55,6 @@ function FeedPageContainer() {
   const commentbutton = () => {
     if (tokenChecker() === false) dispatch(getTodoListsCommentFetch(false));
     else if (tokenChecker() === true) dispatch(getTodoListsCommentFetch(true));
-    // dispatch(getTodoListsCommentFetch());
-    // navigate("/todolists?filter=commentsCounts");
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
@@ -65,8 +64,6 @@ function FeedPageContainer() {
     if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
     else if (tokenChecker() === true)
       dispatch(getTodoListsChallengeFetch(true));
-    // dispatch(getTodoListsChallengeFetch());
-    // navigate("/todolists?filter=challengedCount");
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
@@ -166,7 +163,7 @@ const StTotalWrap = styled.div`
 const StHideToggle = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 154px 0px 18px;
+  margin: 85.33px 0px 18px;
   align-items: center;
 `;
 
@@ -267,7 +264,7 @@ const StSelectMbti = styled.button`
   width: 200px;
   position: fixed;
   height: 60px;
-  top: 850px;
+  top:65vh;
   margin-left: 150px;
   background: #979797;
   border-radius: 66px;

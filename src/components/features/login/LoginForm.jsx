@@ -1,3 +1,4 @@
+// 대연 담당 파일
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
@@ -5,6 +6,8 @@ import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postLoginFetch } from "../../../app/modules/accountsSlice";
+import { preInstance } from "../../../app/modules/instance";
+import { tokenChecker } from "../../../utils/token";
 
 function LoginForm() {
   const loginState = useSelector((state) => state.accounts);
@@ -41,11 +44,21 @@ function LoginForm() {
     ) {
       alert("올바른 비밀번호를 입력하세요");
       return false;
-    } else {
-      dispatch(postLoginFetch(userData));
-      alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
-      navigate("/");
     }
+
+    const postLogin = async () => {
+      const response = await preInstance.post("/accounts/login", userData);
+      console.log(response);
+      if(response.data.message === "success" ){
+        window.localStorage.setItem("token", response.data.token)
+        // alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
+        window.location.assign("/");
+      }else{
+        return alert(response.response.data.errorMessage)
+      }
+    };
+    postLogin();
+
   };
 
   // moveSignUpPage
@@ -133,9 +146,9 @@ const StPassword = styled.div`
   color: #000000;
 `;
 const StPasswordInput = styled.input`
-::placeholder{
-  margin-left: 150px;
-}
+  ::placeholder {
+    margin-left: 150px;
+  }
   display: flex;
   box-sizing: border-box;
   height: 55px;
@@ -149,7 +162,7 @@ const StLoginBtn = styled.button`
   display: flex;
   height: 70px;
   border: 1px solid white;
-  background: #FF6D53;
+  background: #ff6d53;
   border-radius: 6px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -177,4 +190,3 @@ const StSignupBtn = styled.div`
   margin: 0px 0px 439px 218px;
 `;
 export default LoginForm;
-

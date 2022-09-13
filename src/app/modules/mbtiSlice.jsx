@@ -15,7 +15,7 @@ export const postMbtifetch = createAsyncThunk(
             const response = await instance.post("/accounts/mbti", payload);
             return thunkAPI.fulfillWithValue(response.data)
         } catch (error) {
-            return thunkAPI.rejectWithValue(error.data);
+            return thunkAPI.rejectWithValue(error.response.data);
         }
     }
 )
