@@ -41,7 +41,6 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
     return `${selectYear}-${selectMonth}-${selectDay}`
   }
 
-  console.log(settingTodayDate())
   // 오늘의 챌린지 완료/진행중 상태를 바꿔주도록 함. 
   function changeStateChallenge (event) {
     event.stopPropagation();
@@ -88,7 +87,7 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
     event.stopPropagation();
     dispatch(deleteMyTodosFetch(data.todoId));
   }
-
+  console.log(myData)
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
@@ -114,25 +113,36 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
           <StCommonRowBox>
             <StChallengeNameSpan>{data.todo.length < 10 ? data.todo : data.todo.substring(0, 10) + "..."}</StChallengeNameSpan>
 
-            {window.location.pathname === "/setuptodo" ?
-              isTodayChallenge === true ?
-                <StMenuBtn onClick={displayCardMenu}>
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
-                </StMenuBtn>
-              : 
+            {/* '상세 메뉴의 출현 여부를 나타내는 코드. 
+              절차가 헷갈릴 수 있으므로 메모함. 
+              1) 지금 내 데이터가 있는가? - 있으면 true, 없으면 나타내지 않음. 
+              2) 현재 페이지의 path가 '/setuptodo'인가? - 맞으면 2-1, 아니면 3으로
+                2-1) path가 '/setuptodo'이면 지금 해당하는 카드가 오늘의 도전인가? - 맞으면 true, 아니면 2-1-1로
+                  2-1-1) 오늘의 도전이 아니라면, 이 카드의 작성자가 내가 맞는가? 맞으면 true, 아니면 나타내지 않음.
+              3) path가 '/setuptodo'가 아니라면, 카드의 작성자가 내가 맞는가? - 맞으면 true, 아니면 나타내지 않음. */}
+
+            {myData !== undefined ?
+              window.location.pathname === "/setuptodo" ?
+                isTodayChallenge === true ?
+                  <StMenuBtn onClick={displayCardMenu}>
+                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                  </StMenuBtn>
+                : 
+                  myData.userId === data.userId ?
+                    <StMenuBtn onClick={displayCardMenu}>
+                      <FontAwesomeIcon icon={faEllipsisVertical} />
+                    </StMenuBtn>
+                  :
+                  <></>
+              :
                 myData.userId === data.userId ?
                   <StMenuBtn onClick={displayCardMenu}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                   </StMenuBtn>
                 :
-                <></>
+                  <></>
             :
-              myData.userId === data.userId ?
-                <StMenuBtn onClick={displayCardMenu}>
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
-                </StMenuBtn>
-              :
-                <></>
+              <></>
             }
 
             </StCommonRowBox>
