@@ -46,6 +46,7 @@ function SetToDoContainer () {
   const selectingDate = `${calendar.getFullYear()}-${calendar.getMonth() < 9 ? "0" + (calendar.getMonth() +1) : calendar.getMonth() + 1}-${calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate()}`
   const nowDate = `${new Date().getFullYear()}-${new Date().getMonth() < 9 ? "0" + (new Date().getMonth() +1) : new Date().getMonth() + 1}-${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`
 
+
   return (
     <StCommonColumnContainer>
       {Object.keys(myTodosState).length !== 0 ?
@@ -75,12 +76,12 @@ function SetToDoContainer () {
         <StChallengeToDoBox>
           <StCommonText margin="0 auto 14px 25px" fontSize="18px">오늘의 TO DO</StCommonText>
           {selectingDate !== nowDate ?
-            Object.keys(myTodosState.challengedTodo).length === 0 ?
+            Array.isArray(myTodosState.challengedTodo) === true ?
               <StNotifyNoSettingBox>진행한 도전이 없습니다.</StNotifyNoSettingBox>
             :
               <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} state="myTodos" />
           :
-            Object.keys(myTodosState.challengedTodo).length === 0 ?
+            Array.isArray(myTodosState.challengedTodo) === true ?
               <StSetToDoBtn onClick={moveToSelectFeed}>도전하러 가기</StSetToDoBtn> 
             :
               <ChallengeCard id={myTodosState.challengedTodo.todoId} data={myTodosState.challengedTodo} isTodayChallenge={true} state="myTodos" />
@@ -89,7 +90,7 @@ function SetToDoContainer () {
 
         <StMakingToDoBox>
           <StCommonText margin="0 auto 14px 25px" fontSize="18px">내가 만든 TO DO</StCommonText>
-          {Object.keys(myTodosState.createdTodo).length === 0 ?
+          {Array.isArray(myTodosState.createdTodo) === true ?
             selectingDate !== nowDate ?
               <StNotifyNoSettingBox>제안한 도전이 없습니다.</StNotifyNoSettingBox> :
                 <StSetToDoBtn onClick={moveToWriteTodo}>제안하러 가기</StSetToDoBtn> :

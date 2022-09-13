@@ -17,8 +17,6 @@ function ActivityContainer () {
   const myTodosState = useSelector((state) => state.mytodos.data);
   const dispatch = useDispatch();
   
-  console.log(myTodosState)
-
   useEffect(()=>{
     if (myData !== null && myData !== undefined)
       dispatch(getOthersTodoFetch({userId: myData.userId}))
@@ -48,7 +46,7 @@ function ActivityContainer () {
           <StShadowBackgroundDiv>
             <StPopupBox>
               <StSlideDiv />
-              {sortList.map((elem, index) =>
+              {sortList?.map((elem, index) =>
                 <div key={index} style={{margin:"0", padding:"0"}}>
                   <StSortListBtn onClick={changeFeedListSort} value={index} fontWeight={sortState === elem ? "600" : "500"}>
                     {elem}
@@ -77,15 +75,15 @@ function ActivityContainer () {
 
             <StMyCardListDiv>
               {sortState === sortList[0] ?
-                myTodosState.challengedTodos.map((elem, index) => 
+                myTodosState.challengedTodos?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[1] ?
-                myTodosState.challengedTodos.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
+                myTodosState.challengedTodos.slice().sort((a, b) =>  b.commentCounts - a.commentCounts)?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[2] ?
-                myTodosState.challengedTodos.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
+                myTodosState.challengedTodos.slice().sort((a, b) => b.challengedCounts - a.challengedCounts)?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : <></>}
@@ -104,15 +102,15 @@ function ActivityContainer () {
 
             <StMyCardListDiv>
               {sortState === sortList[0] ?
-                myTodosState.createdTodo.map((elem, index) => 
+                myTodosState.createdTodo?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[1] ?
-                myTodosState.createdTodo.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
+                myTodosState.createdTodo.slice().sort((a, b) =>  b.commentCounts - a.commentCounts)?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : sortState === sortList[2] ?
-                myTodosState.createdTodo.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
+                myTodosState.createdTodo.slice().sort((a, b) => b.challengedCounts - a.challengedCounts)?.map((elem, index) => 
                   <ChallengeCard id={elem.todoId} data={elem} key={index} />
                 )
               : <></>}
