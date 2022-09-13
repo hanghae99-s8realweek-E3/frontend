@@ -10,19 +10,20 @@ const initialState = {
 //예시
 // dispatch(postSignUpFetch(payload))
 // payload값이 서버에 payload를 전달하지 않더라도, 경로를 만들기 위해서 사용하는 경우도 있다 (예시-/api/todoLists/:todoId), ('api url /${payload.id값}' , payload값은 필요한 경우만 사용한다.)
-export const postLoginFetch = createAsyncThunk(
-  "users/postLogin",
-  async (payload, thunkAPI) => {
-    try {
-      //get,delete요청에서 /:postid같은 경우랑 일반적인 /follow같은 경우의 차이점에 대해서 생각하고 있어야한다. 전자는 payload생각~~ `await axios.delete(server_url + `/api/posts/${value}`요런거,
-      const response = await instance.post("/accounts/login", payload);
-      return thunkAPI.fulfillWithValue(response.data);
+// 9 13 리팩토링
+// export const postLoginFetch = createAsyncThunk(
+//   "users/postLogin",
+//   async (payload, thunkAPI) => {
+//     try {
+//       //get,delete요청에서 /:postid같은 경우랑 일반적인 /follow같은 경우의 차이점에 대해서 생각하고 있어야한다. 전자는 payload생각~~ `await axios.delete(server_url + `/api/posts/${value}`요런거,
+//       const response = await instance.post("/accounts/login", payload);
+//       return thunkAPI.fulfillWithValue(response.data);
       
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 export const postSignUpFetch = createAsyncThunk(
   'users/postSignUp',
@@ -76,25 +77,25 @@ const accountsSlice = createSlice({
     }
   },  
   extraReducers: builder => { 
-    builder.addCase(postLoginFetch.pending, (state, action) => {
-      state = action.payload;
-      return state;
-    });
-    builder.addCase(postLoginFetch.fulfilled, (state, action) => {
-      const newState = {...state };
-      // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
-      newState.message = action.payload.message;
-      window.localStorage.setItem("token", action.payload.token)
-      return newState;
-      // state = action.payload;
-      // return state;
-    });
-    builder.addCase(postLoginFetch.rejected, (state, action) => {
-      const newState = { ...state };
-      newState.errorMessage = action.payload.errorMessage;
-      alert(newState);
-      return newState;
-    });
+    // builder.addCase(postLoginFetch.pending, (state, action) => {
+    //   state = action.payload;
+    //   return state;
+    // });
+    // builder.addCase(postLoginFetch.fulfilled, (state, action) => {
+    //   const newState = {...state };
+    //   // // newState.result로만 해왔었는데 api명세서를 확인해봤을때 result가아니라 message로 반환을해줬었다..
+    //   newState.message = action.payload.message;
+    //   window.localStorage.setItem("token", action.payload.token)
+    //   return newState;
+    //   // state = action.payload;
+    //   // return state;
+    // });
+    // builder.addCase(postLoginFetch.rejected, (state, action) => {
+    //   const newState = { ...state };
+    //   newState.errorMessage = action.payload.errorMessage;
+    //   alert(newState);
+    //   return newState;
+    // });
     builder.addCase(postSignUpFetch.pending , (state, action)=> {
       return state;
     })

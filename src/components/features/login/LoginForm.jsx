@@ -6,6 +6,7 @@ import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postLoginFetch } from "../../../app/modules/accountsSlice";
+import { preInstance } from "../../../app/modules/instance";
 
 function LoginForm() {
   const loginState = useSelector((state) => state.accounts);
@@ -43,6 +44,9 @@ function LoginForm() {
       alert("올바른 비밀번호를 입력하세요");
       return false;
     } else {
+      const postSignUp =async(payload) =>{
+      const response = await preInstance.post("/accounts/login", payload);
+      }
       dispatch(postLoginFetch(userData));
       alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
       navigate("/");
