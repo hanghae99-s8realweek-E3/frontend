@@ -1,25 +1,19 @@
 //대연
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { postmytodosFetch } from "../../../app/modules/mytodosSlice";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 // 나중에 코드 추가정리 필요!
 function WriteTodoForm() {
-
   const navigate = useNavigate();
-
-  if (tokenChecker() === false){
+  if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.");
     navigate("/mypage");
   }
   //mbti를 찾기위해 decodeMyTokenData() 사용
   const getMbti = decodeMyTokenData();
   console.log(getMbti);
-
-  const dispatch = useDispatch();
   const [todo, setTodo] = useState({
     todo: "",
   });
@@ -48,24 +42,34 @@ function WriteTodoForm() {
   //   todoRef.current.style.height=todoRef.current.scrollHeight +"px" ;
   // },[]);
 
-
   // 스타일드 컴포넌트 프롭스 활용해보자
   // suggestion finish go todopage
-  
+
   //9월 13일 리팩토링
-  const submitTodoData = async() => {
-    const response = await instance.post("/mytodos", todo);
-    console.log(response);
-    if(response.data.message === "success" ){
-        window.localStorage.setItem("token", response.data.token)
-        navigate("/");
-    }else{
-      return alert(response.response.data.errorMessage)
+  // const submitTodoData = async() => {
+  //   const response = await instance.post("/mytodos", todo);
+  //   console.log(response);
+  //   if(response.data.message === "success" ){
+  //       window.localStorage.setItem("token", response.data.token)
+  //       window.location.assign("/");
+  //   }else{
+  //     return alert(response.response.data.errorMessage)
+  //   }
+  //   submitTodoData();
+  // };
+
+  const submitTodoData = async () => {
+    try {
+      const response = await instance.post("/mytodos", todo);
+      console.log(response);
+      if (response.data.message === "success") {
+        window.localStorage.setItem("token", response.data.token);
+        window.location.assign("/");
+      }
+    } catch (error) {
+      return alert(error);
     }
     submitTodoData();
-      // e.preventDefault();
-    // dispatch(postmytodosFetch(todo));
-    // navigate("/todoList?date=");
   };
 
   return (
@@ -89,7 +93,7 @@ function WriteTodoForm() {
             {200 - todo.todo.length}
           </StTextCount>
         </span>
-        <Stbutton type="submit" >등록하기</Stbutton>
+        <Stbutton type="submit">등록하기</Stbutton>
       </StWriteTodoForm>
     </StTotalWrap>
   );
