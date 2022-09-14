@@ -4,29 +4,54 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import {
-  getTodoListsChallengeFetch,
-  getTodoListsCommentFetch,
-  getTodoListsFetch,
-} from "../../../app/modules/todolistsSlice";
-import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
+import {getTodoListsChallengeFetch, getTodoListsCommentFetch, getTodoListsFetch,} from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
+import { useInView } from "react-intersection-observer";
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [ref, inView] = useInView();
+
   const card = useSelector((state) => state.todolists.data);
   const { mbti } = useParams();
   console.log(card);
+  console.log(card.length);
+  console.log(inView);
 
-  console.log(mbti);
+
+  // console.log(mbti);
+
   useEffect(() => {
-    if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
-    else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
+    if (card.length === 0 && tokenChecker() === true) {
+      console.log("첫로딩");
+      dispatch(getTodoListsFetch(true))
+      console.log("첫로딩1");
+    }
+    else if (card.length === 0 && tokenChecker() === false){ 
+      console.log("첫로딩2")
+      dispatch(getTodoListsFetch(false));
+      console.log("첫로딩3")
+    }
   }, []);
+
+  useEffect(()=>{
+    console.log("갑니다")
+    if((card.length !==0 && inView) ||tokenChecker() === true){
+        console.log('첫 로딩 이후 무한 스크롤');
+        dispatch(getTodoListsFetch(true));
+        console.log('첫 로딩 이후 무한 스크롤1');
+      }
+    else if((card.length !==0 && inView) ||tokenChecker() === false){
+      console.log('첫 로딩 이후 무한 스크롤2');
+      dispatch(getTodoListsFetch(false));
+      console.log('첫 로딩 이후 무한 스크롤3');
+    }
+  },[inView]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -58,7 +83,7 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
 
-  //도전순
+  // //도전순
   const challengebutton = () => {
     if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
     else if (tokenChecker() === true)
@@ -69,20 +94,22 @@ function FeedPageContainer() {
   const moveToSelectMBTI = () => {
     navigate("/selectmbtifeed");
   };
-
+console.log("리턴전콘솔")
   return (
     <>
       {selectSort === true ? (
-        <StPopupBox>
-          <StSlideDiv />
-          <StSort>
-            <StDate onClick={datebutton}>최신순</StDate>
-            <StComment onClick={commentbutton}>댓글순</StComment>
-            <StChallenge onClick={challengebutton}>도전순</StChallenge>
-          </StSort>
-          <StCommonBar />
-          {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
-        </StPopupBox>
+        <StShadowBackgroundDiv>
+          <StPopupBox>
+            <StSlideDiv />
+            <StSort>
+              <StDate onClick={datebutton}>최신순</StDate>
+              <StComment onClick={commentbutton}>댓글순</StComment>
+              <StChallenge onClick={challengebutton}>도전순</StChallenge>
+            </StSort>
+            <StCommonBar />
+            {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
+          </StPopupBox>
+        </StShadowBackgroundDiv>
       ) : (
         <></>
       )}
@@ -127,15 +154,18 @@ function FeedPageContainer() {
                     id={it.todoId}
                     data={it}
                     key={idx}
-                  ></ChallengeCard>
+                  >
+                  </ChallengeCard>
                 ))
             : card?.map((it, idx) => (
                 <ChallengeCard
                   id={it.todoId}
                   data={it}
                   key={idx}
-                ></ChallengeCard>
+                >
+                </ChallengeCard>
               ))}
+              <div ref={ref}/>
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
@@ -189,6 +219,7 @@ const StToggle = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  cursor: pointer;
 `;
 const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
@@ -200,70 +231,12 @@ const StTodayMyCardWrap = styled.div`
   /* align-items: start; */
   flex-direction: column;
 `;
-const StCardSmallWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid red;
-  margin: 18px 26px 14px 24px;
-  border: 1px solid #979797;
-  background-color: green;
-  border-radius: 6px;
-`;
-const StCard = styled.div`
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 32px;
-  color: #979797;
-  margin: 16px 0px 11px 24px;
-  cursor: pointer;
-`;
-const StNameCounterBox = styled.div`
-  display: flex;
-`;
-
-//여기 width를 설정안했을때 약간 문제가생김 9/8 확인
-const StName = styled.div`
-  display: flex;
-  margin: 11px 0px 11px 25px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 32px;
-  color: #979797;
-  width: 275px;
-  cursor: pointer;
-`;
-const StCommentCount = styled.div`
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  margin: 11px 25px 11px 0px;
-  color: #979797;
-  text-align: end;
-`;
-const StChallengeCount = styled.div`
-  display: flex;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  margin: 11px 25px 11px 25px;
-  color: #979797;
-`;
 const StSelectMbti = styled.button`
   display: flex;
   width: 200px;
   position: fixed;
   height: 60px;
-  top:65vh;
+  top: 65vh;
   margin-left: 150px;
   background: #979797;
   border-radius: 66px;
@@ -279,11 +252,24 @@ const StSelectMbti = styled.button`
   cursor: pointer;
 `;
 
+const StShadowBackgroundDiv = styled.div`
+  background: rgba(0, 0, 0, 0.3);
+
+  position: fixed;
+  display: block;
+
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+`;
+
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
-  height: 683px;
+  /* height: 683px; */
+  height: 335px;
   box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
