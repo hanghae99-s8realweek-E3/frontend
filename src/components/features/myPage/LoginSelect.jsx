@@ -1,3 +1,4 @@
+//대연
 import React from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -95,7 +96,7 @@ const StTopMsg = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: #000000;
-  margin: 339px 125px 15px 125px;
+  margin: 218.33px 125px 15px 125px;
 `;
 const StHashMsg = styled.span`
   height: 32px;
@@ -161,7 +162,7 @@ const StNormalLoginBtn = styled.button`
   line-height: 32px;
   text-align: center;
   color: #ffffff;
-  margin: 0px 25px 407.61px 25px;
+  margin: 0px 25px 340px 25px;
   align-items: center;
   justify-content: center;
 `;

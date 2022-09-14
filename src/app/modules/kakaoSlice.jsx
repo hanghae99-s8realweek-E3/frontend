@@ -57,10 +57,8 @@ import axios from "axios";
 //     console.error(error);
 //   }
 // );
-
 // export const TokenCheck = localStorage.getItem("token") ? true : false;
-
 // kakao 연결용
-const KAKAO_REDIRECT_URI = "http://3.36.126.158/api/accounts/auth/kakao/callback";
+const KAKAO_REDIRECT_URI = `${process.env.REACT_KAKAO_AUTH_API}/accounts/auth/kakao/callback`;
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;

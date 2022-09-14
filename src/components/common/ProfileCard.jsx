@@ -1,3 +1,4 @@
+//대연
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,11 +7,17 @@ function ProfileCard({ profileData }) {
   const params = useParams();
   console.log(params);
   const goFollow = () => {
-    navigate(`/follow/${params.userId}`);
+    window.location.pathname === "/otherspage" ?
+    navigate(`/follows/${params.userId}`)
+    : navigate(`/follows/${profileData.userInfo.userId}`)
   };
+  console.log(profileData)
+  console.log(window.location.href);
 
   const goFollowing = () => {
-    navigate(`/follow/${params.userId}`);
+    window.location.pathname === "/otherspage" ?
+    navigate(`/follows/${params.userId}`)
+    : navigate(`/follows/${profileData.userInfo.userId}`)
   };
   return (
     <>
@@ -21,10 +28,10 @@ function ProfileCard({ profileData }) {
           height="80"
           alt="dy"
         />
-        <StFriendNameMbti>
-          <StFriendName>{profileData.userInfo.nickname}</StFriendName>
+        <StNickNameMbti>
+          <StNickName>{profileData.userInfo.nickname}</StNickName>
           <StMbti>{profileData.userInfo.mbti}</StMbti>
-        </StFriendNameMbti>
+        </StNickNameMbti>
         <StFollowWrap onClick={goFollow}>
           <StFollowNumber>
             {window.location.pathname === "/mypage"
@@ -53,6 +60,7 @@ const StTopWrap = styled.div`
   flex-direction: row;
   /* margin-bottom: 48.33px; */
   width: 500px;
+  margin-top: 42px;
 `;
 const StProfileImg = styled.img`
   display: flex;
@@ -60,7 +68,7 @@ const StProfileImg = styled.img`
   border-radius: 9999px;
 `;
 
-const StFriendNameMbti = styled.div`
+const StNickNameMbti = styled.div`
   display: flex;
   /* justify-content: center;
   align-items: center; */
@@ -68,7 +76,7 @@ const StFriendNameMbti = styled.div`
   margin-top: 12.33px;
   margin-left: 26px;
 `;
-const StFriendName = styled.div`
+const StNickName = styled.div`
   flex-direction: row;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -124,6 +132,8 @@ const StFollowingNumber = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 32px;
+  text-align: center;
+  color: #000000;
 `;
 const StFollowingWord = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -133,5 +143,4 @@ const StFollowingWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
-
 `;

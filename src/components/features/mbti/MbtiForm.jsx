@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { postMbtifetch } from "../../../app/modules/mbtiSlice";
+import instance from "../../../app/modules/instance";
+import { setCookie } from "../../../utils/cookie";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const myCookie = decodeMyTokenData();
-  const state = useSelector (state => state.mbti)
+  // const dispatch = useDispatch();
+  const myToken = decodeMyTokenData();
+  // const state = useSelector (state => state.mbti)
   const kakaoToken = new URL(window.location.href).searchParams.get("token");
   if (kakaoToken !== null ) {
     window.localStorage.setItem("token", kakaoToken)
@@ -18,13 +19,20 @@ const MbtiForm = () => {
   if (tokenChecker() === false){
     navigate('/mypage')
   }
-
+  console.log(myToken,kakaoToken)
   //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
   useEffect(()=> {
-    if (state.message === "success")
-      if (myCookie.mbti !== null )
+    if (myToken !== undefined && myToken !== null) {
+      if (myToken.mbti !== null) {
         navigate('/')
-  },[state])
+      }
+    }
+    if (kakaoToken !== undefined && kakaoToken !== null) {
+      if (kakaoToken.mbti !== null) {
+        navigate('/')
+      }
+    }
+      },[])
 
   const [myMbti, setMyMbti] = useState(false);
   const mbtiList = [
@@ -38,8 +46,23 @@ const MbtiForm = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
+    //payload
     const selectedMbti = {mbti:myMbti} //!api 명세서 키값 확인
-    dispatch(postMbtifetch(selectedMbti))
+    //post 만들기
+    const postMbtifetch = async ()=> {
+      try {
+        const response = await instance.post("/accounts/mbti", selectedMbti);
+          if (response.data.message === "success") {
+            setCookie("firstLogin", "true", 300);
+            window.localStorage.setItem("token", response.data.token)
+            window.location.assign('/')
+            } 
+        }catch (error) {
+            return alert(error.response.data.errorMessage)
+      }
+    }
+    postMbtifetch();
+    // dispatch(postMbtifetch(selectedMbti))
   }
   
 

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+function NoticeAccordionCard({ title, date, content }) {
+  const [openState, setOpenState] = useState(false);
 
-function NoticeAccordionCard ({title, date, content}) {
-  const [openState, setOpenState] = useState(false)
-
-  function toggleToAccordianCard () {
-    setOpenState(!openState)
+  function toggleToAccordianCard() {
+    setOpenState(!openState);
   }
 
   return (
@@ -15,25 +14,25 @@ function NoticeAccordionCard ({title, date, content}) {
         <h3>{title}</h3>
         <p>{date}</p>
       </StNoticeDiv>
-      <StNoticeAccordionBox 
-        display={openState === true? "flex" : "none"}
-        dangerouslySetInnerHTML={ {__html: content} } />
+      <StNoticeAccordionBox
+        display={openState === true ? "flex" : "none"}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
     </>
-  )
+  );
 }
-
 
 export default NoticeAccordionCard;
 
 const StNoticeDiv = styled.div`
   text-align: left;
 
-  cursor:pointer;
+  cursor: pointer;
 
   & > h3 {
     font-size: 20px;
     font-weight: 500;
-    margin:0;
+    margin: 0;
     margin-top: 30px;
   }
 
@@ -44,18 +43,18 @@ const StNoticeDiv = styled.div`
 
     margin: 10px 0 20px 0;
   }
-`
+`;
 
 const StNoticeAccordionBox = styled.div`
-display: ${props=>props.display || "none"};
-flex-direction: column;
-justify-content: flex-start;
+  display: ${(props) => props.display || "none"};
+  flex-direction: column;
+  justify-content: flex-start;
 
-text-align: left;
-font-size: 16px;
-color: #979797;
+  text-align: left;
+  font-size: 16px;
+  color: #979797;
 
-margin:0 auto 20px 5px;
+  margin: 0 auto 20px 5px;
 
-width: 100%;
-`
+  width: 100%;
+`;

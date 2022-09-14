@@ -1,18 +1,20 @@
+// 대연 담당 파일
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { postLoginFetch } from "../../../app/modules/accountsSlice";
+import { preInstance } from "../../../app/modules/instance";
 
 function LoginForm() {
-  const loginState = useSelector((state) => state.accounts);
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-  const dispatch = useDispatch();
+  const [modal, setModal] = useState(
+    ""
+  );
 
   // 구조 분해 할당
   const onChange = (event) => {
@@ -23,38 +25,65 @@ function LoginForm() {
     });
   };
 
-  // useEffect=(() => {
-  //   postLoginFetch()
-  // },[])
-  //preventDefault
-  const navigate = useNavigate();
-  // 로그인 버튼 클릭시 유효성 검사에따라서 alert창 띄움
+
+  // const submitLoginData = (event) => {
+  //   event.preventDefault();
+  //   if (userData.email === "" || !emailFormat.test(userData.email)) {
+  //     return false
+  //   } else if (
+  //     userData.password === "" ||
+  //     !passwordFormat.test(userData.password) ||
+  //     userData.password.length < 8
+  //   )
+  //   {
+  //   return false
+  //   }
+  //   const postLogin = async () => {
+  //     console.log("아하하하")
+  //     const response = await preInstance.post("/accounts/login", userData);
+  //     console.log(response);
+  //     if (response.data.message === "success") {
+  //       window.localStorage.setItem("token", response.data.token);
+  //       window.location.assign("/");
+  //     } else {
+  //       return setModal("하이요");
+  //     }
+  //   };
+  //   postLogin();
+  // };
   const submitLoginData = (event) => {
     event.preventDefault();
     if (userData.email === "" || !emailFormat.test(userData.email)) {
-      alert("올바른 이메일 주소를 입력하세요");
-      return false;
+      return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     } else if (
       userData.password === "" ||
       !passwordFormat.test(userData.password) ||
       userData.password.length < 8
-    ) {
-      alert("올바른 비밀번호를 입력하세요");
-      return false;
-    } else {
-      dispatch(postLoginFetch(userData));
-      alert("오늘부터 #환경보호 #내가바로 #수호자 환경 수호자 ");
-      navigate("/");
+    )
+    {
+    return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
+    const postLogin = async () => {
+      try {
+        const response = await preInstance.post("/accounts/login", userData);
+        if (response.data.message = "success") {
+          window.localStorage.setItem("token", response.data.token);
+          navigate("/");
+        }
+      } catch(error) {
+        return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
+      }
+    };
+    postLogin();
   };
+
+
 
   // moveSignUpPage
   const moveToSignUp = () => {
     navigate("/signup");
   };
 
-  //8글자 미만일경우
-  //test match
   return (
     <StTotalWrap>
       <StForm onSubmit={submitLoginData}>
@@ -78,6 +107,7 @@ function LoginForm() {
           onChange={onChange}
           StPasswordInput
         />
+        <StIncorrect>{modal}</StIncorrect>
 
         <StLoginBtn type="submit">로그인</StLoginBtn>
       </StForm>
@@ -88,12 +118,7 @@ function LoginForm() {
   );
 }
 
-const StTotalWrap = styled.div`
-  /* width: 500px; */
-  /* margin-top: 120px; */
-  /* display: flex; */
-  /* flex-direction: column; */
-`;
+const StTotalWrap = styled.div``;
 
 const StForm = styled.form`
   display: flex;
@@ -133,23 +158,32 @@ const StPassword = styled.div`
   color: #000000;
 `;
 const StPasswordInput = styled.input`
-::placeholder{
-  margin-left: 150px;
-}
+  ::placeholder {
+    margin-left: 150px;
+  }
   display: flex;
   box-sizing: border-box;
   height: 55px;
   border: 1px solid #979797;
   border-radius: 6px;
   display: flex;
-  margin: 0px 25px 130px 25px;
+  margin: 0px 25px 12px 25px;
 `;
-
+const StIncorrect = styled.div`
+  display: flex;
+  margin: 0 0 86px 25px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  color: #ff6d53;
+`;
 const StLoginBtn = styled.button`
   display: flex;
   height: 70px;
   border: 1px solid white;
-  background: #FF6D53;
+  background: #ff6d53;
   border-radius: 6px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -177,4 +211,3 @@ const StSignupBtn = styled.div`
   margin: 0px 0px 439px 218px;
 `;
 export default LoginForm;
-

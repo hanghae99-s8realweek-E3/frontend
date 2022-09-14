@@ -1,52 +1,108 @@
-import React,{useState, useEffect, useRef} from "react";
+import React,{useEffect, useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { deleteCommentFetch, postCommentFetch } from "../../../app/modules/commentsSlice";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { getFeedDetailFetch, postFeedDetailFetch } from "../../../app/modules/detailSlice";
-import {decodeMyTokenData} from "../../../utils/token"
+import { useNavigate, useParams } from "react-router-dom";
+import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
+import {decodeMyTokenData, tokenChecker} from "../../../utils/token"
 import ChallengeCard from "../../common/ChallengeCard";
-import { putMyPageFollowFetch } from "../../../app/modules/followSlice";
+import instance from "../../../app/modules/instance";
 
 function FeedDetailContainer () {
     const inputRef = useRef();
     const params = useParams();
     const dispatch = useDispatch();
-    const comm = useSelector((state)=> state.comments)
-    const detailState = useSelector((state) =>  state.detail)
-    const followState = useSelector((state)=> state.follow)
+    const navigate = useNavigate();
+    // const comm = useSelector((state)=> state.comments) ///삭제한다!!!
     
-    const initialState = { 
-          comment: "",
+    //useEffect의 위치 선정 중요.
+    useEffect(()=> {
+      //토큰체크 후 없으면 로그인페이지 이동  
+      if (tokenChecker() === false){
+        alert("로그인 후 이용해주세요.");
+        navigate('/mypage');
         }
-    const[feedComment, setFeedComment] =useState(initialState);
+      },[])
+
+    const detailState = useSelector((state) =>  state.detail)
+    
+    //삭제한다!!! 
+    // const initialState = { 
+    //       comment: "",
+    //     }
+    // const[feedComment, setFeedComment] =useState(initialState);
 
     useEffect(() => {
         dispatch(getFeedDetailFetch({todoId:params.todoId}));
-      },[comm,followState]);
+      },[]);
 
-    const onChangeInputComment = (e)=> {
-        setFeedComment({...feedComment, comment:e.target.value})
-    }
+    // const onChangeInputComment = (e)=> {
+    //     // setFeedComment({...feedComment, comment:e.target.value}) //삭제한다!!!
+    // }
 
     const onClickDeleteComment = (e) => {
-        dispatch(deleteCommentFetch(e.target.id))
+      e.preventDefault();
+      const deleteCommentFetch = async () => {
+        try {
+          const response = await instance.delete(`/comments/${e.target.id}`);
+          if (response.data.message === "success") {
+            return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+          } 
+        } catch(error) {
+          return alert(error.response.data.errorMessage)
+        }
     }
+    deleteCommentFetch()
+  }
 
     const setMyTodayChallenge = (e)=> {
-      dispatch(postFeedDetailFetch(e.target.id))
-    }
+      e.preventDefault();
+      //payload
+      //통신
+      const postFeedDetailFetch = async () => {
+        try {
+          const response = await instance.post(`/mytodos/${e.target.id}/challenged`);
+          if (response.data.message === "success") {
+            return navigate('/setuptodo')
+          } 
+        } catch(error) {
+          return alert(error.response.data.errorMessage)
+        }
+      }
+      postFeedDetailFetch()
+      // dispatch(postFeedDetailFetch(e.target.id))
+    };
 
-    const onSubmitComment = (e) => {
+    const upLoadCommentData = (e) => {
         e.preventDefault();
-        dispatch(postCommentFetch({...feedComment , todoId:params.todoId }))
-        setFeedComment({...feedComment, comment:""})
+        const postCommentFetch = async () => {
+          try {
+            const response = await instance.post(`/comments/${params.todoId }`,{comment:inputRef.current.value});
+            if (response.data.message === "success") {
+              return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+            }
+          } catch(error) {
+              return alert(error.response.data.errorMessage)
+          }
+        }
+        postCommentFetch();
+        // dispatch(postCommentFetch({comment:inputRef.current.value, todoId:params.todoId }))
         inputRef.current.value="";
-    } 
+      };
 
-    const onClickFollow = (e) => {
-      dispatch(putMyPageFollowFetch(e.target.id))
+    const changeFollowState = (e) => {
+      const putMyPageFollowFetch = async () => {
+        try {
+          const response = await instance.put(`/follows/${e.target.id}`);
+          if (response.data.message === "success") {
+            return dispatch(getFeedDetailFetch({todoId:params.todoId}));
+          } 
+        }catch(error) {
+            return alert(error.response.data.errorMessage);
+        }
+      }
+      putMyPageFollowFetch();
+      // dispatch(putMyPageFollowFetch(e.target.id))
     }
 
     const myData = decodeMyTokenData()
@@ -58,7 +114,7 @@ function FeedDetailContainer () {
         <StUserIdBox>
           <StProfileImg src={detailState.data.profileImg}/>
           <StNickname>{detailState.data.nickname}</StNickname>
-            {(detailState.data.isFollowed) === false ? <StFollowBtn id={detailState.data.userId} onClick={onClickFollow}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.data.userId} onClick={onClickFollow}>언팔로우</StFollowBtn>}
+            {(detailState.data.isFollowed) === false ? <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
         </StUserIdBox>
           <ChallengeCard id={detailState.data.userId} data={detailState.data} hideState="true"></ChallengeCard>
         <div>
@@ -76,9 +132,9 @@ function FeedDetailContainer () {
                     </StCommentBox>
                     </div>
 
-        })}
+          })}
         </div>
-          <StWriteComment onSubmit={onSubmitComment}>
+          <StWriteComment onSubmit={upLoadCommentData}>
             <StItem>
               <StInputWrap>
                 <StProfileImg></StProfileImg>
@@ -87,7 +143,7 @@ function FeedDetailContainer () {
                   name="comment"
                   placeholder="댓글 입력"
                   ref={inputRef} //!ref를 참고하겠다.
-                  onChange={onChangeInputComment}/>
+                  />
                   <StCommentBtn type="submit">작성</StCommentBtn>
                 </StInputWrap>
               </StItem>

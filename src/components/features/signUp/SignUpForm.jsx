@@ -1,19 +1,20 @@
+//호진 담당
 import React, { useEffect, useRef, useState } from "react";
 import {emailFormat,passwordFormat} from "../../../utils/reqList"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { postSignUpFetch } from "../../../app/modules/accountsSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { postSignUpFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker } from "../../../utils/token";
 import { preInstance } from "../../../app/modules/instance";
-import { current } from "@reduxjs/toolkit";
 
 const SignUpForm = () => {
-  const dispatch = useDispatch();
-  const state = useSelector(state => state.accounts)
+  //hook
+  // const accountsState = useSelector(state => state.accounts)
   const confirmNumberRef = useRef();
   const navigate = useNavigate();
 
+  //initialState
   const initialState = {
     email: "",
     password: "",
@@ -21,58 +22,67 @@ const SignUpForm = () => {
     nickname: "",
   };
 
+  //state
   const [signupData, setSignupData] = useState(initialState);
 
+  //onChangeEventHandler
   const onChangeSignupData = (e) => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
   };
 
-
-  // 새로고침방지, 썽크안쓰고하기, 액시오스로 값을 서버에 보내기, 기지국세우기
-
+  //email중복확인
   const onClickEmailCheck = (e) => {
+    //새로고침방지
     e.preventDefault();
+    //정규식
     if (signupData.email.length === 0 || emailFormat.test(signupData.email)===false) 
       return alert("이메일 형식을 확인해주세요.")
     //payload
     const payload = e.target.value
-    // console.log(e.target.value)
-    //이메일정보 서버로 보내기
+    //axios (instance.jsx을 import로 불러와서 사용)
     const emailCheck = async() => {
-      const response = await preInstance.post("/accounts/emailAuth", {email:payload});
-      console.log(response)
-      if ( response.data.message === "success") {
-        return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
-      } else {
-        return alert(response.response.data.errorMessage)
+      try {
+        const response = await preInstance.post("/accounts/emailAuth", {email:payload});
+        if ( response.data.message === "success") {
+          return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
+        } 
+      } catch (error) {
+          return alert(error.response.data.errorMessage)
       }
-    }
-    emailCheck();
-  }
-    //async 함수를 만든다음, 동작시키게 만들어둔다.
 
-//인증로직만들기!!!!!!!......
-//새로고침마고, 리스폰스 , api보내고, 페이로드 보내고, 
-//인증성공시 성공햇고, 
-//인증실패시
+      // const response = await preInstance.post("/accounts/emailAuth", {email:payload});
+      // if ( response.data.message === "success") {
+      //   return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
+      // } else {
+      //   return alert(response.response.data.errorMessage)
+      // }
+    }
+    emailCheck(); // 최종 동작
+  }
+
+  //인증번호 확인
   const onClickCertificate = (e) => {
+    //새로고침방지
     e.preventDefault();
+    //axios
     const certificate = async () => {
-        const response = await preInstance.post("/accounts/emailAuth/check", {email:signupData.email, emailAuthNumber:confirmNumberRef.current.value})
-        if (response.data.message === "success") {
+        try {
+          const response = await preInstance.post("/accounts/emailAuth/check", {email:signupData.email, emailAuthNumber:confirmNumberRef.current.value})
+          if (response.data.message === "success") {
             return alert('인증 성공 했습니다')
-        } else {
-            return alert(response.response.data.errorMessage)
-        }
+          }
+        } catch (error) {
+            return alert(error.response.data.errorMessage)
+      }
     }
     certificate();
   }
 
-
-
+  //회원가입 정보 입력 양식
   const onSubmitSignUpComplete = (e) => {
     e.preventDefault();
+    //정규식
     if (signupData.email.length === 0 || emailFormat.test(signupData.email)===false) {
         return alert("이메일 형식을 확인해주세요.")
     } else if  (signupData.password.length === 0 || passwordFormat.test(signupData.password)===false || signupData.password.length <= 7){
@@ -82,26 +92,29 @@ const SignUpForm = () => {
     } else if (signupData.nickname.length === 0) {
         return alert('닉네임 형식을 확인해주세요 ')
     }
-    console.log("에러발생!!!!")
+    //axios
     const postSignUpFetch = async () => {
-        const response = await preInstance.post("/accounts/signup", signupData)
-        if (response.data.message === "success") {
-            window.localStorage.setItem("token", response.data.token)
-            navigate('/mbti');
-        } else {
-            return alert(response.response.data.errorMessage)
+        try {
+          const response = await preInstance.post("/accounts/signup", signupData)
+          //request
+          if (response.data.message === "success") {
+              //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
+              window.localStorage.setItem("token", response.data.token)
+              window.location.assign('/mbti')
         }
+      } catch (error) {
+          return alert(error.response.data.errorMessage)
+      }
     }
-    postSignUpFetch();
+    postSignUpFetch(); //함수 발동
   };
 
-  
-  
-  useEffect(()=> {
-    if (state.message === "success")
-      if (tokenChecker() === true)
-        window.location.assign('/mbti')
-  },[state])
+  //
+  // useEffect(()=> {
+  //   if (accountsState.message === "success")
+  //     if (tokenChecker() === true)
+  //       window.location.assign('/mbti')
+  // },[accountsState])
 
   return (
     
@@ -127,7 +140,6 @@ const SignUpForm = () => {
               <label>인증번호</label>
                 <StInputWrap>
                   <StInput
-                    onChange={onChangeSignupData} 
                     type="text" 
                     name="confirmNumber"
                     ref={confirmNumberRef}

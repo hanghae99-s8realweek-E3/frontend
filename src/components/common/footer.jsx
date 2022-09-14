@@ -1,46 +1,78 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function Footer() {
   const params = useParams();
+  const navigate = useNavigate();
 
   // 메인 페이지로 이동
   function moveToHome() {
-    window.location.assign('/')
+    navigate("/");
   }
 
   // 피드 페이지로 이동
   function moveToFeed() {
-    window.location.assign('/todolists')
+    navigate("/todolists");
   }
 
   // TODO 페이지로 이동
   function moveToTodo() {
-    window.location.assign('/setuptodo')
+    navigate("/setuptodo");
   }
 
   // 내 정보 페이지로 이동
   function moveToMyPage() {
-    window.location.assign('/mypage')
+    navigate("/mypage");
   }
 
   return (
     <FooterContainer>
       <FooterButtonBox>
-        <StButton onClick={moveToHome}><StCircle background={window.location.pathname === "/" ? "#E8644C" : "#E8E8E8"}/>홈</StButton>
-        <StButton onClick={moveToFeed}><StCircle background={window.location.pathname === "/todolists" || window.location.pathname === `/todolists/${params.mbti}` ? "#E8644C" : "#E8E8E8"}/>피드</StButton>
-        <StButton onClick={moveToTodo}><StCircle background={window.location.pathname === "/setuptodo" ? "#E8644C" : "#E8E8E8"}/>TO DO</StButton>
-        <StButton onClick={moveToMyPage}><StCircle background={window.location.pathname === "/mypage" ? "#E8644C" : "#E8E8E8"}/>MY</StButton>
+        <StButton onClick={moveToHome}>
+          <StCircle
+            background={
+              window.location.pathname === "/" ? "#E8644C" : "#E8E8E8"
+            }
+          />
+          홈
+        </StButton>
+        <StButton onClick={moveToFeed}>
+          <StCircle
+            background={
+              window.location.pathname === "/todolists" ||
+              window.location.pathname === `/todolists/${params.mbti}`
+                ? "#E8644C"
+                : "#E8E8E8"
+            }
+          />
+          피드
+        </StButton>
+        <StButton onClick={moveToTodo}>
+          <StCircle
+            background={
+              window.location.pathname === "/setuptodo" ? "#E8644C" : "#E8E8E8"
+            }
+          />
+          TO DO
+        </StButton>
+        <StButton onClick={moveToMyPage}>
+          <StCircle
+            background={
+              window.location.pathname === "/mypage" ? "#E8644C" : "#E8E8E8"
+            }
+          />
+          MY
+        </StButton>
       </FooterButtonBox>
       <StCommonBar />
     </FooterContainer>
-  )
+  );
 }
 
 export default Footer;
 
 const FooterContainer = styled.div`
-  background: #FAFAFA;
+  background: #fafafa;
 
   display: flex;
   flex-direction: column;
@@ -48,20 +80,20 @@ const FooterContainer = styled.div`
   align-items: center;
   position: fixed;
 
-  height:108px;
-  width:500px;
+  height: 108px;
+  width: 500px;
 
   padding-top: 15px;
 
-  bottom:0;
+  bottom: 0;
   z-index: 6;
-`
+`;
 
 const FooterButtonBox = styled.div`
   display: flex;
   flex-direction: row;
-  gap:5rem;
-`
+  gap: 5rem;
+`;
 const StButton = styled.button`
   background: none;
 
@@ -75,11 +107,11 @@ const StButton = styled.button`
 
   border: none;
   outline: none;
-  padding:0;
+  padding: 0;
 
   cursor: pointer;
-`
-  
+`;
+
 const StCommonBar = styled.div`
   background: #000000;
 
@@ -88,15 +120,14 @@ const StCommonBar = styled.div`
 
   width: 178.23px;
   height: 6.65px;
-
-`
+`;
 
 const StCircle = styled.span`
-  background: ${props=>props.background || "#E8E8E8"};
+  background: ${(props) => props.background || "#E8E8E8"};
 
-  border-radius: 133.005px; 
-  margin-bottom:5px;
+  border-radius: 133.005px;
+  margin-bottom: 5px;
 
-  height:30px;
-  width:30px;
-`
+  height: 30px;
+  width: 30px;
+`;

@@ -2,131 +2,160 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
-import { getTodoListsChallengeFetch, getTodoListsCommentFetch, getTodoListsFetch } from "../../../app/modules/todolistsSlice";
 import { decodeMyTokenData } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
 import { StCommonBorder } from "../../interface/styledCommon";
 
-
-function ActivityContainer () {
-  const sortList = ["최신순", "댓글순", "도전순"]
+function ActivityContainer() {
+  const sortList = ["최신순", "댓글순", "도전순"];
   const [popUpState, setPopUpState] = useState(false);
   const [sortState, setSortState] = useState(sortList[0]);
   const [selectTab, setSelectTab] = useState("challenge");
   const myData = decodeMyTokenData();
   const myTodosState = useSelector((state) => state.mytodos.data);
   const dispatch = useDispatch();
-  
-  console.log(myTodosState)
 
-  useEffect(()=>{
+  useEffect(() => {
     if (myData !== null && myData !== undefined)
-      dispatch(getOthersTodoFetch({userId: myData.userId}))
-  }, [])
+      dispatch(getOthersTodoFetch({ userId: myData.userId }));
+  }, []);
 
-  function selectTabMenu (event) {
-    if (event.target.value === "challenge")
-      setSelectTab("challenge")
-    else if (event.target.value === "making")
-      setSelectTab("making")
+  function selectTabMenu(event) {
+    if (event.target.value === "challenge") setSelectTab("challenge");
+    else if (event.target.value === "making") setSelectTab("making");
   }
 
-  function changeFeedListSort (event) {
-    setSortState(sortList[event.target.value])
-    setPopUpState(!popUpState)
+  function changeFeedListSort(event) {
+    setSortState(sortList[event.target.value]);
+    setPopUpState(!popUpState);
   }
 
-  function changePopUpState () {
-    setPopUpState(!popUpState)
+  function changePopUpState() {
+    setPopUpState(!popUpState);
   }
 
   return (
     <StContainer>
-      {Object.keys(myTodosState).length !== 0 ?
-      <>
-        {popUpState === true ? (
-          <StShadowBackgroundDiv>
-            <StPopupBox>
-              <StSlideDiv />
-              {sortList.map((elem, index) =>
-                <div key={index} style={{margin:"0", padding:"0"}}>
-                  <StSortListBtn onClick={changeFeedListSort} value={index} fontWeight={sortState === elem ? "600" : "500"}>
-                    {elem}
-                  </StSortListBtn>
-                  <StCommonBorder margin="0 25px" width="90%" />
-                </div>
-              )}
-              <StFooterBar />
-              {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
-            </StPopupBox>
-          </StShadowBackgroundDiv>
-        ) : (
-          <></>
-        )}
+      {Object.keys(myTodosState).length !== 0 ? (
+        <>
+          {popUpState === true ? (
+            <StShadowBackgroundDiv>
+              <StPopupBox>
+                <StSlideDiv />
+                {sortList?.map((elem, index) => (
+                  <div key={index} style={{ margin: "0", padding: "0" }}>
+                    <StSortListBtn
+                      onClick={changeFeedListSort}
+                      value={index}
+                      fontWeight={sortState === elem ? "600" : "500"}>
+                      {elem}
+                    </StSortListBtn>
+                    <StCommonBorder margin="0 25px" width="90%" />
+                  </div>
+                ))}
+                <StFooterBar />
+                {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
+              </StPopupBox>
+            </StShadowBackgroundDiv>
+          ) : (
+            <></>
+          )}
 
-        {selectTab === "challenge" ?
-          <>
-            <StTapBox>
-              <StActiveTapButton value="challenge" onClick={selectTabMenu}>도전한 미믹</StActiveTapButton>
-              <StTapButton value="making" onClick={selectTabMenu}>제안한 미믹</StTapButton>
-            </StTapBox>
-            <StSortBtn type="button" onClick={changePopUpState}>
-              <div style={{fontSize:"18px"}}>{sortState}</div>
-              <img src={process.env.PUBLIC_URL + `/images/Toggle.png`} alt="sort list button" style={{height:"8px", margin:"0 0 0 8px"}}/>
-            </StSortBtn>
+          {selectTab === "challenge" ? (
+            <>
+              <StTapBox>
+                <StActiveTapButton value="challenge" onClick={selectTabMenu}>
+                  도전한 미믹
+                </StActiveTapButton>
+                <StTapButton value="making" onClick={selectTabMenu}>
+                  제안한 미믹
+                </StTapButton>
+              </StTapBox>
+              <StSortBtn type="button" onClick={changePopUpState}>
+                <div style={{ fontSize: "18px" }}>{sortState}</div>
+                <img
+                  src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                  alt="sort list button"
+                  style={{ height: "8px", margin: "0 0 0 8px" }}
+                />
+              </StSortBtn>
 
-            <StMyCardListDiv>
-              {sortState === sortList[0] ?
-                myTodosState.challengedTodos.map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[1] ?
-                myTodosState.challengedTodos.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[2] ?
-                myTodosState.challengedTodos.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : <></>}
-            </StMyCardListDiv>
-          </>
-        : selectTab === "making" ?
-          <>
-            <StTapBox>
-              <StTapButton value="challenge" onClick={selectTabMenu}>도전한 미믹</StTapButton>
-              <StActiveTapButton value="making" onClick={selectTabMenu}>제안한 미믹</StActiveTapButton>
-            </StTapBox>
-            <StSortBtn type="button" onClick={changePopUpState}>
-              <div style={{fontSize:"18px"}}>{sortState}</div>
-              <img src={process.env.PUBLIC_URL + `/images/Toggle.png`} alt="sort list button" style={{height:"8px", margin:"0 0 0 8px"}}/>
-            </StSortBtn>
+              <StMyCardListDiv>
+                {sortState === sortList[0] ? (
+                  myTodosState.challengedTodos?.map((elem, index) => (
+                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                  ))
+                ) : sortState === sortList[1] ? (
+                  myTodosState.challengedTodos
+                    .slice()
+                    .sort((a, b) => b.commentCounts - a.commentCounts)
+                    ?.map((elem, index) => (
+                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    ))
+                ) : sortState === sortList[2] ? (
+                  myTodosState.challengedTodos
+                    .slice()
+                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                    ?.map((elem, index) => (
+                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    ))
+                ) : (
+                  <></>
+                )}
+              </StMyCardListDiv>
+            </>
+          ) : selectTab === "making" ? (
+            <>
+              <StTapBox>
+                <StTapButton value="challenge" onClick={selectTabMenu}>
+                  도전한 미믹
+                </StTapButton>
+                <StActiveTapButton value="making" onClick={selectTabMenu}>
+                  제안한 미믹
+                </StActiveTapButton>
+              </StTapBox>
+              <StSortBtn type="button" onClick={changePopUpState}>
+                <div style={{ fontSize: "18px" }}>{sortState}</div>
+                <img
+                  src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                  alt="sort list button"
+                  style={{ height: "8px", margin: "0 0 0 8px" }}
+                />
+              </StSortBtn>
 
-            <StMyCardListDiv>
-              {sortState === sortList[0] ?
-                myTodosState.createdTodo.map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[1] ?
-                myTodosState.createdTodo.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[2] ?
-                myTodosState.createdTodo.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : <></>}
-            </StMyCardListDiv>
-
-          </>
-        :
-          <></>
-        }
-      </>
-      :
-      <div>로딩중입니다.</div>}
+              <StMyCardListDiv>
+                {sortState === sortList[0] ? (
+                  myTodosState.createdTodo?.map((elem, index) => (
+                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                  ))
+                ) : sortState === sortList[1] ? (
+                  myTodosState.createdTodo
+                    .slice()
+                    .sort((a, b) => b.commentCounts - a.commentCounts)
+                    ?.map((elem, index) => (
+                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    ))
+                ) : sortState === sortList[2] ? (
+                  myTodosState.createdTodo
+                    .slice()
+                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                    ?.map((elem, index) => (
+                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    ))
+                ) : (
+                  <></>
+                )}
+              </StMyCardListDiv>
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      ) : (
+        <div>로딩중입니다.</div>
+      )}
     </StContainer>
-  )
+  );
 }
 
 export default ActivityContainer;
@@ -134,13 +163,13 @@ export default ActivityContainer;
 const StContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
-  position:relative;
+  justify-content: flex-start;
+  position: relative;
 
-  margin:80px 0;
+  margin: 80px 0;
 
   box-sizing: border-box;
-`
+`;
 
 const StTapBox = styled.div`
   display: flex;
@@ -151,7 +180,7 @@ const StTapBox = styled.div`
 
   width: 90%;
   height: 50px;
-`
+`;
 
 const StActiveTapButton = styled.button`
   background: none;
@@ -159,16 +188,16 @@ const StActiveTapButton = styled.button`
   font-size: 18px;
   font-weight: 500;
 
-  border:none;
+  border: none;
   border-bottom: 2px solid black;
-  outline:none;
+  outline: none;
   padding-bottom: 10px;
   margin-bottom: 5px;
 
-  width:100%;
+  width: 100%;
 
   cursor: pointer;
-`
+`;
 
 const StTapButton = styled.button`
   background: none;
@@ -176,16 +205,16 @@ const StTapButton = styled.button`
   font-size: 18px;
   font-weight: 500;
 
-  border:none;
+  border: none;
   border-bottom: 2px solid gray;
-  outline:none;
+  outline: none;
   padding-bottom: 10px;
   margin-bottom: 5px;
 
-  width:100%;
+  width: 100%;
 
   cursor: pointer;
-`
+`;
 
 const StPopupBox = styled.div`
   background: #ffffff;
@@ -219,9 +248,9 @@ const StSortBtn = styled.button`
   outline: none;
   margin: 16px 25px 16px auto;
 
-  height: 32px;  
+  height: 32px;
 
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const StMyCardListDiv = styled.div`
@@ -230,17 +259,16 @@ const StMyCardListDiv = styled.div`
 `;
 
 const StShadowBackgroundDiv = styled.div`
-  background:rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 
   position: fixed;
   display: block;
 
-  top:0;
-  width:500px;
-  height:100%;
-  z-index:10;
-
-`
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+`;
 
 const StSortListBtn = styled.button`
   background: none;
@@ -250,14 +278,14 @@ const StSortListBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
-  font-weight: ${props => props.fontWeight || "500"};
+  font-weight: ${(props) => props.fontWeight || "500"};
 
   border: none;
   outline: none;
   margin: 20px auto;
 
-  cursor:pointer;
-`
+  cursor: pointer;
+`;
 
 const StFooterBar = styled.div`
   background: #000000;
@@ -267,5 +295,4 @@ const StFooterBar = styled.div`
 
   width: 178.23px;
   height: 6.65px;
-
-`
+`;
