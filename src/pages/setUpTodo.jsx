@@ -12,18 +12,19 @@ function SetUpTodo() {
   // 현재 쿠키가 없는 상태라면 mypage로 이동시켜 바로 로그인하게 만들도록 적용.
   useEffect(() => {
     if (tokenChecker() === false) {
-      alert("로그인 후 이용해주세요.")
-      navigate("/mypage")
+
+      alert("로그인 후 이용해주세요.");
+      navigate("/mypage");
     }
-  },[])
+  }, []);
 
   return (
     <Layout>
       <Header />
-        <SetToDoContainer />
+      <SetToDoContainer />
       <Footer />
     </Layout>
-  )
+  );
 }
 
 export default SetUpTodo;

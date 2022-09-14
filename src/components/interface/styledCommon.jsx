@@ -1,49 +1,48 @@
 import styled from "styled-components";
 
 export const StCommonColumnBox = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
-  justify-content: ${props=>props.justifyContent};
-  align-items: ${props=>props.alignItems};
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
 
-  padding: ${props=>props.padding};
-  margin: ${props=>props.margin};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
 
-  width: ${props=>props.width};
-  height: ${props=>props.height};
-`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+`;
 
 export const StCommonRowBox = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: row;
-  justify-content: ${props=>props.justifyContent};
-  align-items: ${props=>props.alignItems};
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
 
-  padding: ${props=>props.padding};
-  margin: ${props=>props.margin};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
 
-  width: ${props=>props.width};
-  height: ${props=>props.height};
-`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+`;
 
 export const StCommonText = styled.div`
-  font-size: ${props=> props.fontSize};
+  font-size: ${(props) => props.fontSize};
   font-weight: 500;
-  
+
   color: #000000;
 
-  margin: ${props => props.margin};
+  margin: ${(props) => props.margin};
   height: 32px;
-`
+`;
 
 export const StCommonBorder = styled.div`
-  background: #BDC5CD;
+  background: #bdc5cd;
 
-  display:block;
+  display: block;
 
-  width: ${props=>props.width || "100%"};
+  width: ${(props) => props.width || "100%"};
   height: 1px;
 
-  margin:${props => props.margin};
-
-`
+  margin: ${(props) => props.margin};
+`;

@@ -15,18 +15,19 @@ export const getTodoListsFetch = createAsyncThunk(
   "todolists/gettodolistsFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
-      console.log(payload);
+      // console.log("서버와의 통신 시작");
+      // console.log(payload);
       let response;
       if (payload === false){
         response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
-      console.log(response)}
+      // console.log(response)
+    }
       else if (payload === true) {response = await instance.get("/todolists");
       }
-      
+      // else if(payload === undefined) {response = await instance.get("/todolists");}
       // const response = await instance.get("/todolists")
-      console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
+      // console.log(response);
+      // console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("서버와의 통신 에러");
