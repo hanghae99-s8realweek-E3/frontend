@@ -55,7 +55,7 @@ const MbtiForm = () => {
           if (response.data.message === "success") {
             setCookie("firstLogin", "true", 300);
             window.localStorage.setItem("token", response.data.token)
-            window.location.assign('/')
+            navigate('/')
             } 
         }catch (error) {
             return alert(error.response.data.errorMessage)
