@@ -1,20 +1,41 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { setCookie } from "../../../utils/cookie";
 
 function StartContainer() {
+  const navigate = useNavigate();
+
   const startingPageImage = [
-    "https://cdn.class101.net/images/ed70fb92-b8fb-42cd-83d0-db0761a60f37/1920xauto.webp",
-    "https://cdn.class101.net/images/367bcbd9-1311-405f-bb5f-5737e4f9b43a",
-    "https://cdn.class101.net/images/070f5c4e-031b-41b9-9d2b-be4bee95c031/1920xauto.webp",
+    "https://cinnamorolllife.com/wp-content/uploads/2018/12/%E7%84%A1%E9%A1%8C625-1.png",
+    "https://i.pinimg.com/originals/75/21/4d/75214d2350a22faad8343f9f89e9cd51.png",
+    "https://scdn.line-apps.com/stf/linenews-issue-1726/rssitem-10757747/87fc3b6fd9aab04fc88546d72134a9f654ba2a72.jpg",
+    "https://pbs.twimg.com/media/BkSRCUCCMAA_XHp.png",
   ];
+
+  const startingPageText = [
+    "미믹에 오신 여러분을 환영합니다!\n 미믹은 타인의 활동을 체험해보고, 내 활동을 공유하는 어플입니다.",
+    "우선, 피드 페이지에 들어가셔서 모두가 어떤 일을 진행했는지 구경해보세요!",
+    "체험해보고 싶은 일이 있다면 오늘의 도전을 클릭하면\n오늘 내가 체험할 타인의 활동이 됩니다.",
+    "다른 사람이 나의 활동을 체험하게 하고 싶다고요?\n그럼 당신의 활동을 제안해주세요!\n도전하고 싶은 사람들이 당신의 활동을 가져갈거에요.",
+  ];
+
+  function startAndGoToMain () {
+    setCookie("firstEnter", true, 30758400)
+    navigate('/')
+  }
 
   return (
     <StContainer>
-      <StHeadTitle>안녕하세요! 미믹입니다.</StHeadTitle>
+      <StHeadTitle>
+        안녕하세요,
+        <br />
+        MIMIC 입니다!
+      </StHeadTitle>
       <BannerSlideBox>
         {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
         <Swiper
@@ -24,10 +45,25 @@ function StartContainer() {
           speed={500}
           scrollbar={{ draggable: true }}
           allowTouchMove
-          pagination={{ clickable: true }}>
+          pagination={{ clickable: true }}
+          style={{ height: "650px" }}>
           {startingPageImage.map((elem, idx) => (
             <SwiperSlide key={idx} style={SwiperImageCSSData}>
-              <SildeImage width="450px" src={elem} />
+              <div
+                style={{
+                  height: "400px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <SildeImage width="100%" src={elem} />
+              </div>
+              <StContext>{startingPageText[idx]}</StContext>
+              {idx === 3 ? (
+                <StStartbutton type="button" onClick={startAndGoToMain}>미믹, 시작해볼까요?</StStartbutton>
+              ) : (
+                <div></div>
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
@@ -42,22 +78,27 @@ const StContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  margin: 10vh 25px;
   width: 100%;
+
+  box-sizing: border-box;
 `;
 
 const StHeadTitle = styled.h1`
-  text-align: left;
-  font-size: 24px;
+  display: block;
+
   font-weight: 500;
-  margin: 0 auto 20px 0;
+  font-size: 32px;
+
+  width: 90%;
 `;
 
 const BannerSlideBox = styled.div`
   display: flex;
   flex-direction: row;
 
-  width: 450px;
-  height: 230px;
+  width: 90%;
+  height: 650px;
 
   border-radius: 6px;
 
@@ -69,13 +110,40 @@ const SildeImage = styled.img`
   width: ${(props) => props.width};
 `;
 
+const StContext = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+
+  height: 50px;
+`;
+
 const SwiperImageCSSData = {
-  backgroundColor: "gray",
+  background: "none",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
+  justifyContent: "flex-start",
   alignItems: "center",
 
-  width: "500px",
-  height: "300px",
+  width: "100%",
 };
+
+const StStartbutton = styled.button`
+  background: #979797;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 20px 0;
+  margin: 30px 0 0 0;
+
+  width: 90%;
+  cursor: pointer;
+`;

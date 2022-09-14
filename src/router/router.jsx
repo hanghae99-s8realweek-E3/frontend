@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Main from "../pages/main";
 import Activity from "../pages/activity";
 import ErrorPage from "../pages/errorPage";
@@ -19,12 +19,22 @@ import ModifyProfile from "../pages/modifyProfile";
 import ChangePW from "../pages/changePW";
 import HelpDesk from "../pages/helpDesk";
 import Withdraw from "../pages/withdraw";
+import { getCookie } from "../utils/cookie";
+
+const FirstPage = ({ children }) => {
+  console.log(getCookie("firstEnter"))
+  if (getCookie("firstEnter") === undefined) {
+    return <Navigate to="/welcomepage" />
+  }
+  return children;
+}
 
 function Router() {
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<FirstPage><Main /></FirstPage>} />
         <Route path="/activity" element={<Activity />} />
         <Route path="/errorpage" element={<ErrorPage />} />
         <Route path="/todolists" element={<Feed />} />
