@@ -13,8 +13,8 @@ function FeedDetailContainer () {
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const comm = useSelector((state)=> state.comments) ///삭제한다!!!
-    
+    const [loading, setLoading] = useState(false);
+
     //useEffect의 위치 선정 중요.
     useEffect(()=> {
       //토큰체크 후 없으면 로그인페이지 이동  
@@ -25,20 +25,31 @@ function FeedDetailContainer () {
       },[])
 
     const detailState = useSelector((state) =>  state.detail)
-    
-    //삭제한다!!! 
-    // const initialState = { 
-    //       comment: "",
-    //     }
-    // const[feedComment, setFeedComment] =useState(initialState);
+    console.log(detailState)
 
     useEffect(() => {
         dispatch(getFeedDetailFetch({todoId:params.todoId}));
+        setLoading(true);
       },[]);
 
-    // const onChangeInputComment = (e)=> {
-    //     // setFeedComment({...feedComment, comment:e.target.value}) //삭제한다!!!
-    // }
+    useEffect(()=> {
+      if(loading === true) {
+        if (detailState.data.length === 0) {
+          navigate('/todolists')
+        }
+      }
+    })  
+
+    const onClickGoToOtherspage = (e) => {
+      e.preventDefault();
+      console.log(e.target.id)
+      navigate(`/otherspage/${e.target.id}`)
+    }
+
+    const onClickCommentGoToOtherspage = (e) => {
+      e.preventDefault();
+      navigate(`/otherspage/${e.target.id}`)
+    }
 
     const onClickDeleteComment = (e) => {
       e.preventDefault();
@@ -57,8 +68,6 @@ function FeedDetailContainer () {
 
     const setMyTodayChallenge = (e)=> {
       e.preventDefault();
-      //payload
-      //통신
       const postFeedDetailFetch = async () => {
         try {
           const response = await instance.post(`/mytodos/${e.target.id}/challenged`);
@@ -75,6 +84,9 @@ function FeedDetailContainer () {
 
     const upLoadCommentData = (e) => {
         e.preventDefault();
+        if (inputRef.current.value==="") {
+          return alert("댓글을 입력해주세요")
+        }
         const postCommentFetch = async () => {
           try {
             const response = await instance.post(`/comments/${params.todoId }`,{comment:inputRef.current.value});
@@ -113,7 +125,7 @@ function FeedDetailContainer () {
       <div>
         <StUserIdBox>
           <StProfileImg src={detailState.data.profileImg}/>
-          <StNickname>{detailState.data.nickname}</StNickname>
+          <StNickname id={detailState.data.userId} onClick={onClickGoToOtherspage}>{detailState.data.nickname}</StNickname>
             {(detailState.data.isFollowed) === false ? <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
         </StUserIdBox>
           <ChallengeCard id={detailState.data.userId} data={detailState.data} hideState="true"></ChallengeCard>
@@ -123,7 +135,7 @@ function FeedDetailContainer () {
                     <StCommentBox>
                       <StImgNickname>
                         <StProfileImg src={x.profileImg}/>
-                        <StNickname>{x.nickname}</StNickname>
+                        <StNickname id={x.userId} onClick={onClickCommentGoToOtherspage} >{x.nickname}</StNickname>
                       </StImgNickname>
                           <StComment>{x.comment}</StComment>
                             <StChangeDeleteBtn>
@@ -148,7 +160,8 @@ function FeedDetailContainer () {
                 </StInputWrap>
               </StItem>
           </StWriteComment>
-        <button onClick={setMyTodayChallenge} id={detailState.data.todoId}>오늘의 도전!</button>
+          {(detailState.data.isTodayDone) === "false" ? <></> : <button onClick={setMyTodayChallenge} id={detailState.data.todoId}>오늘의 도전!</button>}
+        
       </div>}
     </div>
     )
