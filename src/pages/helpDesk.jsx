@@ -5,14 +5,13 @@ import HelpDeskContainer from "../components/features/helpdesk/HelpDeskContainer
 import Layout from "../layout/layout";
 
 const HelpDesk = () => {
-
   return (
     <Layout>
       <Header />
-        <HelpDeskContainer />
+      <HelpDeskContainer />
       <Footer />
     </Layout>
-  )
-}
+  );
+};
 
 export default HelpDesk;

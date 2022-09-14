@@ -1,70 +1,99 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 
-function ProfileModifyForm () {
+function ProfileModifyForm() {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
 
   // 변경할 프로필의 내용들을 설정하는 상태
-  const [changeProfile, setChangeProfile] = useState({profile:"https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg", nickname: myData.nickname, mbti: myData.mbti});
+  const [changeProfile, setChangeProfile] = useState({
+    profile: "https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg",
+    nickname: myData.nickname,
+    mbti: myData.mbti,
+  });
   // 내 MBTI를 수정하기 위해 팝업을 띄워야하는지를 설정하는 상태
   const [selectMBTI, setSelectMBTI] = useState(false);
   // mbti 16개 리스트
-  const mbtiList = ["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
+  const mbtiList = [
+    "ISTJ",
+    "ISFJ",
+    "INFJ",
+    "INTJ",
+    "ISTP",
+    "ISFP",
+    "INFP",
+    "INTP",
+    "ESTP",
+    "ESFP",
+    "ENFP",
+    "ENTP",
+    "ESTJ",
+    "ESFJ",
+    "ENFJ",
+    "ENTJ",
+  ];
 
   if (tokenChecker() === false) {
-    alert("로그인 후 이용해주세요.")
-    navigate("/mypage")
+    alert("로그인 후 이용해주세요.");
+    navigate("/mypage");
   }
 
   // 작성한 닉네임의 값으로 상태를 변경
-  function changeInputData (event) {
-    setChangeProfile({ ...changeProfile, nickname: event.target.value})
+  function changeInputData(event) {
+    setChangeProfile({ ...changeProfile, nickname: event.target.value });
   }
 
   // 선택한 MBTI의 값으로 상태를 변경
   function changeMBTIProfile(event) {
-    setChangeProfile({ ...changeProfile, mbti: event.target.value})
+    setChangeProfile({ ...changeProfile, mbti: event.target.value });
   }
 
   // MBTI 선택창을 띄울지 말지 설정
   function toggleMBTISelectPopUp(event) {
     event.preventDefault();
-    setSelectMBTI(!selectMBTI)
+    setSelectMBTI(!selectMBTI);
   }
 
   function submitModifyMyProfileData(event) {
     event.preventDefault();
     const modifyConnect = async () => {
       try {
-        const response = await instance.put("/accounts", changeProfile)
+        const response = await instance.put("/accounts", changeProfile);
         if (response.data.message === "success") {
-          window.localStorage.setItem("token", response.data.token)
-          navigate("/mypage")
+          window.localStorage.setItem("token", response.data.token);
+          navigate("/mypage");
         }
-      } catch(error) {
-        alert(error.response.data.errorMessage)
+      } catch (error) {
+        alert(error.response.data.errorMessage);
       }
-    }
+    };
     modifyConnect();
-  } 
+  }
 
-  return(
+  return (
     <>
-      {selectMBTI === true ?
+      {selectMBTI === true ? (
         <StPopupBox>
           <StSlideDiv />
-          {mbtiList.map((elem, idx) => 
-            <StMBTIBtn key={idx} background={changeProfile.mbti === elem ? "skyblue" : "white"} onClick={changeMBTIProfile} value={elem}>
+          {mbtiList.map((elem, idx) => (
+            <StMBTIBtn
+              key={idx}
+              background={changeProfile.mbti === elem ? "skyblue" : "white"}
+              onClick={changeMBTIProfile}
+              value={elem}>
               {elem}
-            </StMBTIBtn>)
-          }
-          <StCommonButton  onClick={toggleMBTISelectPopUp}>선택하기</StCommonButton>
-        </StPopupBox> : <></> }
+            </StMBTIBtn>
+          ))}
+          <StCommonButton onClick={toggleMBTISelectPopUp}>
+            선택하기
+          </StCommonButton>
+        </StPopupBox>
+      ) : (
+        <></>
+      )}
       <StContainer>
         <StMyProfileSec>
           <StMyImageBox>
@@ -75,18 +104,28 @@ function ProfileModifyForm () {
         <StCommonBorder />
         <StInputSettingBox>
           <StCommonLabel>나의 정보</StCommonLabel>
-          <StCommonInput type="text" value={changeProfile.nickname} onChange={changeInputData} />
+          <StCommonInput
+            type="text"
+            value={changeProfile.nickname}
+            onChange={changeInputData}
+          />
         </StInputSettingBox>
         <StCommonBorder />
         <StInputSettingBox>
           <StCommonLabel>나의 MBTI</StCommonLabel>
-          <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>{changeProfile.mbti === "" || changeProfile.mbti === null ? "선택하기" : changeProfile.mbti}</StSelectMBTIBtn>
+          <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
+            {changeProfile.mbti === "" || changeProfile.mbti === null
+              ? "선택하기"
+              : changeProfile.mbti}
+          </StSelectMBTIBtn>
         </StInputSettingBox>
         <StCommonBorder />
-        <StCommonButton margin="25px auto" onClick={submitModifyMyProfileData}>완료</StCommonButton>
+        <StCommonButton margin="25px auto" onClick={submitModifyMyProfileData}>
+          완료
+        </StCommonButton>
       </StContainer>
     </>
-  )
+  );
 }
 
 export default ProfileModifyForm;
@@ -94,26 +133,26 @@ export default ProfileModifyForm;
 const StContainer = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
+  justify-content: flex-start;
   position: relative;
-  
+
   text-align: left;
 
-  margin:80px auto;
+  margin: 80px auto;
   padding: 0 12px;
 
-  width:500px;
+  width: 500px;
   box-sizing: border-box;
-`
+`;
 
 const StMyProfileSec = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  
+
   margin: 1rem 0;
-`
+`;
 
 const StMyImageBox = styled.div`
   display: flex;
@@ -128,13 +167,12 @@ const StMyImageBox = styled.div`
   height: 135px;
   width: 135px;
   overflow: hidden;
-`
+`;
 
 const StMyImage = styled.img`
   height: 144px;
   width: 144px;
-
-`
+`;
 
 const StChangeImageBtn = styled.button`
   background: none;
@@ -147,53 +185,52 @@ const StChangeImageBtn = styled.button`
   margin-bottom: 69px;
 
   cursor: pointer;
-`
+`;
 
 const StCommonBorder = styled.div`
   height: 1px;
   background: gray;
   margin: 0 13px;
-`
+`;
 
 const StInputSettingBox = styled.div`
   padding: 25px 25px;
-`
+`;
 
 const StCommonLabel = styled.label`
   color: #979797;
   font-size: 18px;
   font-weight: 500;
-
-`
+`;
 
 const StCommonInput = styled.input`
   font-size: 18px;
-  color:#979797;
+  color: #979797;
   font-weight: 500;
 
-  border:none;
+  border: none;
   outline: none;
 
-  margin-left:104px;
+  margin-left: 104px;
   padding: 0;
-  width:234px;
-`
+  width: 234px;
+`;
 
 const StMBTIBtn = styled.button`
-  background: ${props => props.background};
+  background: ${(props) => props.background};
 
   height: 105px;
   width: 105px;
 
   border: 1px solid #979797;
   border-radius: 6px;
-  
-  margin:6px;
-  
+
+  margin: 6px;
+
   box-sizing: border-box;
 
   cursor: pointer;
-`
+`;
 
 const StSelectMBTIBtn = styled.button`
   background: none;
@@ -201,19 +238,19 @@ const StSelectMBTIBtn = styled.button`
   font-size: 18px;
   text-align: left;
 
-  border:none;
+  border: none;
   outline: none;
 
-  margin-left:98px;
+  margin-left: 98px;
   padding: 0;
-  width:200px;
+  width: 200px;
 
   cursor: pointer;
-`
+`;
 
 const StPopupBox = styled.div`
-  background: #FFFFFF;
-  
+  background: #ffffff;
+
   position: absolute;
   width: 500px;
   height: 683px;
@@ -222,19 +259,18 @@ const StPopupBox = styled.div`
   border-radius: 21.3333px 21.3333px 0px 0px;
 
   z-index: 10;
-  bottom:0;
-`
+  bottom: 0;
+`;
 
 const StSlideDiv = styled.div`
-  background: #E8E8E8;
+  background: #e8e8e8;
 
   width: 42.67px;
   height: 5.33px;
 
   border-radius: 133.333px;
   margin: 21px auto 28px auto;
-`
-
+`;
 
 const StCommonButton = styled.div`
   background: #979797;
@@ -244,13 +280,13 @@ const StCommonButton = styled.div`
   align-items: center;
 
   font-size: 22px;
-  color: #FFFFFF;
+  color: #ffffff;
 
   border-radius: 6px;
-  margin: ${props=>props.margin || "25px"};
+  margin: ${(props) => props.margin || "25px"};
 
   width: 450px;
-  height:70px;
+  height: 70px;
 
-  cursor:pointer;
-`
+  cursor: pointer;
+`;

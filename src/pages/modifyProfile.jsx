@@ -5,14 +5,13 @@ import ProfileModifyForm from "../components/modifyProfile/ProfileModifyForm";
 import Layout from "../layout/layout";
 
 const ModifyProfile = () => {
-
   return (
     <Layout>
       <Header />
-        <ProfileModifyForm />
+      <ProfileModifyForm />
       <Footer />
     </Layout>
-  )
-}
+  );
+};
 
 export default ModifyProfile;
