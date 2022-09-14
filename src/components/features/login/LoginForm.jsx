@@ -68,7 +68,7 @@ function LoginForm() {
         const response = await preInstance.post("/accounts/login", userData);
         if (response.data.message = "success") {
           window.localStorage.setItem("token", response.data.token);
-          window.location.assign("/");
+          navigate("/");
         }
       } catch(error) {
         return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");

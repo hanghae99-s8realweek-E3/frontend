@@ -66,7 +66,7 @@ function WriteTodoForm() {
         console.log(response);
         if (response.data.message === "success") {
           console.log(response.data.message);
-          window.location.assign("/");
+          navigate("/");
         }
       } catch (error) {
         return alert(error);

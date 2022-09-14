@@ -93,13 +93,14 @@ function UserProfileContainer() {
               제안한 TO DO
             </StSuggestionTodo>
           </StTodoWrap>
-          <StLineWrap>
+          {/* <StLineWrap>
             <StMiddleLeftLine></StMiddleLeftLine>
             <StMiddleRightLine></StMiddleRightLine>
-          </StLineWrap>
+          </StLineWrap> */}
 
           <StBottomWrap>
             {selectSort === true ? (
+              <StShadowBackgroundDiv>
               <StPopupBox>
                 <StSlideDiv />
                 {/* <StSort>
@@ -118,6 +119,7 @@ function UserProfileContainer() {
                 <StFooterBar />
                 {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
               </StPopupBox>
+              </StShadowBackgroundDiv>
             ) : (
               <></>
             )}
@@ -208,12 +210,19 @@ const StTodoWrap = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  /* gap: 30px; */
   margin-bottom: 10px;
 `;
 const StChallengeTodo = styled.div`
-  width: 105px;
-  display: flex;
+justify-content: center;
+display: flex;
+:active{
+  width: 225px;
+  border-bottom: 2px solid black;
+}
+width: 225px;
+  border-bottom: 2px solid #bdc5cd;
+  /* width: 105px; */
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -221,10 +230,17 @@ const StChallengeTodo = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  
 `;
 const StSuggestionTodo = styled.div`
-  width: 105px;
-  display: flex;
+justify-content: center;
+display: flex;
+:active{
+  width: 225px;
+  border-bottom: 2px solid black;
+}
+width: 225px;
+  border-bottom: 2px solid #bdc5cd;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -266,6 +282,19 @@ const StTodayMyCardWrap = styled.div`
   /* align-items: start; */
   flex-direction: column;
 `;
+const StShadowBackgroundDiv = styled.div`
+  background:rgba(0,0,0,0.3);
+
+  position: fixed;
+  display: block;
+
+  top:0;
+  width:500px;
+  height:100%;
+  z-index:10;
+
+`
+
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
