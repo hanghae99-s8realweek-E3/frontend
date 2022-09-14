@@ -7,7 +7,7 @@ function selectMBTIFeed() {
   return (
     <Layout>
       <Header />
-        <SelectMBTIFeedContainer />
+      <SelectMBTIFeedContainer />
       <Footer />
     </Layout>
   );

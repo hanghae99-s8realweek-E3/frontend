@@ -1,15 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
 
 const initialState = {
   message: "",
   errorMessage: "",
-  data: {}
-}
+  data: {},
+};
 
-// 나의 ToDo 피드를 조회할 때 사용되는 thunk action creater 
+// 나의 ToDo 피드를 조회할 때 사용되는 thunk action creater
 export const getSetUpMyTodoFetch = createAsyncThunk(
-  'mytodos/getSetUpMyTodoFetch',
+  "mytodos/getSetUpMyTodoFetch",
   async (payload, thunkAPI) => {
     try {
       const response = await instance.get(`/mytodos?date=${payload.date}`);
@@ -18,31 +18,30 @@ export const getSetUpMyTodoFetch = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const setUpTodosSlice = createSlice({
-  name:"setUpTodos",
+  name: "setUpTodos",
   initialState,
-  reducers:{
-  },
-  extraReducers: builder => { 
+  reducers: {},
+  extraReducers: (builder) => {
     //getSetUpMyTodoFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(getSetUpMyTodoFetch.pending , (state, action)=> {
+    builder.addCase(getSetUpMyTodoFetch.pending, (state, action) => {
       return state;
-    })
-    builder.addCase(getSetUpMyTodoFetch.fulfilled, (state, action)=> {
-      const newState ={...state}
+    });
+    builder.addCase(getSetUpMyTodoFetch.fulfilled, (state, action) => {
+      const newState = { ...state };
       newState.message = action.payload.message;
       newState.data = action.payload.data;
       console.log(newState.data);
       return newState;
-    })
-    builder.addCase(getSetUpMyTodoFetch.rejected, (state, action)=> {
-      const newState = {...state };
+    });
+    builder.addCase(getSetUpMyTodoFetch.rejected, (state, action) => {
+      const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;
-    })
-  }
-})
+    });
+  },
+});
 
 export default setUpTodosSlice;

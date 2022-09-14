@@ -3,93 +3,97 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fqaList } from "../../../utils/helpList";
 
-function FQAAccordionCard ({title, content}) {
-  const [openState, setOpenState] = useState(false)
+function FQAAccordionCard({ title, content }) {
+  const [openState, setOpenState] = useState(false);
   const navigate = useNavigate();
 
-  function toggleToAccordianCard () {
-    setOpenState(!openState)
+  function toggleToAccordianCard() {
+    setOpenState(!openState);
   }
 
-
-  function moveToWithdrawPage () {
-    navigate('/withdraw')
+  function moveToWithdrawPage() {
+    navigate("/withdraw");
   }
 
   return (
     <>
-      <StFAQAccordTitle
-        onClick={toggleToAccordianCard}>
+      <StFAQAccordTitle onClick={toggleToAccordianCard}>
         {title}
-        <StArrowIcon 
-          src={process.env.PUBLIC_URL+`/images/Toggle.png`} 
-          transform={openState === true ? "rotateZ(180deg)" : "rotateZ(0deg)" }/>
+        <StArrowIcon
+          src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+          transform={openState === true ? "rotateZ(180deg)" : "rotateZ(0deg)"}
+        />
       </StFAQAccordTitle>
-      <StFQAAccordionBox 
-        display={openState === true? "flex" : "none"}
-        dangerouslySetInnerHTML={ {__html: content} } />
-      {title === fqaList[2].title ? <StWithdrawButton display={openState === true? "block" : "none"} onClick={moveToWithdrawPage}>탈퇴하기</StWithdrawButton> : null}
+      <StFQAAccordionBox
+        display={openState === true ? "flex" : "none"}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+      {title === fqaList[2].title ? (
+        <StWithdrawButton
+          display={openState === true ? "block" : "none"}
+          onClick={moveToWithdrawPage}>
+          탈퇴하기
+        </StWithdrawButton>
+      ) : null}
     </>
-  )
+  );
 }
-
 
 export default FQAAccordionCard;
 
 const StFAQAccordTitle = styled.button`
-background: none;
+  background: none;
 
-display: flex;
-justify-content: flex-start;
-align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
-font-size: 20px;
-font-weight: 500;
+  font-size: 20px;
+  font-weight: 500;
 
-border: none;
-outline: none;
-margin:20px 0;
+  border: none;
+  outline: none;
+  margin: 20px 0;
 
-width: 100%;
-cursor: pointer;
-`
-
+  width: 100%;
+  cursor: pointer;
+`;
 
 const StFQAAccordionBox = styled.div`
-display: ${props=>props.display || "none"};
-flex-direction: column;
-justify-content: flex-start;
+  display: ${(props) => props.display || "none"};
+  flex-direction: column;
+  justify-content: flex-start;
 
-text-align: left;
-font-size: 16px;
-color: #979797;
+  text-align: left;
+  font-size: 16px;
+  color: #979797;
 
-margin:0 auto 20px 5px;
+  margin: 0 auto 20px 5px;
 
-width: 100%;
-`
+  width: 100%;
+`;
 
 const StArrowIcon = styled.img`
-height:6px;
+  height: 6px;
 
-margin-left:auto;
+  margin-left: auto;
 
-transform: ${props=>props.transform};
-transition: ease 0.2s;
-`
+  transform: ${(props) => props.transform};
+  transition: ease 0.2s;
+`;
 
 const StWithdrawButton = styled.button`
-background: none;
+  background: none;
 
-display: ${props=>props.display || "none"};
+  display: ${(props) => props.display || "none"};
 
-font-size: 16px;
-font-weight: 500;
-text-decoration: underline;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline;
 
-border:none;
-outline: none;
-margin-bottom: 20px;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
 
-cursor:pointer;
-`
+  cursor: pointer;
+`;

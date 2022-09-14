@@ -62,6 +62,7 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
                 window.location.pathname === `/otherspage/${params.userId}` ||
                   window.location.pathname === `/activity`) === true)
                 return false
+                // 위의 경로에 해당하는 경우가 하나라도 있으면 너비 변화 줄 것.
     else
       return true
   }
@@ -70,8 +71,10 @@ function ChallengeCard ({ id, data, hideState, isTodayChallenge }) {
   function locationButtonCheck () {
     if ((window.location.pathname === "/todolists" || 
           window.location.pathname === `/todolists/${params.mbti}` ||
-            window.location.pathname === "/activity") === true)
+            window.location.pathname === `/otherspage/${params.userId}` ||
+              window.location.pathname === "/activity") === true)
         return false
+        // 위의 경로에 해당하는 경우가 하나라도 있으면 버튼 가릴 것.
     else
       return true
   }

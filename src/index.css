@@ -18,7 +18,23 @@ code {
     monospace;
 }
 
-
-p, ol, ul, li, dl, dt, dd, div, textarea, h1, h2, h3, h4, h5, h6, button, input, select {
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+div,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+select {
   white-space: pre-wrap;
 }
