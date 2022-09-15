@@ -22,9 +22,14 @@ export const getTodoListsFetch = createAsyncThunk(
         response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
       // console.log(response)
     }
-      else if (payload === true) {response = await instance.get("/todolists");
+      else if (payload === true) 
+      {
+        response = await instance.get("/todolists");
       }
-      // else if(payload === undefined) {response = await instance.get("/todolists");}
+      else if(payload === undefined)
+      {
+        response = await instance.get("/todolists");
+      }
       // const response = await instance.get("/todolists")
       // console.log(response);
       // console.log("서버 통신 성공 값 반환해줍니다");
@@ -91,13 +96,16 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      // axios.ins
-      const response = await axios.get(
-        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}`
-      );
-      // const response = await instance.get("/todolists")
-      console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
+      let response;
+      if(payload.login === false){
+        response = await axios.get(`${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}`);
+        console.log("5")
+      }
+      else if(payload.login === true){
+        response = await instance.get(`/todolists?mbti=${payload.mbti}`);
+        console.log("6")
+      }
+      console.log(response.data)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("서버와의 통신 에러");
