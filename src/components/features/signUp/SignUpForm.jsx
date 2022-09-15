@@ -100,7 +100,7 @@ const SignUpForm = () => {
           if (response.data.message === "success") {
               //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
               window.localStorage.setItem("token", response.data.token)
-              window.location.assign('/mbti')
+              navigate('/mbti')
         }
       } catch (error) {
           return alert(error.response.data.errorMessage)
