@@ -98,7 +98,7 @@ function Footer() {
               }
             />
           </div>
-          TO DO
+          미믹
         </StButton>
         <StButton
           onClick={moveToMyPage}
@@ -153,7 +153,8 @@ const FooterContainer = styled.div`
   height: 64px;
   width: 500px;
 
-  padding-top: 15px;
+  padding-top: 5px;
+  margin: auto;
 
   bottom: 0;
   z-index: 6;

@@ -10,12 +10,19 @@ import WelcomeForm from "./WelcomeForm";
 function MainContainer() {
   const firstLoginCheck = getCookie("firstLogin");
   const bannerSlide = [
-    "https://cdn.class101.net/images/ed70fb92-b8fb-42cd-83d0-db0761a60f37/1920xauto.webp",
+    process.env.PUBLIC_URL + `/images/Banner1.jpg`,
     "https://cdn.class101.net/images/367bcbd9-1311-405f-bb5f-5737e4f9b43a",
     "https://cdn.class101.net/images/070f5c4e-031b-41b9-9d2b-be4bee95c031/1920xauto.webp",
     "https://cdn.class101.net/images/12783d2d-308a-49fd-8d5c-096ec8e05c9b/1920xauto.webp",
     "https://cdn.class101.net/images/63be45f8-20fa-47e4-b503-d2445799ddba/1920xauto.webp",
     "https://cdn.class101.net/images/dfb0bc2d-5a8a-4adc-9c44-6d5425c18a9d/1920xauto.webp",
+  ];
+  const locationLink = [
+    "https://www.16personalities.com/ko",
+    "https://poomang.com/t/promiseworld?from_detail=True",
+    "http://16types.glam.am/intro",
+    "https://ktestone.com/kapable.github.io/personalColor2022/",
+    "https://doda.app/quiz/l2hrXtybhV",
   ];
 
   function moveToPage0() {
@@ -30,12 +37,19 @@ function MainContainer() {
     );
   }
 
+  function moveToPageNewTab(event) {
+    console.log(event.target);
+    window.open(locationLink[event.target.id]);
+  }
+
   return (
     <>
       {firstLoginCheck !== undefined ? <WelcomeForm /> : <></>}
       <StContainer>
         <StHeadTitle>
-          미믹님! <br /> 오늘은 누구를 따라해볼까요?
+          미믹님!
+          <br />
+          오늘은 누구를 따라해볼까요?
         </StHeadTitle>
         <BannerSlideBox>
           {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
@@ -51,7 +65,7 @@ function MainContainer() {
             pagination={{ clickable: true }}>
             {bannerSlide.map((elem, idx) => (
               <SwiperSlide key={idx} style={SwiperImageCSSData}>
-                <SildeImage width="450px" src={elem} />
+                <SildeBannerImage width="450px" src={elem} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -105,7 +119,7 @@ function MainContainer() {
           </Swiper>
         </InfomationSlideBox>
         <InfomationSlideBox>
-          <SildeTitle>한 주 간의 레포트!</SildeTitle>
+          <SildeTitle>심심풀이에 이런 테스트들은 어때요?</SildeTitle>
 
           {/* 슬라이드 목록 구간 */}
           <Swiper
@@ -114,39 +128,84 @@ function MainContainer() {
             spaceBetween={12}
             style={{ margin: "0.5rem 0" }}
             scrollbar={{ draggable: true }}>
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <SwiperSlide
+              id="0"
+              onClick={moveToPageNewTab}
+              style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[0]} />
+                <SildeImage
+                  width="300px"
+                  src={process.env.PUBLIC_URL + `/images/testImage0.jpg`}
+                />
               </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+              <PostText>
+                <span style={{ fontWeight: "700" }}>[16 Personalities]</span>{" "}
+                MBTI 검사의 근본!
+              </PostText>
             </SwiperSlide>
 
-            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+            <SwiperSlide
+              id="1"
+              onClick={moveToPageNewTab}
+              style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[1]} />
+                <SildeImage
+                  width="190px"
+                  src={process.env.PUBLIC_URL + `/images/testImage1.jpg`}
+                />
               </PostImageBox>
-              <PostText>Lorem ipsum dolor </PostText>
+              <PostText>
+                <span style={{ fontWeight: "700" }}>[푸망XDB손해보험]</span>{" "}
+                약속BTI 테스트
+              </PostText>
             </SwiperSlide>
 
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <SwiperSlide
+              id="2"
+              onClick={moveToPageNewTab}
+              style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[2]} />
+                <SildeImage
+                  width="250px"
+                  src={process.env.PUBLIC_URL + `/images/testImage2.jpg`}
+                />
               </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+              <PostText>
+                <span style={{ fontWeight: "700" }}>[glam]</span> 연애 능력치
+                테스트
+              </PostText>
             </SwiperSlide>
 
-            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
+            <SwiperSlide
+              id="3"
+              onClick={moveToPageNewTab}
+              style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[3]} />
+                <SildeImage
+                  width="210px"
+                  src={process.env.PUBLIC_URL + `/images/testImage3.jpg`}
+                />
               </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+              <PostText>
+                <span style={{ fontWeight: "700" }}>[케이테스트]</span> 2022
+                버전 퍼스널 컬러 테스트
+              </PostText>
             </SwiperSlide>
 
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
+            <SwiperSlide
+              id="4"
+              onClick={moveToPageNewTab}
+              style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[4]} />
+                <SildeImage
+                  width="180px"
+                  src={process.env.PUBLIC_URL + `/images/testImage4.jpg`}
+                />
               </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
+              <PostText>
+                <span style={{ fontWeight: "700" }}>[Doda]</span> 수랑의 성향
+                검사
+              </PostText>
             </SwiperSlide>
           </Swiper>
         </InfomationSlideBox>
@@ -182,7 +241,7 @@ const BannerSlideBox = styled.div`
   flex-direction: row;
 
   width: 450px;
-  height: 230px;
+  height: 250px;
 
   border-radius: 6px;
 
@@ -200,8 +259,13 @@ const InfomationSlideBox = styled.div`
   overflow: hidden;
 `;
 
+const SildeBannerImage = styled.img`
+  width: ${(props) => props.width};
+`;
+
 const SildeImage = styled.img`
   width: ${(props) => props.width};
+  pointer-events: none;
 `;
 
 const SildeTitle = styled.h4`
@@ -225,6 +289,8 @@ const PostImageBox = styled.div`
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+  pointer-events: none;
 `;
 
 const PostText = styled.p`
@@ -237,14 +303,13 @@ const PostText = styled.p`
 `;
 
 const SwiperImageCSSData = {
-  backgroundColor: "gray",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
 
-  width: "500px",
-  height: "300px",
+  width: "450px",
+  height: "260px",
 };
 
 const SwiperPostCSSData = {
