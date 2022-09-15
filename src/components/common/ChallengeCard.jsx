@@ -12,17 +12,21 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { decodeMyTokenData } from "../../utils/token";
 import instance from "../../app/modules/instance";
+import { useDispatch } from "react-redux";
+import { getSetUpMyTodoFetch } from "../../app/modules/setUpTodoSlice";
 
 function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
-  const [challengeComplete, setChallengeComplete] = useState(false);
   const [menuModal, setMenuModal] = useState(false);
   const params = useParams();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // API 새로 요청해야하나?
-  // 결과값에 isCompleted 상태를 반환할 수 있으면 좋을텐데!
-  // 이거 말고 다르게 해결 가능한지를 확인해보자.
+  console.log(
+    window.location.pathname === `/feeddetail/${id}`,
+    id,
+    window.location.pathname
+  );
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
@@ -52,13 +56,10 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
           date: settingTodayDate(),
         });
         if (response.data.message === "success") {
-          if (response.data.isCompleted === 1) {
-            setChallengeComplete(true);
-          } else {
-            setChallengeComplete(false);
-          }
+          dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
         }
       } catch (error) {
+        console.log(error);
         alert(error.response.data.errorMessage);
       }
     };
@@ -143,22 +144,19 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
           {isTodayChallenge === true ? (
             <StPopUpWhiteButton
               onClick={cancelTodayChallenge}
-              transform="translateY(76vh)"
-            >
+              transform="translateY(76vh)">
               등록 취소
             </StPopUpWhiteButton>
           ) : (
             <StPopUpWhiteButton
               onClick={deleteMyTodayMakingChallenge}
-              transform="translateY(76vh)"
-            >
+              transform="translateY(76vh)">
               삭제
             </StPopUpWhiteButton>
           )}
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)"
-          >
+            transform="translateY(77vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -168,21 +166,24 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
       <StChallengeCardDiv
         width={locationSizeCheck() === false ? "90%" : "100%"}
         id={data.todoId}
-        onClick={moveToFeedDetail}
-      >
+        onClick={
+          window.location.pathname === `/feeddetail/${id}`
+            ? null
+            : moveToFeedDetail
+        }
+        cursor={
+          window.location.pathname === `/feeddetail/${id}` ? "arrow" : "pointer"
+        }>
         {locationButtonCheck() === true && hideState !== "true" ? (
           <StChallengeStateBtn onClick={changeStateChallenge}>
-            {challengeComplete === false ? (
-              <FontAwesomeIcon
-                style={{ fontSize: "46px", marginRight: "19px" }}
-                icon={faCircle}
-              />
-            ) : (
-              <FontAwesomeIcon
-                style={{ fontSize: "46px", marginRight: "19px" }}
-                icon={faCircleCheck}
-              />
-            )}
+            <FontAwesomeIcon
+              style={{
+                fontSize: "46px",
+                marginRight: "19px",
+                pointerEvents: "none",
+              }}
+              icon={data.isCompleted === 0 ? faCircle : faCircleCheck}
+            />
           </StChallengeStateBtn>
         ) : (
           <></>
@@ -269,7 +270,7 @@ const StChallengeCardDiv = styled.div`
   margin: 5px 25px;
 
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: ${(props) => props.cursor || "pointer"};
 `;
 
 const StChallengeStateBtn = styled.button`

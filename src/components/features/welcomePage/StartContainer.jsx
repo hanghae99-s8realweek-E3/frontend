@@ -24,9 +24,9 @@ function StartContainer() {
     "다른 사람이 나의 활동을 체험하게 하고 싶다고요?\n그럼 당신의 활동을 제안해주세요!\n도전하고 싶은 사람들이 당신의 활동을 가져갈거에요.",
   ];
 
-  function startAndGoToMain () {
-    setCookie("firstEnter", true, 30758400)
-    navigate('/')
+  function startAndGoToMain() {
+    setCookie("firstEnter", true, 30758400);
+    navigate("/");
   }
 
   return (
@@ -60,7 +60,9 @@ function StartContainer() {
               </div>
               <StContext>{startingPageText[idx]}</StContext>
               {idx === 3 ? (
-                <StStartbutton type="button" onClick={startAndGoToMain}>미믹, 시작해볼까요?</StStartbutton>
+                <StStartbutton type="button" onClick={startAndGoToMain}>
+                  미믹, 시작해볼까요?
+                </StStartbutton>
               ) : (
                 <div></div>
               )}

@@ -18,7 +18,10 @@ function ErrorPageContainer() {
   return (
     <>
       <TotalWrap>
-        <StErrorImg src={process.env.PUBLIC_URL+ `/images/Error.jpg`} alt="ErrorPageImg" />
+        <StErrorImg
+          src={process.env.PUBLIC_URL + `/images/Error.png`}
+          alt="ErrorPageImg"
+        />
         <StContent>문제가 생겼어요</StContent>
         <StErrorMsg>
           죄송합니다 <br />
@@ -45,7 +48,6 @@ const TotalWrap = styled.div`
 const StErrorImg = styled.img`
   width: 169px;
   height: 169px;
-  background: #d9d9d9;
   border-radius: 5px;
   margin-top: 213.33px;
   margin-bottom: 5px;

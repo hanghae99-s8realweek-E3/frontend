@@ -41,7 +41,7 @@ const HeaderContainer = styled.div`
   height: 60px;
   width: 500px;
 
-  /* border: 1px solid black; */
+  border-bottom: 1px solid #c7c7c7;
   margin: 0;
 
   top: 0;
