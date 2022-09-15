@@ -1,11 +1,12 @@
 import React,{useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFollowFetch } from "../../../app/modules/followSlice";
 import instance from "../../../app/modules/instance"
 
 function MyPageFollow() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
     const followState = useSelector((state) => state.follow.data)
@@ -23,8 +24,13 @@ function MyPageFollow() {
         } else setFollowTab(false)
     }
 
-    const changeMyUnFollowState = (e) => {
+    const onClickGoToOthersPage = (e) => {
         e.preventDefault();
+        navigate(`/otherspage/${e.target.id}`)
+    }
+
+    const changeMyUnFollowState = (e) => {
+        e.stopPropagation();
         const putMyPageFollowFetch = async () => {
             try {
                 const response = await instance.put(`/follows/${e.target.id}`)
@@ -44,7 +50,7 @@ function MyPageFollow() {
                 <>
                 <StContainer>
                     <StWrapBtn>
-                        <StWrapBtnFollow>팔로우</StWrapBtnFollow>
+                        <StWrapBtnFollow>팔로워</StWrapBtnFollow>
                         <StWrapBtnFollowing type="submit" onClick={onClick}>팔로잉</StWrapBtnFollowing>
                     </StWrapBtn>
                     <div>
@@ -53,7 +59,7 @@ function MyPageFollow() {
                     <div>
                         {followState.follower?.map((x,index)=> {
                         return (<div key={index}>
-                            <StProfileBox>
+                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
                                     <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
                                 <StWrapNicknameMbti>
                                     <StNickname>{x.nickname}</StNickname>
@@ -67,7 +73,7 @@ function MyPageFollow() {
                 : <>
                 <StContainer>
                     <StWrapBtn>
-                        <StWrapBtnFollowing type="submit" onClick={onClick}>팔로우</StWrapBtnFollowing>
+                        <StWrapBtnFollowing type="submit" onClick={onClick}>팔로워</StWrapBtnFollowing>
                         <StWrapBtnFollow>팔로잉</StWrapBtnFollow>
                     </StWrapBtn>
                     <div>
@@ -76,13 +82,13 @@ function MyPageFollow() {
                     <div>
                         {followState.following?.map((x,index)=> {
                         return (<div key={index}>
-                            <StProfileBox>
+                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
                                 <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
                                     <StWrapNicknameMbti>
-                                        <StNickname>{x.nickname}</StNickname>
+                                        <StNickname >{x.nickname}</StNickname>
                                         <StMbti>{x.mbti}</StMbti>
                                     </StWrapNicknameMbti>
-                                        <StDeleteFollowBtn type="submit" id={x.userId} onClick={changeMyUnFollowState}>언팔로우</StDeleteFollowBtn>
+                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>언팔로우</StDeleteFollowBtn>
                             </StProfileBox>
                                 </div>)
                     })}</div>
@@ -140,6 +146,9 @@ const StInput = styled.input`
 `
 
 const StProfileBox = styled.div`
+    background:none;
+    border:none;
+    outline:none;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     height:100px;
@@ -153,6 +162,7 @@ const StProfileBox = styled.div`
 `
 
 const StProfileImg = styled.img`
+    pointer-events:none;
     border:1px solid black;
     border-radius:30px;
     width:60px;
@@ -161,9 +171,11 @@ const StProfileImg = styled.img`
 
 `
 const StWrapNicknameMbti=styled.div`
+    pointer-events:none;
     margin-left:0px;
 `
 const StNickname = styled.h4`
+    pointer-events:none;
     left:0;
     display:grid;
     justify-content:left;
@@ -172,6 +184,7 @@ const StNickname = styled.h4`
 `
 
 const StMbti = styled.h6`
+    pointer-events:none;
     color: gray;
     text-align: left;
     margin-top:0px;
