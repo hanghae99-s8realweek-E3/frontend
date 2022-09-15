@@ -137,7 +137,7 @@ function SetToDoContainer() {
 
           <StChallengeToDoBox>
             <StCommonText margin="0 auto 14px 25px" fontSize="18px">
-              오늘의 TO DO
+              오늘의 미믹
             </StCommonText>
             {selectingDate !== nowDate ? (
               Array.isArray(myTodosState.challengedTodo) === true ? (
@@ -160,14 +160,13 @@ function SetToDoContainer() {
                 id={myTodosState.challengedTodo.todoId}
                 data={myTodosState.challengedTodo}
                 isTodayChallenge={true}
-                state="myTodos"
-              />
+                state="myTodos"              />
             )}
           </StChallengeToDoBox>
 
           <StMakingToDoBox>
             <StCommonText margin="0 auto 14px 25px" fontSize="18px">
-              내가 만든 TO DO
+              내가 만든 미믹
             </StCommonText>
             {Array.isArray(myTodosState.createdTodo) === true ? (
               selectingDate !== nowDate ? (

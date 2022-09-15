@@ -28,43 +28,113 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterButtonBox>
-        <StButton onClick={moveToHome}>
-          <StCircle
-            background={
-              window.location.pathname === "/" ? "#E8644C" : "#E8E8E8"
-            }
-          />
+        <StButton
+          onClick={moveToHome}
+          color={
+            window.location.pathname === "/" ||
+            window.location.pathname === "/welcomepage" ||
+            window.location.pathname === "/teaser"
+              ? "#E8644C"
+              : "#313131"
+          }>
+          <div>
+            <StBtnImage
+              src={
+                window.location.pathname === "/" ||
+                window.location.pathname === "/welcomepage" ||
+                window.location.pathname === "/teaser"
+                  ? process.env.PUBLIC_URL + `/images/HomeActive.png`
+                  : process.env.PUBLIC_URL + `/images/Home.png`
+              }
+            />
+          </div>
           홈
         </StButton>
-        <StButton onClick={moveToFeed}>
-          <StCircle
-            background={
-              window.location.pathname === "/todolists" ||
-              window.location.pathname === `/todolists/${params.mbti}`
-                ? "#E8644C"
-                : "#E8E8E8"
-            }
-          />
+        <StButton
+          onClick={moveToFeed}
+          color={
+            window.location.pathname === "/todolists" ||
+            window.location.pathname === `/todolists/${params.mbti}` ||
+            window.location.pathname === `/feeddetail/${params.todoId}` ||
+            window.location.pathname === "/todolists" ||
+            window.location.pathname === `/follows/${params.userId}` ||
+            window.location.pathname === `/selectmbtifeed` ||
+            window.location.pathname === `/follows/${params.userId}`
+              ? "#E8644C"
+              : "#313131"
+          }>
+          <div>
+            <StBtnImage
+              src={
+                window.location.pathname === "/todolists" ||
+                window.location.pathname === `/todolists/${params.mbti}` ||
+                window.location.pathname === `/feeddetail/${params.todoId}` ||
+                window.location.pathname === "/todolists" ||
+                window.location.pathname === `/follows/${params.userId}` ||
+                window.location.pathname === `/selectmbtifeed` ||
+                window.location.pathname === `/follows/${params.userId}`
+                  ? process.env.PUBLIC_URL + `/images/FeedActive.png`
+                  : process.env.PUBLIC_URL + `/images/Feed.png`
+              }
+            />
+          </div>
           피드
         </StButton>
-        <StButton onClick={moveToTodo}>
-          <StCircle
-            background={
-              window.location.pathname === "/setuptodo" ? "#E8644C" : "#E8E8E8"
-            }
-          />
+        <StButton
+          onClick={moveToTodo}
+          color={
+            window.location.pathname === "/setuptodo" ||
+            window.location.pathname === "/mytodos"
+              ? "#E8644C"
+              : "#313131"
+          }>
+          <div>
+            <StBtnImage
+              src={
+                window.location.pathname === "/setuptodo" ||
+                window.location.pathname === "/mytodos"
+                  ? process.env.PUBLIC_URL + `/images/MimicActive.png`
+                  : process.env.PUBLIC_URL + `/images/Mimic.png`
+              }
+            />
+          </div>
           TO DO
         </StButton>
-        <StButton onClick={moveToMyPage}>
-          <StCircle
-            background={
-              window.location.pathname === "/mypage" ? "#E8644C" : "#E8E8E8"
-            }
-          />
+        <StButton
+          onClick={moveToMyPage}
+          color={
+            window.location.pathname === "/mypage" ||
+            window.location.pathname === "/activity" ||
+            window.location.pathname === "/login" ||
+            window.location.pathname === "/mbti" ||
+            window.location.pathname === "/signup" ||
+            window.location.pathname === "/modifyprofile" ||
+            window.location.pathname === "/changepw" ||
+            window.location.pathname === "/helpdesk" ||
+            window.location.pathname === "/withdraw"
+              ? "#E8644C"
+              : "#313131"
+          }>
+          <div>
+            <StBtnImage
+              src={
+                window.location.pathname === "/mypage" ||
+                window.location.pathname === "/activity" ||
+                window.location.pathname === "/login" ||
+                window.location.pathname === "/mbti" ||
+                window.location.pathname === "/signup" ||
+                window.location.pathname === "/modifyprofile" ||
+                window.location.pathname === "/changepw" ||
+                window.location.pathname === "/helpdesk" ||
+                window.location.pathname === "/withdraw"
+                  ? process.env.PUBLIC_URL + `/images/MyActive.png`
+                  : process.env.PUBLIC_URL + `/images/My.png`
+              }
+            />
+          </div>
           MY
         </StButton>
       </FooterButtonBox>
-      <StCommonBar />
     </FooterContainer>
   );
 }
@@ -80,7 +150,7 @@ const FooterContainer = styled.div`
   align-items: center;
   position: fixed;
 
-  height: 108px;
+  height: 64px;
   width: 500px;
 
   padding-top: 15px;
@@ -92,8 +162,12 @@ const FooterContainer = styled.div`
 const FooterButtonBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 5rem;
+
+  height: 100%;
 `;
+
 const StButton = styled.button`
   background: none;
 
@@ -102,8 +176,9 @@ const StButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
+  color: ${(props) => props.color};
 
   border: none;
   outline: none;
@@ -112,22 +187,17 @@ const StButton = styled.button`
   cursor: pointer;
 `;
 
-const StCommonBar = styled.div`
-  background: #000000;
+// const StCommonBar = styled.div`
+//   background: #000000;
 
-  margin-top: 15px;
-  border-radius: 133.005px;
+//   margin-top: 15px;
+//   border-radius: 133.005px;
 
-  width: 178.23px;
-  height: 6.65px;
-`;
+//   width: 178.23px;
+//   height: 6.65px;
+// `;
 
-const StCircle = styled.span`
-  background: ${(props) => props.background || "#E8E8E8"};
-
-  border-radius: 133.005px;
-  margin-bottom: 5px;
-
+const StBtnImage = styled.img`
   height: 30px;
   width: 30px;
 `;
