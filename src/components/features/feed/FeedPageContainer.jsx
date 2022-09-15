@@ -4,7 +4,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import {getTodoListsChallengeFetch, getTodoListsCommentFetch, getTodoListsFetch,} from "../../../app/modules/todolistsSlice";
+import {
+  getMbtiTodoListsChallengeFetch,
+  getMbtiTodoListsCommentFetch,
+  getMbtiTodoListsFetch,
+  getTodoListsChallengeFetch,
+  getTodoListsCommentFetch,
+  getTodoListsFetch,
+} from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
 import { useInView } from "react-intersection-observer";
@@ -18,40 +25,46 @@ function FeedPageContainer() {
   const [ref, inView] = useInView();
 
   const card = useSelector((state) => state.todolists.data);
+
   const { mbti } = useParams();
   console.log(card);
-  console.log(card.length);
+  // console.log(card.length);
   console.log(inView);
-
-
   // console.log(mbti);
 
+  //card.length 이슈 
   useEffect(() => {
-    if (card.length === 0 && tokenChecker() === true) {
+    console.log(mbti);
+    if ( tokenChecker() === true) {
       console.log("첫로딩");
-      dispatch(getTodoListsFetch(true))
+      dispatch(getTodoListsFetch(true));
+      dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
       console.log("첫로딩1");
-    }
-    else if (card.length === 0 && tokenChecker() === false){ 
-      console.log("첫로딩2")
+    } else if (card.length === 0 && tokenChecker() === false) {
+      console.log("첫로딩2");
       dispatch(getTodoListsFetch(false));
-      console.log("첫로딩3")
+      dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
+      console.log("첫로딩3");
     }
   }, []);
 
-  useEffect(()=>{
-    console.log("갑니다")
-    if((card.length !==0 && inView) ||tokenChecker() === true){
-        console.log('첫 로딩 이후 무한 스크롤');
-        dispatch(getTodoListsFetch(true));
-        console.log('첫 로딩 이후 무한 스크롤1');
-      }
-    else if((card.length !==0 && inView) ||tokenChecker() === false){
-      console.log('첫 로딩 이후 무한 스크롤2');
-      dispatch(getTodoListsFetch(false));
-      console.log('첫 로딩 이후 무한 스크롤3');
-    }
-  },[inView]);
+  // useEffect(() => {
+  //   console.log("갑니다");
+  //   if ((card.length !== 0 && inView) || tokenChecker() === true) {
+  //     console.log("첫 로딩 이후 무한 스크롤");
+  //     dispatch(getTodoListsFetch(true));
+  //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
+  //     console.log("첫 로딩 이후 무한 스크롤1");
+  //   // } else if ((card.length !== 0 && inView) || tokenChecker() === false) {
+  //   } else if ( inView &&   tokenChecker() === false) {
+  //     console.log("첫 로딩 이후 무한 스크롤2");
+  //     dispatch(getTodoListsFetch(false));
+  //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
+  //     console.log("첫 로딩 이후 무한 스크롤3");
+  //   }
+  // }, [inView]);
+
+ 
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -70,31 +83,84 @@ function FeedPageContainer() {
 
   // 최신순
   const datebutton = () => {
-    if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
-    else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
+    if (tokenChecker() === false) {
+      if (mbti === undefined) {
+        dispatch(getTodoListsFetch(false));
+        console.log("1");
+      } else if (mbti !== undefined) {
+        dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+        console.log("2");
+      }
+    } else {
+      if (tokenChecker() === true) {
+        if (mbti === undefined) {
+          dispatch(getTodoListsFetch(true));
+          console.log("3");
+        } else if (mbti !== undefined) {
+          dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+          console.log("4");
+        }
+      }
+    }
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
   //댓글순
   const commentbutton = () => {
-    if (tokenChecker() === false) dispatch(getTodoListsCommentFetch(false));
-    else if (tokenChecker() === true) dispatch(getTodoListsCommentFetch(true));
+    if (tokenChecker() === false) {
+      if (mbti === undefined) {
+        dispatch(getTodoListsCommentFetch(false));
+        console.log("1");
+      } else if (mbti !== undefined) {
+        dispatch(getMbtiTodoListsCommentFetch({ login: false, mbti: mbti }));
+        console.log("2");
+      }
+    } else {
+      if (tokenChecker() === true) {
+        if (mbti === undefined) {
+          dispatch(getTodoListsCommentFetch(true));
+          console.log("3");
+        } else if (mbti !== undefined) {
+          dispatch(getMbtiTodoListsCommentFetch({ login: true, mbti: mbti }));
+          console.log("4");
+        }
+      }
+    }
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
 
   // //도전순
   const challengebutton = () => {
-    if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
-    else if (tokenChecker() === true)
-      dispatch(getTodoListsChallengeFetch(true));
+    if (tokenChecker() === false) {
+      if (mbti === undefined) {
+        dispatch(getTodoListsChallengeFetch(false));
+        console.log("5");
+      } else if (mbti !== undefined) {
+        dispatch(getMbtiTodoListsChallengeFetch({ login: false, mbti: mbti }));
+        console.log("6");
+      }
+    } else {
+      if (tokenChecker() === true) {
+        if (mbti === undefined) {
+          dispatch(getTodoListsChallengeFetch(true));
+          console.log("7");
+        } else if (mbti !== undefined) {
+          dispatch(getMbtiTodoListsChallengeFetch({ login: true, mbti: mbti }));
+          console.log("8");
+        }
+      }
+    }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
+
   const moveToSelectMBTI = () => {
-    navigate("/selectmbtifeed");
+    // navigate("/selectmbtifeed");
+    window.location.assign("/selectmbtifeed")
   };
-console.log("리턴전콘솔")
+  console.log("리턴전콘솔");
+
   return (
     <>
       {selectSort === true ? (
@@ -107,7 +173,6 @@ console.log("리턴전콘솔")
               <StChallenge onClick={challengebutton}>도전순</StChallenge>
             </StSort>
             <StCommonBar />
-            {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
           </StPopupBox>
         </StShadowBackgroundDiv>
       ) : (
@@ -154,18 +219,14 @@ console.log("리턴전콘솔")
                     id={it.todoId}
                     data={it}
                     key={idx}
-                  >
-                  </ChallengeCard>
+                  ></ChallengeCard>
                 ))
             : card?.map((it, idx) => (
-                <ChallengeCard
-                  id={it.todoId}
-                  data={it}
-                  key={idx}
-                >
+                <ChallengeCard id={it.todoId} data={it} key={idx}>
+                  ?
                 </ChallengeCard>
               ))}
-              <div ref={ref}/>
+          <div ref={ref} />
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
@@ -192,8 +253,12 @@ const StTotalWrap = styled.div`
 const StHideToggle = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 85.33px 0px 18px;
+  padding-top: 24px;
+  margin: 60px 0px 18px;
   align-items: center;
+  background-color: #edecec;
+  width: 500px;
+  position: fixed;
 `;
 
 const StHideImg = styled.img`
@@ -227,16 +292,21 @@ const StToggleImg = styled.img`
   align-items: center;
 `;
 const StTodayMyCardWrap = styled.div`
-  display: flex;
+  /* display: inline-block; */
   /* align-items: start; */
   flex-direction: column;
+  /* position: relative; */
+  margin-top: 135.33px;
 `;
 const StSelectMbti = styled.button`
+:hover{
+  background-color: red;
+}
   display: flex;
   width: 200px;
   position: fixed;
   height: 60px;
-  top: 65vh;
+  top: 80vh;
   margin-left: 150px;
   background: #979797;
   border-radius: 66px;
