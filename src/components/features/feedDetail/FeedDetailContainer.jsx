@@ -24,7 +24,7 @@ function FeedDetailContainer () {
         }
       },[])
 
-    const detailState = useSelector((state) =>  state.detail)
+    const detailState = useSelector((state) =>  state.detail.data)
     console.log(detailState)
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function FeedDetailContainer () {
 
     useEffect(()=> {
       if(loading === true) {
-        if (detailState.data.length === 0) {
+        if (detailState.length === 0) {
           navigate('/todolists')
         }
       }
@@ -121,21 +121,21 @@ function FeedDetailContainer () {
     
     return (
     <div style={{marginTop:"80px", marginBottom:"140px"}}>
-      {Object.keys(detailState.data).length === 0 ? <></> :  
+      {Object.keys(detailState).length === 0 ? <></> :  
       <div>
         <StUserIdBox>
-          <StProfileImg src={detailState.data.profileImg}/>
-          <StNickname id={detailState.data.userId} onClick={onClickGoToOtherspage}>{detailState.data.nickname}</StNickname>
-            {(detailState.data.isFollowed) === false ? <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.data.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
+          <StProfileImg src={detailState.todoInfo.profileImg}/>
+          <StNickname id={detailState.todoInfo.userId} onClick={onClickGoToOtherspage}>{detailState.todoInfo.User.nickname}</StNickname>
+            {(detailState.todoInfo.isFollowed) === false ? <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
         </StUserIdBox>
-          <ChallengeCard id={detailState.data.userId} data={detailState.data} hideState="true"></ChallengeCard>
+          {/* <ChallengeCard id={detailState.todoInfo.userId} data={detailState.todoInfo} hideState="true"></ChallengeCard> */}
         <div>
-          {detailState.data.comment.length ===0? <></> : detailState.data.comment.map((x,index)=> {
+          {detailState.todoInfo.Comments?.map((x,index)=> {
             return  <div key={index}>
                     <StCommentBox>
                       <StImgNickname>
-                        <StProfileImg src={x.profileImg}/>
-                        <StNickname id={x.userId} onClick={onClickCommentGoToOtherspage} >{x.nickname}</StNickname>
+                        <StProfileImg src={x.User.profileImg}/>
+                        <StNickname id={x.userId} onClick={onClickCommentGoToOtherspage} >{x.User.nickname}</StNickname>
                       </StImgNickname>
                           <StComment>{x.comment}</StComment>
                             <StChangeDeleteBtn>
@@ -160,7 +160,7 @@ function FeedDetailContainer () {
                 </StInputWrap>
               </StItem>
           </StWriteComment>
-          {(detailState.data.isTodayDone) === "false" ? <></> : <button onClick={setMyTodayChallenge} id={detailState.data.todoId}>오늘의 도전!</button>}
+          {(detailState.isTodayDone) === "false" ? <></> : <button onClick={setMyTodayChallenge} id={detailState.todoId}>이거 도전할래요!</button>}
         
       </div>}
     </div>
