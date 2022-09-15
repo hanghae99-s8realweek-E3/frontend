@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import instance from "./instance";
+import instance, { preInstance } from "./instance";
 // import { setCookie } from "../../utils/cookie";
 import axios from "axios";
 
@@ -19,14 +19,17 @@ export const getTodoListsFetch = createAsyncThunk(
       // console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
-      // console.log(response)
+        console.log(payload)
+        console.log("페이로드확인용")
+        // response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
+        response = await preInstance.get("/todolists");
+      console.log(response)
     }
-      else if (payload === true) 
+      else if (payload=== true) 
       {
         response = await instance.get("/todolists");
       }
-      else if(payload === undefined)
+      else if(payload=== undefined)
       {
         response = await instance.get("/todolists");
       }
@@ -35,7 +38,7 @@ export const getTodoListsFetch = createAsyncThunk(
       // console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러1");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -50,16 +53,17 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
       console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get(`${process.env.REACT_APP_API}/todolists?filter=challengedCounts`);
+        response = await preInstance.get("/todolists?filter=challengedCounts");
       console.log(response)}
-      else if (payload === true) {response = await instance.get("/todolists?filter=challengedCounts");
+      else if (payload === true) {
+        response = await instance.get("/todolists?filter=challengedCounts");
       }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러2");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -74,16 +78,17 @@ export const getTodoListsCommentFetch = createAsyncThunk(
       console.log(payload);
       let response;
       if (payload === false){
-        response = await axios.get(`${process.env.REACT_APP_API}/todolists?filter=commentCounts`);
+        response = await preInstance.get("/todolists?filter=commentCounts");
       console.log(response)}
-      else if (payload === true) {response = await instance.get("/todolists?filter=commentCounts");
+      else if (payload === true) {
+        response = await instance.get("/todolists?filter=commentCounts");
       }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러3");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -94,12 +99,13 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
-      console.log(payload);
+
       let response;
       if(payload.login === false){
-        response = await axios.get(`${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}`);
+        response = await preInstance.get(`/todolists?mbti=${payload.mbti}`);
         console.log("5")
+        console.log("서버와의 통신 시작");
+        console.log(payload);
       }
       else if(payload.login === true){
         response = await instance.get(`/todolists?mbti=${payload.mbti}`);
@@ -108,7 +114,7 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
       console.log(response.data)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러4");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -122,15 +128,19 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
       console.log("서버와의 통신 시작");
       console.log(payload);
       // axios.ins
-      const response = await axios.get(
-        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}&filter=challengedCounts`
-      );
+      let response;
+      if(payload.login === false){
+        response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
+      }
+      else if(payload.login === true){
+        response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
+      }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러5");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -144,15 +154,19 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
       console.log("서버와의 통신 시작");
       console.log(payload);
       // axios.ins
-      const response = await axios.get(
-        `${process.env.REACT_APP_API}/todolists?mbti=${payload.mbti}&filter=commentCounts`
-      );
+      let response;
+      if(payload.login === false){
+        response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
+      }
+      else if(payload.login === true){
+        response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
+      }
       // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러");
+      console.log("서버와의 통신 에러6");
       return thunkAPI.rejectWithValue(error.data);
     }
   }

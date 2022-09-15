@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
+  getMbtiTodoListsChallengeFetch,
+  getMbtiTodoListsCommentFetch,
   getMbtiTodoListsFetch,
   getTodoListsChallengeFetch,
   getTodoListsCommentFetch,
@@ -26,12 +28,14 @@ function FeedPageContainer() {
 
   const { mbti } = useParams();
   console.log(card);
-  console.log(card.length);
+  // console.log(card.length);
   console.log(inView);
-  console.log(mbti);
+  // console.log(mbti);
 
+  //card.length 이슈 
   useEffect(() => {
-    if (card.length === 0 && tokenChecker() === true) {
+    console.log(mbti);
+    if ( tokenChecker() === true) {
       console.log("첫로딩");
       dispatch(getTodoListsFetch(true));
       dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
@@ -43,6 +47,22 @@ function FeedPageContainer() {
       console.log("첫로딩3");
     }
   }, []);
+
+  // useEffect(() => {
+  //   console.log("갑니다");
+  //   if ((card.length !== 0 && inView) || tokenChecker() === true) {
+  //     console.log("첫 로딩 이후 무한 스크롤");
+  //     dispatch(getTodoListsFetch(true));
+  //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
+  //     console.log("첫 로딩 이후 무한 스크롤1");
+  //   // } else if ((card.length !== 0 && inView) || tokenChecker() === false) {
+  //   } else if ( inView &&   tokenChecker() === false) {
+  //     console.log("첫 로딩 이후 무한 스크롤2");
+  //     dispatch(getTodoListsFetch(false));
+  //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
+  //     console.log("첫 로딩 이후 무한 스크롤3");
+  //   }
+  // }, [inView]);
 
  
 
@@ -89,19 +109,19 @@ function FeedPageContainer() {
   const commentbutton = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
-        dispatch(getTodoListsFetch(false));
+        dispatch(getTodoListsCommentFetch(false));
         console.log("1");
       } else if (mbti !== undefined) {
-        dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+        dispatch(getMbtiTodoListsCommentFetch({ login: false, mbti: mbti }));
         console.log("2");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
-          dispatch(getTodoListsFetch(true));
+          dispatch(getTodoListsCommentFetch(true));
           console.log("3");
         } else if (mbti !== undefined) {
-          dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+          dispatch(getMbtiTodoListsCommentFetch({ login: true, mbti: mbti }));
           console.log("4");
         }
       }
@@ -114,19 +134,19 @@ function FeedPageContainer() {
   const challengebutton = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
-        dispatch(getTodoListsFetch(false));
+        dispatch(getTodoListsChallengeFetch(false));
         console.log("5");
       } else if (mbti !== undefined) {
-        dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+        dispatch(getMbtiTodoListsChallengeFetch({ login: false, mbti: mbti }));
         console.log("6");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
-          dispatch(getTodoListsFetch(true));
+          dispatch(getTodoListsChallengeFetch(true));
           console.log("7");
         } else if (mbti !== undefined) {
-          dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+          dispatch(getMbtiTodoListsChallengeFetch({ login: true, mbti: mbti }));
           console.log("8");
         }
       }
@@ -139,44 +159,8 @@ function FeedPageContainer() {
     // navigate("/selectmbtifeed");
     window.location.assign("/selectmbtifeed")
   };
-
-  // const moveToSelectMBTI = () => {
-  //   if (tokenChecker() === false) {
-  //     if (mbti === undefined) {
-  //       dispatch(getTodoListsFetch(false));
-  //       console.log("1");
-  //     } else if (mbti !== undefined) {
-  //       dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-  //       console.log("2");
-  //     }
-  //   } else {
-  //     if (tokenChecker() === true) {
-  //       if (mbti === undefined) {
-  //         dispatch(getTodoListsFetch(true));
-  //         console.log("3");
-  //       } else if (mbti !== undefined) {
-  //         dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-  //         console.log("4");
-  //       }
-  //     }
-  //   }
-  //   navigate("/selectmbtifeed");
-  // };
   console.log("리턴전콘솔");
-  //  useEffect(() => {
-  //   console.log("갑니다");
-  //   if ((card.length !== 0 && inView) || tokenChecker() === true) {
-  //     console.log("첫 로딩 이후 무한 스크롤");
-  //     dispatch(getTodoListsFetch(true));
-  //     // dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤1");
-  //   } else if ((card.length !== 0 && inView) || tokenChecker() === false) {
-  //     console.log("첫 로딩 이후 무한 스크롤2");
-  //     dispatch(getTodoListsFetch(false));
-  //     // dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤3");
-  //   }
-  // }, [inView]);
+
   return (
     <>
       {selectSort === true ? (
@@ -315,6 +299,9 @@ const StTodayMyCardWrap = styled.div`
   margin-top: 135.33px;
 `;
 const StSelectMbti = styled.button`
+:hover{
+  background-color: red;
+}
   display: flex;
   width: 200px;
   position: fixed;
