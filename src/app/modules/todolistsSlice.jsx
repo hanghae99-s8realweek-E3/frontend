@@ -15,13 +15,12 @@ export const getTodoListsFetch = createAsyncThunk(
   "todolists/gettodolistsFetch",
   async (payload, thunkAPI) => {
     try {
-      // console.log("서버와의 통신 시작");
-      // console.log(payload);
+      console.log("서버와의 통신 시작");
+      console.log(payload);
       let response;
       if (payload === false){
         console.log(payload)
         console.log("페이로드확인용")
-        // response = await axios.get(`${process.env.REACT_APP_API}/todolists`);
         response = await preInstance.get("/todolists");
       console.log(response)
     }
@@ -29,16 +28,16 @@ export const getTodoListsFetch = createAsyncThunk(
       {
         response = await instance.get("/todolists");
       }
-      else if(payload=== undefined)
-      {
-        response = await instance.get("/todolists");
-      }
+      // else if(payload=== undefined)
+      // {
+      //   response = await preInstance.get("/todolists");
+      // }
       // const response = await instance.get("/todolists")
       // console.log(response);
       // console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러1");
+      console.log("피드 최신 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -49,7 +48,7 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
   "todolists/getTodoListsChallengeFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
+      console.log("피드 도전순 시작");
       console.log(payload);
       let response;
       if (payload === false){
@@ -58,12 +57,11 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
       else if (payload === true) {
         response = await instance.get("/todolists?filter=challengedCounts");
       }
-      // const response = await instance.get("/todolists")
       console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
+      console.log("피드 도전순 통신 성공 위에 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러2");
+      console.log("피드 도전 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -74,7 +72,7 @@ export const getTodoListsCommentFetch = createAsyncThunk(
   "todolists/getTodoListsCommentFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
+      console.log("피드 댓글순 시작");
       console.log(payload);
       let response;
       if (payload === false){
@@ -83,12 +81,11 @@ export const getTodoListsCommentFetch = createAsyncThunk(
       else if (payload === true) {
         response = await instance.get("/todolists?filter=commentCounts");
       }
-      // const response = await instance.get("/todolists")
       console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
+      console.log("피드 댓글순 통신 성공 위에 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러3");
+      console.log("피드 댓글 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -127,7 +124,6 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      // axios.ins
       let response;
       if(payload.login === false){
         response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
@@ -135,7 +131,6 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
       else if(payload.login === true){
         response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
       }
-      // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
@@ -153,7 +148,6 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
     try {
       console.log("서버와의 통신 시작");
       console.log(payload);
-      // axios.ins
       let response;
       if(payload.login === false){
         response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
@@ -161,7 +155,6 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
       else if(payload.login === true){
         response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
       }
-      // const response = await instance.get("/todolists")
       console.log(response);
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);

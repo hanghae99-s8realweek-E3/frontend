@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   getMbtiTodoListsChallengeFetch,
   getMbtiTodoListsCommentFetch,
@@ -14,33 +14,35 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
-import { useInView } from "react-intersection-observer";
+// 무한스크롤 때 사용 
+import { useInView } from "react-intersection-observer"; 
+
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [ref, inView] = useInView();
-
-  const card = useSelector((state) => state.todolists.data);
-
+  const feedCard = useSelector((state) => state.todolists.data);
   const { mbti } = useParams();
-  console.log(card);
+  const dispatch = useDispatch();
+  // 무한스크롤때 사용
+  // const [ref, inView] = useInView(); 
+  // 무한 스크롤 때 사용
+  // console.log(inView); 
   // console.log(card.length);
-  console.log(inView);
   // console.log(mbti);
-
-  //card.length 이슈 
+  console.log(feedCard);
+  
+  //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남 
+  // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
   useEffect(() => {
     console.log(mbti);
-    if ( tokenChecker() === true) {
+    // if ( feedCard.length === 0 && tokenChecker() === true) {
+      if (tokenChecker() === true) {
       console.log("첫로딩");
       dispatch(getTodoListsFetch(true));
       dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
       console.log("첫로딩1");
-    } else if (card.length === 0 && tokenChecker() === false) {
+    } else if (tokenChecker() === false) {
       console.log("첫로딩2");
       dispatch(getTodoListsFetch(false));
       dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
@@ -50,13 +52,13 @@ function FeedPageContainer() {
 
   // useEffect(() => {
   //   console.log("갑니다");
-  //   if ((card.length !== 0 && inView) || tokenChecker() === true) {
+  //   if ((feedCard.length !== 0 && inView) || tokenChecker() === true) {
   //     console.log("첫 로딩 이후 무한 스크롤");
   //     dispatch(getTodoListsFetch(true));
   //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
   //     console.log("첫 로딩 이후 무한 스크롤1");
-  //   // } else if ((card.length !== 0 && inView) || tokenChecker() === false) {
-  //   } else if ( inView &&   tokenChecker() === false) {
+  //   } else if ((feedCard.length !== 0 && inView) || tokenChecker() === false) {
+  //   // } else if ( inView &&   tokenChecker() === false) {
   //     console.log("첫 로딩 이후 무한 스크롤2");
   //     dispatch(getTodoListsFetch(false));
   //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
@@ -64,23 +66,20 @@ function FeedPageContainer() {
   //   }
   // }, [inView]);
 
- 
-
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
-  // check 이미지 변경state
+  // 도전완료 이미지 변경state
   const checkState = () => {
     if (tokenChecker() === false) {
       alert("로그인 후 이용해주세요");
       return;
     } else return checkOff(!checkOn);
   };
-
+  //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   const toggleSortPopUp = (e) => {
     e.preventDefault();
     setSelectSort(!selectSort);
   };
-
   // 최신순
   const datebutton = () => {
     if (tokenChecker() === false) {
@@ -129,7 +128,6 @@ function FeedPageContainer() {
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
-
   // //도전순
   const challengebutton = () => {
     if (tokenChecker() === false) {
@@ -212,7 +210,7 @@ function FeedPageContainer() {
           {checkOn === true
             ? //isChallenged가 true이면 화면에 띄우면 안된다.
               //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-              card
+              feedCard
                 ?.filter((elem) => elem.isChallenged === false)
                 .map((it, idx) => (
                   <ChallengeCard
@@ -221,12 +219,13 @@ function FeedPageContainer() {
                     key={idx}
                   ></ChallengeCard>
                 ))
-            : card?.map((it, idx) => (
+            : feedCard?.map((it, idx) => (
                 <ChallengeCard id={it.todoId} data={it} key={idx}>
                   ?
                 </ChallengeCard>
               ))}
-          <div ref={ref} />
+              <div className="hi" style={{height:80}}>안녕하세요</div>
+          {/* <div ref={ref} /> 무한스크롤 때 사용 */}
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
@@ -264,6 +263,7 @@ const StHideToggle = styled.div`
 const StHideImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
+  cursor: pointer;
 `;
 const StHide = styled.div`
   display: flex;
@@ -288,7 +288,7 @@ const StToggle = styled.div`
 `;
 const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
-
+  cursor: pointer;
   align-items: center;
 `;
 const StTodayMyCardWrap = styled.div`
