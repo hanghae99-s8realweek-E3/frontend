@@ -14,7 +14,9 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
-// import { useInView } from "react-intersection-observer"; 무한스크롤 때 사용 
+// 무한스크롤 때 사용 
+import { useInView } from "react-intersection-observer"; 
+
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
@@ -22,8 +24,10 @@ function FeedPageContainer() {
   const feedCard = useSelector((state) => state.todolists.data);
   const { mbti } = useParams();
   const dispatch = useDispatch();
-  // const [ref, inView] = useInView(); 무한스크롤때 사용
-  // console.log(inView); 무한 스크롤 때 사용
+  // 무한스크롤때 사용
+  // const [ref, inView] = useInView(); 
+  // 무한 스크롤 때 사용
+  // console.log(inView); 
   // console.log(card.length);
   // console.log(mbti);
   console.log(feedCard);
@@ -48,13 +52,13 @@ function FeedPageContainer() {
 
   // useEffect(() => {
   //   console.log("갑니다");
-  //   if ((card.length !== 0 && inView) || tokenChecker() === true) {
+  //   if ((feedCard.length !== 0 && inView) || tokenChecker() === true) {
   //     console.log("첫 로딩 이후 무한 스크롤");
   //     dispatch(getTodoListsFetch(true));
   //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
   //     console.log("첫 로딩 이후 무한 스크롤1");
-  //   // } else if ((card.length !== 0 && inView) || tokenChecker() === false) {
-  //   } else if ( inView &&   tokenChecker() === false) {
+  //   } else if ((feedCard.length !== 0 && inView) || tokenChecker() === false) {
+  //   // } else if ( inView &&   tokenChecker() === false) {
   //     console.log("첫 로딩 이후 무한 스크롤2");
   //     dispatch(getTodoListsFetch(false));
   //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
@@ -220,6 +224,7 @@ function FeedPageContainer() {
                   ?
                 </ChallengeCard>
               ))}
+              <div className="hi" style={{height:80}}>안녕하세요</div>
           {/* <div ref={ref} /> 무한스크롤 때 사용 */}
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
