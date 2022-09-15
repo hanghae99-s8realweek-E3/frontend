@@ -1,3 +1,5 @@
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { removeCookies } from "../../../utils/cookie";
@@ -19,10 +21,13 @@ function WelcomeForm() {
           {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
           <StContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={closeToModal}>
-              <img
-                src={process.env.PUBLIC_URL + `/images/close.png`}
-                alt="modal popup close button"
-                style={{ height: "18px", width: "18px" }}
+              <FontAwesomeIcon
+                icon={faXmark}
+                style={{
+                  fontSize: "18px",
+                  color: "#ffffff",
+                  pointerEvents: "none",
+                }}
               />
             </StCloseButton>
             <StText>

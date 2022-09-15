@@ -46,12 +46,12 @@ function SelectMBTIFeedContainer() {
   // mbti 상성이나 로그인 상태에 따라 나타나는 색상을 다르게 적용.
   function buttonColorSet(elem, index) {
     if (mbtiList[index] === selectMBTI) {
-      if (mbtiState.mbti === selectMBTI) return "gray";
+      if (mbtiState.mbti === selectMBTI) return "#919191";
       else return "#E8644C";
     } else if (Object.keys(mbtiState).length === 0) return "#ffffff";
-    else if (mbtiList[index] === mbtiState.mbti) return "gray";
-    else if (mbtiState[elem] === 5) return "#507DF1";
-    else if (mbtiState[elem] === 1) return "#FFD600";
+    else if (mbtiList[index] === mbtiState.mbti) return "#919191";
+    else if (mbtiState[elem] === 5) return "#569AFF";
+    else if (mbtiState[elem] === 1) return "#FF3A3A";
     else return "#ffffff";
   }
 
@@ -62,7 +62,11 @@ function SelectMBTIFeedContainer() {
 
   // 선택한 MBTI의 정보를 필터로 하여 피드를 보도록
   function moveToMBTIFeedPage() {
-    navigate(`/todolists/${selectMBTI}`);
+    if (selectMBTI === "") {
+      navigate(`/todolists`);
+    } else {
+      navigate(`/todolists/${selectMBTI}`);
+    }
   }
 
   // 도움말 팝업창 상태 열고 닫기 적용
@@ -78,22 +82,40 @@ function SelectMBTIFeedContainer() {
             return (
               <StButton
                 key={index}
-                background={buttonColorSet(elem, index)}
-                border={
-                  buttonColorSet(elem, index) === "#ffffff"
-                    ? "1px solid #979797"
-                    : "none"
-                }
-                color={
-                  buttonColorSet(elem, index) === "#ffffff"
-                    ? "#979797"
+                background={
+                  buttonColorSet(elem, index) === "#919191"
+                    ? "gray"
+                    : buttonColorSet(elem, index) === "#E8644C"
+                    ? "#E8644C"
                     : "#ffffff"
                 }
+                border={
+                  buttonColorSet(elem, index) === "#FF3A3A"
+                    ? "1px solid #FF3A3A"
+                    : buttonColorSet(elem, index) === "#569AFF"
+                    ? "1px solid #569AFF"
+                    : "1px solid #979797"
+                }
+                color={
+                  buttonColorSet(elem, index) === "#FF3A3A"
+                    ? "#FF3A3A"
+                    : buttonColorSet(elem, index) === "#569AFF"
+                    ? "#569AFF"
+                    : buttonColorSet(elem, index) === "#E8644C"
+                    ? "#ffffff"
+                    : buttonColorSet(elem, index) === "#919191"
+                    ? "#ffffff"
+                    : "#909090"
+                }
                 onClick={
-                  buttonColorSet(elem, index) === "gray" ? null : selectMBTIFeed
+                  buttonColorSet(elem, index) === "#919191"
+                    ? null
+                    : selectMBTIFeed
                 }
                 cursor={
-                  buttonColorSet(elem, index) === "gray" ? "arrow" : "pointer"
+                  buttonColorSet(elem, index) === "#919191"
+                    ? "arrow"
+                    : "pointer"
                 }
                 value={mbtiList[index]}>
                 {mbtiList[index]}
@@ -180,7 +202,7 @@ const StSelectFilterBtn = styled.button`
   font-weight: 500;
   color: #ffffff;
 
-  margin: 18vh 0 0 25px;
+  margin: auto 0 100px 25px;
   border: none;
   border-radius: 6px;
   outline: none;
