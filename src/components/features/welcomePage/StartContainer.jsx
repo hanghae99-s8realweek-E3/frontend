@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -39,12 +39,13 @@ function StartContainer() {
       <BannerSlideBox>
         {/* Pagination과 Navigation, Autoplay를 이용하고 싶아면 반드시 modules 속에 이용할 기능을 배치해주자. */}
         <Swiper
-          modules={[Pagination]}
+          modules={[Pagination, Navigation]}
           spaceBetween={0}
           slidesPerView={1}
           speed={500}
           scrollbar={{ draggable: true }}
           allowTouchMove
+          Navigation={true}
           pagination={{ clickable: true }}
           style={{ height: "650px" }}>
           {startingPageImage.map((elem, idx) => (

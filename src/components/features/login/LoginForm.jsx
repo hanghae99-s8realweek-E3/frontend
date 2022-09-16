@@ -12,9 +12,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [modal, setModal] = useState(
-    ""
-  );
+  const [modal, setModal] = useState("");
 
   // 구조 분해 할당
   const onChange = (event) => {
@@ -25,59 +23,34 @@ function LoginForm() {
     });
   };
 
-
-  // const submitLoginData = (event) => {
-  //   event.preventDefault();
-  //   if (userData.email === "" || !emailFormat.test(userData.email)) {
-  //     return false
-  //   } else if (
-  //     userData.password === "" ||
-  //     !passwordFormat.test(userData.password) ||
-  //     userData.password.length < 8
-  //   )
-  //   {
-  //   return false
-  //   }
-  //   const postLogin = async () => {
-  //     console.log("아하하하")
-  //     const response = await preInstance.post("/accounts/login", userData);
-  //     console.log(response);
-  //     if (response.data.message === "success") {
-  //       window.localStorage.setItem("token", response.data.token);
-  //       window.location.assign("/");
-  //     } else {
-  //       return setModal("하이요");
-  //     }
-  //   };
-  //   postLogin();
-  // };
   const submitLoginData = (event) => {
+    //이벤트 발생방지
     event.preventDefault();
+    //req.List.jsx에 있는 정규식 사용
     if (userData.email === "" || !emailFormat.test(userData.email)) {
       return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     } else if (
       userData.password === "" ||
       !passwordFormat.test(userData.password) ||
       userData.password.length < 8
-    )
-    {
-    return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
+    ) {
+      return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
+    // 로그인 버튼 클릭시 서버와의 통신
     const postLogin = async () => {
       try {
         const response = await preInstance.post("/accounts/login", userData);
-        if (response.data.message = "success") {
+        if (response.data.message === "success") {
           window.localStorage.setItem("token", response.data.token);
           navigate("/");
         }
-      } catch(error) {
+      } catch (error) {
         return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
     };
+    //함수 실행
     postLogin();
   };
-
-
 
   // moveSignUpPage
   const moveToSignUp = () => {
@@ -89,30 +62,23 @@ function LoginForm() {
       <StForm onSubmit={submitLoginData}>
         <StEmail> 이메일 </StEmail>
         <StEmailInput
-          //   id="inputemail"
           name="email"
-          type="email"
+          // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제 
           value={userData.email}
           placeholder="abcdef@gmail.com"
           onChange={onChange}
-          StEmailInput
         />
         <StPassword> 비밀번호 </StPassword>
         <StPasswordInput
-          //id="inputpassword"
           name="password"
-          type="password"
+          type="password" // 비밀번호 입력시 숫자 가려지게 하는 역할
           value={userData.password}
           placeholder="비밀번호 입력"
           onChange={onChange}
-          StPasswordInput
         />
         <StIncorrect>{modal}</StIncorrect>
-
         <StLoginBtn type="submit">로그인</StLoginBtn>
       </StForm>
-
-      {/* <button>카카오톡 계정연동</button> */}
       <StSignupBtn onClick={moveToSignUp}>회원가입</StSignupBtn>
     </StTotalWrap>
   );
@@ -126,7 +92,7 @@ const StForm = styled.form`
 `;
 const StEmail = styled.div`
   display: flex;
-  margin: 154px 0px 8px 25px;
+  margin: 93.33px 0px 8px 25px;
   height: 32px;
   font-family: IBM Plex Sans KR;
   font-size: 18px;
@@ -135,16 +101,15 @@ const StEmail = styled.div`
   letter-spacing: 0em;
   text-align: left;
 `;
-
 const StEmailInput = styled.input`
   display: flex;
   box-sizing: border-box;
-  width: 450px;
   height: 55px;
   border: 1px solid #979797;
   border-radius: 6px;
   margin: 0px 25px 30px 25px;
   text-align: left;
+  padding-left: 19px;
 `;
 const StPassword = styled.div`
   display: flex;
@@ -158,9 +123,6 @@ const StPassword = styled.div`
   color: #000000;
 `;
 const StPasswordInput = styled.input`
-  ::placeholder {
-    margin-left: 150px;
-  }
   display: flex;
   box-sizing: border-box;
   height: 55px;
@@ -168,6 +130,7 @@ const StPasswordInput = styled.input`
   border-radius: 6px;
   display: flex;
   margin: 0px 25px 12px 25px;
+  padding-left: 19px;
 `;
 const StIncorrect = styled.div`
   display: flex;
@@ -197,7 +160,6 @@ const StLoginBtn = styled.button`
   justify-content: center;
   align-items: center;
 `;
-
 const StSignupBtn = styled.div`
   display: flex;
   font-family: "IBM Plex Sans KR";

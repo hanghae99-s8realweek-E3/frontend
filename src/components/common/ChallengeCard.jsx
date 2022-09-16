@@ -14,6 +14,7 @@ import { decodeMyTokenData } from "../../utils/token";
 import instance from "../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../app/modules/setUpTodoSlice";
+import { settingTodayDate } from "../../utils/commonFunc";
 
 function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
   const [menuModal, setMenuModal] = useState(false);
@@ -22,29 +23,9 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log(
-    window.location.pathname === `/feeddetail/${id}`,
-    id,
-    window.location.pathname
-  );
-
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
     if (id !== "null" && id !== undefined) navigate(`/feeddetail/${id}`);
-  }
-
-  // 오늘 날짜를 yyyy-mm-dd로 반환해줌.
-  function settingTodayDate() {
-    const selectYear = new Date().getFullYear();
-    const selectMonth =
-      new Date().getMonth() < 9
-        ? "0" + (new Date().getMonth() + 1)
-        : new Date().getMonth() + 1;
-    const selectDay =
-      new Date().getDate() < 10
-        ? "0" + new Date().getDate()
-        : new Date().getDate();
-    return `${selectYear}-${selectMonth}-${selectDay}`;
   }
 
   // 오늘의 챌린지 완료/진행중 상태를 바꿔주도록 함.
@@ -59,7 +40,6 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
           dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
         }
       } catch (error) {
-        console.log(error);
         alert(error.response.data.errorMessage);
       }
     };
@@ -72,7 +52,6 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
       (window.location.pathname === `/todolists/${params.mbti}` ||
         window.location.pathname === "/todolists" ||
         window.location.pathname === "/setuptodo" ||
-        window.location.pathname === `/feeddetail/${params.todoId}` ||
         window.location.pathname === `/otherspage/${params.userId}` ||
         window.location.pathname === `/activity`) === true
     )
@@ -166,14 +145,8 @@ function ChallengeCard({ id, data, hideState, isTodayChallenge }) {
       <StChallengeCardDiv
         width={locationSizeCheck() === false ? "90%" : "100%"}
         id={data.todoId}
-        onClick={
-          window.location.pathname === `/feeddetail/${id}`
-            ? null
-            : moveToFeedDetail
-        }
-        cursor={
-          window.location.pathname === `/feeddetail/${id}` ? "arrow" : "pointer"
-        }>
+        onClick={moveToFeedDetail}
+        cursor="pointer">
         {locationButtonCheck() === true && hideState !== "true" ? (
           <StChallengeStateBtn onClick={changeStateChallenge}>
             <FontAwesomeIcon

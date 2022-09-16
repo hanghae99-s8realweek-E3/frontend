@@ -1,7 +1,7 @@
 import React,{useEffect, useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 import {decodeMyTokenData, tokenChecker} from "../../../utils/token"
@@ -120,48 +120,51 @@ function FeedDetailContainer () {
     const myData = decodeMyTokenData()
     
     return (
-    <div style={{marginTop:"80px", marginBottom:"140px"}}>
+    <div style={{marginTop:"80px", marginBottom:"220px"}}>
       {Object.keys(detailState).length === 0 ? <></> :  
       <div>
         <StUserIdBox>
           <StProfileImg src={detailState.todoInfo.profileImg}/>
-          <StNickname id={detailState.todoInfo.userId} onClick={onClickGoToOtherspage}>{detailState.todoInfo.User.nickname}</StNickname>
-            {(detailState.todoInfo.isFollowed) === false ? <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
+          <StNickname id={detailState.todoInfo.userId} onClick={onClickGoToOtherspage}>{detailState.todoInfo.User.nickname}
+          </StNickname>
+            {(detailState.isFollowed) === false ? <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>팔로우</StFollowBtn> : <StFollowBtn id={detailState.todoInfo.userId} onClick={changeFollowState}>언팔로우</StFollowBtn>}
         </StUserIdBox>
-          {/* <ChallengeCard id={detailState.todoInfo.userId} data={detailState.todoInfo} hideState="true"></ChallengeCard> */}
+          <ChallengeCard id={detailState.todoInfo.userId} data={detailState.todoInfo} hideState="true"></ChallengeCard>
         <div>
+        {(detailState.isTodayDone) === "false" ? <></> : <StBtnGoToChallenge onClick={setMyTodayChallenge} id={detailState.todoInfo.todoId}>도전할래요!</StBtnGoToChallenge>}
+          <div style={{width:'100%', background:'white', padding:'10px 0', marginTop:'10px'}}>
           {detailState.todoInfo.Comments?.map((x,index)=> {
             return  <div key={index}>
                     <StCommentBox>
                       <StImgNickname>
-                        <StProfileImg src={x.User.profileImg}/>
+                        <StProfileImg width="20px" height="20px" borderRadius="10px" src={x.User.profileImg}/>
                         <StNickname id={x.userId} onClick={onClickCommentGoToOtherspage} >{x.User.nickname}</StNickname>
-                      </StImgNickname>
-                          <StComment>{x.comment}</StComment>
-                            <StChangeDeleteBtn>
+                        <StChangeDeleteBtn>
                                 {myData.userId === x.userId ? <StDeleteBtn type="submit" id={x.commentId} onClick={onClickDeleteComment}>삭제</StDeleteBtn> : <></>}
                             </StChangeDeleteBtn>
+                      </StImgNickname>
+                          <StComment>{x.comment}</StComment>
+                            
                     </StCommentBox>
                     </div>
 
           })}
+          </div>
         </div>
           <StWriteComment onSubmit={upLoadCommentData}>
             <StItem>
               <StInputWrap>
-                <StProfileImg></StProfileImg>
+                <StProfileImg/>
                   <StInput
                   type="text"
                   name="comment"
-                  placeholder="댓글 입력"
+                  placeholder="댓글 내용"
                   ref={inputRef} //!ref를 참고하겠다.
                   />
                   <StCommentBtn type="submit">작성</StCommentBtn>
                 </StInputWrap>
               </StItem>
           </StWriteComment>
-          {(detailState.isTodayDone) === "false" ? <></> : <button onClick={setMyTodayChallenge} id={detailState.todoId}>이거 도전할래요!</button>}
-        
       </div>}
     </div>
     )
@@ -172,17 +175,21 @@ export default FeedDetailContainer;
 const StCommentBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin:20px auto 20px 20px;
+  width:90%;
+  margin:30px auto 30px 20px;
+
 `
 const StUserIdBox = styled.div`
+  /* background-color:yellow; */
   display: flex;
   flex-direction: row;
-  width:100%;
+  width:90%;
   margin:0px auto 10px 20px;
   align-items: center;
 `
 
 const StImgNickname = styled.div`
+/* background-color:green; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -192,18 +199,33 @@ const StImgNickname = styled.div`
 const StProfileImg = styled.img`
   background-color:gray;
   border-radius:15px;
-  width:30px;
+  /* width:30px;
   height:30px;
-  margin:10px;
+  margin:10px; */
+  ${({width,height,margin,borderRadius})=> {
+    return css`
+        width: ${width || '30px'};
+        height: ${height || '30px'};
+        margin: ${margin || '10px'};
+        border-radius: ${borderRadius || '15px'}
+    `
+  }}
 `
 const StNickname = styled.div`
+  /* background-color:red; */
+  width:150px;
 /* margin-top:5px; */
 /* border:1px solid; */
 `
 const StFollowBtn = styled.button`
+  /* background-color:white; */
   border:none;
-  background-color:white;
-  margin-left:250px;
+  margin-left:auto;
+  font-family: 'IBM Plex Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #FF6D53;
   :hover{
       }
       cursor: pointer;
@@ -212,18 +234,20 @@ const StComment = styled.div`
   align-items:flex-start;
   text-align: start;
   font-size:15px;
-  margin-left:10px;
+  margin-left:40px;
+  margin-right:50px;
+  word-wrap:break-word;
 `
 
 const StChangeDeleteBtn=styled.div`
   text-align: right;
-  margin-right: 20px;
+  margin-left: auto;
 `
 
 const StDeleteBtn = styled.button`
   font-size: 15px;
   color:gray;
-  margin-right: 50px;
+  margin-right: 10px;
   border:none;
   background-color:white;
   :hover{
@@ -232,11 +256,19 @@ const StDeleteBtn = styled.button`
 `
 
 const StWriteComment = styled.form`
-  margin:20px ;
+background-color:white;
+  position:fixed;
   display:flex;
+  width: 500px;
+  bottom:0;
+  height:216px;
+  z-index: 6;
+
+
 
 `
 const StItem = styled.div`
+/* background-color:blue; */
   display: grid;
   display: inline-grid;
 
@@ -248,11 +280,12 @@ const StInputWrap = styled.div`
 `
 
 const StInput = styled.input`
+/* background-color:red; */
   position:relative;
   border: 1px solid #979797;
   border-radius: 6px;
   width: 90%;
-  max-width: 320px;
+  max-width: 355px;
   height:55px;
   position: absolute;
   padding-left:10px;
@@ -260,6 +293,7 @@ const StInput = styled.input`
 `
 
 const StCommentBtn = styled.button`
+  color: #FF6D53;
   position: absolute;
   z-index: 2;
   width: 60px;
@@ -270,4 +304,18 @@ const StCommentBtn = styled.button`
   padding:0;
   right:0;
   transform: translateX(-60%) translateY(40%);
+`
+const StBtnGoToChallenge = styled.button`
+  background: #FF6D53;
+  border-radius: 6px;
+  border:none;
+  width:450px;
+  height:70px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  color: #FFFFFF;
+  text-align: center;
+
+
 `

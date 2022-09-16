@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getMbtiTodoListsChallengeFetch,
   getMbtiTodoListsCommentFetch,
@@ -14,9 +14,8 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
-// 무한스크롤 때 사용 
-import { useInView } from "react-intersection-observer"; 
-
+// 무한스크롤 때 사용
+import { useInView } from "react-intersection-observer";
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
@@ -24,32 +23,64 @@ function FeedPageContainer() {
   const feedCard = useSelector((state) => state.todolists.data);
   const { mbti } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // 무한스크롤때 사용
-  // const [ref, inView] = useInView(); 
+  // const [ref, inView] = useInView();
   // 무한 스크롤 때 사용
-  // console.log(inView); 
+  // console.log(inView);
   // console.log(card.length);
   // console.log(mbti);
   console.log(feedCard);
-  
-  //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남 
-  // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
-  useEffect(() => {
-    console.log(mbti);
-    // if ( feedCard.length === 0 && tokenChecker() === true) {
-      if (tokenChecker() === true) {
-      console.log("첫로딩");
-      dispatch(getTodoListsFetch(true));
-      dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
-      console.log("첫로딩1");
-    } else if (tokenChecker() === false) {
-      console.log("첫로딩2");
-      dispatch(getTodoListsFetch(false));
-      dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
-      console.log("첫로딩3");
-    }
-  }, []);
 
+  //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남
+  // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
+  // useEffect(() => {
+  //   console.log(mbti);
+  //   // if ( feedCard.length === 0 && tokenChecker() === true) {
+  //   if (tokenChecker() === true && mbti === undefined){
+  //     dispatch(getTodoListsFetch(true));
+  //   } else 
+  //   dispatch(getTodoListsFetch(false));
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(mbti);
+  //   // if ( feedCard.length === 0 && tokenChecker() === true) {
+  //     if (tokenChecker() === true && mbti === undefined) {
+  //         dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  //   } else 
+  //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+  // }, []);
+
+  useEffect(() => {
+    if(tokenChecker() === false && mbti === undefined){
+      console.log("1")
+      dispatch(getTodoListsFetch(false))
+    }else if(tokenChecker() === false && mbti !== undefined){
+      console.log("2")
+      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
+    }else if(tokenChecker() === true && mbti === undefined){
+      console.log("3")
+    dispatch(getMbtiTodoListsFetch(true))
+    }else if(tokenChecker() === true && mbti !== undefined)
+    console.log("4")
+    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
+  },[])
+
+  useEffect(() => {
+    if(mbti === undefined){
+      console.log("11")
+      dispatch(getTodoListsFetch(false))
+    }else if(mbti !== undefined){
+      console.log("22")
+      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
+    }else if(mbti === undefined){
+      console.log("33")
+    dispatch(getMbtiTodoListsFetch(true))
+    }else if(mbti !== undefined)
+    console.log("44")
+    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
+  },[mbti])
   // useEffect(() => {
   //   console.log("갑니다");
   //   if ((feedCard.length !== 0 && inView) || tokenChecker() === true) {
@@ -81,7 +112,8 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
   // 최신순
-  const datebutton = () => {
+  const datebutton = (e) => {
+    e.preventDefault();
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -105,7 +137,8 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
   //댓글순
-  const commentbutton = () => {
+  const commentbutton = (e) => {
+    e.preventDefault();
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -129,7 +162,8 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
   // //도전순
-  const challengebutton = () => {
+  const challengebutton = (e) => {
+    e.preventDefault();
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -154,8 +188,8 @@ function FeedPageContainer() {
   };
 
   const moveToSelectMBTI = () => {
-    // navigate("/selectmbtifeed");
-    window.location.assign("/selectmbtifeed")
+    navigate("/selectmbtifeed");
+    // window.location.assign("/selectmbtifeed")
   };
   console.log("리턴전콘솔");
 
@@ -224,7 +258,7 @@ function FeedPageContainer() {
                   ?
                 </ChallengeCard>
               ))}
-              <div className="hi" style={{height:80}}>안녕하세요</div>
+          <div className="hi" style={{ height: 80 }}></div>
           {/* <div ref={ref} /> 무한스크롤 때 사용 */}
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
@@ -299,9 +333,9 @@ const StTodayMyCardWrap = styled.div`
   margin-top: 135.33px;
 `;
 const StSelectMbti = styled.button`
-:hover{
-  background-color: red;
-}
+  :hover {
+    background-color: red;
+  }
   display: flex;
   width: 200px;
   position: fixed;
