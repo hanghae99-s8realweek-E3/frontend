@@ -7,17 +7,17 @@ function ProfileCard({ profileData }) {
   const params = useParams();
   console.log(params);
   const goFollow = () => {
-    window.location.pathname === "/otherspage" ?
-    navigate(`/follows/${params.userId}`)
-    : navigate(`/follows/${profileData.userInfo.userId}`)
+    window.location.pathname === "/otherspage"
+      ? navigate(`/follows/${params.userId}`)
+      : navigate(`/follows/${profileData.userInfo.userId}`);
   };
-  console.log(profileData)
+  console.log(profileData);
   console.log(window.location.href);
 
   const goFollowing = () => {
-    window.location.pathname === "/otherspage" ?
-    navigate(`/follows/${params.userId}`)
-    : navigate(`/follows/${profileData.userInfo.userId}`)
+    window.location.pathname === "/otherspage"
+      ? navigate(`/follows/${params.userId}`)
+      : navigate(`/follows/${profileData.userInfo.userId}`);
   };
   return (
     <>
@@ -28,55 +28,51 @@ function ProfileCard({ profileData }) {
           height="80"
           alt="dy"
         />
-        <StNickNameMbti>
+        <StMiddleWrap>
           <StNickName>{profileData.userInfo.nickname}</StNickName>
-          <StMbti>{profileData.userInfo.mbti}</StMbti>
-        </StNickNameMbti>
-        <StFollowWrap onClick={goFollow}>
-          <StFollowNumber>
-            {window.location.pathname === "/mypage"
-              ? profileData.userInfo.follower
-              : profileData.userInfo.followerCount}
-          </StFollowNumber>
-          <StFollowWord>팔로워</StFollowWord>
-        </StFollowWrap>
-        <StFollowingWrap onClick={goFollowing}>
-          <StFollowingNumber>
-            {window.location.pathname === "/mypage"
-              ? profileData.userInfo.following
-              : profileData.userInfo.followingCount}
-          </StFollowingNumber>
-          <StFollowingWord>팔로잉</StFollowingWord>
-        </StFollowingWrap>
+          <StMbtiFollowWrap>
+            <StMbti>{profileData.userInfo.mbti}</StMbti>
+            <StFollowWrap onClick={goFollow}>
+              <StFollowWord>팔로워</StFollowWord>
+              <StFollowNumber>
+                {window.location.pathname === "/mypage"
+                  ? profileData.userInfo.follower
+                  : profileData.userInfo.followerCount}
+              </StFollowNumber>
+            </StFollowWrap>
+            <StFollowingWrap onClick={goFollowing}>
+              <StFollowingWord>팔로잉</StFollowingWord>
+              <StFollowingNumber>
+                {window.location.pathname === "/mypage"
+                  ? profileData.userInfo.following
+                  : profileData.userInfo.followingCount}
+              </StFollowingNumber>
+            </StFollowingWrap>
+          </StMbtiFollowWrap>
+        </StMiddleWrap>
       </StTopWrap>
     </>
   );
 }
-
 export default ProfileCard;
 
 const StTopWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  /* margin-bottom: 48.33px; */
   width: 500px;
   margin-top: 42px;
+  display: flex;
+  flex-direction: row;
 `;
 const StProfileImg = styled.img`
-  display: flex;
+  /* display: flex; */
   margin-left: 35px;
   border-radius: 9999px;
 `;
-
-const StNickNameMbti = styled.div`
+const StMiddleWrap = styled.div`
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   flex-direction: column;
-  margin-top: 12.33px;
-  margin-left: 26px;
 `;
 const StNickName = styled.div`
+  /* display: flex; */
   flex-direction: row;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -84,8 +80,14 @@ const StNickName = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: #000000;
+  margin-left: 16px;
+`;
+const StMbtiFollowWrap = styled.div`
+  display: flex;
 `;
 const StMbti = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 42px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -94,15 +96,16 @@ const StMbti = styled.div`
   line-height: 32px;
   text-align: left;
   color: #979797;
+  margin-left: 16px;
 `;
 const StFollowWrap = styled.div`
-  flex-direction: column;
-  margin: 6.33px 70px 0px 50px;
-  /* align-items: center; */
-
+  display: flex;
+  flex-direction: row;
+  margin-left: 100px;
+  gap: 5px;
 `;
 const StFollowNumber = styled.div`
-  margin-bottom: 6px;
+margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -121,12 +124,13 @@ const StFollowWord = styled.div`
   color: #000000;
 `;
 const StFollowingWrap = styled.div`
-  flex-direction: column;
-  align-items: center;
-  margin-top: 6.33px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 55px;
+  gap: 5px;
 `;
 const StFollowingNumber = styled.div`
-  margin-bottom: 6px;
+margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;

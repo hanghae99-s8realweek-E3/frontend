@@ -13,7 +13,6 @@ function WriteTodoForm() {
   }
   //mbti를 찾기위해 decodeMyTokenData() 사용
   const getMbti = decodeMyTokenData();
-  console.log(getMbti);
   const [todo, setTodo] = useState({
     todo: "",
   });
@@ -32,7 +31,12 @@ function WriteTodoForm() {
   const todoRef = useRef();
 
   useEffect(() => {
-    //새로고침시 textarea안에 커서가 가게끔하기 위하여
+   // 페이지 첫 렌더링 시 mbti가 없을경우 mbti등록으로 이동
+    if(getMbti.mbti === null || getMbti.mbti === undefined || getMbti.mbti === ""){
+      alert("mbti를 등록해주세요!")
+      navigate("/modifyprofile")
+    }
+     //페이지 렌더링 시 textarea안에 커서가 가게끔하기 위하여
     todoRef.current.focus();
   }, []);
 
@@ -42,24 +46,10 @@ function WriteTodoForm() {
   //   todoRef.current.style.height=todoRef.current.scrollHeight +"px" ;
   // },[]);
 
-  // 스타일드 컴포넌트 프롭스 활용해보자
-  // suggestion finish go todopage
-
-  //9월 13일 리팩토링
-  // const submitTodoData = async() => {
-  //   const response = await instance.post("/mytodos", todo);
-  //   console.log(response);
-  //   if(response.data.message === "success" ){
-  //       window.localStorage.setItem("token", response.data.token)
-  //       window.location.assign("/");
-  //   }else{
-  //     return alert(response.response.data.errorMessage)
-  //   }
-  //   submitTodoData();
-  // };
-
   const submitTodoData = (e) => {
+    // 새로고침 이벤트 막기
     e.preventDefault();
+    // instance통신 선언
     const TodoDateFetchCheck = async () => {
       try {
         const response = await instance.post("/mytodos", todo);
@@ -72,6 +62,7 @@ function WriteTodoForm() {
         return alert(error);
       }
     };
+    // 실행
     TodoDateFetchCheck();
   };
 
@@ -89,13 +80,13 @@ function WriteTodoForm() {
           value={todo.todo}
           onChange={onChange}
         />
-        {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌 */}
+        {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
         <span>
           입력할 수 있는 글자 수 :{" "}
           <StTextCount color={200 - todo.todo.length < 10 ? "red" : "black"}>
             {200 - todo.todo.length}
           </StTextCount>
-        </span>
+        </span> */}
         <Stbutton type="submit">등록하기</Stbutton>
       </StWriteTodoForm>
     </StTotalWrap>
@@ -108,7 +99,7 @@ const StTotalWrap = styled.div`
 `;
 const StMbti = styled.span`
   display: flex;
-  margin: 177px 0px 9px 27px;
+  margin: 84px 0px 9px 27px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 600;
@@ -140,17 +131,18 @@ const StWriteTodoTextArea = styled.textarea`
   font-size: 18px;
   line-height: 32px;
   color: #979797;
+  border:none;
+  outline:none;
 `;
-
-const StTextCount = styled.span`
-  color: ${(props) => props.color};
-`;
+// const StTextCount = styled.span`
+//   color: ${(props) => props.color};
+// `;
 const Stbutton = styled.button`
   width: 450px;
   height: 70px;
   background: #979797;
   border-radius: 6px;
-  margin: 200px 25px 66.61px 25px;
+  margin: 400px 25px 0px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
