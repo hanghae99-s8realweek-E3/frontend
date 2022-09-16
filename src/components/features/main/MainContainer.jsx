@@ -77,9 +77,11 @@ function MainContainer() {
           {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
           {/* 문제는 해결했는데 왜 해결된건지 모르겠다. width를 정밀하게 주니까 해결. */}
           <Swiper
+            modules={[Navigation]}
             width={350}
             slidesPerView={2}
             spaceBetween={12}
+            navigation={true}
             style={{ margin: "0.5rem 0" }}
             scrollbar={{ draggable: true }}>
             <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
@@ -123,9 +125,11 @@ function MainContainer() {
 
           {/* 슬라이드 목록 구간 */}
           <Swiper
+            modules={[Navigation]}
             width={350}
             slidesPerView={2}
             spaceBetween={12}
+            navigation={true}
             style={{ margin: "0.5rem 0" }}
             scrollbar={{ draggable: true }}>
             <SwiperSlide
