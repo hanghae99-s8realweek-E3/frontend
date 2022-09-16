@@ -81,6 +81,7 @@ const StNickName = styled.div`
   line-height: 32px;
   color: #000000;
   margin-left: 16px;
+  text-align:left;
 `;
 const StMbtiFollowWrap = styled.div`
   display: flex;

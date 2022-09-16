@@ -334,13 +334,13 @@ const StTodayMyCardWrap = styled.div`
 `;
 const StSelectMbti = styled.button`
   :hover {
-    background-color: red;
+    background: #FF6D53;
   }
   display: flex;
   width: 200px;
   position: fixed;
   height: 60px;
-  top: 80vh;
+  bottom :110.06px;
   margin-left: 150px;
   background: #979797;
   border-radius: 66px;
@@ -354,6 +354,7 @@ const StSelectMbti = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const StShadowBackgroundDiv = styled.div`
