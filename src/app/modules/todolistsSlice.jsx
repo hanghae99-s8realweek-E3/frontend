@@ -15,12 +15,11 @@ export const getTodoListsFetch = createAsyncThunk(
   "todolists/gettodolistsFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
-      console.log(payload);
+      console.log("피드 최신순 시작");
       let response;
       if (payload === false){
-        console.log(payload)
-        console.log("페이로드확인용")
+        console.log(response)
+        console.log(payload + "왼쪽페이로드 값")
         response = await preInstance.get("/todolists");
       console.log(response)
     }
@@ -28,16 +27,9 @@ export const getTodoListsFetch = createAsyncThunk(
       {
         response = await instance.get("/todolists");
       }
-      // else if(payload=== undefined)
-      // {
-      //   response = await preInstance.get("/todolists");
-      // }
-      // const response = await instance.get("/todolists")
-      // console.log(response);
-      // console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("피드 최신 통신에러");
+      console.log("피드 최신순 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -96,13 +88,10 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsFetch",
   async (payload, thunkAPI) => {
     try {
-
       let response;
       if(payload.login === false){
         response = await preInstance.get(`/todolists?mbti=${payload.mbti}`);
-        console.log("5")
-        console.log("서버와의 통신 시작");
-        console.log(payload);
+        console.log("특정mbti의 통신 시작");
       }
       else if(payload.login === true){
         response = await instance.get(`/todolists?mbti=${payload.mbti}`);
@@ -111,7 +100,7 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
       console.log(response.data)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러4");
+      console.log("특정mbti의 통신 에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -123,7 +112,6 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("서버와의 통신 시작");
-      console.log(payload);
       let response;
       if(payload.login === false){
         response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
@@ -135,7 +123,7 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
       console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러5");
+      console.log("특정mbti의 통신 에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
