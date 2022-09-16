@@ -160,7 +160,8 @@ function SetToDoContainer() {
                 id={myTodosState.challengedTodo.todoId}
                 data={myTodosState.challengedTodo}
                 isTodayChallenge={true}
-                state="myTodos"              />
+                state="myTodos"
+              />
             )}
           </StChallengeToDoBox>
 
@@ -200,7 +201,7 @@ const StCommonColumnContainer = styled.div`
 
   width: 500px;
 
-  margin: 80px auto 128px auto;
+  margin: 80px auto;
 
   width: 500px;
   box-sizing: border-box;
@@ -324,6 +325,7 @@ const CalendarContainer = styled.div`
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
+  margin-top: 70px;
 `;
 
 const StTodayBox = styled.div`
