@@ -190,13 +190,13 @@ const StMbti = styled.h6`
     margin-top:0px;
 `
 const StDeleteFollowBtn = styled.button`
-    width: 65px;
+    width: 85px;
     height:35px;
     border-radius:50px;
     background-color:white;
     margin:auto 10px;
     :hover{
-        background-color:red;
+        background-color:gray;
     }
     cursor: pointer;
 

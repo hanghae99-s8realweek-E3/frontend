@@ -150,7 +150,9 @@ function FeedDetailContainer() {
               </StFollowBtn>
             )}
           </StUserIdBox>
+        
           <DetailCard data={detailState.todoInfo} />
+          
           <div>
             {detailState.isTodayDone === "false" ? (
               <></>
@@ -266,7 +268,7 @@ const StProfileImg = styled.img`
 `;
 const StNickname = styled.div`
   /* background-color:red; */
-  width: 150px;
+  width: 200px;
   /* margin-top:5px; */
   /* border:1px solid; */
 `;
