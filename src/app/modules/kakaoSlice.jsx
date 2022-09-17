@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 // export const api = axios.create({
-//   baseURL: "http://3.36.126.158/api/accounts/auth/kakao/callback",
+//   baseURL: "/api/accounts/auth/kakao/callback",
 //   // withCredentials: false,
 // });
 // //1. axios 인터셉터 생성

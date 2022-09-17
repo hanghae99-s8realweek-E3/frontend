@@ -26,33 +26,6 @@ function LoginSelect() {
     window.location.href = KAKAO_AUTH_URL
   };
 
-  // https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F3.36.126.158%252Fapi%252Faccounts%252Fauth%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3D6d38e857413484f790fca11de76d3626
-
-  // const code = new URL(window.location.href).searchParams.get("token");
-
-  // console.log(window.location.href);
-  // console.log(code);
-
-  // useEffect(() => {
-  //   if (code) {
-  //     console.log("통신해보자");
-  //     axios
-  //       .get(
-  //         `http://3.36.126.158/api/accounts/auth/kakao/callback?code=${code}`
-  //       )
-  //       .then((response) => {
-  //         console.log("흑흑");
-  //         window.localStorage.setItem("token", response.data.token);
-  //         navigate("/");
-  //       })
-  //       .catch((error) => {
-  //         console.log("하")
-  //         console.error(error);
-  //       });
-  //   }
-  // }, [code]);
-
-
   useEffect(()=>{
     if(window.localStorage.getItem('token')){
     navigate('/mypage')
@@ -74,11 +47,7 @@ function LoginSelect() {
       <StHashMsg>#어느누군가 #하루 #따라하기</StHashMsg>
       <StKakaoLoginBtn onClick={goKakaoLogin}>
         카카오계정 로그인
-        {/* <a href= "http://3.36.126.158/api/accounts/kakao"> */}
-
       </StKakaoLoginBtn>
-      {/* <StKakaoLoginBtn onClick={goKakaoLogin}>카카오 계정 로그인</StKakaoLoginBtn> */}
-      {/* <StKakaoLoginBtn> <a href={KAKAO_AUTH_URL}></a> 카카오톡 로그인</StKakaoLoginBtn> */}
       <StNormalLoginBtn onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
     </StTotalWrap>
   );

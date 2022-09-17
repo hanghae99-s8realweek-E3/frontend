@@ -38,29 +38,6 @@ export const getMyPageFetch = createAsyncThunk(
   }
 )
 
-// // // 소셜로그인 카카오
-// export const getKakaoLoginFetch = createAsyncThunk(
-//   'users/getKakaoLoginFetch',
-//   async (payload, thunkAPI) => {
-//     try {
-//       const response = await axios.get(`http://3.36.126.158/api/accounts/kakao`)
-//       console.log(response);
-//       return thunkAPI.fulfillWithValue(response.data);
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.response.data);
-//     }
-//   }
-// )
-
-// export const __kakaoSignIn = (code) => async (dispatch) => {
-//   const data = await axios.get(`/oauth/kakao/callback?code=${code}`);
-//   if (data.headers.authorization !== undefined) {
-//     localStorage.setItem("Authorization", data.headers.authorization);
-//   }
-//   dispatch(postLoginFetch(data.data));
-// };
-
-
 const accountsSlice = createSlice({
   name:"accounts",
   initialState,
