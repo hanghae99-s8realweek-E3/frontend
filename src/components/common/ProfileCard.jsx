@@ -9,7 +9,7 @@ function ProfileCard({ profileData }) {
   const goFollow = () => {
     window.location.pathname === "/otherspage"
       ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+      : navigate(`/follows/${profileData.userInfo.userId}`,{state:false});
   };
   console.log(profileData);
   console.log(window.location.href);
@@ -17,7 +17,7 @@ function ProfileCard({ profileData }) {
   const goFollowing = () => {
     window.location.pathname === "/otherspage"
       ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+      : navigate(`/follows/${profileData.userInfo.userId}`,{state:true});
   };
   return (
     <>
