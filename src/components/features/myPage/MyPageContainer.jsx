@@ -46,9 +46,7 @@ function MyPageContainer() {
     window.localStorage.clear();
     navigate("/");
   }
-  const test = () => {
-    navigate(`/otherspage/${accountsState.userInfo.userId}`);
-  };
+
   return (
     <StMyPageContainer>
       {Object.keys(accountsState.userInfo).length === 0 ? (
@@ -88,7 +86,7 @@ function MyPageContainer() {
           paddingLeft: "25px",
           paddingBottom: "25px",
         }}>
-        <StMyPageMenu onClick={test}>설정</StMyPageMenu>
+        <StMyPageMenu>설정</StMyPageMenu>
         <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
         <StMyPageButton onClick={changeMyPasswordData}>
           비밀번호 변경

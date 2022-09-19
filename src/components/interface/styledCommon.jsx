@@ -46,3 +46,15 @@ export const StCommonBorder = styled.div`
 
   margin: ${(props) => props.margin};
 `;
+
+export const StShadowBackgroundDiv = styled.div`
+  background: rgba(0, 0, 0, 0.3);
+
+  display: block;
+  position: fixed;
+
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+`;
