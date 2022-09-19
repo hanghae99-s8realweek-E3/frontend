@@ -69,7 +69,7 @@ function MyPageContainer() {
         style={{
           display: "flex",
           flexDirection: "column",
-          paddingLeft: "35px",
+          paddingLeft: "25px",
           paddingBottom: "25px",
         }}>
         <StMyPageMenu>나의 정보</StMyPageMenu>
@@ -85,7 +85,7 @@ function MyPageContainer() {
         style={{
           display: "flex",
           flexDirection: "column",
-          paddingLeft: "35px",
+          paddingLeft: "25px",
           paddingBottom: "25px",
         }}>
         <StMyPageMenu onClick={test}>설정</StMyPageMenu>
@@ -108,7 +108,7 @@ const StMyPageContainer = styled.div`
 
   text-align: left;
 
-  margin: 80px auto 108px auto;
+  margin: 80px 0;
   /* padding: 0 0.6rem; */
 
   width: 500px;
@@ -126,11 +126,12 @@ const StMyPageButton = styled.button`
   text-align: left;
   font-size: 20px;
   font-weight: 700;
+  line-height: 50px;
 
   border: none;
   outline: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 6px 0;
 
   cursor: pointer;
 `;
@@ -138,7 +139,10 @@ const StMyPageButton = styled.button`
 const StMyPageMenu = styled.span`
   font-size: 18px;
   color: #979797;
-  margin: 42px 0 8px 0;
+  font-weight: 500;
+  line-height: 32px;
+
+  margin: 25px 0 12px 0;
 `;
 
 const StMatchCheckDiv = styled.div`

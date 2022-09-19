@@ -131,7 +131,7 @@ const SwiperImageCSSData = {
 };
 
 const StStartbutton = styled.button`
-  background: #979797;
+  background: #ff6d53;
 
   display: flex;
   justify-content: center;
