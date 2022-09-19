@@ -38,7 +38,7 @@ function FeedDetailContainer() {
         navigate("/todolists");
       }
     }
-  });
+  },[]);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -241,6 +241,8 @@ const StUserIdBox = styled.div`
   width: 90%;
   margin: 0px auto 10px 20px;
   align-items: center;
+  cursor: pointer;
+
 `;
 
 const StImgNickname = styled.div`
@@ -249,11 +251,15 @@ const StImgNickname = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
+  cursor: pointer;
+
 `;
 
 const StProfileImg = styled.img`
   background-color: gray;
   border-radius: 15px;
+  cursor: pointer;
+
   /* width:30px;
   height:30px;
   margin:10px; */
@@ -274,7 +280,7 @@ const StNickname = styled.div`
   /* border:1px solid; */
 `;
 const StFollowBtn = styled.button`
-  /* background-color:white; */
+  background-color:#F2F2F2;
   border: none;
   margin-left: auto;
   font-family: "IBM Plex Sans KR";
@@ -317,8 +323,8 @@ const StWriteComment = styled.form`
   display: flex;
   width: 500px;
   bottom: 0;
-  height: 216px;
-  z-index: 6;
+  height: 124px;
+  z-index: 7;
 `;
 const StItem = styled.div`
   /* background-color:blue; */
@@ -356,6 +362,8 @@ const StCommentBtn = styled.button`
   padding: 0;
   right: 0;
   transform: translateX(-60%) translateY(40%);
+  cursor: pointer;
+
 `;
 const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
@@ -368,4 +376,5 @@ const StBtnGoToChallenge = styled.button`
   font-size: 22px;
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
 `;
