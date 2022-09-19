@@ -10,12 +10,11 @@ function ProfileCard({ profileData }) {
   console.log(params);
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    window.location.pathname === "/otherspage"
       navigate(`/follows/${profileData.userInfo.userId}`,{state:false});
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    window.location.pathname === "/otherspage"
+
      navigate(`/follows/${profileData.userInfo.userId}`,{state:true});
   };
 
