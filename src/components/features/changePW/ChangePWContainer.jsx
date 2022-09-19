@@ -63,47 +63,73 @@ function ChangePWContainer() {
               color: "#999999",
               margin: "0",
             }}>
-            새로운 비밀번호를 입력해주세요.
+            회원님의 소중한 개인정보를 안전하게 보호하기 위해
+          </p>
+          <p
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              color: "#999999",
+              margin: "0",
+            }}>
+            비밀번호를 입력해주세요.
           </p>
         </div>
-        <label
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#000000",
-            display: "block",
-            textAlign: "left",
-          }}>
-          비밀번호
-        </label>
-        <StCommonInput
-          type="password"
-          name="password"
-          placeholder="현재 비밀번호 입력"
-          value={inputData.password}
-          onChange={changeInputPassWord}
-        />
-        <StCommonInput
-          type="password"
-          name="newPassword"
-          placeholder="변경할 비밀번호 입력"
-          value={inputData.newPassword}
-          onChange={changeInputPassWord}
-        />
-        <StCommonInput
-          type="password"
-          name="confirmPassword"
-          placeholder="변경할 비밀번호 확인"
-          value={inputData.confirmPassword}
-          onChange={changeInputPassWord}
-        />
+        <div style={{}}>
+          <label
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              color: "#000000",
+              display: "block",
+              textAlign: "left",
+            }}>
+            현재 비밀번호
+          </label>
+          <StCommonInput
+            type="password"
+            name="password"
+            placeholder="비밀번호 입력"
+            value={inputData.password}
+            onChange={changeInputPassWord}
+          />
+          <StErrorMessage>
+            {inputData.password.length === 0 || inputData.password.length <= 8
+              ? "비밀번호는 9글자 이상이어야 합니다."
+              : passwordFormat.test(inputData.password) === false
+              ? "비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
+              : "　"}
+          </StErrorMessage>
+        </div>
+        <div>
+          <label
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              color: "#000000",
+              display: "block",
+              textAlign: "left",
+            }}>
+            새로운 비밀번호
+          </label>
+          <StCommonInput
+            type="password"
+            name="newPassword"
+            placeholder="변경할 비밀번호 입력"
+            value={inputData.newPassword}
+            onChange={changeInputPassWord}
+          />
+          <StCommonInput
+            type="password"
+            name="confirmPassword"
+            placeholder="변경할 비밀번호 재입력"
+            value={inputData.confirmPassword}
+            onChange={changeInputPassWord}
+          />
+        </div>
         <StErrorMessage>
-          {inputData.password.length === 0 || inputData.password.length <= 8
-            ? "비밀번호는 9글자 이상이어야 합니다."
-            : passwordFormat.test(inputData.password) === false
-            ? "비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
-            : inputData.newPassword.length === 0 ||
-              inputData.newPassword.length <= 8
+          {inputData.newPassword.length === 0 ||
+          inputData.newPassword.length <= 8
             ? "변경할 비밀번호는 9글자 이상이어야 합니다."
             : passwordFormat.test(inputData.newPassword) === false
             ? "변경할 비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
@@ -140,7 +166,7 @@ const StCommonInput = styled.input`
   border: 1px solid #979797;
   border-radius: 6px;
   outline: none;
-  margin: 8px 0;
+  margin: 8px 0 0 0;
   padding: 0 0 0 20px;
 
   width: 85%;
@@ -154,7 +180,7 @@ const StCommonInput = styled.input`
 `;
 
 const StCommonButton = styled.button`
-  background: #979797;
+  background: #ff6d53;
 
   display: flex;
   justify-content: center;
@@ -167,7 +193,7 @@ const StCommonButton = styled.button`
   border: none;
   border-radius: 6px;
   outline: none;
-  margin: 30px 0;
+  margin: 80px 0;
   padding: 0;
 
   width: 90%;
@@ -183,4 +209,5 @@ const StErrorMessage = styled.div`
   text-align: left;
 
   height: 32px;
+  margin-bottom: 8px;
 `;

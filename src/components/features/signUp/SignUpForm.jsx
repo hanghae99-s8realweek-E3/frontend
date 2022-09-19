@@ -3,19 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 import {emailFormat,passwordFormat} from "../../../utils/reqList"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { postSignUpFetch } from "../../..  /app/modules/accountsSlice";
-import { tokenChecker } from "../../../utils/token";
 import { preInstance } from "../../../app/modules/instance";
 
 const SignUpForm = () => {
   //hook
-  // const accountsState = useSelector(state => state.accounts)
   const confirmNumberRef = useRef();
   const navigate = useNavigate();
 
   const [checkState, setCheckState] = useState({email:"none" , password:"none", confirm:"" , nickname:""});
-
 
   //initialState
   const initialState = {
@@ -50,18 +45,11 @@ const SignUpForm = () => {
       try {
         const response = await preInstance.post("/accounts/emailAuth", {email:payload});
         if ( response.data.message === "success") {
-          return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
+          return alert('이메일로 인증번호를 보냈습니다') 
         } 
       } catch (error) {
           return alert(error.response.data.errorMessage)
       }
-
-      // const response = await preInstance.post("/accounts/emailAuth", {email:payload});
-      // if ( response.data.message === "success") {
-      //   return alert('이메일로 인증번호를 보냈습니다') // 이메일 중복확인 성공하면, 진행할 내용들...
-      // } else {
-      //   return alert(response.response.data.errorMessage)
-      // }
     }
     emailCheck(); // 최종 동작
   }
@@ -122,7 +110,6 @@ const SignUpForm = () => {
   // },[accountsState])
 
   return (
-    
     <div>
       <StOutLine type="submit" onSubmit={onSubmitSignUpComplete}>
         <h4>회원가입 페이지</h4>
@@ -141,6 +128,7 @@ const SignUpForm = () => {
               </StInputWrap>
               <StErrorTextMessage>{checkState.email === "none" ? "　" : signupData.email.length === 0 ? "이메일을 입력해주세요" : signupData.email.match(emailFormat) ? "" : "잘못된 이메일입니다"}</StErrorTextMessage>
             </StItem>
+            
             <StItem>
               <label>인증번호</label>
                 <StInputWrap marginBottom="70px">
@@ -149,9 +137,10 @@ const SignUpForm = () => {
                     name="confirmNumber"
                     ref={confirmNumberRef}
                     placeholder="인증번호 입력"/>
-                <StInsideBtn type="button" onClick={onClickCertificate}>인증 완료</StInsideBtn>
+                <StInsideBtn type="button" onClick={onClickCertificate}>인증하기</StInsideBtn>
               </StInputWrap>
             </StItem>
+
             <StItem>
               <label>비밀번호</label>
                 <StInputWrap marginBottom="60px">
@@ -165,7 +154,7 @@ const SignUpForm = () => {
                 </StInputWrap>
               <StErrorTextMessage>{checkState.password === "none" ? "　" : signupData.password.length === 0 ? "비밀번호를 입력해주세요" : signupData.password.length < 8 ? "사용불가 : 최소 8자 이상 입력해주세요." : signupData.password.match(passwordFormat) ? "" : "사용불가 : 영문,숫자,특수문자 중 2가지 이상을 조합해주세요."}</StErrorTextMessage>
             </StItem>
-
+            
             <StItem>
             <label>비밀번호 확인</label>
               <StInputWrap marginTop="0px" marginBottom="70px">
@@ -193,6 +182,7 @@ const SignUpForm = () => {
                   />
                 </StInputWrap>
             </StItem>
+
             <StSignUpBtn>회원가입</StSignUpBtn>
           </StContainer>
       </StOutLine>
