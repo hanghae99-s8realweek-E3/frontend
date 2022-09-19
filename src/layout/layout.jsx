@@ -38,4 +38,8 @@ const LayoutContainer = styled.div`
 
   max-width: 500px;
   min-height: 100vh;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;

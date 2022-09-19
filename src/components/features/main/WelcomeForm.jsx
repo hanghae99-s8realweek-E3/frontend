@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { removeCookies } from "../../../utils/cookie";
+import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
 function WelcomeForm() {
   //modalState
@@ -76,18 +77,6 @@ const StText = styled.div`
   height: 90%;
 
   box-sizing: border-box;
-`;
-
-const StShadowBackgroundDiv = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-
-  position: fixed;
-  display: block;
-
-  top: 0;
-  width: 500px;
-  height: 100%;
-  z-index: 10;
 `;
 
 const StCloseButton = styled.button`

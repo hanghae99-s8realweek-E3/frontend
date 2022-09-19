@@ -65,7 +65,7 @@ function MainContainer() {
             pagination={{ clickable: true }}>
             {bannerSlide.map((elem, idx) => (
               <SwiperSlide key={idx} style={SwiperImageCSSData}>
-                <SildeBannerImage width="450px" src={elem} />
+                <SildeBannerImage src={elem} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -231,6 +231,11 @@ const StContainer = styled.div`
   margin: 80px 0 120px 0;
   padding: 0 25px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 360px;
+  }
 `;
 
 const StHeadTitle = styled.h1`
@@ -251,6 +256,10 @@ const BannerSlideBox = styled.div`
 
   overflow: hidden;
   box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 
 const InfomationSlideBox = styled.div`
@@ -261,10 +270,17 @@ const InfomationSlideBox = styled.div`
 
   /* margin: 10px 0; */
   overflow: hidden;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 
 const SildeBannerImage = styled.img`
-  width: ${(props) => props.width};
+  width: 450px;
+
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 
 const SildeImage = styled.img`

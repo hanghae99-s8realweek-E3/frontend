@@ -46,6 +46,10 @@ const HeaderContainer = styled.div`
 
   top: 0;
   z-index: 5;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StBackBtn = styled.button`
