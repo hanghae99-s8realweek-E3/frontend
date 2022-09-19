@@ -10,47 +10,45 @@ function ProfileCard({ profileData }) {
   console.log(params);
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    window.location.pathname === "/otherspage"
-      navigate(`/follows/${profileData.userInfo.userId}`,{state:false});
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    window.location.pathname === "/otherspage"
-     navigate(`/follows/${profileData.userInfo.userId}`,{state:true});
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
 
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
-    return (
-      <StTotalWrap>
-        <StProfileImg
-          src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
-          width="80"
-          height="80"
-          alt="dy"
-        />
-        <StNoImageWrap>
-          <StNickName>{profileData.userInfo.nickname}</StNickName>
-          <StMbtiFollowFollowingWrap>
-            <StMbti>{profileData.userInfo.mbti}</StMbti>
-            <StFollowWrap onClick={goFollow}>
-              <StFollowWord>팔로워</StFollowWord>
-              <StFollowNumber>
-                {window.location.pathname === "/mypage"
-                  ? profileData.userInfo.follower
-                  : profileData.userInfo.followerCount}
-              </StFollowNumber>
-            </StFollowWrap>
-            <StFollowingWrap onClick={goFollowing}>
-              <StFollowingWord>팔로잉</StFollowingWord>
-              <StFollowingNumber>
-                {window.location.pathname === "/mypage"
-                  ? profileData.userInfo.following
-                  : profileData.userInfo.followingCount}
-              </StFollowingNumber>
-            </StFollowingWrap>
-          </StMbtiFollowFollowingWrap>
-        </StNoImageWrap>
-      </StTotalWrap>
+  return (
+    <StTotalWrap>
+      <StProfileImg
+        src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
+        width="80"
+        height="80"
+        alt="dy"
+      />
+      <StNoImageWrap>
+        <StNickName>{profileData.userInfo.nickname}</StNickName>
+        <StMbtiFollowFollowingWrap>
+          <StMbti>{profileData.userInfo.mbti}</StMbti>
+          <StFollowWrap onClick={goFollow}>
+            <StFollowWord>팔로워</StFollowWord>
+            <StFollowNumber>
+              {window.location.pathname === "/mypage"
+                ? profileData.userInfo.follower
+                : profileData.userInfo.followerCount}
+            </StFollowNumber>
+          </StFollowWrap>
+          <StFollowingWrap onClick={goFollowing}>
+            <StFollowingWord>팔로잉</StFollowingWord>
+            <StFollowingNumber>
+              {window.location.pathname === "/mypage"
+                ? profileData.userInfo.following
+                : profileData.userInfo.followingCount}
+            </StFollowingNumber>
+          </StFollowingWrap>
+        </StMbtiFollowFollowingWrap>
+      </StNoImageWrap>
+    </StTotalWrap>
   );
 }
 export default ProfileCard;
@@ -78,7 +76,7 @@ const StNickName = styled.div`
   line-height: 32px;
   color: #000000;
   margin-left: 16px;
-  text-align:left;
+  text-align: left;
 `;
 const StMbtiFollowFollowingWrap = styled.div`
   display: flex;
@@ -103,7 +101,7 @@ const StFollowWrap = styled.div`
   gap: 5px;
 `;
 const StFollowNumber = styled.div`
-margin-top: 1px;
+  margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -128,7 +126,7 @@ const StFollowingWrap = styled.div`
   gap: 5px;
 `;
 const StFollowingNumber = styled.div`
-margin-top: 1px;
+  margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
