@@ -1,21 +1,27 @@
 import React,{useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFollowFetch } from "../../../app/modules/followSlice";
 import instance from "../../../app/modules/instance"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
 
 function MyPageFollow() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
     const followState = useSelector((state) => state.follow.data)
-    const [followTab, setFollowTab] = useState(false)
+    const [followTab, setFollowTab] = useState(true)
+    const {state} = useLocation();
+    console.log(state)
 
     useEffect(()=> {
         dispatch(getMyPageFollowFetch({userId:params.userId}))
+        state === true ? setFollowTab(state) : setFollowTab(false)
         },[]); //followState 삭제이유: 리덕스를 사용하지않기때문에 값을 갱신시켜줄필요가없다 (아래 함수자체애서 값을 갱신시켜주고있기때문)
-    console.log(followState)
+    console.log(followTab)
 
     const onClick = (e)=> {
         e.preventDefault();
@@ -53,9 +59,12 @@ function MyPageFollow() {
                         <StWrapBtnFollow>팔로워</StWrapBtnFollow>
                         <StWrapBtnFollowing type="submit" onClick={onClick}>팔로잉</StWrapBtnFollowing>
                     </StWrapBtn>
-                    <div>
-                        <StInput placeholder="닉네임을 입력해주세요"/>
-                    </div>
+
+                    <StSearchBarBox>
+                        <StInput placeholder="검색"/>
+                        <StSearchBtn><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
+                    </StSearchBarBox>
+
                     <div>
                         {followState.follower?.map((x,index)=> {
                         return (<div key={index}>
@@ -76,9 +85,12 @@ function MyPageFollow() {
                         <StWrapBtnFollowing type="submit" onClick={onClick}>팔로워</StWrapBtnFollowing>
                         <StWrapBtnFollow>팔로잉</StWrapBtnFollow>
                     </StWrapBtn>
-                    <div>
-                        <StInput placeholder="닉네임을 입력해주세요"/>
-                    </div>
+                    
+                    <StSearchBarBox>
+                        <StInput placeholder="검색"/>
+                        <StSearchBtn><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
+                    </StSearchBarBox>
+                    
                     <div>
                         {followState.following?.map((x,index)=> {
                         return (<div key={index}>
@@ -88,7 +100,7 @@ function MyPageFollow() {
                                         <StNickname >{x.nickname}</StNickname>
                                         <StMbti>{x.mbti}</StMbti>
                                     </StWrapNicknameMbti>
-                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>언팔로우</StDeleteFollowBtn>
+                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
                             </StProfileBox>
                                 </div>)
                     })}</div>
@@ -123,28 +135,60 @@ const StContainer=styled.div`
 `
 const StWrapBtn = styled.div`
     /* background-color:black; */
+    height:55px;
+    padding-top:20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top:60px;
     cursor: pointer;
+
 `
 const StWrapBtnFollow = styled.div`
-    border-style: inset;
+    /* border-style: inset; */
+    background: none;
+    /* font-size: 18px; */
+    font-weight: 500;
+    color:#FF6D53;
+    border: none;
+    border-bottom: 2px solid #FF6D53;
+    outline: none;
+
 `
 
 const StWrapBtnFollowing = styled.div`
-    border-style: outset;
+    /* border-style: outset; */
+`
+
+const StSearchBarBox = styled.div`
+/* background-color:blue; */
+    display:flex;
+    z-index: 1;
+    opacity: 1;
+    width:99%;
+    border: 2px solid #979797;
+    border-radius: 3px;
+
+
 `
 
 const StInput = styled.input`
-    border: 2px solid #979797;
-    border-radius: 3px;
-    padding-left: 10px;
-    width: 450px;
+    padding-left: 20px;
+    border:none;
+    width: 400px;
     height:55px;
-    
+    z-index: -1;
+    outline: none;
+    overflow: auto; //검색어가 길어졌을때 오른쪽으로 자연스럽게 검색되도록 하기 위해
 `
 
+const StSearchBtn = styled.button`
+    background-color:white;
+    margin:auto;
+    border:none;
+    text-align:center;
+    outline:none;
+    cursor: pointer;
+`
 const StProfileBox = styled.div`
     background:none;
     border:none;
@@ -152,7 +196,7 @@ const StProfileBox = styled.div`
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     height:100px;
-    width: 450px;
+    width: 99%;
     margin:auto;
     :hover{
         background-color:gainsboro;
@@ -167,12 +211,12 @@ const StProfileImg = styled.img`
     border-radius:30px;
     width:60px;
     height:60px;
-    margin:20px;
+    margin:auto;
 
 `
 const StWrapNicknameMbti=styled.div`
     pointer-events:none;
-    margin-left:0px;
+    margin-left:10px;
 `
 const StNickname = styled.h4`
     pointer-events:none;
