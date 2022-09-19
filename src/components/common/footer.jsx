@@ -34,7 +34,7 @@ function Footer() {
             window.location.pathname === "/" ||
             window.location.pathname === "/welcomepage" ||
             window.location.pathname === "/teaser"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -60,7 +60,7 @@ function Footer() {
             window.location.pathname === `/follows/${params.userId}` ||
             window.location.pathname === `/selectmbtifeed` ||
             window.location.pathname === `/follows/${params.userId}`
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -85,7 +85,7 @@ function Footer() {
           color={
             window.location.pathname === "/setuptodo" ||
             window.location.pathname === "/mytodos"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -112,7 +112,7 @@ function Footer() {
             window.location.pathname === "/changepw" ||
             window.location.pathname === "/helpdesk" ||
             window.location.pathname === "/withdraw"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -158,6 +158,10 @@ const FooterContainer = styled.div`
 
   bottom: 0;
   z-index: 6;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 360px;
+  }
 `;
 
 const FooterButtonBox = styled.div`
@@ -167,6 +171,16 @@ const FooterButtonBox = styled.div`
   gap: 5rem;
 
   height: 100%;
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 360px;
+    gap: 3rem;
+  }
 `;
 
 const StButton = styled.button`

@@ -1,20 +1,8 @@
 import { StCommonColumnBox, StCommonRowBox } from "../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCircleCheck,
-  faMessage,
-  faStar,
-} from "@fortawesome/free-regular-svg-icons";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { decodeMyTokenData } from "../../utils/token";
-import instance from "../../app/modules/instance";
-import { useDispatch } from "react-redux";
-import { getSetUpMyTodoFetch } from "../../app/modules/setUpTodoSlice";
-import { settingTodayDate } from "../../utils/commonFunc";
+import { useNavigate } from "react-router-dom";
 
 function ChallengeCard({ id, data }) {
   const navigate = useNavigate();
@@ -27,41 +15,46 @@ function ChallengeCard({ id, data }) {
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
-    <StChallengeCardDiv>
+    <StChallengeCardDiv
+      background={data.isCompleted === 1 ? "#DDDDDD" : "#ffffff"}>
       <StCommonRowBox
         width="100%"
         height="100%"
         alignItems="center"
         style={{ textAlign: "left" }}
         onClick={moveToFeedDetail}>
-        <StChallengeNameSpan>
+        <StChallengeNameSpan
+          color={data.isCompleted === 1 ? "#B8B8B8" : "#000000"}>
           {data.todo.length > 30
             ? `${data.todo.substring(0, 27)}...`
             : data.todo}
         </StChallengeNameSpan>
 
-        <StCommonColumnBox style={{ height: "100%" }}>
+        <StStaticBox color={data.isCompleted === 1 ? "#B8B8B8" : "#909090"}>
           <StCommonRowBox alignItems="center" margin="auto 0 0 0">
             <StCommonRowBox
               alignItems="center"
-              style={{ marginRight: "5px", lineHeight: "32px" }}>
-              <FontAwesomeIcon
-                style={{ color: "#979797", margin: "0 4px" }}
-                icon={faMessage}
-              />
+              style={{
+                marginRight: "5px",
+                lineHeight: "32px",
+                color: data.isCompleted === 1 ? "#B8B8B8" : "#909090",
+              }}>
+              <FontAwesomeIcon style={{ margin: "0 4px" }} icon={faMessage} />
               <StCountSpan>{data.commentCounts}</StCountSpan>
             </StCommonRowBox>
-            <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <FontAwesomeIcon
-                style={{ color: "#979797", margin: "0 0 0 0" }}
-                icon={faStar}
-              />
+            <StCommonRowBox
+              alignItems="center"
+              style={{
+                marginLeft: "5px",
+                color: data.isCompleted === 1 ? "#B8B8B8" : "#909090",
+              }}>
+              <FontAwesomeIcon style={{ margin: "0 0 0 0" }} icon={faStar} />
               <StCountSpan style={{ marginRight: "4px" }}>
                 {data.challengedCounts}
               </StCountSpan>
             </StCommonRowBox>
           </StCommonRowBox>
-        </StCommonColumnBox>
+        </StStaticBox>
       </StCommonRowBox>
     </StChallengeCardDiv>
   );
@@ -70,18 +63,17 @@ function ChallengeCard({ id, data }) {
 export default ChallengeCard;
 
 const StChallengeCardDiv = styled.div`
-  background: #ffffff;
+  background: ${(props) => props.background};
 
   display: flex;
   flex-direction: row;
   align-items: center;
 
   width: 90%;
-  height: 102px;
-  border: 1px solid gray;
+  height: 90px;
   border-radius: 6px;
   padding: 14px 20px;
-  margin: 5px 25px;
+  margin: 6px 25px;
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
@@ -89,8 +81,8 @@ const StChallengeCardDiv = styled.div`
 
 const StChallengeNameSpan = styled.span`
   font-size: 22px;
-  font-weight: 600;
-  color: #979797;
+  font-weight: 400;
+  color: ${(props) => props.color};
   line-height: 32px;
 
   margin-right: auto;
@@ -102,4 +94,11 @@ const StCountSpan = styled.span`
   color: #979797;
 
   margin: 0 8px;
+`;
+
+const StStaticBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
 `;

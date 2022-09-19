@@ -1,6 +1,7 @@
 import {
   StCommonColumnBox,
   StCommonRowBox,
+  StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -90,6 +91,8 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
     deleteApply();
   }
 
+  console.log(isTodayChallenge);
+
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
@@ -124,18 +127,25 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
         width="90%"
         id={data.todoId}
         onClick={moveToFeedDetail}
+        background={
+          myData.userId === data.userId
+            ? "#ffffff"
+            : data.isCompleted === 0
+            ? "#ffffff"
+            : "#FF6D53"
+        }
         cursor="pointer">
         {hideState === true ? (
           <></>
         ) : (
-          <StChallengeStateBtn onClick={changeStateChallenge}>
-            <FontAwesomeIcon
-              style={{
-                fontSize: "46px",
-                marginRight: "19px",
-                pointerEvents: "none",
-              }}
-              icon={data.isCompleted === 0 ? faCircle : faCircleCheck}
+          <StChallengeStateBtn
+            onClick={isTodayChallenge === true ? changeStateChallenge : null}>
+            <StTodoStateImage
+              src={
+                data.isCompleted === 0
+                  ? process.env.PUBLIC_URL + `/images/Progress.png`
+                  : process.env.PUBLIC_URL + `/images/Complete.png`
+              }
             />
           </StChallengeStateBtn>
         )}
@@ -145,25 +155,36 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
           height="100%"
           alignItems="center"
           style={{ textAlign: "left" }}>
-          <StChallengeNameSpan>
+          <StChallengeNameSpan
+            color={
+              myData.userId === data.userId
+                ? "#979797"
+                : data.isCompleted === 0
+                ? "#979797"
+                : "#ffffff"
+            }>
             {data.todo.length > 30
               ? `${data.todo.substring(0, 27)}...`
               : data.todo}
           </StChallengeNameSpan>
 
-          <StCommonColumnBox style={{ height: "100%" }}>
+          {/* 상세 메뉴 출력 여부 표시 */}
+
+          <StCommonColumnBox style={{ height: "100%", width: "50%" }}>
             {isTodayChallenge === true ? (
-              <StMenuBtn onClick={displayCardMenu}>
+              <StMenuBtn
+                color={data.isCompleted === 0 ? "#979797" : "#ffffff"}
+                onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
             ) : myData.userId === data.userId ? (
-              <StMenuBtn onClick={displayCardMenu}>
+              <StMenuBtn color="#979797" onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
             ) : (
               <div>　</div>
             )}
-            <StCommonRowBox alignItems="center" margin="auto 0 0 0">
+            {/* <StCommonRowBox alignItems="center" margin="auto 0 0 0">
               <StCommonRowBox
                 alignItems="center"
                 style={{ marginRight: "5px", lineHeight: "32px" }}>
@@ -182,7 +203,7 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
                   {data.challengedCounts}
                 </StCountSpan>
               </StCommonRowBox>
-            </StCommonRowBox>
+            </StCommonRowBox> */}
           </StCommonColumnBox>
         </StCommonRowBox>
       </StChallengeCardDiv>
@@ -193,7 +214,7 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
 export default SetUpToDoCard;
 
 const StChallengeCardDiv = styled.div`
-  background: #ffffff;
+  background: ${(props) => props.background || "#ffffff"};
 
   display: flex;
   flex-direction: row;
@@ -203,7 +224,7 @@ const StChallengeCardDiv = styled.div`
   height: 102px;
   border: 1px solid gray;
   border-radius: 6px;
-  padding: 14px 20px;
+  padding: 16px 18px;
   margin: 5px 25px;
 
   box-sizing: border-box;
@@ -212,6 +233,8 @@ const StChallengeCardDiv = styled.div`
 
 const StChallengeStateBtn = styled.button`
   background: none;
+  display: flex;
+  align-items: center;
 
   border: none;
   outline: none;
@@ -219,10 +242,17 @@ const StChallengeStateBtn = styled.button`
   cursor: pointer;
 `;
 
+const StTodoStateImage = styled.img`
+  width: 46px;
+  height: 46px;
+  margin-right: 19px;
+  pointer-events: none;
+`;
+
 const StChallengeNameSpan = styled.span`
   font-size: 22px;
-  font-weight: 600;
-  color: #979797;
+  font-weight: 400;
+  color: ${(props) => props.color};
   line-height: 32px;
 
   margin-right: auto;
@@ -232,20 +262,13 @@ const StMenuBtn = styled.button`
   background: none;
   font-size: 16px;
   line-height: 32px;
-  color: #979797;
+  color: ${(props) => props.color};
 
   border: none;
   outline: none;
+  margin-left: auto;
 
   cursor: pointer;
-`;
-
-const StCountSpan = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  color: #979797;
-
-  margin: 0 8px;
 `;
 
 const StPopUpWhiteButton = styled.button`
@@ -268,13 +291,4 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
-`;
-
-const StShadowBackgroundDiv = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  width: 500px;
-  height: 100%;
-  z-index: 10;
 `;

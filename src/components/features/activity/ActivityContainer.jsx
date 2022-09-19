@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
-import { StCommonBorder } from "../../interface/styledCommon";
+import {
+  StCommonBorder,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
 
 function ActivityContainer() {
   const sortList = ["최신순", "댓글순", "도전순"];
@@ -166,17 +169,17 @@ const StContainer = styled.div`
   justify-content: flex-start;
   position: relative;
 
-  margin: 80px 0;
+  margin: 60px 0 80px 0;
 
   box-sizing: border-box;
 `;
 
 const StTapBox = styled.div`
+  background: #ffffff;
   display: flex;
-
   flex-direction: row;
 
-  margin: 0 25px;
+  padding: 20px 25px 0 25px;
 
   width: 90%;
   height: 50px;
@@ -193,7 +196,6 @@ const StActiveTapButton = styled.button`
   border-bottom: 3px solid #ff6d53;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -211,7 +213,6 @@ const StTapButton = styled.button`
   border-bottom: 1px solid #909090;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -258,18 +259,6 @@ const StSortBtn = styled.button`
 const StMyCardListDiv = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StShadowBackgroundDiv = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-
-  position: fixed;
-  display: block;
-
-  top: 0;
-  width: 500px;
-  height: 100%;
-  z-index: 10;
 `;
 
 const StSortListBtn = styled.button`

@@ -149,7 +149,8 @@ function SetToDoContainer() {
                 <SetUpToDoCard
                   id={myTodosState.challengedTodo.todoId}
                   data={myTodosState.challengedTodo}
-                  hideState={true}
+                  hideState={false}
+                  isTodayChallenge={false}
                 />
               )
             ) : Array.isArray(myTodosState.challengedTodo) === true ? (
@@ -161,6 +162,7 @@ function SetToDoContainer() {
                 id={myTodosState.challengedTodo.todoId}
                 data={myTodosState.challengedTodo}
                 hideState={false}
+                isTodayChallenge={true}
               />
             )}
           </StChallengeToDoBox>
@@ -183,7 +185,7 @@ function SetToDoContainer() {
               <SetUpToDoCard
                 id={myTodosState.createdTodo.todoId}
                 data={myTodosState.createdTodo}
-                hideState="true"
+                hideState={true}
               />
             )}
           </StMakingToDoBox>
