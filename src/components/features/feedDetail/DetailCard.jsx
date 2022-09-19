@@ -83,7 +83,6 @@ function DetailCard({ data }) {
           </StCommonRowBox>
           <StCommonRowBox alignItems="center">
             <StNickNameSpan>{data.nickname}</StNickNameSpan>
-            <StMBTISpan>{data.mbti}</StMBTISpan>
             <StCommonRowBox alignItems="center" style={{ marginRight: "5px" }}>
               <FontAwesomeIcon
                 style={{ color: "#979797", margin: "0 4px" }}
@@ -117,10 +116,9 @@ const StChallengeCardDiv = styled.div`
   align-items: center;
 
   width: ${(props) => props.width || "100%"};
-  height: 102px;
   border: 1px solid gray;
   border-radius: 6px;
-  padding: 14px 20px 7px 20px;
+  padding: 14px 20px;
   margin: 5px 25px;
 
   box-sizing: border-box;
@@ -129,6 +127,7 @@ const StChallengeCardDiv = styled.div`
 const StChallengeNameSpan = styled.span`
   font-size: 22px;
   font-weight: 600;
+  text-align: left;
   color: #979797;
   line-height: 32px;
 
@@ -194,13 +193,4 @@ const StShadowBackgroundDiv = styled.div`
   width: 500px;
   height: 100%;
   z-index: 10;
-`;
-
-const StMBTISpan = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 32px;
-  color: #979797;
-
-  margin: 0 16px;
 `;

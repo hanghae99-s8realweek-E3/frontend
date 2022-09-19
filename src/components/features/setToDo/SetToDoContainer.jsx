@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import ChallengeCard from "../../common/ChallengeCard";
 import { StCommonRowBox, StCommonText } from "../../interface/styledCommon";
 import ProfileCard from "../../common/ProfileCard";
 import { useNavigate } from "react-router-dom";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
+import SetUpToDoCard from "./SetUpToDoCard";
 
 function SetToDoContainer() {
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
@@ -72,6 +72,7 @@ function SetToDoContainer() {
       ? "0" + (calendar.getMonth() + 1)
       : calendar.getMonth() + 1
   }-${calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate()}`;
+
   const nowDate = `${new Date().getFullYear()}-${
     new Date().getMonth() < 9
       ? "0" + (new Date().getMonth() + 1)
@@ -82,7 +83,7 @@ function SetToDoContainer() {
       : new Date().getDate()
   }`;
 
-  console.log(Object.keys(myTodosState).length);
+  console.log(nowDate);
 
   return (
     <StCommonColumnContainer>
@@ -145,10 +146,10 @@ function SetToDoContainer() {
                   진행한 도전이 없습니다.
                 </StNotifyNoSettingBox>
               ) : (
-                <ChallengeCard
+                <SetUpToDoCard
                   id={myTodosState.challengedTodo.todoId}
                   data={myTodosState.challengedTodo}
-                  state="myTodos"
+                  hideState={true}
                 />
               )
             ) : Array.isArray(myTodosState.challengedTodo) === true ? (
@@ -156,11 +157,10 @@ function SetToDoContainer() {
                 도전하러 가기
               </StSetToDoBtn>
             ) : (
-              <ChallengeCard
+              <SetUpToDoCard
                 id={myTodosState.challengedTodo.todoId}
                 data={myTodosState.challengedTodo}
-                isTodayChallenge={true}
-                state="myTodos"
+                hideState={false}
               />
             )}
           </StChallengeToDoBox>
@@ -180,7 +180,7 @@ function SetToDoContainer() {
                 </StSetToDoBtn>
               )
             ) : (
-              <ChallengeCard
+              <SetUpToDoCard
                 id={myTodosState.createdTodo.todoId}
                 data={myTodosState.createdTodo}
                 hideState="true"

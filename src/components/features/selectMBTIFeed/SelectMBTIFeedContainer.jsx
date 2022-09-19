@@ -94,6 +94,8 @@ function SelectMBTIFeedContainer() {
                     ? "1px solid #FF3A3A"
                     : buttonColorSet(elem, index) === "#569AFF"
                     ? "1px solid #569AFF"
+                    : buttonColorSet(elem, index) === "#E8644C"
+                    ? "1px solid #E8644C"
                     : "1px solid #979797"
                 }
                 color={

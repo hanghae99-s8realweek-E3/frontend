@@ -187,9 +187,10 @@ const StActiveTapButton = styled.button`
 
   font-size: 18px;
   font-weight: 500;
+  color: #ff6d53;
 
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 3px solid #ff6d53;
   outline: none;
   padding-bottom: 10px;
   margin-bottom: 5px;
@@ -204,9 +205,10 @@ const StTapButton = styled.button`
 
   font-size: 18px;
   font-weight: 500;
+  color: #313131;
 
   border: none;
-  border-bottom: 2px solid gray;
+  border-bottom: 1px solid #909090;
   outline: none;
   padding-bottom: 10px;
   margin-bottom: 5px;
