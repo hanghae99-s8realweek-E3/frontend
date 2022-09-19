@@ -7,24 +7,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 import { settingTodayDate } from "../../../utils/commonFunc";
 
-function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
+function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
   const [menuModal, setMenuModal] = useState(false);
-  const params = useParams();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
-    if (data.originTodoId !== "null" && data.originTodoId !== undefined)
-      navigate(`/feeddetail/${data.originTodoId}`);
+    console.log("들어가나요");
+    if (data.challengedTodo !== undefined) {
+      if (data.originTodoId !== "null" && data.originTodoId !== undefined) {
+        navigate(`/feeddetail/${data.originTodoId}`);
+      }
+    }
+    if (data.todo !== undefined) {
+      if (data.todoId !== "null" && data.todoId !== undefined) {
+        navigate(`/feeddetail/${data.todoId}`);
+      }
+    }
   }
 
   // 오늘의 챌린지 완료/진행중 상태를 바꿔주도록 함.
@@ -160,14 +168,14 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
 
           {/* 상세 메뉴 출력 여부 표시 */}
 
-          <StCommonColumnBox style={{ height: "100%", width: "50%" }}>
+          <StCommonColumnBox style={{ height: "100%" }}>
             {isTodayChallenge === true ? (
               <StMenuBtn
                 color={data.isCompleted === 1 ? "#ffffff" : "#979797"}
                 onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
-            ) : myData.userId === data.userId ? (
+            ) : data.todo !== undefined ? (
               <StMenuBtn color="#979797" onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
