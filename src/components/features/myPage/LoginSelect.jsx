@@ -56,8 +56,10 @@ function LoginSelect() {
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 const StTopMsg = styled.div`
+
   height: 64px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -65,7 +67,7 @@ const StTopMsg = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: #000000;
-  margin: 218.33px 125px 15px 125px;
+  margin: 218.33px 0px 15px 0px;
 `;
 const StHashMsg = styled.span`
   height: 32px;
@@ -75,9 +77,8 @@ const StHashMsg = styled.span`
   font-size: 18px;
   line-height: 32px;
   color: #979797;
-  margin: 0px 0px 105px 25px;
+  margin: 0px 0px 105px 0px;
 `;
-const StImg = styled.img``;
 
 const StKakaoLoginBtn = styled.button`
 height: 70px;

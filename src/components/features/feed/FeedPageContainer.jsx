@@ -194,24 +194,27 @@ function FeedPageContainer() {
   console.log("리턴전콘솔");
 
   return (
-    <>
+    <StTotalWrap>
       {selectSort === true ? (
-        <StShadowBackgroundDiv>
+        <StShadowBackgroundDiv onClick={toggleSortPopUp}>
           <StPopupBox>
             <StSlideDiv />
             <StSort>
               <StDate onClick={datebutton}>최신순</StDate>
+              <StDateLine/>
               <StComment onClick={commentbutton}>댓글순</StComment>
+              <StCommentLine/>
               <StChallenge onClick={challengebutton}>도전순</StChallenge>
+              <StChallengeLine/>
+              <StCommonBar/>
             </StSort>
-            <StCommonBar />
           </StPopupBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
       )}
-      <StTotalWrap>
-        <StHideToggle>
+        <StTopWrap>
+          <StHideWrap>
           {/* 거짓이면 체크안한거 참이면 체크한거 */}
           {checkOn === false ? (
             <StHideImg
@@ -231,6 +234,8 @@ function FeedPageContainer() {
             />
           )}
           <StHide>도전완료 가리기</StHide>
+          </StHideWrap>
+          <StToggleImgWrap>
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
@@ -239,7 +244,8 @@ function FeedPageContainer() {
             height="6"
             alt="ToggleImg"
           />
-        </StHideToggle>
+          </StToggleImgWrap>
+        </StTopWrap>
         <StTodayMyCardWrap>
           {checkOn === true
             ? //isChallenged가 true이면 화면에 띄우면 안된다.
@@ -263,7 +269,7 @@ function FeedPageContainer() {
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
-    </>
+    
   );
 }
 
@@ -282,18 +288,24 @@ function FeedPageContainer() {
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
+  /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
-const StHideToggle = styled.div`
+const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 24px;
   margin: 60px 0px 18px;
-  align-items: center;
+  /* align-items: center; */
   background-color: #edecec;
   width: 500px;
   position: fixed;
+  /* background-color: blue; 범위확인용 */
+  /* gap:60px */
 `;
-
+const StHideWrap = styled.div`
+  /* background-color: red; 범위확인용 */
+  display: flex;
+`
 const StHideImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
@@ -302,7 +314,7 @@ const StHideImg = styled.img`
 const StHide = styled.div`
   display: flex;
   margin-right: 235px;
-  align-items: center;
+  /* align-items: flex-end; */
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -310,6 +322,11 @@ const StHide = styled.div`
   line-height: 32px;
   color: #000000;
 `;
+const StToggleImgWrap = styled.div`
+/* background-color: yellow; 범위 확인용 */
+display: flex;
+/* align-items: flex-end; */
+`
 const StToggle = styled.div`
   margin-right: 8px;
   font-family: "IBM Plex Sans KR";
@@ -333,33 +350,29 @@ const StTodayMyCardWrap = styled.div`
   margin-top: 135.33px;
 `;
 const StSelectMbti = styled.button`
-  :hover {
-    background: #FF6D53;
-  }
   display: flex;
   width: 200px;
   position: fixed;
   height: 60px;
   bottom :110.06px;
-  margin-left: 150px;
-  background: #979797;
-  border-radius: 66px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
-  line-height: 32px;
-  text-align: center;
+  margin-left: 150px;
   color: #ffffff;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  border: 0px;
+  background: #FF6D53;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
 `;
 
 const StShadowBackgroundDiv = styled.div`
+/* display: flex; */
   background: rgba(0, 0, 0, 0.3);
-
   position: fixed;
   display: block;
 
@@ -375,7 +388,7 @@ const StPopupBox = styled.div`
   width: 500px;
   /* height: 683px; */
   height: 335px;
-  box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25); */
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
@@ -392,7 +405,6 @@ const StSort = styled.div`
   flex-direction: column;
   height: 260px;
   width: 59px;
-  position: absolute;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 600;
@@ -401,14 +413,36 @@ const StSort = styled.div`
   text-align: center;
   color: #000000;
   margin-left: 220px;
+  align-items: center;
+  
 `;
-const StDate = styled.div``;
+const StDate = styled.div`
+
+`;
+const StDateLine = styled.div`
+display: flex;
+width: 450px;
+height: 1px;
+background: #C7C7C7;
+`;
+
+
 const StComment = styled.div``;
+const StCommentLine = styled.div`
+background: #C7C7C7;
+width: 450px;
+height: 1px;
+`;
 const StChallenge = styled.div``;
+const StChallengeLine = styled.div`
+width: 450px;
+height: 1px;
+background: #C7C7C7;
+`;
 const StCommonBar = styled.div`
   position: absolute;
   width: 178.23px;
-  margin-top: 315px;
+  margin-top: 250px;
   height: 6.65px;
   left: calc(50% - 178.23px / 2 - 1.33px);
   background: #000000;
