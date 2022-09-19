@@ -1,14 +1,15 @@
-//대연
+//대연 참고할만한 주석은 남겨두었습니다.
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
-// 나중에 코드 추가정리 필요!
+
 function WriteTodoForm() {
   const navigate = useNavigate();
+
   if (tokenChecker() === false) {
-    alert("로그인 후 이용해주세요.");
+    alert("로그인 후 이용해11111주세요.");
     navigate("/mypage");
   }
   //mbti를 찾기위해 decodeMyTokenData() 사용
@@ -46,9 +47,12 @@ function WriteTodoForm() {
   //   todoRef.current.style.height=todoRef.current.scrollHeight +"px" ;
   // },[]);
 
+  // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
+
     // 새로고침 이벤트 막기
     e.preventDefault();
+
     // instance통신 선언
     const TodoDateFetchCheck = async () => {
       try {
@@ -64,6 +68,7 @@ function WriteTodoForm() {
     };
     // 실행
     TodoDateFetchCheck();
+
   };
 
   return (
@@ -99,7 +104,7 @@ const StTotalWrap = styled.div`
 `;
 const StMbti = styled.span`
   display: flex;
-  margin: 84px 0px 9px 27px;
+  margin: 108.33px 0px 9px 27px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 600;
@@ -134,9 +139,7 @@ const StWriteTodoTextArea = styled.textarea`
   border:none;
   outline:none;
 `;
-// const StTextCount = styled.span`
-//   color: ${(props) => props.color};
-// `;
+
 const Stbutton = styled.button`
   width: 450px;
   height: 70px;
@@ -151,6 +154,7 @@ const Stbutton = styled.button`
   line-height: 32px;
   text-align: center;
   color: #ffffff;
+  border: 0px;
 `;
 
 export default WriteTodoForm;
