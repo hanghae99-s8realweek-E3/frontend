@@ -269,6 +269,7 @@ const StProfileImg = styled.img`
 const StNickname = styled.div`
   /* background-color:red; */
   width: 200px;
+  text-align: start;
   /* margin-top:5px; */
   /* border:1px solid; */
 `;
