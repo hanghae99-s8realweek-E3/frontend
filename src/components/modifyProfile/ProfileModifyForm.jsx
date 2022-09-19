@@ -81,15 +81,19 @@ function ProfileModifyForm() {
           {mbtiList.map((elem, idx) => (
             <StMBTIBtn
               key={idx}
-              background={changeProfile.mbti === elem ? "skyblue" : "white"}
+              color={changeProfile.mbti === elem ? "#ffffff" : "#909090"}
+              background={changeProfile.mbti === elem ? "#ff6d53" : "#ffffff"}
+              border={
+                changeProfile.mbti === elem
+                  ? "1px solid #ff6d53"
+                  : "1px solid #979797"
+              }
               onClick={changeMBTIProfile}
               value={elem}>
               {elem}
             </StMBTIBtn>
           ))}
-          <StCommonButton onClick={toggleMBTISelectPopUp}>
-            선택하기
-          </StCommonButton>
+          <StCommonButton onClick={toggleMBTISelectPopUp}>확인</StCommonButton>
         </StPopupBox>
       ) : (
         <></>
@@ -120,8 +124,8 @@ function ProfileModifyForm() {
           </StSelectMBTIBtn>
         </StInputSettingBox>
         <StCommonBorder />
-        <StCommonButton margin="25px auto" onClick={submitModifyMyProfileData}>
-          완료
+        <StCommonButton margin="54px auto" onClick={submitModifyMyProfileData}>
+          확인
         </StCommonButton>
       </StContainer>
     </>
@@ -162,7 +166,7 @@ const StMyImageBox = styled.div`
 
   border: none;
   border-radius: 50%;
-  margin: 17px;
+  margin: 18px;
 
   height: 135px;
   width: 135px;
@@ -178,7 +182,8 @@ const StChangeImageBtn = styled.button`
   background: none;
 
   font-size: 18px;
-  color: #979797;
+  color: #ff6d53;
+  font-weight: 500;
 
   border: none;
   outline: none;
@@ -189,7 +194,7 @@ const StChangeImageBtn = styled.button`
 
 const StCommonBorder = styled.div`
   height: 1px;
-  background: gray;
+  background: #c7c7c7;
   margin: 0 13px;
 `;
 
@@ -198,15 +203,19 @@ const StInputSettingBox = styled.div`
 `;
 
 const StCommonLabel = styled.label`
-  color: #979797;
+  color: #313131;
   font-size: 18px;
   font-weight: 500;
+  line-height: 32px;
+
+  margin: 20px 0;
 `;
 
 const StCommonInput = styled.input`
+  color: #313131;
   font-size: 18px;
-  color: #979797;
   font-weight: 500;
+  line-height: 32px;
 
   border: none;
   outline: none;
@@ -219,29 +228,33 @@ const StCommonInput = styled.input`
 const StMBTIBtn = styled.button`
   background: ${(props) => props.background};
 
-  height: 105px;
-  width: 105px;
+  color: ${(props) => props.color};
+  font-weight: 500;
+  font-size: 18px;
 
-  border: 1px solid #979797;
+  border: ${(props) => props.border || "1px solid #979797"};
   border-radius: 6px;
-
   margin: 6px;
 
+  height: 105px;
+  width: 105px;
   box-sizing: border-box;
-
   cursor: pointer;
 `;
 
 const StSelectMBTIBtn = styled.button`
   background: none;
 
-  font-size: 18px;
   text-align: left;
+  color: #ff6d53;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 32px;
 
   border: none;
   outline: none;
 
-  margin-left: 98px;
+  margin-left: 92px;
   padding: 0;
   width: 200px;
 
@@ -273,7 +286,7 @@ const StSlideDiv = styled.div`
 `;
 
 const StCommonButton = styled.div`
-  background: #979797;
+  background: #ff6d53;
 
   display: flex;
   justify-content: center;
