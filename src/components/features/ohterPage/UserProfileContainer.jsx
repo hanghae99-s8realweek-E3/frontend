@@ -18,89 +18,54 @@ import ProfileCard from "../../common/ProfileCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
+  // 첫 화면 진입시 challenge로 값을 지정
   const [todoTab, setTodoTab] = useState("challenge");
+  // 정렬 버튼의 값을 배열로 지정
   const sortList = ["최신순", "댓글순", "도전순"];
+  // 정렬 버튼의 초기값을 최신순으로 지정
   const [sortState, setSortState] = useState(sortList[0]);
   const [selectSort, setSelectSort] = useState(false);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const params = useParams();
   console.log(card);
-
-  const checkState = () => {
-    return setTodoTab("challenge");
-  };
-  const checkState2 = () => {
-    return setTodoTab("making");
-  };
-
+  // 첫 렌더링 일때 userId 인자로 parmas사용
   useEffect(() => {
     dispatch(getOthersTodoFetch(params));
   }, []);
+  
+  // 도전한 TO DO 누를때 
+  const ChallengeState = () => {
+    return setTodoTab("challenge");
+  };
 
-  // 최신순
-  const datebutton = (e) => {
-    e.preventDefault();
-    dispatch(getTodoListsFetch(false));
+    // 제안한 TO DO 누를때 
+  const SuggestState = () => {
+    return setTodoTab("making");
+  };
 
+  // 최신순 정렬
+  const sortDate = () => {
+    dispatch(getTodoListsFetch());
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
-  //댓글순
-  const commentbutton = (e) => {
-    e.preventDefault();
-    dispatch(getTodoListsCommentFetch(false));
+  //댓글순 정렬
+  const sortComment = () => {
+    dispatch(getTodoListsCommentFetch());
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
-  // //도전순
-  const challengebutton = (e) => {
-    dispatch(getTodoListsChallengeFetch(false));
+  // 도전순 정렬
+  const sortChallenge = () => {
+    dispatch(getTodoListsChallengeFetch());
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
-  function changeFeedListSort(event) {
-    setSortState(sortList[event.target.value]);
-    setSelectSort(!selectSort);
-  }
-  const toggleSortPopUp = (e) => {
-    e.preventDefault();
+  //정렬 버튼 클릭시 
+  const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-
-  // useEffect(() => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
-  //   else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
-  // }, []);
-
-  // // 최신순
-  // const datebutton = () => {
-  //   if (tokenChecker() === false) {
-  //     return dispatch(getTodoListsFetch(false));
-  //   } else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
-  //   setSortState("최신순");
-  //   setSelectSort(!selectSort);
-  // };
-  // //댓글순
-  // const commentbutton = () => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsCommentFetch(false));
-  //   else if (tokenChecker() === true) dispatch(getTodoListsCommentFetch(true));
-  //   // dispatch(getTodoListsCommentFetch());
-  //   // navigate("/todolists?filter=commentsCounts");
-  //   setSortState("댓글순");
-  //   setSelectSort(!selectSort);
-  // };
-
-  // //도전순
-  // const challengebutton = () => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
-  //   else if (tokenChecker() === true)
-  //     dispatch(getTodoListsChallengeFetch(true));
-  //   // dispatch(getTodoListsChallengeFetch());
-  //   // navigate("/todolists?filter=challengedCount");
-  //   setSortState("도전순");
-  //   setSelectSort(!selectSort);
-  // };
 
   return (
     <StTotalWrap>
@@ -111,11 +76,10 @@ function UserProfileContainer() {
           <StTopWrap>
             <ProfileCard profileData={card} />
           </StTopWrap>
-
-          <StMiddleLine></StMiddleLine>
+          <StTodoTopLine></StTodoTopLine>
           <StTodoWrap>
-            <StChallengeTodo onClick={checkState}>도전한 TO DO</StChallengeTodo>
-            <StSuggestionTodo onClick={checkState2}>
+            <StChallengeTodo onClick={ChallengeState}>도전한 TO DO</StChallengeTodo>
+            <StSuggestionTodo onClick={SuggestState}>
               제안한 TO DO
             </StSuggestionTodo>
           </StTodoWrap>
@@ -130,11 +94,11 @@ function UserProfileContainer() {
                 <StPopupBox>
                   <StSlideDiv />
                   <StSort>
-                    <StDate onClick={datebutton}>최신순</StDate>
+                    <StDate onClick={sortDate}>최신순</StDate>
                     <StDateLine />
-                    <StComment onClick={commentbutton}>댓글순</StComment>
+                    <StComment onClick={sortComment}>댓글순</StComment>
                     <StCommentLine />
-                    <StChallenge onClick={challengebutton}>도전순</StChallenge>
+                    <StChallenge onClick={sortChallenge}>도전순</StChallenge>
                     <StChallengeLine />
                     <StCommonBar />
                   </StSort>
@@ -233,7 +197,7 @@ const StTopWrap = styled.div`
   margin-top: 80px;
   margin-bottom: 48.33px;
 `;
-const StMiddleLine = styled.div`
+const StTodoTopLine = styled.div`
   display: flex;
   height: 1px;
   background: #bdc5cd;
@@ -241,7 +205,6 @@ const StMiddleLine = styled.div`
   width: 500px;
   margin-bottom: 10px;
 `;
-
 const StTodoWrap = styled.div`
   display: flex;
   flex-direction: row;
@@ -284,30 +247,6 @@ const StSuggestionTodo = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
-`;
-const StLineWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 25px;
-  margin-right: 25px;
-`;
-const StMiddleLeftLine = styled.div`
-  height: 1px;
-  width: 225px;
-  background: #bdc5cd;
-  transform: matrix(1, 0, 0, -1, 0, 0);
-  &:hover {
-    background-color: black;
-  }
-`;
-const StMiddleRightLine = styled.div`
-  height: 1px;
-  width: 225px;
-  background: #bdc5cd;
-  transform: matrix(1, 0, 0, -1, 0, 0);
-  &:hover {
-    background-color: black;
-  }
 `;
 const StBottomWrap = styled.div`
   display: flex;
@@ -370,7 +309,6 @@ const StDateLine = styled.div`
   height: 1px;
   background: #c7c7c7;
 `;
-
 const StComment = styled.div``;
 const StCommentLine = styled.div`
   background: #c7c7c7;
@@ -394,38 +332,14 @@ const StCommonBar = styled.div`
 `;
 const StToggle = styled.div`
   background: none;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   font-size: 18px;
-
   border: none;
   outline: none;
   margin: 16px 25px 16px auto;
-
   height: 32px;
-
   cursor: pointer;
-`;
-const StSortListBtn = styled.button`
-  background: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  font-weight: ${(props) => props.fontWeight || "500"};
-  border: none;
-  outline: none;
-  margin: 20px auto;
-  cursor: pointer;
-`;
-const StFooterBar = styled.div`
-  background: #000000;
-  margin: 30px auto 0 auto;
-  border-radius: 133.005px;
-  width: 178.23px;
-  height: 6.65px;
 `;
 export default UserProfileContainer;

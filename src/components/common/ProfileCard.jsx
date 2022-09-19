@@ -2,35 +2,33 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
+// 컴포넌트 다른곳에서 가져다 쓸 수 있게
+
 function ProfileCard({ profileData }) {
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
+  // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    window.location.pathname === "/otherspage"
-      ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+    navigate(`/follows/${profileData.userInfo.userId}`, {state : "Follow11"});
   };
-  console.log(profileData);
-  console.log(window.location.href);
-
+  // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    window.location.pathname === "/otherspage"
-      ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+    navigate(`/follows/${profileData.userInfo.userId}`, {state : "Following11"});
   };
-  return (
-    <>
-      <StTopWrap>
+
+  // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
+    return (
+      <StTotalWrap>
         <StProfileImg
           src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
           width="80"
           height="80"
           alt="dy"
         />
-        <StMiddleWrap>
+        <StNoImageWrap>
           <StNickName>{profileData.userInfo.nickname}</StNickName>
-          <StMbtiFollowWrap>
+          <StMbtiFollowFollowingWrap>
             <StMbti>{profileData.userInfo.mbti}</StMbti>
             <StFollowWrap onClick={goFollow}>
               <StFollowWord>팔로워</StFollowWord>
@@ -48,31 +46,28 @@ function ProfileCard({ profileData }) {
                   : profileData.userInfo.followingCount}
               </StFollowingNumber>
             </StFollowingWrap>
-          </StMbtiFollowWrap>
-        </StMiddleWrap>
-      </StTopWrap>
-    </>
+          </StMbtiFollowFollowingWrap>
+        </StNoImageWrap>
+      </StTotalWrap>
   );
 }
 export default ProfileCard;
 
-const StTopWrap = styled.div`
+const StTotalWrap = styled.div`
   width: 500px;
   margin-top: 42px;
   display: flex;
   flex-direction: row;
 `;
 const StProfileImg = styled.img`
-  /* display: flex; */
   margin-left: 35px;
   border-radius: 9999px;
 `;
-const StMiddleWrap = styled.div`
+const StNoImageWrap = styled.div`
   display: flex;
   flex-direction: column;
 `;
 const StNickName = styled.div`
-  /* display: flex; */
   flex-direction: row;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -83,7 +78,7 @@ const StNickName = styled.div`
   margin-left: 16px;
   text-align:left;
 `;
-const StMbtiFollowWrap = styled.div`
+const StMbtiFollowFollowingWrap = styled.div`
   display: flex;
 `;
 const StMbti = styled.div`

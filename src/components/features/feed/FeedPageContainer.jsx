@@ -1,4 +1,4 @@
-//대연
+//대연  주석은 아직 비교해볼게 많아서 안지워놨습니다
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -14,18 +14,21 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
-// 무한스크롤 때 사용
-import { useInView } from "react-intersection-observer";
+
+// check uncheck
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
+  
+  // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
+  
+  // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // 무한스크롤때 사용
-  // const [ref, inView] = useInView();
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
@@ -52,146 +55,110 @@ function FeedPageContainer() {
   //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
   // }, []);
 
+
+  //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링 
   useEffect(() => {
     if(tokenChecker() === false && mbti === undefined){
-      console.log("1")
       dispatch(getTodoListsFetch(false))
     }else if(tokenChecker() === false && mbti !== undefined){
-      console.log("2")
       dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
     }else if(tokenChecker() === true && mbti === undefined){
-      console.log("3")
     dispatch(getMbtiTodoListsFetch(true))
     }else if(tokenChecker() === true && mbti !== undefined)
-    console.log("4")
     dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
   },[])
 
+  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함 
   useEffect(() => {
     if(mbti === undefined){
-      console.log("11")
       dispatch(getTodoListsFetch(false))
-    }else if(mbti !== undefined){
-      console.log("22")
       dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
     }else if(mbti === undefined){
-      console.log("33")
     dispatch(getMbtiTodoListsFetch(true))
     }else if(mbti !== undefined)
-    console.log("44")
     dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
   },[mbti])
-  // useEffect(() => {
-  //   console.log("갑니다");
-  //   if ((feedCard.length !== 0 && inView) || tokenChecker() === true) {
-  //     console.log("첫 로딩 이후 무한 스크롤");
-  //     dispatch(getTodoListsFetch(true));
-  //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤1");
-  //   } else if ((feedCard.length !== 0 && inView) || tokenChecker() === false) {
-  //   // } else if ( inView &&   tokenChecker() === false) {
-  //     console.log("첫 로딩 이후 무한 스크롤2");
-  //     dispatch(getTodoListsFetch(false));
-  //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤3");
-  //   }
-  // }, [inView]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
-  // 도전완료 이미지 변경state
+  // 도전완료 클릭시 로그인 유무에따라서 1차적으로 거르고 아니면  기본/체크 이미지 변화
   const checkState = () => {
     if (tokenChecker() === false) {
       alert("로그인 후 이용해주세요");
       return;
     } else return checkOff(!checkOn);
   };
-  //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
-  const toggleSortPopUp = (e) => {
-    e.preventDefault();
+
+  // 최신순 클릭 후 클릭한 값에 따라 변화
+  const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-  // 최신순
-  const datebutton = (e) => {
-    e.preventDefault();
+
+    //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
+  // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지 
+  const sortDate = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
-        console.log("1");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-        console.log("2");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsFetch(true));
-          console.log("3");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-          console.log("4");
         }
       }
     }
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
-  //댓글순
-  const commentbutton = (e) => {
-    e.preventDefault();
+  //댓글순 정렬
+  const sortComment = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
-        console.log("1");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsCommentFetch({ login: false, mbti: mbti }));
-        console.log("2");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsCommentFetch(true));
-          console.log("3");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsCommentFetch({ login: true, mbti: mbti }));
-          console.log("4");
         }
       }
     }
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
-  // //도전순
-  const challengebutton = (e) => {
-    e.preventDefault();
+  //도전순 정렬
+  const sortChallenge = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
-        console.log("5");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsChallengeFetch({ login: false, mbti: mbti }));
-        console.log("6");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsChallengeFetch(true));
-          console.log("7");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsChallengeFetch({ login: true, mbti: mbti }));
-          console.log("8");
         }
       }
     }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
-
+  // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
     navigate("/selectmbtifeed");
-    // window.location.assign("/selectmbtifeed")
   };
-  console.log("리턴전콘솔");
 
   return (
     <StTotalWrap>
@@ -200,11 +167,11 @@ function FeedPageContainer() {
           <StPopupBox>
             <StSlideDiv />
             <StSort>
-              <StDate onClick={datebutton}>최신순</StDate>
+              <StDate onClick={sortDate}>최신순</StDate>
               <StDateLine/>
-              <StComment onClick={commentbutton}>댓글순</StComment>
+              <StComment onClick={sortComment}>댓글순</StComment>
               <StCommentLine/>
-              <StChallenge onClick={challengebutton}>도전순</StChallenge>
+              <StChallenge onClick={sortChallenge}>도전순</StChallenge>
               <StChallengeLine/>
               <StCommonBar/>
             </StSort>
@@ -236,6 +203,7 @@ function FeedPageContainer() {
           <StHide>도전완료 가리기</StHide>
           </StHideWrap>
           <StToggleImgWrap>
+            {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
@@ -265,26 +233,11 @@ function FeedPageContainer() {
                 </ChallengeCard>
               ))}
           <div className="hi" style={{ height: 80 }}></div>
-          {/* <div ref={ref} /> 무한스크롤 때 사용 */}
         </StTodayMyCardWrap>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
-    
   );
 }
-
-// <StCardSmallWrap key={idx}>
-//   <StCard id={it.todoId} onClick={goFeedDetail}>
-//     {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
-//   </StCard>
-//   <StNameCounterBox>
-//     <StName id={it.userId} onClick={goUserProfile}>
-//       {it.nickname}
-//     </StName>
-//     <StCommentCount>댓글{it.commentCounts}</StCommentCount>
-//     <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
-//   </StNameCounterBox>
-// </StCardSmallWrap>
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -369,19 +322,16 @@ const StSelectMbti = styled.button`
   background: #FF6D53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
 `;
-
 const StShadowBackgroundDiv = styled.div`
 /* display: flex; */
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
   display: block;
-
   top: 0;
   width: 500px;
   height: 100%;
   z-index: 10;
 `;
-
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
@@ -414,10 +364,8 @@ const StSort = styled.div`
   color: #000000;
   margin-left: 220px;
   align-items: center;
-  
 `;
 const StDate = styled.div`
-
 `;
 const StDateLine = styled.div`
 display: flex;
@@ -425,8 +373,6 @@ width: 450px;
 height: 1px;
 background: #C7C7C7;
 `;
-
-
 const StComment = styled.div``;
 const StCommentLine = styled.div`
 background: #C7C7C7;
