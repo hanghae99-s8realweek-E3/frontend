@@ -98,10 +98,10 @@ const StFollowWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 100px;
-  gap: 5px;
+  gap: 7px;
+  cursor: pointer;
 `;
 const StFollowNumber = styled.div`
-  margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -123,10 +123,10 @@ const StFollowingWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 55px;
-  gap: 5px;
+  gap: 7px;
+  cursor: pointer;
 `;
 const StFollowingNumber = styled.div`
-  margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;

@@ -130,7 +130,8 @@ const StContainer=styled.div`
     display: inline-grid;
     column-gap: 20px;
     row-gap: 20px;
-    overflow:scroll;
+    margin-bottom: 100px;
+    /* overflow:scroll; */
 
 `
 const StWrapBtn = styled.div`

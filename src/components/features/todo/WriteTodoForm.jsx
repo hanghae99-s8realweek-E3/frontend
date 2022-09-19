@@ -80,7 +80,7 @@ function WriteTodoForm() {
           // onInput={handleResizeHeight}
           ref={todoRef}
           placeholder="내가만드는 TO DO내용"
-          maxLength={200}
+          maxLength={30}
           name="todo"
           value={todo.todo}
           onChange={onChange}
@@ -143,8 +143,6 @@ const StWriteTodoTextArea = styled.textarea`
 const Stbutton = styled.button`
   width: 450px;
   height: 70px;
-  background: #979797;
-  border-radius: 6px;
   margin: 400px 25px 0px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
@@ -155,6 +153,8 @@ const Stbutton = styled.button`
   text-align: center;
   color: #ffffff;
   border: 0px;
+  background: #FF6D53;
+border-radius: 6px;
 `;
 
 export default WriteTodoForm;

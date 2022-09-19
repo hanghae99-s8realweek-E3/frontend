@@ -1,4 +1,5 @@
 //대연
+import { current } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +20,8 @@ import ProfileCard from "../../common/ProfileCard";
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
   // 첫 화면 진입시 challenge로 값을 지정
-  const [todoTab, setTodoTab] = useState("challenge");
+  const [todoTab, setTodoTab] = useState("도전");
+  const [prevClick, setPrevClick] = useState(null);
   // 정렬 버튼의 값을 배열로 지정
   const sortList = ["최신순", "댓글순", "도전순"];
   // 정렬 버튼의 초기값을 최신순으로 지정
@@ -28,20 +30,42 @@ function UserProfileContainer() {
 
   const dispatch = useDispatch();
   const params = useParams();
-  console.log(card);
+
   // 첫 렌더링 일때 userId 인자로 parmas사용
+
+  // useEffect(() => {
+  //   dispatch(getOthersTodoFetch(params));
+  // }, []);
+  console.log(todoTab);
   useEffect(() => {
     dispatch(getOthersTodoFetch(params));
   }, []);
-  
-  // 도전한 TO DO 누를때 
-  const ChallengeState = () => {
-    return setTodoTab("challenge");
+  console.log(document.getElementById(todoTab));
+
+  useEffect(() => {
+    let current = document.getElementById(todoTab);
+    if (current !== null) {
+      current.style.color = "black";
+      current.style.borderBottom = "2px solid";
+      current.style.borderBottomColor = "black";
+    }
+
+    if (prevClick !== null) {
+      let prev = document.getElementById(prevClick);
+      prev.style.color = "black";
+      prev.style.borderBottomColor = "gray";
+    }
+    setPrevClick(todoTab);
+  }, [todoTab]);
+
+  // 도전한 TO DO 누를때
+  const ChallengeState = (e) => {
+    return setTodoTab(e.target.id);
   };
 
-    // 제안한 TO DO 누를때 
-  const SuggestState = () => {
-    return setTodoTab("making");
+  // 제안한 TO DO 누를때
+  const SuggestState = (e) => {
+    return setTodoTab(e.target.id);
   };
 
   // 최신순 정렬
@@ -62,7 +86,7 @@ function UserProfileContainer() {
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
-  //정렬 버튼 클릭시 
+  //정렬 버튼 클릭시
   const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
@@ -78,8 +102,10 @@ function UserProfileContainer() {
           </StTopWrap>
           <StTodoTopLine></StTodoTopLine>
           <StTodoWrap>
-            <StChallengeTodo onClick={ChallengeState}>도전한 TO DO</StChallengeTodo>
-            <StSuggestionTodo onClick={SuggestState}>
+            <StChallengeTodo id="도전" onClick={ChallengeState}>
+              도전한 TO DO
+            </StChallengeTodo>
+            <StSuggestionTodo id="제안" onClick={SuggestState}>
               제안한 TO DO
             </StSuggestionTodo>
           </StTodoWrap>
@@ -117,7 +143,7 @@ function UserProfileContainer() {
             </StToggle>
 
             <StTodayMyCardWrap>
-              {todoTab === "challenge" ? (
+              {todoTab === "도전" ? (
                 // card.challengedTodos?.map((it, idx) => (
                 //   <ChallengeCard
                 //     id={it.todoId}
@@ -146,7 +172,7 @@ function UserProfileContainer() {
                 ) : (
                   <></>
                 )
-              ) : todoTab === "making" ? (
+              ) : todoTab === "제안" ? (
                 sortState === sortList[0] ? (
                   card.createdTodo?.map((elem, index) => (
                     <ChallengeCard id={elem.todoId} data={elem} key={index} />
@@ -210,18 +236,13 @@ const StTodoWrap = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* gap: 30px; */
   margin-bottom: 10px;
 `;
 const StChallengeTodo = styled.div`
   justify-content: center;
   display: flex;
-  :active {
-    width: 225px;
-    border-bottom: 2px solid black;
-  }
   width: 225px;
-  border-bottom: 2px solid #bdc5cd;
+  border-bottom: 2px solid black;
   /* width: 105px; */
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
@@ -230,14 +251,11 @@ const StChallengeTodo = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  padding-bottom: 9px;
 `;
 const StSuggestionTodo = styled.div`
   justify-content: center;
   display: flex;
-  :active {
-    width: 225px;
-    border-bottom: 2px solid black;
-  }
   width: 225px;
   border-bottom: 2px solid #bdc5cd;
   cursor: pointer;
@@ -247,6 +265,7 @@ const StSuggestionTodo = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  padding-bottom: 9px;
 `;
 const StBottomWrap = styled.div`
   display: flex;
