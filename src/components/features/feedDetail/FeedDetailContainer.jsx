@@ -136,7 +136,8 @@ function FeedDetailContainer() {
               onClick={onClickGoToOtherspage}>
               {detailState.todoInfo.User.nickname}
             </StNickname>
-            {detailState.isFollowed === false ? (
+            {myData.userId === detailState.todoInfo.userId ? <></> : 
+            detailState.isFollowed === false ? (
               <StFollowBtn
                 id={detailState.todoInfo.userId}
                 onClick={changeFollowState}>
@@ -280,7 +281,6 @@ const StNickname = styled.div`
   /* border:1px solid; */
 `;
 const StFollowBtn = styled.button`
-  background-color:#F2F2F2;
   border: none;
   margin-left: auto;
   font-family: "IBM Plex Sans KR";
