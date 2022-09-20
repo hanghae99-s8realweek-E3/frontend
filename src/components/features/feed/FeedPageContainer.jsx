@@ -282,6 +282,11 @@ const StTopWrap = styled.div`
   position: fixed;
   /* background-color: blue; 범위확인용 */
   /* gap:60px */
+  @media screen and (max-width: 500px) {
+    /* align-items: center; */
+    width: 360px
+  }
+
 `;
 const StHideWrap = styled.div`
   /* background-color: red; 범위확인용 */
@@ -291,6 +296,7 @@ const StHideImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
   cursor: pointer;
+  
 `;
 const StHide = styled.div`
   display: flex;
@@ -302,12 +308,22 @@ const StHide = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
-  margin-bottom: 10px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 175px;
+    margin:0px;
+  }
 `;
 const StToggleImgWrap = styled.div`
+
   /* background-color: yellow; 범위 확인용 */
   display: flex;
   /* align-items: flex-end; */
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin:0px;
+  }
 `;
 const StToggle = styled.div`
   margin-right: 8px;
@@ -318,11 +334,18 @@ const StToggle = styled.div`
   line-height: 32px;
   color: #000000;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100.09px;
+    margin:0px 8px 0px 0px;
+    text-align: end;
+  }
 `;
 const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
   cursor: pointer;
   align-items: center;
+
 `;
 const StTodayMyCardWrap = styled.div`
   /* display: inline-block; */
@@ -350,6 +373,11 @@ const StSelectMbti = styled.button`
   border: 0px;
   background: #ff6d53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  @media screen and (max-width: 500px) {
+
+    width: 144px;
+    margin-left:108px;
+  }
 `;
 const StShadowBackgroundDiv = styled.div`
   /* display: flex; */
