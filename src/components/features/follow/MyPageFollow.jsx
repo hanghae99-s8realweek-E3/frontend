@@ -15,13 +15,24 @@ function MyPageFollow() {
     const followState = useSelector((state) => state.follow.data)
     const [followTab, setFollowTab] = useState(true)
     const {state} = useLocation();
-    console.log(state)
+    const [inputContext,setInputContext] = useState("");
+    const [searchList, setSearchList] = useState([]);
+
+    useEffect(()=> {
+        if (Object.keys(followState).length !== 0) {
+            if (followTab === true) {
+                setSearchList(followState.follower)
+            } else if (followTab === false) {
+                setSearchList(followState.following) 
+        }}
+    },[followTab,followState])
 
     useEffect(()=> {
         dispatch(getMyPageFollowFetch({userId:params.userId}))
         state === true ? setFollowTab(state) : setFollowTab(false)
         },[]); //followState 삭제이유: 리덕스를 사용하지않기때문에 값을 갱신시켜줄필요가없다 (아래 함수자체애서 값을 갱신시켜주고있기때문)
-    console.log(followTab)
+    // console.log(followTab)
+    // console.log(Object.keys(followState).length)
 
     const onClick = (e)=> {
         e.preventDefault();
@@ -42,6 +53,7 @@ function MyPageFollow() {
                 const response = await instance.put(`/follows/${e.target.id}`)
                 if (response.data.message === "success") {
                     dispatch(getMyPageFollowFetch({userId:params.userId}))
+
                 }
             } catch (error) {
                 return alert(error.response.data.errorMessage)
@@ -50,9 +62,29 @@ function MyPageFollow() {
             putMyPageFollowFetch();
         }
 
+        const inputSearch = (e) => {
+            setInputContext(e.target.value);                 
+        }
+
+        const searchData = (e) => {
+            e.preventDefault();
+            let followData;
+            if (followTab === true)
+                followData = followState.follower;
+            else if (followTab === false)
+                followData = followState.following;
+            // 1. 검색어가 빈 값일 때? 그러면 어떻게 처리할 것인가? = 아니면 다 노출시킬 것인지?
+            console.log(followData)
+            setSearchList(followData.filter(elem => elem.nickname.indexOf(inputContext) !== -1))
+            console.log(searchList)
+            
+            // inputContext === "" ? setPostLIst(data)
+        }
+        console.log(searchList.length)
+
     return (
         <StOutline>
-            {followTab === false ? 
+            {followTab === true ? 
                 <>
                 <StContainer>
                     <StWrapBtn>
@@ -60,23 +92,43 @@ function MyPageFollow() {
                         <StWrapBtnFollowing type="submit" onClick={onClick}>팔로잉</StWrapBtnFollowing>
                     </StWrapBtn>
 
-                    <StSearchBarBox>
-                        <StInput placeholder="검색"/>
-                        <StSearchBtn><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
-                    </StSearchBarBox>
+                    
+                        <StSearchBarBox>
+                            <form onSubmit={searchData}>
+                                <StInput placeholder="검색" onChange={inputSearch} value={inputContext} />
+                                <StSearchBtn type="submit"><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
+                            </form> 
+                        </StSearchBarBox>
+                    
 
                     <div>
-                        {followState.follower?.map((x,index)=> {
-                        return (<div key={index}>
-                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
-                                    <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
-                                <StWrapNicknameMbti>
-                                    <StNickname>{x.nickname}</StNickname>
-                                    <StMbti>{x.mbti}</StMbti>
-                                </StWrapNicknameMbti>
-                            </StProfileBox>
-                                </div>)
-                    })}</div>
+                    <>{searchList.length !== 0 ?  
+                            searchList?.map((x,index)=> {
+                                return (<div key={index}>
+                                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
+                                                <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
+                                                    <StWrapNicknameMbti>
+                                                        <StNickname >{x.nickname}</StNickname>
+                                                        <StMbti>{x.mbti}</StMbti>
+                                                    </StWrapNicknameMbti>
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                            </StProfileBox>
+                                        </div>)
+                            })
+                            : 
+                            followState.follower?.map((x,index)=> {
+                                return (<div key={index}>
+                                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
+                                                <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
+                                                    <StWrapNicknameMbti>
+                                                        <StNickname >{x.nickname}</StNickname>
+                                                        <StMbti>{x.mbti}</StMbti>
+                                                    </StWrapNicknameMbti>
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                            </StProfileBox>
+                                        </div>)
+                            })}</> 
+                        </div>
                 </StContainer>
                 </>
                 : <>
@@ -87,23 +139,40 @@ function MyPageFollow() {
                     </StWrapBtn>
                     
                     <StSearchBarBox>
-                        <StInput placeholder="검색"/>
-                        <StSearchBtn><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
+                            <form onSubmit={searchData}>
+                                <StInput placeholder="검색" onChange={inputSearch} value={inputContext} />
+                                <StSearchBtn type="submit"><FontAwesomeIcon icon={faMagnifyingGlass}/></StSearchBtn>
+                            </form> 
                     </StSearchBarBox>
                     
                     <div>
-                        {followState.following?.map((x,index)=> {
-                        return (<div key={index}>
-                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
-                                <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
-                                    <StWrapNicknameMbti>
-                                        <StNickname >{x.nickname}</StNickname>
-                                        <StMbti>{x.mbti}</StMbti>
-                                    </StWrapNicknameMbti>
-                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
-                            </StProfileBox>
-                                </div>)
-                    })}</div>
+                        <>{searchList.length !== 0 ?  
+                            searchList?.map((x,index)=> {
+                                return (<div key={index}>
+                                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
+                                                <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
+                                                    <StWrapNicknameMbti>
+                                                        <StNickname >{x.nickname}</StNickname>
+                                                        <StMbti>{x.mbti}</StMbti>
+                                                    </StWrapNicknameMbti>
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                            </StProfileBox>
+                                        </div>)
+                            })
+                            : 
+                            followState.following?.map((x,index)=> {
+                                return (<div key={index}>
+                                            <StProfileBox id={x.userId} onClick={onClickGoToOthersPage}>
+                                                <StProfileImg height="200px" width="200px" src={x.profileImg}></StProfileImg>
+                                                    <StWrapNicknameMbti>
+                                                        <StNickname >{x.nickname}</StNickname>
+                                                        <StMbti>{x.mbti}</StMbti>
+                                                    </StWrapNicknameMbti>
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                            </StProfileBox>
+                                        </div>)
+                            })}</> 
+                    </div>
                 </StContainer>
                 </>}
         </StOutline>
