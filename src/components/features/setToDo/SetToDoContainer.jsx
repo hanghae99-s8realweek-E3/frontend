@@ -247,7 +247,9 @@ const CalendarContainer = styled.div`
   }
   .react-calendar__navigation {
     display: flex;
+    align-items: center;
     height: 44px;
+    padding-top: 10px;
     margin-bottom: 1em;
   }
   .react-calendar__navigation button {
@@ -346,12 +348,15 @@ const CalendarContainer = styled.div`
     display: none;
   }
   .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
-    margin-left: 30px;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 50px;
     font-size: 30px;
     color: #909090;
   }
   .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
-    margin-right: 30px;
+    display: flex;
+    margin-right: 50px;
     font-size: 30px;
     color: #909090;
   }
