@@ -69,7 +69,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           { data: { date: settingTodayDate() } }
         );
         if (response.data.message === "success") {
-          window.location.reload();
+          dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
         }
       } catch (error) {
         alert(error.response.data.errorMessage);
@@ -85,7 +85,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
       try {
         const response = await instance.delete(`mytodos/${data.todoId}`);
         if (response.data.message === "success") {
-          window.location.reload();
+          dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
         }
       } catch (error) {
         alert(error.response.data.errorMessage);

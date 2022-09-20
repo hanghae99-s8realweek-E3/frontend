@@ -15,6 +15,7 @@ function WithdrawContainer() {
           data: { password: passwordRef.current.value },
         });
         if (response.data.message === "success") {
+          window.localStorage.clear();
           navigate("/");
         }
       } catch (error) {
