@@ -8,8 +8,6 @@ function Layout({ children }) {
     if (
       (window.location.pathname === `/todolists/${params.mbti}` ||
         window.location.pathname === "/todolists" ||
-        window.location.pathname === "/setuptodo" ||
-        window.location.pathname === `/feeddetail/${params.todoId}` ||
         window.location.pathname === `/otherspage/${params.userId}` ||
         window.location.pathname === `/activity`) === true
     )

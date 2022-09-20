@@ -130,7 +130,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         onClick={moveToFeedDetail}
         background={data.isCompleted === 1 ? "#FF6D53" : "#ffffff"}
         border={
-          data.isCompleted === 1 ? "1px solid #FF6D53" : "1px solid #ffffff"
+          data.isCompleted === 1 ? "1px solid #FF6D53" : "1px solid #909090"
         }
         cursor="pointer">
         {hideState === true ? (
