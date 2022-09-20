@@ -56,10 +56,8 @@ function Footer() {
             window.location.pathname === "/todolists" ||
             window.location.pathname === `/todolists/${params.mbti}` ||
             window.location.pathname === `/feeddetail/${params.todoId}` ||
-            window.location.pathname === "/todolists" ||
             window.location.pathname === `/follows/${params.userId}` ||
-            window.location.pathname === `/selectmbtifeed` ||
-            window.location.pathname === `/follows/${params.userId}`
+            window.location.pathname === `/selectmbtifeed`
               ? "#FF6D53"
               : "#313131"
           }>
@@ -69,10 +67,8 @@ function Footer() {
                 window.location.pathname === "/todolists" ||
                 window.location.pathname === `/todolists/${params.mbti}` ||
                 window.location.pathname === `/feeddetail/${params.todoId}` ||
-                window.location.pathname === "/todolists" ||
                 window.location.pathname === `/follows/${params.userId}` ||
-                window.location.pathname === `/selectmbtifeed` ||
-                window.location.pathname === `/follows/${params.userId}`
+                window.location.pathname === `/selectmbtifeed`
                   ? process.env.PUBLIC_URL + `/images/FeedActive.png`
                   : process.env.PUBLIC_URL + `/images/Feed.png`
               }
@@ -96,6 +92,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/MimicActive.png`
                   : process.env.PUBLIC_URL + `/images/Mimic.png`
               }
+              style={{ height: "40px", width: "40px" }}
             />
           </div>
           미믹

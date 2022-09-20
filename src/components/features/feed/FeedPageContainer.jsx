@@ -20,10 +20,10 @@ import { tokenChecker } from "../../../utils/token";
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
-  
+
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
-  
+
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
 
@@ -42,7 +42,7 @@ function FeedPageContainer() {
   //   // if ( feedCard.length === 0 && tokenChecker() === true) {
   //   if (tokenChecker() === true && mbti === undefined){
   //     dispatch(getTodoListsFetch(true));
-  //   } else 
+  //   } else
   //   dispatch(getTodoListsFetch(false));
   // }, []);
 
@@ -51,33 +51,36 @@ function FeedPageContainer() {
   //   // if ( feedCard.length === 0 && tokenChecker() === true) {
   //     if (tokenChecker() === true && mbti === undefined) {
   //         dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-  //   } else 
+  //   } else
   //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
   // }, []);
 
+  console.log(tokenChecker(), mbti);
 
-  //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링 
+  //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    if(tokenChecker() === false && mbti === undefined){
-      dispatch(getTodoListsFetch(false))
-    }else if(tokenChecker() === false && mbti !== undefined){
-      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
-    }else if(tokenChecker() === true && mbti === undefined){
-    dispatch(getMbtiTodoListsFetch(true))
-    }else if(tokenChecker() === true && mbti !== undefined)
-    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
-  },[])
+    if (tokenChecker() === false && mbti === undefined) {
+      dispatch(getTodoListsFetch(false));
+    } else if (tokenChecker() === false && mbti !== undefined) {
+      dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    } else if (tokenChecker() === true && mbti === undefined) {
+      //김대연 지적 사항 1
+      dispatch(getTodoListsFetch(true));
+    } else if (tokenChecker() === true && mbti !== undefined)
+      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  }, []);
 
-  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함 
+  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
   useEffect(() => {
-    if(mbti === undefined){
-      dispatch(getTodoListsFetch(false))
-      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
-    }else if(mbti === undefined){
-    dispatch(getMbtiTodoListsFetch(true))
-    }else if(mbti !== undefined)
-    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
-  },[mbti])
+    if (mbti === undefined) {
+      dispatch(getTodoListsFetch(false));
+      // 김대연 지적 사항 2
+      // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    } else if (mbti === undefined) {
+      dispatch(getTodoListsFetch(true));
+    } else if (mbti !== undefined)
+      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -94,8 +97,8 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
 
-    //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
-  // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지 
+  //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
+  // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = () => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
@@ -168,20 +171,20 @@ function FeedPageContainer() {
             <StSlideDiv />
             <StSort>
               <StDate onClick={sortDate}>최신순</StDate>
-              <StDateLine/>
+              <StDateLine />
               <StComment onClick={sortComment}>댓글순</StComment>
-              <StCommentLine/>
+              <StCommentLine />
               <StChallenge onClick={sortChallenge}>도전순</StChallenge>
-              <StChallengeLine/>
-              <StCommonBar/>
+              <StChallengeLine />
+              <StCommonBar />
             </StSort>
           </StPopupBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
       )}
-        <StTopWrap>
-          <StHideWrap>
+      <StTopWrap>
+        <StHideWrap>
           {/* 거짓이면 체크안한거 참이면 체크한거 */}
           {checkOn === false ? (
             <StHideImg
@@ -201,9 +204,9 @@ function FeedPageContainer() {
             />
           )}
           <StHide>도전완료 가리기</StHide>
-          </StHideWrap>
-          <StToggleImgWrap>
-            {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+        </StHideWrap>
+        <StToggleImgWrap>
+          {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
@@ -212,30 +215,29 @@ function FeedPageContainer() {
             height="6"
             alt="ToggleImg"
           />
-          </StToggleImgWrap>
-        </StTopWrap>
-        <StTodayMyCardWrap>
-          {checkOn === true
-            ? //isChallenged가 true이면 화면에 띄우면 안된다.
-              //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-              feedCard
-                ?.filter((elem) => elem.isChallenged === false)
-                .map((it, idx) => (
-                  <ChallengeCard
-                    id={it.todoId}
-                    data={it}
-                    key={idx}
-                  ></ChallengeCard>
-                ))
-            : feedCard?.map((it, idx) => (
-                <ChallengeCard id={it.todoId} data={it} key={idx}>
-                  ?
-                </ChallengeCard>
-              ))}
-          <div className="hi" style={{ height: 80 }}></div>
-        </StTodayMyCardWrap>
-        <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
-      </StTotalWrap>
+        </StToggleImgWrap>
+      </StTopWrap>
+      <StTodayMyCardWrap>
+        {checkOn === true
+          ? //isChallenged가 true이면 화면에 띄우면 안된다.
+            //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+            feedCard
+              ?.filter((elem) => elem.isChallenged === false)
+              .map((it, idx) => (
+                <ChallengeCard
+                  id={it.todoId}
+                  data={it}
+                  key={idx}></ChallengeCard>
+              ))
+          : feedCard?.map((it, idx) => (
+              <ChallengeCard id={it.todoId} data={it} key={idx}>
+                ?
+              </ChallengeCard>
+            ))}
+        <div className="hi" style={{ height: 80 }}></div>
+      </StTodayMyCardWrap>
+      <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+    </StTotalWrap>
   );
 }
 const StTotalWrap = styled.div`
@@ -258,7 +260,7 @@ const StTopWrap = styled.div`
 const StHideWrap = styled.div`
   /* background-color: red; 범위확인용 */
   display: flex;
-`
+`;
 const StHideImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
@@ -276,10 +278,10 @@ const StHide = styled.div`
   color: #000000;
 `;
 const StToggleImgWrap = styled.div`
-/* background-color: yellow; 범위 확인용 */
-display: flex;
-/* align-items: flex-end; */
-`
+  /* background-color: yellow; 범위 확인용 */
+  display: flex;
+  /* align-items: flex-end; */
+`;
 const StToggle = styled.div`
   margin-right: 8px;
   font-family: "IBM Plex Sans KR";
@@ -307,7 +309,7 @@ const StSelectMbti = styled.button`
   width: 200px;
   position: fixed;
   height: 60px;
-  bottom :110.06px;
+  bottom: 110.06px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -319,11 +321,11 @@ const StSelectMbti = styled.button`
   cursor: pointer;
   border-radius: 999px;
   border: 0px;
-  background: #FF6D53;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
+  background: #ff6d53;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 const StShadowBackgroundDiv = styled.div`
-/* display: flex; */
+  /* display: flex; */
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
   display: block;
@@ -365,25 +367,24 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
 `;
-const StDate = styled.div`
-`;
+const StDate = styled.div``;
 const StDateLine = styled.div`
-display: flex;
-width: 450px;
-height: 1px;
-background: #C7C7C7;
+  display: flex;
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
 `;
 const StComment = styled.div``;
 const StCommentLine = styled.div`
-background: #C7C7C7;
-width: 450px;
-height: 1px;
+  background: #c7c7c7;
+  width: 450px;
+  height: 1px;
 `;
 const StChallenge = styled.div``;
 const StChallengeLine = styled.div`
-width: 450px;
-height: 1px;
-background: #C7C7C7;
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
 `;
 const StCommonBar = styled.div`
   position: absolute;
