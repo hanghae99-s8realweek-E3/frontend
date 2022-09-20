@@ -6,6 +6,7 @@ import { getMyPageFollowFetch } from "../../../app/modules/followSlice";
 import instance from "../../../app/modules/instance"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { decodeMyTokenData } from "../../../utils/token";
 
 
 function MyPageFollow() {
@@ -29,7 +30,7 @@ function MyPageFollow() {
 
     useEffect(()=> {
         dispatch(getMyPageFollowFetch({userId:params.userId}))
-        state === true ? setFollowTab(state) : setFollowTab(false)
+        state === true ? setFollowTab(false) : setFollowTab(true)
         },[]); //followState 삭제이유: 리덕스를 사용하지않기때문에 값을 갱신시켜줄필요가없다 (아래 함수자체애서 값을 갱신시켜주고있기때문)
     // console.log(followTab)
     // console.log(Object.keys(followState).length)
@@ -53,6 +54,8 @@ function MyPageFollow() {
                 const response = await instance.put(`/follows/${e.target.id}`)
                 if (response.data.message === "success") {
                     dispatch(getMyPageFollowFetch({userId:params.userId}))
+                    setInputContext("");
+                    setSearchList([]);
 
                 }
             } catch (error) {
@@ -74,13 +77,15 @@ function MyPageFollow() {
             else if (followTab === false)
                 followData = followState.following;
             // 1. 검색어가 빈 값일 때? 그러면 어떻게 처리할 것인가? = 아니면 다 노출시킬 것인지?
-            console.log(followData)
+            // console.log(followData)
             setSearchList(followData.filter(elem => elem.nickname.indexOf(inputContext) !== -1))
-            console.log(searchList)
+            // console.log(searchList)
             
             // inputContext === "" ? setPostLIst(data)
         }
-        console.log(searchList.length)
+        // console.log(searchList.length)
+
+        const myData = decodeMyTokenData();
 
     return (
         <StOutline>
@@ -111,7 +116,7 @@ function MyPageFollow() {
                                                         <StNickname >{x.nickname}</StNickname>
                                                         <StMbti>{x.mbti}</StMbti>
                                                     </StWrapNicknameMbti>
-                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                                        {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
                                             </StProfileBox>
                                         </div>)
                             })
@@ -124,7 +129,7 @@ function MyPageFollow() {
                                                         <StNickname >{x.nickname}</StNickname>
                                                         <StMbti>{x.mbti}</StMbti>
                                                     </StWrapNicknameMbti>
-                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                                        {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
                                             </StProfileBox>
                                         </div>)
                             })}</> 
@@ -155,7 +160,8 @@ function MyPageFollow() {
                                                         <StNickname >{x.nickname}</StNickname>
                                                         <StMbti>{x.mbti}</StMbti>
                                                     </StWrapNicknameMbti>
-                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                                    {myData.userId !== parseInt(params.userId) ? <></> : 
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>}
                                             </StProfileBox>
                                         </div>)
                             })
@@ -168,7 +174,8 @@ function MyPageFollow() {
                                                         <StNickname >{x.nickname}</StNickname>
                                                         <StMbti>{x.mbti}</StMbti>
                                                     </StWrapNicknameMbti>
-                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>
+                                                    { myData.userId !== parseInt(params.userId) ? <></> : 
+                                                        <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn>}
                                             </StProfileBox>
                                         </div>)
                             })}</> 
