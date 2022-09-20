@@ -5,9 +5,9 @@ import styled from "styled-components";
 function ErrorPageContainer() {
   const navigate = useNavigate();
 
-  //새로고침하기
-  const refresh = () => {
-    window.location.reload();
+  //뒤로가기
+  const backPage = () => {
+    navigate(-1);
   };
 
   //메인페이지 이동
@@ -30,7 +30,7 @@ function ErrorPageContainer() {
           불러올 수 없습니다.
         </StErrorMsg>
         <StBtnWrap>
-          <StRefreshBtn onClick={refresh}>다시 시도하기</StRefreshBtn>
+          <StBackBtn onClick={backPage}>다시 시도하기</StBackBtn>
           <StMainBtn onClick={goMain}>홈으로 가기</StMainBtn>
         </StBtnWrap>
       </TotalWrap>
@@ -82,7 +82,7 @@ const StBtnWrap = styled.div`
   margin: 0 auto;
   gap: 26px;
 `;
-const StRefreshBtn = styled.button`
+const StBackBtn = styled.button`
   width: 162px;
   height: 48.6px;
   background: #979797;
