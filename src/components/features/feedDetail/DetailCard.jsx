@@ -18,6 +18,7 @@ function DetailCard({ data }) {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
 
+  console.log(data);
   // 팝업창 열고 닫기 위한 함수
   function displayCardMenu(event) {
     event.stopPropagation();

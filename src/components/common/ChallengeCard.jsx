@@ -4,19 +4,20 @@ import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-function ChallengeCard({ id, data }) {
+function ChallengeCard({ data }) {
   const navigate = useNavigate();
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
-    if (id !== "null" && id !== undefined) navigate(`/feeddetail/${id}`);
+    if (data.todoInfo.todoId !== "null" && data.todoInfo.todoId !== undefined)
+      navigate(`/feeddetail/${data.todoInfo.todoId}`);
   }
-
+  console.log(data);
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
     <StChallengeCardDiv
-      background={data.isCompleted === 1 ? "#DDDDDD" : "#ffffff"}>
+      background={data.isChallenged === true ? "#DDDDDD" : "#ffffff"}>
       <StCommonRowBox
         width="100%"
         height="100%"
@@ -24,37 +25,48 @@ function ChallengeCard({ id, data }) {
         style={{ textAlign: "left" }}
         onClick={moveToFeedDetail}>
         <StChallengeNameSpan
-          color={data.isCompleted === 1 ? "#B8B8B8" : "#000000"}>
-          {data.todo.length > 30
-            ? `${data.todo.substring(0, 27)}...`
-            : data.todo}
+          color={data.isChallenged === true ? "#B8B8B8" : "#000000"}>
+          {data.todoInfo.todo.length > 30
+            ? `${data.todoInfo.todo.substring(0, 27)}...`
+            : data.todoInfo.todo}
         </StChallengeNameSpan>
 
-        <StStaticBox color={data.isCompleted === 1 ? "#B8B8B8" : "#909090"}>
+        <StCommonColumnBox height="100%">
           <StCommonRowBox alignItems="center" margin="auto 0 0 0">
             <StCommonRowBox
               alignItems="center"
               style={{
                 marginRight: "5px",
                 lineHeight: "32px",
-                color: data.isCompleted === 1 ? "#B8B8B8" : "#909090",
               }}>
-              <FontAwesomeIcon style={{ margin: "0 4px" }} icon={faMessage} />
-              <StCountSpan>{data.commentCounts}</StCountSpan>
+              <FontAwesomeIcon
+                style={{
+                  margin: "0 4px",
+                  color: data.isChallenged === true ? "#B8B8B8" : "#909090",
+                }}
+                icon={faMessage}
+              />
+              <StCountSpan
+                color={data.isChallenged === true ? "#B8B8B8" : "#909090"}>
+                {data.todoInfo.commentCounts}
+              </StCountSpan>
             </StCommonRowBox>
-            <StCommonRowBox
-              alignItems="center"
-              style={{
-                marginLeft: "5px",
-                color: data.isCompleted === 1 ? "#B8B8B8" : "#909090",
-              }}>
-              <FontAwesomeIcon style={{ margin: "0 0 0 0" }} icon={faStar} />
-              <StCountSpan style={{ marginRight: "4px" }}>
-                {data.challengedCounts}
+            <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
+              <FontAwesomeIcon
+                style={{
+                  margin: "0 0 0 0",
+                  color: data.isChallenged === true ? "#B8B8B8" : "#909090",
+                }}
+                icon={faStar}
+              />
+              <StCountSpan
+                color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
+                style={{ marginRight: "4px" }}>
+                {data.todoInfo.challengedCounts}
               </StCountSpan>
             </StCommonRowBox>
           </StCommonRowBox>
-        </StStaticBox>
+        </StCommonColumnBox>
       </StCommonRowBox>
     </StChallengeCardDiv>
   );
@@ -91,14 +103,7 @@ const StChallengeNameSpan = styled.span`
 const StCountSpan = styled.span`
   font-size: 13px;
   font-weight: 500;
-  color: #979797;
+  color: ${(props) => props.color};
 
   margin: 0 8px;
-`;
-
-const StStaticBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  height: 100%;
 `;

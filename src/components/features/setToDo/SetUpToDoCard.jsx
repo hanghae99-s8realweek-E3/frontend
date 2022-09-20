@@ -4,32 +4,35 @@ import {
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCircleCheck,
-  faMessage,
-  faStar,
-} from "@fortawesome/free-regular-svg-icons";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 import { settingTodayDate } from "../../../utils/commonFunc";
 
-function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
+function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
   const [menuModal, setMenuModal] = useState(false);
-  const params = useParams();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
-    if (id !== "null" && id !== undefined) navigate(`/feeddetail/${id}`);
+    console.log("들어가나요");
+    if (data.challengedTodo !== undefined) {
+      if (data.originTodoId !== "null" && data.originTodoId !== undefined) {
+        navigate(`/feeddetail/${data.originTodoId}`);
+      }
+    }
+    if (data.todo !== undefined) {
+      if (data.todoId !== "null" && data.todoId !== undefined) {
+        navigate(`/feeddetail/${data.todoId}`);
+      }
+    }
   }
 
   // 오늘의 챌린지 완료/진행중 상태를 바꿔주도록 함.
@@ -37,9 +40,9 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
     event.stopPropagation();
     const stateChallenge = async () => {
       try {
-        const response = await instance.put(`/mytodos/${id}/challenged`, {
-          date: settingTodayDate(),
-        });
+        const response = await instance.put(
+          `/mytodos/${data.challengedTodoId}/challenged`
+        );
         if (response.data.message === "success") {
           dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
         }
@@ -62,7 +65,7 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
     const cancelApply = async () => {
       try {
         const response = await instance.delete(
-          `/mytodos/${data.todoId}/challenged`,
+          `/mytodos/${data.challengedTodoId}/challenged`,
           { data: { date: settingTodayDate() } }
         );
         if (response.data.message === "success") {
@@ -90,8 +93,6 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
     };
     deleteApply();
   }
-
-  console.log(isTodayChallenge);
 
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
@@ -127,12 +128,9 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
         width="90%"
         id={data.todoId}
         onClick={moveToFeedDetail}
-        background={
-          myData.userId === data.userId
-            ? "#ffffff"
-            : data.isCompleted === 0
-            ? "#ffffff"
-            : "#FF6D53"
+        background={data.isCompleted === 1 ? "#FF6D53" : "#ffffff"}
+        border={
+          data.isCompleted === 1 ? "1px solid #FF6D53" : "1px solid #ffffff"
         }
         cursor="pointer">
         {hideState === true ? (
@@ -142,9 +140,9 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
             onClick={isTodayChallenge === true ? changeStateChallenge : null}>
             <StTodoStateImage
               src={
-                data.isCompleted === 0
-                  ? process.env.PUBLIC_URL + `/images/Progress.png`
-                  : process.env.PUBLIC_URL + `/images/Complete.png`
+                data.isCompleted === 1
+                  ? process.env.PUBLIC_URL + `/images/Complete.png`
+                  : process.env.PUBLIC_URL + `/images/Progress.png`
               }
             />
           </StChallengeStateBtn>
@@ -156,54 +154,34 @@ function SetUpToDoCard({ id, data, hideState, isTodayChallenge }) {
           alignItems="center"
           style={{ textAlign: "left" }}>
           <StChallengeNameSpan
-            color={
-              myData.userId === data.userId
-                ? "#979797"
-                : data.isCompleted === 0
-                ? "#979797"
-                : "#ffffff"
-            }>
-            {data.todo.length > 30
-              ? `${data.todo.substring(0, 27)}...`
-              : data.todo}
+            color={data.isCompleted === 1 ? "#ffffff" : "#979797"}>
+            {data.challengedTodo !== undefined
+              ? data.challengedTodo.length > 30
+                ? `${data.challengedTodo.substring(0, 27)}...`
+                : data.challengedTodo
+              : data.todo !== undefined
+              ? data.todo.length > 30
+                ? `${data.todo.substring(0, 27)}...`
+                : data.todo
+              : ""}
           </StChallengeNameSpan>
 
           {/* 상세 메뉴 출력 여부 표시 */}
 
-          <StCommonColumnBox style={{ height: "100%", width: "50%" }}>
+          <StCommonColumnBox style={{ height: "100%" }}>
             {isTodayChallenge === true ? (
               <StMenuBtn
-                color={data.isCompleted === 0 ? "#979797" : "#ffffff"}
+                color={data.isCompleted === 1 ? "#ffffff" : "#979797"}
                 onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
-            ) : myData.userId === data.userId ? (
+            ) : data.todo !== undefined ? (
               <StMenuBtn color="#979797" onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
             ) : (
               <div>　</div>
             )}
-            {/* <StCommonRowBox alignItems="center" margin="auto 0 0 0">
-              <StCommonRowBox
-                alignItems="center"
-                style={{ marginRight: "5px", lineHeight: "32px" }}>
-                <FontAwesomeIcon
-                  style={{ color: "#979797", margin: "0 4px" }}
-                  icon={faMessage}
-                />
-                <StCountSpan>{data.commentCounts}</StCountSpan>
-              </StCommonRowBox>
-              <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-                <FontAwesomeIcon
-                  style={{ color: "#979797", margin: "0 0 0 0" }}
-                  icon={faStar}
-                />
-                <StCountSpan style={{ marginRight: "4px" }}>
-                  {data.challengedCounts}
-                </StCountSpan>
-              </StCommonRowBox>
-            </StCommonRowBox> */}
           </StCommonColumnBox>
         </StCommonRowBox>
       </StChallengeCardDiv>
@@ -222,7 +200,7 @@ const StChallengeCardDiv = styled.div`
 
   width: ${(props) => props.width || "100%"};
   height: 102px;
-  border: 1px solid gray;
+  border: ${(props) => props.border};
   border-radius: 6px;
   padding: 16px 18px;
   margin: 5px 25px;

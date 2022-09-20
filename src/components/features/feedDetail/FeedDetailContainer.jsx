@@ -134,7 +134,7 @@ function FeedDetailContainer() {
             <StNickname
               id={detailState.todoInfo.userId}
               onClick={onClickGoToOtherspage}>
-              {detailState.todoInfo.User.nickname}
+              {detailState.todoInfo.nickname}
             </StNickname>
             {myData.userId === detailState.todoInfo.userId ? <></> : 
             detailState.isFollowed === false ? (
@@ -151,9 +151,9 @@ function FeedDetailContainer() {
               </StFollowBtn>
             )}
           </StUserIdBox>
-        
+
           <DetailCard data={detailState.todoInfo} />
-          
+
           <div>
             {detailState.isTodayDone === "false" ? (
               <></>
