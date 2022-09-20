@@ -37,12 +37,13 @@ function UserProfileContainer() {
   // useEffect(() => {
   //   dispatch(getOthersTodoFetch(params));
   // }, []);
-  console.log(todoTab);
   useEffect(() => {
     dispatch(getOthersTodoFetch(params));
   }, []);
-  console.log(document.getElementById(todoTab));
 
+
+
+  // 탭을 할 때마다 혅재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
   useEffect(() => {
     let current = document.getElementById(todoTab);
     if (current !== null) {

@@ -70,7 +70,6 @@ function WriteTodoForm() {
     };
     // 실행
     TodoDateFetchCheck();
-  
   };
 
   return (
@@ -125,6 +124,7 @@ const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 70vh;
 `;
 
 const StWriteTodoTextArea = styled.textarea`
@@ -145,7 +145,7 @@ const StWriteTodoTextArea = styled.textarea`
 const Stbutton = styled.button`
   width: 450px;
   height: 70px;
-  margin: 400px 25px 0px 25px;
+  margin: auto 25px 80px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;

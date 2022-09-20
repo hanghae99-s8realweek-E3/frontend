@@ -115,8 +115,8 @@ function FeedPageContainer() {
         }
       }
     }
-    console.log(e.target.id)
-   
+    console.log(e.target.id);
+
     // setSelectSort(!selectSort);
   };
   //댓글순 정렬
@@ -171,11 +171,32 @@ function FeedPageContainer() {
           <StPopupBox>
             <StSlideDiv />
             <StSort>
-              <StDate style={{ color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortDate}>최신순</StDate>
+              <StDate
+                style={{
+                  color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortDate}
+              >
+                최신순
+              </StDate>
               <StDateLine />
-              <StComment style={{ color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortComment}>댓글순</StComment>
+              <StComment
+                style={{
+                  color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortComment}
+              >
+                댓글순
+              </StComment>
               <StCommentLine />
-              <StChallenge style={{ color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortChallenge}>도전순</StChallenge>
+              <StChallenge
+                style={{
+                  color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortChallenge}
+              >
+                도전순
+              </StChallenge>
               <StChallengeLine />
               <StCommonBar />
             </StSort>
@@ -228,7 +249,8 @@ function FeedPageContainer() {
                 <ChallengeCard
                   id={it.todoId}
                   data={it}
-                  key={idx}></ChallengeCard>
+                  key={idx}
+                ></ChallengeCard>
               ))
           : feedCard?.map((it, idx) => (
               <ChallengeCard id={it.todoId} data={it} key={idx}>
@@ -242,17 +264,20 @@ function FeedPageContainer() {
   );
 }
 const StTotalWrap = styled.div`
+/* background-color: red; */
   display: flex;
   flex-direction: column;
   /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
 const StTopWrap = styled.div`
+
   display: flex;
   flex-direction: row;
   padding-top: 24px;
   margin: 60px 0px 18px;
   /* align-items: center; */
   background-color: #edecec;
+  /* background-color: yellow; */
   width: 500px;
   position: fixed;
   /* background-color: blue; 범위확인용 */
@@ -277,6 +302,7 @@ const StHide = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  margin-bottom: 10px;
 `;
 const StToggleImgWrap = styled.div`
   /* background-color: yellow; 범위 확인용 */
@@ -369,7 +395,7 @@ const StSort = styled.div`
   align-items: center;
 `;
 const StDate = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StDateLine = styled.div`
   display: flex;
@@ -378,7 +404,7 @@ const StDateLine = styled.div`
   background: #c7c7c7;
 `;
 const StComment = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StCommentLine = styled.div`
   background: #c7c7c7;
@@ -386,7 +412,7 @@ const StCommentLine = styled.div`
   height: 1px;
 `;
 const StChallenge = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StChallengeLine = styled.div`
   width: 450px;
