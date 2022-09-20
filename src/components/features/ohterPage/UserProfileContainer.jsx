@@ -46,9 +46,9 @@ function UserProfileContainer() {
   useEffect(() => {
     let current = document.getElementById(todoTab);
     if (current !== null) {
-      current.style.color = "black";
+      current.style.color = "#ff6d53";
       current.style.borderBottom = "2px solid";
-      current.style.borderBottomColor = "black";
+      current.style.borderBottomColor = "#ff6d53";
     }
 
     if (prevClick !== null) {
@@ -121,11 +121,11 @@ function UserProfileContainer() {
                 <StPopupBox>
                   <StSlideDiv />
                   <StSort>
-                    <StDate onClick={sortDate}>최신순</StDate>
+                    <StDate style = {{color : sortState === "최신순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortDate}>최신순</StDate>
                     <StDateLine />
-                    <StComment onClick={sortComment}>댓글순</StComment>
+                    <StComment style = {{color : sortState === "댓글순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortComment}>댓글순</StComment>
                     <StCommentLine />
-                    <StChallenge onClick={sortChallenge}>도전순</StChallenge>
+                    <StChallenge style = {{color : sortState === "도전순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortChallenge}>도전순</StChallenge>
                     <StChallengeLine />
                     <StCommonBar />
                   </StSort>
@@ -175,18 +175,18 @@ function UserProfileContainer() {
                 )
               ) : todoTab === "제안" ? (
                 sortState === sortList[0] ? (
-                  card.createdTodo?.map((elem, index) => (
+                  card.createdTodos?.map((elem, index) => (
                     <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
-                  card.createdTodo
+                  card.createdTodos
                     ?.slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     .map((elem, index) => (
                       <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
-                  card.createdTodo
+                  card.createdTodos
                     ?.slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     .map((elem, index) => (
@@ -243,7 +243,7 @@ const StChallengeTodo = styled.div`
   justify-content: center;
   display: flex;
   width: 225px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #ff6d53;
   /* width: 105px; */
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
@@ -251,7 +251,7 @@ const StChallengeTodo = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  color: #ff6d53;
   padding-bottom: 9px;
 `;
 const StSuggestionTodo = styled.div`
@@ -322,20 +322,26 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
 `;
-const StDate = styled.div``;
+const StDate = styled.div`
+cursor: pointer;
+`;
 const StDateLine = styled.div`
   display: flex;
   width: 450px;
   height: 1px;
   background: #c7c7c7;
 `;
-const StComment = styled.div``;
+const StComment = styled.div`
+cursor: pointer;
+`;
 const StCommentLine = styled.div`
   background: #c7c7c7;
   width: 450px;
   height: 1px;
 `;
-const StChallenge = styled.div``;
+const StChallenge = styled.div`
+cursor: pointer;
+`;
 const StChallengeLine = styled.div`
   width: 450px;
   height: 1px;

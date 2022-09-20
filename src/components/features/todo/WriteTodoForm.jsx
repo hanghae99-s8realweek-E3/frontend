@@ -9,7 +9,7 @@ function WriteTodoForm() {
   const navigate = useNavigate();
 
   if (tokenChecker() === false) {
-    alert("로그인 후 이용해11111주세요.");
+    alert("로그인 후 이용해주세요.");
     navigate("/mypage");
   }
   //mbti를 찾기위해 decodeMyTokenData() 사용
@@ -49,7 +49,9 @@ function WriteTodoForm() {
 
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
-
+    if(todo.todo.length < 10 ){
+    return alert("10자 미만은 작성할 수 없습니다.")
+    }else 
     // 새로고침 이벤트 막기
     e.preventDefault();
 
@@ -63,12 +65,12 @@ function WriteTodoForm() {
           navigate("/setuptodo");
         }
       } catch (error) {
-        return alert(error);
+        return ;
       }
     };
     // 실행
     TodoDateFetchCheck();
-
+  
   };
 
   return (
