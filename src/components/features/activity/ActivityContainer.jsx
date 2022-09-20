@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../../utils/token";
-import ChallengeCard from "../../common/ChallengeCard";
 import {
   StCommonBorder,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
+import OthersCard from "../ohterPage/OthersCard";
 
 function ActivityContainer() {
   const sortList = ["최신순", "댓글순", "도전순"];
@@ -50,7 +50,7 @@ function ActivityContainer() {
                     <StSortListBtn
                       onClick={changeFeedListSort}
                       value={index}
-                      fontWeight={sortState === elem ? "600" : "500"}>
+                      color={sortState === elem ? "#FF6D53" : "#909090"}>
                       {elem}
                     </StSortListBtn>
                     <StCommonBorder margin="0 25px" width="90%" />
@@ -86,21 +86,21 @@ function ActivityContainer() {
               <StMyCardListDiv>
                 {sortState === sortList[0] ? (
                   myTodosState.challengedTodos?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
                   myTodosState.challengedTodos
                     .slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
                   myTodosState.challengedTodos
                     .slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
@@ -128,22 +128,22 @@ function ActivityContainer() {
 
               <StMyCardListDiv>
                 {sortState === sortList[0] ? (
-                  myTodosState.createdTodo?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                  myTodosState.createdTodos?.map((elem, index) => (
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
-                  myTodosState.createdTodo
+                  myTodosState.createdTodos
                     .slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
-                  myTodosState.createdTodo
+                  myTodosState.createdTodos
                     .slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
@@ -269,7 +269,8 @@ const StSortListBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
-  font-weight: ${(props) => props.fontWeight || "500"};
+  font-weight: 600;
+  color: ${(props) => props.color};
 
   border: none;
   outline: none;

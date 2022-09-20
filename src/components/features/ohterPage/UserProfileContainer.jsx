@@ -16,6 +16,7 @@ import {
 import { tokenChecker } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
 import ProfileCard from "../../common/ProfileCard";
+import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
@@ -153,21 +154,21 @@ function UserProfileContainer() {
                 // ))
                 sortState === sortList[0] ? (
                   card.challengedTodos?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
                   card.challengedTodos
                     ?.slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     .map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
                   card.challengedTodos
                     ?.slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     .map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
@@ -175,21 +176,21 @@ function UserProfileContainer() {
               ) : todoTab === "제안" ? (
                 sortState === sortList[0] ? (
                   card.createdTodo?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
                   card.createdTodo
                     ?.slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     .map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
                   card.createdTodo
                     ?.slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     .map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
