@@ -20,7 +20,6 @@ import { tokenChecker } from "../../../utils/token";
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
-
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
 
@@ -99,7 +98,8 @@ function FeedPageContainer() {
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
-  const sortDate = () => {
+  const sortDate = (e) => {
+    setSortState("최신순");
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -115,11 +115,12 @@ function FeedPageContainer() {
         }
       }
     }
-    setSortState("최신순");
-    setSelectSort(!selectSort);
+    console.log(e.target.id);
+
+    // setSelectSort(!selectSort);
   };
   //댓글순 정렬
-  const sortComment = () => {
+  const sortComment = (e) => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -139,7 +140,7 @@ function FeedPageContainer() {
     setSelectSort(!selectSort);
   };
   //도전순 정렬
-  const sortChallenge = () => {
+  const sortChallenge = (e) => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -170,11 +171,32 @@ function FeedPageContainer() {
           <StPopupBox>
             <StSlideDiv />
             <StSort>
-              <StDate onClick={sortDate}>최신순</StDate>
+              <StDate
+                style={{
+                  color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortDate}
+              >
+                최신순
+              </StDate>
               <StDateLine />
-              <StComment onClick={sortComment}>댓글순</StComment>
+              <StComment
+                style={{
+                  color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortComment}
+              >
+                댓글순
+              </StComment>
               <StCommentLine />
-              <StChallenge onClick={sortChallenge}>도전순</StChallenge>
+              <StChallenge
+                style={{
+                  color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortChallenge}
+              >
+                도전순
+              </StChallenge>
               <StChallengeLine />
               <StCommonBar />
             </StSort>
@@ -189,7 +211,7 @@ function FeedPageContainer() {
           {checkOn === false ? (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/Appear.png`}
+              src={process.env.PUBLIC_URL + `/images/unCheck.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -197,7 +219,7 @@ function FeedPageContainer() {
           ) : (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/Hide.png`}
+              src={process.env.PUBLIC_URL + `/images/check.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -227,7 +249,8 @@ function FeedPageContainer() {
                 <ChallengeCard
                   id={it.todoId}
                   data={it}
-                  key={idx}></ChallengeCard>
+                  key={idx}
+                ></ChallengeCard>
               ))
           : feedCard?.map((it, idx) => (
               <ChallengeCard id={it.todoId} data={it} key={idx}>
@@ -241,17 +264,20 @@ function FeedPageContainer() {
   );
 }
 const StTotalWrap = styled.div`
+/* background-color: red; */
   display: flex;
   flex-direction: column;
   /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
 const StTopWrap = styled.div`
+
   display: flex;
   flex-direction: row;
   padding-top: 24px;
   margin: 60px 0px 18px;
   /* align-items: center; */
   background-color: #edecec;
+  /* background-color: yellow; */
   width: 500px;
   position: fixed;
   /* background-color: blue; 범위확인용 */
@@ -276,6 +302,7 @@ const StHide = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  margin-bottom: 10px;
 `;
 const StToggleImgWrap = styled.div`
   /* background-color: yellow; 범위 확인용 */
@@ -367,20 +394,26 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
 `;
-const StDate = styled.div``;
+const StDate = styled.div`
+  cursor: pointer;
+`;
 const StDateLine = styled.div`
   display: flex;
   width: 450px;
   height: 1px;
   background: #c7c7c7;
 `;
-const StComment = styled.div``;
+const StComment = styled.div`
+  cursor: pointer;
+`;
 const StCommentLine = styled.div`
   background: #c7c7c7;
   width: 450px;
   height: 1px;
 `;
-const StChallenge = styled.div``;
+const StChallenge = styled.div`
+  cursor: pointer;
+`;
 const StChallengeLine = styled.div`
   width: 450px;
   height: 1px;

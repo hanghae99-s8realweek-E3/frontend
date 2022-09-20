@@ -9,7 +9,7 @@ function WriteTodoForm() {
   const navigate = useNavigate();
 
   if (tokenChecker() === false) {
-    alert("로그인 후 이용해11111주세요.");
+    alert("로그인 후 이용해주세요.");
     navigate("/mypage");
   }
   //mbti를 찾기위해 decodeMyTokenData() 사용
@@ -49,7 +49,9 @@ function WriteTodoForm() {
 
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
-
+    if(todo.todo.length < 10 ){
+    return alert("10자 미만은 작성할 수 없습니다.")
+    }else 
     // 새로고침 이벤트 막기
     e.preventDefault();
 
@@ -63,12 +65,11 @@ function WriteTodoForm() {
           navigate("/setuptodo");
         }
       } catch (error) {
-        return alert(error);
+        return ;
       }
     };
     // 실행
     TodoDateFetchCheck();
-
   };
 
   return (
@@ -123,6 +124,7 @@ const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 70vh;
 `;
 
 const StWriteTodoTextArea = styled.textarea`
@@ -143,7 +145,7 @@ const StWriteTodoTextArea = styled.textarea`
 const Stbutton = styled.button`
   width: 450px;
   height: 70px;
-  margin: 400px 25px 0px 25px;
+  margin: auto 25px 80px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
