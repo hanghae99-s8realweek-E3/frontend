@@ -14,8 +14,7 @@ function ProfileModifyForm() {
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({
-    profile:
-      "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg",
+    profile: myData.profile,
     nickname: myData.nickname,
     mbti: myData.mbti,
   });
