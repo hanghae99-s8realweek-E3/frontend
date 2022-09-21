@@ -130,6 +130,7 @@ function FeedDetailContainer() {
   };
 
   const myData = decodeMyTokenData();
+  console.log(myData)
 
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -163,7 +164,9 @@ function FeedDetailContainer() {
         <div>
         <StProfilWrap>
           <StUserIdBox>
-            <StProfileImg src={detailState.todoInfo.profileImg} />
+          <StProfileBox>
+            <StProfileImg src={detailState.todoInfo.profile !== "none" ? detailState.todoInfo.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"} />
+          </StProfileBox>
             <StNickname
               id={detailState.todoInfo.userId}
               onClick={onClickGoToOtherspage}>
@@ -212,12 +215,17 @@ function FeedDetailContainer() {
                   <div key={index}>
                     <StCommentBox>
                       <StImgNickname>
+                      <StProfileBox 
+                          width="32px"
+                          height="32px"
+                      >
                         <StProfileImg
                           width="32px"
                           height="32px"
                           borderRadius="16px"
-                          src={x.profileImg}
+                          src={x.profile !== "none" ? x.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"}
                         />
+                        </StProfileBox>
                         <StNicknameComment
                           id={x.userId}
                           onClick={onClickCommentGoToOtherspage}>
@@ -247,18 +255,24 @@ function FeedDetailContainer() {
             </div>
           
           <StWriteComment onSubmit={upLoadCommentData}>
-            <StItem>
-              <StInputWrap>
-                <StProfileImg />
-                <StInput
-                  type="text"
-                  name="comment"
-                  placeholder="댓글 내용"
-                  ref={inputRef} //!ref를 참고하겠다.
-                />
-                <StCommentBtn type="submit">작성</StCommentBtn>
-              </StInputWrap>
-            </StItem>
+
+            
+            <div
+            style={{width : "50px", height : "50px", margin:"10px", padding:"0", borderRadius:"50%", overflow:"hidden"}}
+            >
+              <StProfileImg style={{height:"50px", width:"auto", margin:"0", padding:"0"}} 
+              src={myData.profile !== "none" ? myData.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"} />
+            </div> 
+
+              <StInput
+                type="text"
+                name="comment"
+                placeholder="댓글 내용"
+                ref={inputRef} //!ref를 참고하겠다.
+              />
+              <StCommentBtn type="submit">작성</StCommentBtn>
+            
+
           </StWriteComment>
         </div>
       )}
@@ -301,12 +315,27 @@ const StImgNickname = styled.div`
 
 `;
 
-const StProfileImg = styled.img`
-  background-color: gray;
-  border-radius: 15px;
-  cursor: pointer;
-  
+const StProfileBox = styled.div`
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  ${({ width, height}) => {
+    return css`
+    width: ${width || "50px"};
+    height: ${height || "50px"};
+    `
+  }}
+  /* width:50px;
+  height:50px; */
+  border-radius:50%;
+  overflow:hidden;
+  margin:10px;
+`
 
+const StProfileImg = styled.img`
+  /* background-color: gray; */
+  /* border-radius: 15px; */
+  cursor: pointer;
   /* width:30px;
   height:30px;
   margin:10px; */
@@ -314,8 +343,8 @@ const StProfileImg = styled.img`
     return css`
       width: ${width || "50px"};
       height: ${height || "50px"};
-      margin: ${margin || "10px"};
-      border-radius: ${borderRadius || "25px"};
+      /* margin: ${margin || "10px"}; */
+      /* border-radius: ${borderRadius || "25px"}; */
     `;
   }}
 `;
@@ -335,6 +364,7 @@ const StMBTI = styled.div`
   color: #5E5C5C;
 `
 const StFollowBtn = styled.button`
+  background:none;
   border: none;
   margin-left: auto;
   font-family: "IBM Plex Sans KR";
@@ -400,17 +430,19 @@ const StWriteComment = styled.form`
   border-top:1px solid #C7C7C7;;
   position: fixed;
   display: flex;
+  align-items:center;
   width: 500px;
-  height:124px;
+  height:70px;
   bottom: 0;
   z-index: 7;
+  padding: 4px 0;
 
 `;
 const StItem = styled.div`
   /* background-color:blue; */
-  display: grid;
-  display: inline-grid;
-    border-radius: 1px solid red;
+  display: flex;
+  flex-direction:row;
+  border-radius: 1px solid red;
 
 `;
 
@@ -421,37 +453,38 @@ const StInputWrap = styled.div`
 
 const StInput = styled.input`
   /* background-color:red; */
-  margin-top:5px;
-  margin-bottom: 75px;
-  position: relative;
+  margin-left:auto; 
+  margin-right: 15px;
+  
   border: 1px solid #979797;
   border-radius: 6px;
   width: 90%;
-  max-width: 345px;
+  max-width: 320px;
   height: 55px;
-  position: absolute;
-  padding-left: 10px;
+  padding-left: 20px;
   padding-right: 70px;
+  font-weight: 500;
+  font-size: 18px;
   ::placeholder{
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
 const StCommentBtn = styled.button`
   color: #ff6d53;
-  position: absolute;
-  z-index: 2;
+  z-index: 8;
   width: 60px;
   height: 32px;
   font-weight: 500;
-  font-size: 20px;
+  position:absolute;
+  font-size: 18px;
   background-color: white;
   border: none;
   margin-top: 5px;
   padding: 0;
   right: 0;
-  transform: translateX(-60%) translateY(40%);
+  transform: translateX(-40%) translateY(-10%);
   cursor: pointer;
 
 `;
@@ -467,7 +500,7 @@ const StBtnGoToChallenge = styled.button`
   color: #ffffff;
   text-align: center;
   cursor: pointer;
-  margin: 20px;
+  margin: 10px;
 `;
 
 const StPopUpWhiteButton = styled.button`
