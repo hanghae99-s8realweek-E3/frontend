@@ -112,11 +112,10 @@ const SignUpForm = () => {
   return (
     <div>
       <StOutLine type="submit" onSubmit={onSubmitSignUpComplete}>
-        <h4>회원가입 페이지</h4>
         <StContainer>
             <StItem>
             <label>이메일</label>
-              <StInputWrap marginBottom="70px">
+              <StInputWrap marginBottom="70px" marginTop="5px">
                 <StInput
                   onChange={onChangeSignupData}
                   type="text"
@@ -157,7 +156,7 @@ const SignUpForm = () => {
             
             <StItem>
             <label>비밀번호 확인</label>
-              <StInputWrap marginTop="0px" marginBottom="70px">
+              <StInputWrap  marginBottom="70px">
                 <StInput
                   onChange={onChangeSignupData}
                   type="password"
@@ -183,7 +182,7 @@ const SignUpForm = () => {
                 </StInputWrap>
             </StItem>
 
-            <StSignUpBtn>회원가입</StSignUpBtn>
+            <StSignUpBtn>가입하기</StSignUpBtn>
           </StContainer>
       </StOutLine>
     </div>
@@ -207,6 +206,7 @@ const StContainer=styled.div`
   display: inline-grid;
   text-align: start;
   gap:10px;
+  margin-top:30px;
 
 
 `
@@ -218,7 +218,7 @@ const StItem=styled.div`
 `
 
 const StInputWrap = styled.div`
-  margin-top: ${(props) => props.marginTop || "5px"};
+  margin-top: ${(props) => props.marginTop || "10px"};
   margin-bottom: ${(props) => props.marginBottom || "10px"};
 
 
@@ -231,6 +231,10 @@ const StInput = styled.input `
   position: absolute;
   padding-left:10px;
   cursor: pointer;
+  ::placeholder {
+    font-size: 18px;
+    line-height: 18px;
+  }
 `
 const StInsideBtn = styled.button`
   font-weight: 500;
@@ -259,6 +263,8 @@ const StSignUpBtn = styled.button`
   border:none;
   color:white;
   background: #FF6D53;
+  font-weight: 500;
+  font-size: 22px;
 `
 const StErrorTextMessage = styled.div`
 font-family: 'IBM Plex Sans KR';

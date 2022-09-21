@@ -7,6 +7,9 @@ import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
 function FeedDetailContainer() {
   const inputRef = useRef();
@@ -14,6 +17,9 @@ function FeedDetailContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [menuModal, setMenuModal] = useState(false);
+  const [commentId, setCommentId] = useState("")
+
 
   //useEffect의 위치 선정 중요.
   useEffect(() => {
@@ -55,9 +61,11 @@ function FeedDetailContainer() {
     e.preventDefault();
     const deleteCommentFetch = async () => {
       try {
-        const response = await instance.delete(`/comments/${e.target.id}`);
+        const response = await instance.delete(`/comments/${commentId}`);
         if (response.data.message === "success") {
-          return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
+            dispatch(getFeedDetailFetch({ todoId: params.todoId }));
+            setCommentId("")
+            setMenuModal(false)
         }
       } catch (error) {
         return alert(error.response.data.errorMessage);
@@ -123,8 +131,32 @@ function FeedDetailContainer() {
 
   const myData = decodeMyTokenData();
 
+  function displayCardMenu(event) {
+    event.stopPropagation();
+    setMenuModal(!menuModal);
+    setCommentId(event.target.id);
+  }
+
   return (
     <div style={{ marginTop: "60px", marginBottom: "220px" }}>
+
+    {menuModal === true ?  
+        <StShadowBackgroundDiv>
+            <StPopUpWhiteButton
+              onClick={onClickDeleteComment}
+              transform="translateY(76vh)">
+              삭제
+            </StPopUpWhiteButton>
+          
+            <StPopUpWhiteButton
+              onClick={displayCardMenu}
+              transform="translateY(77vh)">
+              닫기
+            </StPopUpWhiteButton>
+          </StShadowBackgroundDiv> 
+      : <></>
+    }
+
       {Object.keys(detailState).length === 0 ? (
         <></>
       ) : (
@@ -181,27 +213,30 @@ function FeedDetailContainer() {
                     <StCommentBox>
                       <StImgNickname>
                         <StProfileImg
-                          width="20px"
-                          height="20px"
-                          borderRadius="10px"
+                          width="32px"
+                          height="32px"
+                          borderRadius="16px"
                           src={x.profileImg}
                         />
-                        <StNickname
+                        <StNicknameComment
                           id={x.userId}
                           onClick={onClickCommentGoToOtherspage}>
                           {x.nickname}
-                        </StNickname>
+                        </StNicknameComment>
                         <StChangeDeleteBtn>
+                        
                           {myData.userId === x.userId ? (
-                            <StDeleteBtn
-                              type="submit"
+      
+                            <StMenuBtn
                               id={x.commentId}
-                              onClick={onClickDeleteComment}>
-                              삭제
-                            </StDeleteBtn>
+                              onClick={displayCardMenu}>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </StMenuBtn>
                           ) : (
                             <></>
                           )}
+
+
                         </StChangeDeleteBtn>
                       </StImgNickname>
                       <StComment>{x.comment}</StComment>
@@ -270,16 +305,17 @@ const StProfileImg = styled.img`
   background-color: gray;
   border-radius: 15px;
   cursor: pointer;
+  
 
   /* width:30px;
   height:30px;
   margin:10px; */
   ${({ width, height, margin, borderRadius }) => {
     return css`
-      width: ${width || "30px"};
-      height: ${height || "30px"};
+      width: ${width || "50px"};
+      height: ${height || "50px"};
       margin: ${margin || "10px"};
-      border-radius: ${borderRadius || "15px"};
+      border-radius: ${borderRadius || "25px"};
     `;
   }}
 `;
@@ -310,10 +346,19 @@ const StFollowBtn = styled.button`
   }
   cursor: pointer;
 `;
+
+const StNicknameComment = styled.div`
+  font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+`
 const StComment = styled.div`
   align-items: flex-start;
   text-align: start;
-  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
   margin-left: 40px;
   margin-right: 50px;
   word-wrap: break-word;
@@ -335,37 +380,62 @@ const StDeleteBtn = styled.button`
   cursor: pointer;
 `;
 
+
+
+const StMenuBtn = styled.button`
+  background: none;
+  font-size: 16px;
+  line-height: 32px;
+  color: ${(props) => props.color};
+
+  border: none;
+  outline: none;
+  margin-left: auto;
+
+  cursor: pointer;
+`;
+
 const StWriteComment = styled.form`
   background-color: white;
+  border-top:1px solid #C7C7C7;;
   position: fixed;
   display: flex;
   width: 500px;
-  height:69px;
+  height:124px;
   bottom: 0;
   z-index: 7;
+
 `;
 const StItem = styled.div`
   /* background-color:blue; */
   display: grid;
   display: inline-grid;
+    border-radius: 1px solid red;
+
 `;
 
 const StInputWrap = styled.div`
   margin-top: 5px;
-  margin-bottom: 80px;
+  margin-bottom: 75px;
 `;
 
 const StInput = styled.input`
   /* background-color:red; */
+  margin-top:5px;
+  margin-bottom: 75px;
   position: relative;
   border: 1px solid #979797;
   border-radius: 6px;
   width: 90%;
-  max-width: 355px;
+  max-width: 345px;
   height: 55px;
   position: absolute;
   padding-left: 10px;
   padding-right: 70px;
+  ::placeholder{
+    font-weight: 500;
+    font-size: 20px;
+  }
 `;
 
 const StCommentBtn = styled.button`
@@ -374,9 +444,11 @@ const StCommentBtn = styled.button`
   z-index: 2;
   width: 60px;
   height: 32px;
+  font-weight: 500;
+  font-size: 20px;
   background-color: white;
   border: none;
-  margin: 0;
+  margin-top: 5px;
   padding: 0;
   right: 0;
   transform: translateX(-60%) translateY(40%);
@@ -394,5 +466,28 @@ const StBtnGoToChallenge = styled.button`
   font-size: 22px;
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
+  margin: 20px;
+`;
+
+const StPopUpWhiteButton = styled.button`
+  background: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+  font-weight: 500;
+  color: #979797;
+
+  border: none;
+  outline: none;
+  margin: 0 25px;
+  border-radius: 6px;
+
+  width: 90%;
+  height: 70px;
+  transform: ${(props) => props.transform};
   cursor: pointer;
 `;
