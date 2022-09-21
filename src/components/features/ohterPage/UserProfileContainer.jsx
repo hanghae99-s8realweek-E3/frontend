@@ -222,8 +222,9 @@ const StTotalWrap = styled.div`
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 80px;
-  margin-bottom: 48.33px;
+  margin-top: 60px;
+  padding-bottom: 31.5px;
+  background-color: white;
 `;
 const StTodoTopLine = styled.div`
   display: flex;

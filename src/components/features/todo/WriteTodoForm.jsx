@@ -61,11 +61,10 @@ function WriteTodoForm() {
         const response = await instance.post("/mytodos", todo);
         console.log(response);
         if (response.data.message === "success") {
-          console.log(response.data.message);
           navigate("/setuptodo");
         }
       } catch (error) {
-        return ;
+        return alert(error.response.data.errorMessage);
       }
     };
     // 실행
@@ -123,15 +122,13 @@ const StLine = styled.div`
 const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   height: 70vh;
 `;
 
 const StWriteTodoTextArea = styled.textarea`
-  display: flex;
   resize: none; // 크기 조절하는 커서 안뜨게할려고
   height: 150px;
-  width: 450px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -140,10 +137,11 @@ const StWriteTodoTextArea = styled.textarea`
   color: #979797;
   border:none;
   outline:none;
+  margin-left: 27px;
 `;
 
 const Stbutton = styled.button`
-  width: 450px;
+  /* width: 450px; */
   height: 70px;
   margin: auto 25px 80px 25px;
   cursor: pointer;
