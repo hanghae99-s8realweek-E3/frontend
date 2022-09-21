@@ -92,7 +92,7 @@ function UserProfileContainer() {
   const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-
+  console.log(card)
   return (
     <StTotalWrap>
       {Object.keys(card).length === 0 ? (
@@ -221,7 +221,7 @@ const StTotalWrap = styled.div`
 `;
 const StTopWrap = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 60px;
   padding-bottom: 31.5px;
   background-color: white;

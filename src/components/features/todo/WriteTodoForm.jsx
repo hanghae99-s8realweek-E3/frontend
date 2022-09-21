@@ -50,7 +50,7 @@ function WriteTodoForm() {
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
     if(todo.todo.length < 10 ){
-    return alert("10자 미만은 작성할 수 없습니다.")
+    return alert("10자 이상 작성해 주세요.")
     }else 
     // 새로고침 이벤트 막기
     e.preventDefault();
