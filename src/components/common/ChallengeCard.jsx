@@ -85,7 +85,7 @@ const StChallengeCardDiv = styled.div`
   height: 90px;
   border-radius: 6px;
   padding: 14px 20px;
-  margin: 6px 25px;
+  margin: 12px 25px;
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};

@@ -97,12 +97,6 @@ function MyPageContainer() {
         ) : (
           <>
             <ProfileCard profileData={accountsState} />
-
-            <StMatchCheckDiv>
-              <StMatchCheckBtn onClick={changeModalState}>
-                궁합 알아보기
-              </StMatchCheckBtn>
-            </StMatchCheckDiv>
           </>
         )}
 
@@ -152,7 +146,7 @@ const StMyPageContainer = styled.div`
 
   text-align: left;
 
-  margin: 80px 0;
+  margin: 60px 0;
   /* padding: 0 0.6rem; */
 
   width: 500px;
@@ -169,7 +163,7 @@ const StMyPageButton = styled.button`
 
   text-align: left;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 50px;
 
   border: none;
@@ -187,23 +181,6 @@ const StMyPageMenu = styled.span`
   line-height: 32px;
 
   margin: 25px 0 12px 0;
-`;
-
-const StMatchCheckDiv = styled.div`
-  margin-bottom: 46px;
-`;
-
-const StMatchCheckBtn = styled.button`
-  background: none;
-
-  font-size: 13px;
-  text-decoration: underline;
-  font-weight: 500;
-
-  border: none;
-  margin: 0 0 0 126px;
-
-  cursor: pointer;
 `;
 
 const StModalContainer = styled.div`

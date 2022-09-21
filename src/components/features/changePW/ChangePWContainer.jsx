@@ -95,7 +95,7 @@ function ChangePWContainer() {
           />
           <StErrorMessage>
             {inputData.password.length === 0 || inputData.password.length <= 8
-              ? "비밀번호는 9글자 이상이어야 합니다."
+              ? "비밀번호는 8글자 이상이어야 합니다."
               : passwordFormat.test(inputData.password) === false
               ? "비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
               : "　"}

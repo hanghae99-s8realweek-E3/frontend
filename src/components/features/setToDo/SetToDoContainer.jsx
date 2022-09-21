@@ -203,7 +203,7 @@ const StCommonColumnContainer = styled.div`
 
   width: 500px;
 
-  margin: 80px auto;
+  margin: 60px auto;
 
   width: 500px;
   box-sizing: border-box;
@@ -392,8 +392,6 @@ const CalendarContainer = styled.div`
     line-height: 36px;
     color: #313131;
   }
-
-  margin-top: 70px;
 `;
 
 const StTodayBox = styled.div`

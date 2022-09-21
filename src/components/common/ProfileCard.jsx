@@ -1,4 +1,6 @@
 //대연
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,6 +8,7 @@ import styled from "styled-components";
 import instance from "../../app/modules/instance";
 import { getOthersTodoFetch } from "../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../utils/token";
+import { StShadowBackgroundDiv } from "../interface/styledCommon";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
@@ -14,9 +17,7 @@ function ProfileCard({ profileData }) {
   const dispatch = useDispatch();
   const params = useParams();
   const myData = decodeMyTokenData();
-  console.log(myData)
-  console.log(params);
-
+  const [modalState, setModalState] = useState(false);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
@@ -36,37 +37,74 @@ function ProfileCard({ profileData }) {
   const [, setFollow] = useState("팔로우");
 
   // 다른 유저 프로필 정보 페이지에서 팔로우/언팔로우  및 피드를 불러야하고
-  // instance 통신 후 만약 내가 현재 이 유저를 팔로우하고 있다면 state를 이용해 언팔로우, 언팔로우 하고있다면 state를 이용해 팔로우로 바꿔야한다. 
+  // instance 통신 후 만약 내가 현재 이 유저를 팔로우하고 있다면 state를 이용해 언팔로우, 언팔로우 하고있다면 state를 이용해 팔로우로 바꿔야한다.
   const changeFollowState = async () => {
     try {
       const response = await instance.put(`/follows/${params.userId}`);
       if (response.data.message === "success") {
-        console.log(profileData.userInfo.isFollowed)
         if (profileData.userInfo.isFollowed === false) {
-        dispatch(getOthersTodoFetch(params));
-        setFollow("언팔로우");
+          dispatch(getOthersTodoFetch(params));
+          setFollow("언팔로우");
         } else if (profileData.userInfo.isFollowed === true)
-        dispatch(getOthersTodoFetch(params));
+          dispatch(getOthersTodoFetch(params));
         setFollow("팔로우");
-      } 
+      }
     } catch (error) {
       return alert(error.response.data.errorMessage);
     }
   };
 
-  // console.log(params.userId)
-  // console.log(myData.userId)
-  // console.log(profileData.userInfo.userId)
+  const changeModalState = () => {
+    setModalState(!modalState);
+  };
 
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
   return (
     <>
+      {modalState === true ? (
+        <StShadowBackgroundDiv>
+          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+          <StModalContainer onClick={(e) => e.stopPropagation()}>
+            <StCloseButton type="button" onClick={changeModalState}>
+              <FontAwesomeIcon
+                icon={faXmark}
+                style={{
+                  fontSize: "18px",
+                  color: "#ffffff",
+                  pointerEvents: "none",
+                }}
+              />
+            </StCloseButton>
+            <StContent>
+              <img
+                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
+                alt="MBTI matching List Images"
+                style={{ width: "350px", margin: "5px 0" }}
+              />
+              <StText>위의 표는 MBTI 간의 궁합을 보여줍니다.</StText>
+              <StText>푸른 색상에 가까울 수록 각 MBTI 간의 궁합이</StText>
+              <StText>잘 맞는 편입니다.</StText>
+              <StText>
+                반대로 붉은 색상에 가까울 수록 각 MBTI 간의 궁합이
+              </StText>
+              <StText>잘 맞지 않는 편입니다.</StText>
+            </StContent>
+          </StModalContainer>
+        </StShadowBackgroundDiv>
+      ) : (
+        <></>
+      )}
+
       <StTotalWrap>
         <StImageBox>
-        <StProfileImg
-          src={profileData.userInfo.profile !== "" ? profileData.userInfo.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"}
-          alt="dy"
-        />
+          <StProfileImg
+            src={
+              profileData.userInfo.profile !== ""
+                ? profileData.userInfo.profile
+                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+            }
+            alt="dy"
+          />
         </StImageBox>
         <StNoImageWrap>
           <StNickName>{profileData.userInfo.nickname}</StNickName>
@@ -91,16 +129,15 @@ function ProfileCard({ profileData }) {
           </StMbtiFollowFollowingWrap>
         </StNoImageWrap>
       </StTotalWrap>
-      
-      {window.location.pathname === `/otherspage/${params.userId}` ?
-      <StFollowBtn onClick={changeFollowState} >
-        {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
-        {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우" }
-      </StFollowBtn>
-      :      
-      <StInfo>
-        궁합 알아보기 
-      </StInfo>}
+
+      {window.location.pathname === `/otherspage/${params.userId}` ? (
+        <StFollowBtn onClick={changeFollowState}>
+          {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
+          {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우"}
+        </StFollowBtn>
+      ) : (
+        <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+      )}
     </>
   );
 }
@@ -122,15 +159,15 @@ const StTotalWrap = styled.div`
   }
 `;
 const StImageBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-height: 80px;
-width: 80px;
-overflow: hidden;
-margin-left: 35px;
-border-radius: 50%;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  overflow: hidden;
+  margin-left: 35px;
+  border-radius: 50%;
+`;
 const StProfileImg = styled.img`
   /* border-radius: 9999px; */
   height: 80px;
@@ -271,7 +308,7 @@ const StFollowBtn = styled.button`
   text-align: center;
   color: #ff6d53;
   background-color: white;
-  margin : 1.5px 0 22px 125px ;
+  margin: 1.5px 0 22px 125px;
   border: 0px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
@@ -288,12 +325,61 @@ const StInfo = styled.div`
   font-size: 13px;
   text-align: center;
   color: #ff6d53;
-  background-color: white;
-
-  border: 0px;
-  margin : 1.5px 0 22px 125px ;
+  background: none;
+  border: none;
+  margin: 1.5px 0 22px 125px;
+  cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 115px;
   }
-  `;
+`;
+
+const StCloseButton = styled.button`
+  background: none;
+
+  display: block;
+
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+
+  cursor: pointer;
+`;
+const StContent = styled.div`
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: left;
+
+  bottom: 0;
+  height: 90%;
+  box-sizing: border-box;
+`;
+
+const StText = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+
+  margin: 0;
+  margin-right: auto;
+`;
+
+const StModalContainer = styled.div`
+  background: #ff6d53;
+
+  border-radius: 6px;
+  padding: 25px;
+  margin: 18vh auto;
+
+  width: 80%;
+  height: 520px;
+
+  box-sizing: border-box;
+`;
