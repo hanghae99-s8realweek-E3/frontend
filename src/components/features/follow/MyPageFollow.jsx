@@ -30,7 +30,7 @@ function MyPageFollow() {
 
     useEffect(()=> {
         dispatch(getMyPageFollowFetch({userId:params.userId}))
-        state === true ? setFollowTab(false) : setFollowTab(true)
+        state === true ? setFollowTab(true) : setFollowTab(false)
         },[]); //followState 삭제이유: 리덕스를 사용하지않기때문에 값을 갱신시켜줄필요가없다 (아래 함수자체애서 값을 갱신시켜주고있기때문)
     // console.log(followTab)
     // console.log(Object.keys(followState).length)
