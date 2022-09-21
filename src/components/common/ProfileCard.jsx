@@ -2,77 +2,103 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
+// 컴포넌트 다른곳에서 가져다 쓸 수 있게
+
 function ProfileCard({ profileData }) {
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
+  // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    window.location.pathname === "/otherspage"
-      ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+    // window.location.pathname === "/otherspage" ?
+    // navigate(`/follows/${params.userId}`)
+    // :
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
-  console.log(profileData);
-  console.log(window.location.href);
-
+  // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    window.location.pathname === "/otherspage"
-      ? navigate(`/follows/${params.userId}`)
-      : navigate(`/follows/${profileData.userInfo.userId}`);
+    // window.location.pathname === "/otherspage" ?
+    // navigate(`/follows/${params.userId}`)
+    // :
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
+  
+  // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
   return (
-    <>
-      <StTopWrap>
-        <StProfileImg
-          src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
-          width="80"
-          height="80"
-          alt="dy"
-        />
-        <StMiddleWrap>
-          <StNickName>{profileData.userInfo.nickname}</StNickName>
-          <StMbtiFollowWrap>
-            <StMbti>{profileData.userInfo.mbti}</StMbti>
-            <StFollowWrap onClick={goFollow}>
-              <StFollowWord>팔로워</StFollowWord>
-              <StFollowNumber>
-                {window.location.pathname === "/mypage"
-                  ? profileData.userInfo.follower
-                  : profileData.userInfo.followerCount}
-              </StFollowNumber>
-            </StFollowWrap>
-            <StFollowingWrap onClick={goFollowing}>
-              <StFollowingWord>팔로잉</StFollowingWord>
-              <StFollowingNumber>
-                {window.location.pathname === "/mypage"
-                  ? profileData.userInfo.following
-                  : profileData.userInfo.followingCount}
-              </StFollowingNumber>
-            </StFollowingWrap>
-          </StMbtiFollowWrap>
-        </StMiddleWrap>
-      </StTopWrap>
-    </>
+    <StTotalWrap>
+      <StProfileImg
+        src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
+        width="80"
+        height="80"
+        alt="dy"
+      />
+      <StNoImageWrap>
+        <StNickName>{profileData.userInfo.nickname}</StNickName>
+        <StMbtiFollowFollowingWrap>
+          <StMbti>{profileData.userInfo.mbti}</StMbti>
+          <StFollowWrap onClick={goFollow}>
+            <StFollowWord>팔로워</StFollowWord>
+            <StFollowNumber>
+              {window.location.pathname === "/mypage"
+                ? profileData.userInfo.follower
+                : profileData.userInfo.followerCount}
+            </StFollowNumber>
+          </StFollowWrap>
+          <StFollowingWrap onClick={goFollowing}>
+            <StFollowingWord>팔로잉</StFollowingWord>
+            <StFollowingNumber>
+              {window.location.pathname === "/mypage"
+                ? profileData.userInfo.following
+                : profileData.userInfo.followingCount}
+            </StFollowingNumber>
+          </StFollowingWrap>
+        </StMbtiFollowFollowingWrap>
+      </StNoImageWrap>
+    </StTotalWrap>
   );
 }
 export default ProfileCard;
 
-const StTopWrap = styled.div`
+const StTotalWrap = styled.div`
+background-color: white;
   width: 500px;
-  margin-top: 42px;
+  margin-top: 31.5px;
   display: flex;
   flex-direction: row;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 360px;
+    margin:0px;
+    background-color: white;
+    margin-top: 22.68px;
+  }
 `;
 const StProfileImg = styled.img`
-  /* display: flex; */
   margin-left: 35px;
   border-radius: 9999px;
+  /* @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+    margin:0px;
+  } */
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 80px;
+    margin : 0 0 0 25.2px;
+  }
 `;
-const StMiddleWrap = styled.div`
+const StNoImageWrap = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    /* width: 100%; */
+    margin:0 0 0 16px;
+  }
 `;
 const StNickName = styled.div`
-  /* display: flex; */
   flex-direction: row;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -81,9 +107,20 @@ const StNickName = styled.div`
   line-height: 32px;
   color: #000000;
   margin-left: 16px;
-  text-align:left;
+  text-align: left;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin:0px;
+  }
 `;
-const StMbtiFollowWrap = styled.div`
+const StMbtiFollowFollowingWrap = styled.div`
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 230px;
+    font-size: 5px;
+    margin:0px;
+  }
   display: flex;
 `;
 const StMbti = styled.div`
@@ -98,15 +135,26 @@ const StMbti = styled.div`
   text-align: left;
   color: #979797;
   margin-left: 16px;
+    @media screen and (max-width: 500px) {
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    margin:0px;
+  }
 `;
 const StFollowWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 100px;
-  gap: 5px;
+  gap: 7px;
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin:0px;
+  }
 `;
 const StFollowNumber = styled.div`
-margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -128,10 +176,15 @@ const StFollowingWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 55px;
-  gap: 5px;
+  gap: 7px;
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin:0px;
+  }
 `;
 const StFollowingNumber = styled.div`
-margin-top: 1px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;

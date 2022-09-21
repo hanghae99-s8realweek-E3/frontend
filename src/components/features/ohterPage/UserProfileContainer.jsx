@@ -1,80 +1,97 @@
 //대연
+import { current } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
-import {getTodoListsFetch} from "../../../app/modules/todolistsSlice";
+import {
+  getMbtiTodoListsChallengeFetch,
+  getMbtiTodoListsCommentFetch,
+  getTodoListsChallengeFetch,
+  getTodoListsCommentFetch,
+  getTodoListsFetch,
+} from "../../../app/modules/todolistsSlice";
 import { tokenChecker } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
 import ProfileCard from "../../common/ProfileCard";
+import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
-  const [todoTab, setTodoTab] = useState("challenge");
+  // 첫 화면 진입시 challenge로 값을 지정
+  const [todoTab, setTodoTab] = useState("도전");
+  const [prevClick, setPrevClick] = useState(null);
+  // 정렬 버튼의 값을 배열로 지정
   const sortList = ["최신순", "댓글순", "도전순"];
+  // 정렬 버튼의 초기값을 최신순으로 지정
   const [sortState, setSortState] = useState(sortList[0]);
   const [selectSort, setSelectSort] = useState(false);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const params = useParams();
-  console.log(card);
 
-  const checkState = () => {
-    return setTodoTab("challenge");
-  };
-  const checkState2 = () => {
-    return setTodoTab("making");
-  };
+  // 첫 렌더링 일때 userId 인자로 parmas사용
 
+  // useEffect(() => {
+  //   dispatch(getOthersTodoFetch(params));
+  // }, []);
   useEffect(() => {
     dispatch(getOthersTodoFetch(params));
   }, []);
 
-  function changeFeedListSort (event) {
-    setSortState(sortList[event.target.value])
-    setSelectSort(!selectSort)
-  }
-  const toggleSortPopUp = (e) => {
-    e.preventDefault();
-    setSelectSort(!selectSort);
+
+
+  // 탭을 할 때마다 혅재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
+  useEffect(() => {
+    let current = document.getElementById(todoTab);
+    if (current !== null) {
+      current.style.color = "#ff6d53";
+      current.style.borderBottom = "2px solid";
+      current.style.borderBottomColor = "#ff6d53";
+    }
+
+    if (prevClick !== null) {
+      let prev = document.getElementById(prevClick);
+      prev.style.color = "black";
+      prev.style.borderBottomColor = "gray";
+    }
+    setPrevClick(todoTab);
+  }, [todoTab]);
+
+  // 도전한 TO DO 누를때
+  const ChallengeState = (e) => {
+    return setTodoTab(e.target.id);
   };
 
-  // useEffect(() => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsFetch(false));
-  //   else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
-  // }, []);
+  // 제안한 TO DO 누를때
+  const SuggestState = (e) => {
+    return setTodoTab(e.target.id);
+  };
 
-  // // 최신순
-  // const datebutton = () => {
-  //   if (tokenChecker() === false) {
-  //     return dispatch(getTodoListsFetch(false));
-  //   } else if (tokenChecker() === true) dispatch(getTodoListsFetch(true));
-  //   setSortState("최신순");
-  //   setSelectSort(!selectSort);
-  // };
-  // //댓글순
-  // const commentbutton = () => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsCommentFetch(false));
-  //   else if (tokenChecker() === true) dispatch(getTodoListsCommentFetch(true));
-  //   // dispatch(getTodoListsCommentFetch());
-  //   // navigate("/todolists?filter=commentsCounts");
-  //   setSortState("댓글순");
-  //   setSelectSort(!selectSort);
-  // };
-
-  // //도전순
-  // const challengebutton = () => {
-  //   if (tokenChecker() === false) dispatch(getTodoListsChallengeFetch(false));
-  //   else if (tokenChecker() === true)
-  //     dispatch(getTodoListsChallengeFetch(true));
-  //   // dispatch(getTodoListsChallengeFetch());
-  //   // navigate("/todolists?filter=challengedCount");
-  //   setSortState("도전순");
-  //   setSelectSort(!selectSort);
-  // };
-
+  // 최신순 정렬
+  const sortDate = () => {
+    dispatch(getTodoListsFetch());
+    setSortState("최신순");
+    setSelectSort(!selectSort);
+  };
+  //댓글순 정렬
+  const sortComment = () => {
+    dispatch(getTodoListsCommentFetch());
+    setSortState("댓글순");
+    setSelectSort(!selectSort);
+  };
+  // 도전순 정렬
+  const sortChallenge = () => {
+    dispatch(getTodoListsChallengeFetch());
+    setSortState("도전순");
+    setSelectSort(!selectSort);
+  };
+  //정렬 버튼 클릭시
+  const toggleSortPopUp = () => {
+    setSelectSort(!selectSort);
+  };
 
   return (
     <StTotalWrap>
@@ -85,11 +102,12 @@ function UserProfileContainer() {
           <StTopWrap>
             <ProfileCard profileData={card} />
           </StTopWrap>
-
-          <StMiddleLine></StMiddleLine>
+          <StTodoTopLine></StTodoTopLine>
           <StTodoWrap>
-            <StChallengeTodo onClick={checkState}>도전한 TO DO</StChallengeTodo>
-            <StSuggestionTodo onClick={checkState2}>
+            <StChallengeTodo id="도전" onClick={ChallengeState}>
+              도전한 TO DO
+            </StChallengeTodo>
+            <StSuggestionTodo id="제안" onClick={SuggestState}>
               제안한 TO DO
             </StSuggestionTodo>
           </StTodoWrap>
@@ -100,36 +118,34 @@ function UserProfileContainer() {
 
           <StBottomWrap>
             {selectSort === true ? (
-              <StShadowBackgroundDiv>
-              <StPopupBox>
-                <StSlideDiv />
-                {/* <StSort>
-                  <StDate onClick={datebutton}>최신순</StDate>
-                  <StComment onClick={commentbutton}>댓글순</StComment>
-                  <StChallenge onClick={challengebutton}>도전순</StChallenge> 
-                </StSort> */}
-                        {sortList.map((elem, index) =>
-                <div key={index} style={{margin:"0", padding:"0"}}>
-                  <StSortListBtn onClick={changeFeedListSort} value={index} fontWeight={sortState === elem ? "600" : "500"}>
-                    {elem}
-                  </StSortListBtn>
-                <StCommonBar />
-                </div>
-                        )}
-                <StFooterBar />
-                {/* <StCommonButton  onClick={toggleSortPopUp}>선택하기</StCommonButton> */}
-              </StPopupBox>
+              <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+                <StPopupBox>
+                  <StSlideDiv />
+                  <StSort>
+                    <StDate style = {{color : sortState === "최신순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortDate}>최신순</StDate>
+                    <StDateLine />
+                    <StComment style = {{color : sortState === "댓글순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortComment}>댓글순</StComment>
+                    <StCommentLine />
+                    <StChallenge style = {{color : sortState === "도전순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortChallenge}>도전순</StChallenge>
+                    <StChallengeLine />
+                    <StCommonBar />
+                  </StSort>
+                </StPopupBox>
               </StShadowBackgroundDiv>
             ) : (
               <></>
             )}
-            <StToggle onClick={toggleSortPopUp}>{sortState}
-            <img src={process.env.PUBLIC_URL + `/images/Toggle.png`} alt="sort list button" style={{height:"8px", margin:"0 0 0 8px"}}/>
+            <StToggle onClick={toggleSortPopUp}>
+              {sortState}
+              <img
+                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                alt="sort list button"
+                style={{ height: "8px", margin: "0 0 0 8px" }}
+              />
             </StToggle>
-            
+
             <StTodayMyCardWrap>
-              {todoTab === "challenge" ? 
-              (
+              {todoTab === "도전" ? (
                 // card.challengedTodos?.map((it, idx) => (
                 //   <ChallengeCard
                 //     id={it.todoId}
@@ -137,35 +153,50 @@ function UserProfileContainer() {
                 //     key={idx}
                 //   ></ChallengeCard>
                 // ))
-                sortState === sortList[0] ?
-                card.challengedTodos?.map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                sortState === sortList[0] ? (
+                  card.challengedTodos?.map((elem, index) => (
+                    <OthersCard data={elem} key={index} />
+                  ))
+                ) : sortState === sortList[1] ? (
+                  card.challengedTodos
+                    ?.slice()
+                    .sort((a, b) => b.commentCounts - a.commentCounts)
+                    .map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                ) : sortState === sortList[2] ? (
+                  card.challengedTodos
+                    ?.slice()
+                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                    .map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                ) : (
+                  <></>
                 )
-              : sortState === sortList[1] ?
-                card.challengedTodos?.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
+              ) : todoTab === "제안" ? (
+                sortState === sortList[0] ? (
+                  card.createdTodos?.map((elem, index) => (
+                    <OthersCard data={elem} key={index} />
+                  ))
+                ) : sortState === sortList[1] ? (
+                  card.createdTodos
+                    ?.slice()
+                    .sort((a, b) => b.commentCounts - a.commentCounts)
+                    .map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                ) : sortState === sortList[2] ? (
+                  card.createdTodos
+                    ?.slice()
+                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                    .map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                ) : (
+                  <></>
                 )
-              : sortState === sortList[2] ?
-                card.challengedTodos?.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : <></>
-              ) 
-              : todoTab === "making" ? 
-              (
-                sortState === sortList[0] ?
-                card.createdTodo?.map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[1] ?
-                card.createdTodo?.slice().sort((a, b) =>  b.commentCounts - a.commentCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : sortState === sortList[2] ?
-                card.createdTodo?.slice().sort((a, b) => b.challengedCounts - a.challengedCounts).map((elem, index) => 
-                  <ChallengeCard id={elem.todoId} data={elem} key={index} />
-                )
-              : <></>
+              ) : (
                 // card.createdTodo?.map((it, idx) => (
                 //   <ChallengeCard
                 //     id={it.todoId}
@@ -173,8 +204,6 @@ function UserProfileContainer() {
                 //     key={idx}
                 //   ></ChallengeCard>
                 // ))
-              ) 
-              : (
                 <>다시한번 시도해주세요</>
               )}
             </StTodayMyCardWrap>
@@ -193,10 +222,11 @@ const StTotalWrap = styled.div`
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 80px;
-  margin-bottom: 48.33px;
+  margin-top: 60px;
+  padding-bottom: 31.5px;
+  background-color: white;
 `;
-const StMiddleLine = styled.div`
+const StTodoTopLine = styled.div`
   display: flex;
   height: 1px;
   background: #bdc5cd;
@@ -204,24 +234,18 @@ const StMiddleLine = styled.div`
   width: 500px;
   margin-bottom: 10px;
 `;
-
 const StTodoWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* gap: 30px; */
   margin-bottom: 10px;
 `;
 const StChallengeTodo = styled.div`
-justify-content: center;
-display: flex;
-:active{
+  justify-content: center;
+  display: flex;
   width: 225px;
-  border-bottom: 2px solid black;
-}
-width: 225px;
-  border-bottom: 2px solid #bdc5cd;
+  border-bottom: 2px solid #ff6d53;
   /* width: 105px; */
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
@@ -229,17 +253,13 @@ width: 225px;
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
-  
+  color: #ff6d53;
+  padding-bottom: 9px;
 `;
 const StSuggestionTodo = styled.div`
-justify-content: center;
-display: flex;
-:active{
+  justify-content: center;
+  display: flex;
   width: 225px;
-  border-bottom: 2px solid black;
-}
-width: 225px;
   border-bottom: 2px solid #bdc5cd;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
@@ -248,30 +268,7 @@ width: 225px;
   font-size: 18px;
   line-height: 32px;
   color: #000000;
-`;
-const StLineWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 25px;
-  margin-right: 25px;
-`;
-const StMiddleLeftLine = styled.div`
-  height: 1px;
-  width: 225px;
-  background: #bdc5cd;
-  transform: matrix(1, 0, 0, -1, 0, 0);
-  &:hover {
-    background-color: black;
-  }
-`;
-const StMiddleRightLine = styled.div`
-  height: 1px;
-  width: 225px;
-  background: #bdc5cd;
-  transform: matrix(1, 0, 0, -1, 0, 0);
-  &:hover {
-    background-color: black;
-  }
+  padding-bottom: 9px;
 `;
 const StBottomWrap = styled.div`
   display: flex;
@@ -283,24 +280,23 @@ const StTodayMyCardWrap = styled.div`
   flex-direction: column;
 `;
 const StShadowBackgroundDiv = styled.div`
-  background:rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 
   position: fixed;
   display: block;
 
-  top:0;
-  width:500px;
-  height:100%;
-  z-index:10;
-
-`
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+`;
 
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
   /* height: 683px; */
-  height:335px;
+  height: 335px;
   box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
@@ -313,49 +309,65 @@ const StSlideDiv = styled.div`
   border-radius: 133.333px;
   margin: 21px auto 28px auto;
 `;
+const StSort = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 260px;
+  width: 59px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 65px;
+  text-align: center;
+  color: #000000;
+  margin-left: 220px;
+  align-items: center;
+`;
+const StDate = styled.div`
+cursor: pointer;
+`;
+const StDateLine = styled.div`
+  display: flex;
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
+`;
+const StComment = styled.div`
+cursor: pointer;
+`;
+const StCommentLine = styled.div`
+  background: #c7c7c7;
+  width: 450px;
+  height: 1px;
+`;
+const StChallenge = styled.div`
+cursor: pointer;
+`;
+const StChallengeLine = styled.div`
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
+`;
 const StCommonBar = styled.div`
   position: absolute;
   width: 178.23px;
-  /* margin-top: 200px; 이거 200줬을때 스크롤생겼음 */
+  margin-top: 250px;
   height: 6.65px;
   left: calc(50% - 178.23px / 2 - 1.33px);
-  /* background: red; */
+  background: #000000;
   border-radius: 133.005px;
 `;
 const StToggle = styled.div`
   background: none;
-
-display: flex;
-justify-content: center;
-align-items: center;
-
-font-size: 18px;
-
-border: none;
-outline: none;
-margin: 16px 25px 16px auto;
-
-height: 32px;  
-
-cursor:pointer;
-`;
-const StSortListBtn = styled.button`
-  background: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
-  font-weight: ${props => props.fontWeight || "500"};
+  font-size: 18px;
   border: none;
   outline: none;
-  margin: 20px auto;
-  cursor:pointer;
-`
-const StFooterBar = styled.div`
-  background: #000000;
-  margin: 30px auto 0 auto;
-  border-radius: 133.005px;
-  width: 178.23px;
-  height: 6.65px;
-`
+  margin: 16px 25px 16px auto;
+  height: 32px;
+  cursor: pointer;
+`;
 export default UserProfileContainer;

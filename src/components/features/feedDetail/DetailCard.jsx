@@ -1,6 +1,7 @@
 import {
   StCommonColumnBox,
   StCommonRowBox,
+  StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
@@ -17,6 +18,7 @@ function DetailCard({ data }) {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
 
+  console.log(data);
   // 팝업창 열고 닫기 위한 함수
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -66,9 +68,10 @@ function DetailCard({ data }) {
         <></>
       )}
       <StChallengeCardDiv width="90%" id={data.todoId}>
-        <StCommonColumnBox width="100%">
-          <StCommonRowBox>
-            <StChallengeNameSpan>{data.todo}</StChallengeNameSpan>
+        <StCommonRowBox width="100%">
+          {/* 내용 */}
+          <StChallengeNameSpan>{data.todo}</StChallengeNameSpan>
+          <StCommonColumnBox alignItems="center">
             {myData !== undefined ? (
               myData.userId === data.userId ? (
                 <StMenuBtn onClick={displayCardMenu}>
@@ -80,28 +83,30 @@ function DetailCard({ data }) {
             ) : (
               <></>
             )}
-          </StCommonRowBox>
-          <StCommonRowBox alignItems="center">
-            <StNickNameSpan>{data.nickname}</StNickNameSpan>
-            <StMBTISpan>{data.mbti}</StMBTISpan>
-            <StCommonRowBox alignItems="center" style={{ marginRight: "5px" }}>
-              <FontAwesomeIcon
-                style={{ color: "#979797", margin: "0 4px" }}
-                icon={faMessage}
-              />
-              <StCountSpan>{data.commentCounts}</StCountSpan>
+
+            <StCommonRowBox style={{ marginTop: "auto" }}>
+              <StCommonRowBox
+                alignItems="center"
+                style={{ marginLeft: "auto", marginRight: "5px" }}>
+                <FontAwesomeIcon
+                  style={{ color: "#979797", margin: "0 4px" }}
+                  icon={faMessage}
+                />
+                <StCountSpan>{data.commentCounts}</StCountSpan>
+              </StCommonRowBox>
+
+              <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
+                <FontAwesomeIcon
+                  style={{ color: "#979797", margin: "0 0 0 0" }}
+                  icon={faStar}
+                />
+                <StCountSpan style={{ marginRight: "4px" }}>
+                  {data.challengedCounts}
+                </StCountSpan>
+              </StCommonRowBox>
             </StCommonRowBox>
-            <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <FontAwesomeIcon
-                style={{ color: "#979797", margin: "0 0 0 0" }}
-                icon={faStar}
-              />
-              <StCountSpan style={{ marginRight: "4px" }}>
-                {data.challengedCounts}
-              </StCountSpan>
-            </StCommonRowBox>
-          </StCommonRowBox>
-        </StCommonColumnBox>
+          </StCommonColumnBox>
+        </StCommonRowBox>
       </StChallengeCardDiv>
     </>
   );
@@ -117,29 +122,22 @@ const StChallengeCardDiv = styled.div`
   align-items: center;
 
   width: ${(props) => props.width || "100%"};
-  height: 102px;
-  border: 1px solid gray;
   border-radius: 6px;
-  padding: 14px 20px 7px 20px;
-  margin: 5px 25px;
+  padding: 14px 20px;
+  margin: 6px 25px;
 
   box-sizing: border-box;
 `;
 
 const StChallengeNameSpan = styled.span`
+  display: flex;
+  align-items: center;
+
   font-size: 22px;
-  font-weight: 600;
-  color: #979797;
+  font-weight: 400;
+  text-align: left;
+  color: #000000;
   line-height: 32px;
-
-  margin-right: auto;
-`;
-
-const StNickNameSpan = styled.span`
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 32px;
-  color: ${(props) => props.color || "#979797"};
 
   margin-right: auto;
 `;
@@ -152,6 +150,8 @@ const StMenuBtn = styled.button`
 
   border: none;
   outline: none;
+  margin-left: auto;
+  margin-bottom: auto;
 
   cursor: pointer;
 `;
@@ -185,22 +185,4 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
-`;
-
-const StShadowBackgroundDiv = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  width: 500px;
-  height: 100%;
-  z-index: 10;
-`;
-
-const StMBTISpan = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 32px;
-  color: #979797;
-
-  margin: 0 16px;
 `;

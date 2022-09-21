@@ -34,7 +34,7 @@ function Footer() {
             window.location.pathname === "/" ||
             window.location.pathname === "/welcomepage" ||
             window.location.pathname === "/teaser"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -56,11 +56,9 @@ function Footer() {
             window.location.pathname === "/todolists" ||
             window.location.pathname === `/todolists/${params.mbti}` ||
             window.location.pathname === `/feeddetail/${params.todoId}` ||
-            window.location.pathname === "/todolists" ||
             window.location.pathname === `/follows/${params.userId}` ||
-            window.location.pathname === `/selectmbtifeed` ||
-            window.location.pathname === `/follows/${params.userId}`
-              ? "#E8644C"
+            window.location.pathname === `/selectmbtifeed`
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -69,10 +67,8 @@ function Footer() {
                 window.location.pathname === "/todolists" ||
                 window.location.pathname === `/todolists/${params.mbti}` ||
                 window.location.pathname === `/feeddetail/${params.todoId}` ||
-                window.location.pathname === "/todolists" ||
                 window.location.pathname === `/follows/${params.userId}` ||
-                window.location.pathname === `/selectmbtifeed` ||
-                window.location.pathname === `/follows/${params.userId}`
+                window.location.pathname === `/selectmbtifeed`
                   ? process.env.PUBLIC_URL + `/images/FeedActive.png`
                   : process.env.PUBLIC_URL + `/images/Feed.png`
               }
@@ -85,7 +81,7 @@ function Footer() {
           color={
             window.location.pathname === "/setuptodo" ||
             window.location.pathname === "/mytodos"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -96,6 +92,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/MimicActive.png`
                   : process.env.PUBLIC_URL + `/images/Mimic.png`
               }
+              style={{ height: "40px", width: "40px" }}
             />
           </div>
           미믹
@@ -112,7 +109,7 @@ function Footer() {
             window.location.pathname === "/changepw" ||
             window.location.pathname === "/helpdesk" ||
             window.location.pathname === "/withdraw"
-              ? "#E8644C"
+              ? "#FF6D53"
               : "#313131"
           }>
           <div>
@@ -158,6 +155,10 @@ const FooterContainer = styled.div`
 
   bottom: 0;
   z-index: 6;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 360px;
+  }
 `;
 
 const FooterButtonBox = styled.div`
@@ -167,6 +168,16 @@ const FooterButtonBox = styled.div`
   gap: 5rem;
 
   height: 100%;
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 360px;
+    gap: 3rem;
+  }
 `;
 
 const StButton = styled.button`

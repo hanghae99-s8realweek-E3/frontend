@@ -38,7 +38,7 @@ function FeedDetailContainer() {
         navigate("/todolists");
       }
     }
-  });
+  },[]);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -124,19 +124,22 @@ function FeedDetailContainer() {
   const myData = decodeMyTokenData();
 
   return (
-    <div style={{ marginTop: "80px", marginBottom: "220px" }}>
+    <div style={{ marginTop: "60px", marginBottom: "220px" }}>
       {Object.keys(detailState).length === 0 ? (
         <></>
       ) : (
         <div>
+        <StProfilWrap>
           <StUserIdBox>
             <StProfileImg src={detailState.todoInfo.profileImg} />
             <StNickname
               id={detailState.todoInfo.userId}
               onClick={onClickGoToOtherspage}>
-              {detailState.todoInfo.User.nickname}
+              {detailState.todoInfo.nickname}
             </StNickname>
-            {detailState.isFollowed === false ? (
+            <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+            {myData.userId === detailState.todoInfo.userId ? <></> : 
+            detailState.isFollowed === false ? (
               <StFollowBtn
                 id={detailState.todoInfo.userId}
                 onClick={changeFollowState}>
@@ -150,27 +153,29 @@ function FeedDetailContainer() {
               </StFollowBtn>
             )}
           </StUserIdBox>
-        
+
           <DetailCard data={detailState.todoInfo} />
-          
-          <div>
-            {detailState.isTodayDone === "false" ? (
-              <></>
-            ) : (
-              <StBtnGoToChallenge
-                onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}>
-                도전할래요!
-              </StBtnGoToChallenge>
-            )}
+
+        
+              
+                {detailState.isTodayDone === "false" ? (
+                  <></>
+                ) : (
+                  <StBtnGoToChallenge
+                    onClick={setMyTodayChallenge}
+                    id={detailState.todoInfo.todoId}>
+                    도전할래요!
+                  </StBtnGoToChallenge>
+                )}
+              </StProfilWrap>
             <div
               style={{
                 width: "100%",
                 background: "white",
                 padding: "10px 0",
-                marginTop: "10px",
+                
               }}>
-              {detailState.todoInfo.Comments?.map((x, index) => {
+              {detailState.comments?.map((x, index) => {
                 return (
                   <div key={index}>
                     <StCommentBox>
@@ -179,12 +184,12 @@ function FeedDetailContainer() {
                           width="20px"
                           height="20px"
                           borderRadius="10px"
-                          src={x.User.profileImg}
+                          src={x.profileImg}
                         />
                         <StNickname
                           id={x.userId}
                           onClick={onClickCommentGoToOtherspage}>
-                          {x.User.nickname}
+                          {x.nickname}
                         </StNickname>
                         <StChangeDeleteBtn>
                           {myData.userId === x.userId ? (
@@ -205,7 +210,7 @@ function FeedDetailContainer() {
                 );
               })}
             </div>
-          </div>
+          
           <StWriteComment onSubmit={upLoadCommentData}>
             <StItem>
               <StInputWrap>
@@ -241,7 +246,15 @@ const StUserIdBox = styled.div`
   width: 90%;
   margin: 0px auto 10px 20px;
   align-items: center;
+  cursor: pointer;
+
 `;
+
+const StProfilWrap = styled.div`
+  background-color:#EDECEC;
+  padding-top:20px;
+  padding-bottom:10px;
+`
 
 const StImgNickname = styled.div`
   /* background-color:green; */
@@ -249,11 +262,15 @@ const StImgNickname = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
+  cursor: pointer;
+
 `;
 
 const StProfileImg = styled.img`
   background-color: gray;
   border-radius: 15px;
+  cursor: pointer;
+
   /* width:30px;
   height:30px;
   margin:10px; */
@@ -268,12 +285,20 @@ const StProfileImg = styled.img`
 `;
 const StNickname = styled.div`
   /* background-color:red; */
-  width: 200px;
+  text-align: start;
+  margin-right: 18px;
+  font-weight: 500;
+  font-size: 22px;
   /* margin-top:5px; */
   /* border:1px solid; */
 `;
+
+const StMBTI = styled.div`
+  font-weight: 500;
+  font-size: 18px;
+  color: #5E5C5C;
+`
 const StFollowBtn = styled.button`
-  /* background-color:white; */
   border: none;
   margin-left: auto;
   font-family: "IBM Plex Sans KR";
@@ -315,9 +340,9 @@ const StWriteComment = styled.form`
   position: fixed;
   display: flex;
   width: 500px;
+  height:69px;
   bottom: 0;
-  height: 216px;
-  z-index: 6;
+  z-index: 7;
 `;
 const StItem = styled.div`
   /* background-color:blue; */
@@ -355,6 +380,8 @@ const StCommentBtn = styled.button`
   padding: 0;
   right: 0;
   transform: translateX(-60%) translateY(40%);
+  cursor: pointer;
+
 `;
 const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
@@ -367,4 +394,5 @@ const StBtnGoToChallenge = styled.button`
   font-size: 22px;
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
 `;

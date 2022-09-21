@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../../utils/token";
-import ChallengeCard from "../../common/ChallengeCard";
-import { StCommonBorder } from "../../interface/styledCommon";
+import {
+  StCommonBorder,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
+import OthersCard from "../ohterPage/OthersCard";
 
 function ActivityContainer() {
   const sortList = ["최신순", "댓글순", "도전순"];
@@ -47,7 +50,7 @@ function ActivityContainer() {
                     <StSortListBtn
                       onClick={changeFeedListSort}
                       value={index}
-                      fontWeight={sortState === elem ? "600" : "500"}>
+                      color={sortState === elem ? "#FF6D53" : "#909090"}>
                       {elem}
                     </StSortListBtn>
                     <StCommonBorder margin="0 25px" width="90%" />
@@ -83,21 +86,21 @@ function ActivityContainer() {
               <StMyCardListDiv>
                 {sortState === sortList[0] ? (
                   myTodosState.challengedTodos?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
                   myTodosState.challengedTodos
                     .slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
                   myTodosState.challengedTodos
                     .slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
@@ -125,22 +128,22 @@ function ActivityContainer() {
 
               <StMyCardListDiv>
                 {sortState === sortList[0] ? (
-                  myTodosState.createdTodo?.map((elem, index) => (
-                    <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                  myTodosState.createdTodos?.map((elem, index) => (
+                    <OthersCard data={elem} key={index} />
                   ))
                 ) : sortState === sortList[1] ? (
-                  myTodosState.createdTodo
+                  myTodosState.createdTodos
                     .slice()
                     .sort((a, b) => b.commentCounts - a.commentCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : sortState === sortList[2] ? (
-                  myTodosState.createdTodo
+                  myTodosState.createdTodos
                     .slice()
                     .sort((a, b) => b.challengedCounts - a.challengedCounts)
                     ?.map((elem, index) => (
-                      <ChallengeCard id={elem.todoId} data={elem} key={index} />
+                      <OthersCard data={elem} key={index} />
                     ))
                 ) : (
                   <></>
@@ -166,17 +169,17 @@ const StContainer = styled.div`
   justify-content: flex-start;
   position: relative;
 
-  margin: 80px 0;
+  margin: 60px 0 80px 0;
 
   box-sizing: border-box;
 `;
 
 const StTapBox = styled.div`
+  background: #ffffff;
   display: flex;
-
   flex-direction: row;
 
-  margin: 0 25px;
+  padding: 20px 25px 0 25px;
 
   width: 90%;
   height: 50px;
@@ -187,12 +190,12 @@ const StActiveTapButton = styled.button`
 
   font-size: 18px;
   font-weight: 500;
+  color: #ff6d53;
 
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 3px solid #ff6d53;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -204,12 +207,12 @@ const StTapButton = styled.button`
 
   font-size: 18px;
   font-weight: 500;
+  color: #313131;
 
   border: none;
-  border-bottom: 2px solid gray;
+  border-bottom: 1px solid #909090;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -258,18 +261,6 @@ const StMyCardListDiv = styled.div`
   flex-direction: column;
 `;
 
-const StShadowBackgroundDiv = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-
-  position: fixed;
-  display: block;
-
-  top: 0;
-  width: 500px;
-  height: 100%;
-  z-index: 10;
-`;
-
 const StSortListBtn = styled.button`
   background: none;
 
@@ -278,7 +269,8 @@ const StSortListBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
-  font-weight: ${(props) => props.fontWeight || "500"};
+  font-weight: 600;
+  color: ${(props) => props.color};
 
   border: none;
   outline: none;

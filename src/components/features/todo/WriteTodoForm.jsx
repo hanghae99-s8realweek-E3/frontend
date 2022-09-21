@@ -1,12 +1,13 @@
-//대연
+//대연 참고할만한 주석은 남겨두었습니다.
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
-// 나중에 코드 추가정리 필요!
+
 function WriteTodoForm() {
   const navigate = useNavigate();
+
   if (tokenChecker() === false) {
     alert("로그인 후 이용해주세요.");
     navigate("/mypage");
@@ -46,20 +47,24 @@ function WriteTodoForm() {
   //   todoRef.current.style.height=todoRef.current.scrollHeight +"px" ;
   // },[]);
 
+  // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
+    if(todo.todo.length < 10 ){
+    return alert("10자 미만은 작성할 수 없습니다.")
+    }else 
     // 새로고침 이벤트 막기
     e.preventDefault();
+
     // instance통신 선언
     const TodoDateFetchCheck = async () => {
       try {
         const response = await instance.post("/mytodos", todo);
         console.log(response);
         if (response.data.message === "success") {
-          console.log(response.data.message);
           navigate("/setuptodo");
         }
       } catch (error) {
-        return alert(error);
+        return alert(error.response.data.errorMessage);
       }
     };
     // 실행
@@ -75,7 +80,7 @@ function WriteTodoForm() {
           // onInput={handleResizeHeight}
           ref={todoRef}
           placeholder="내가만드는 TO DO내용"
-          maxLength={200}
+          maxLength={30}
           name="todo"
           value={todo.todo}
           onChange={onChange}
@@ -99,7 +104,7 @@ const StTotalWrap = styled.div`
 `;
 const StMbti = styled.span`
   display: flex;
-  margin: 84px 0px 9px 27px;
+  margin: 108.33px 0px 9px 27px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 600;
@@ -117,14 +122,13 @@ const StLine = styled.div`
 const StWriteTodoForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  height: 70vh;
 `;
 
 const StWriteTodoTextArea = styled.textarea`
-  display: flex;
   resize: none; // 크기 조절하는 커서 안뜨게할려고
   height: 150px;
-  width: 450px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -133,16 +137,13 @@ const StWriteTodoTextArea = styled.textarea`
   color: #979797;
   border:none;
   outline:none;
+  margin-left: 27px;
 `;
-// const StTextCount = styled.span`
-//   color: ${(props) => props.color};
-// `;
+
 const Stbutton = styled.button`
-  width: 450px;
+  /* width: 450px; */
   height: 70px;
-  background: #979797;
-  border-radius: 6px;
-  margin: 400px 25px 0px 25px;
+  margin: auto 25px 80px 25px;
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -151,6 +152,9 @@ const Stbutton = styled.button`
   line-height: 32px;
   text-align: center;
   color: #ffffff;
+  border: 0px;
+  background: #FF6D53;
+border-radius: 6px;
 `;
 
 export default WriteTodoForm;

@@ -1,4 +1,4 @@
-//대연
+//대연  주석은 아직 비교해볼게 많아서 안지워놨습니다
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -14,18 +14,20 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
-// 무한스크롤 때 사용
-import { useInView } from "react-intersection-observer";
+
+// check uncheck
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
+  // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
+
+  // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // 무한스크롤때 사용
-  // const [ref, inView] = useInView();
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
@@ -39,7 +41,7 @@ function FeedPageContainer() {
   //   // if ( feedCard.length === 0 && tokenChecker() === true) {
   //   if (tokenChecker() === true && mbti === undefined){
   //     dispatch(getTodoListsFetch(true));
-  //   } else 
+  //   } else
   //   dispatch(getTodoListsFetch(false));
   // }, []);
 
@@ -48,175 +50,168 @@ function FeedPageContainer() {
   //   // if ( feedCard.length === 0 && tokenChecker() === true) {
   //     if (tokenChecker() === true && mbti === undefined) {
   //         dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-  //   } else 
+  //   } else
   //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
   // }, []);
 
-  useEffect(() => {
-    if(tokenChecker() === false && mbti === undefined){
-      console.log("1")
-      dispatch(getTodoListsFetch(false))
-    }else if(tokenChecker() === false && mbti !== undefined){
-      console.log("2")
-      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
-    }else if(tokenChecker() === true && mbti === undefined){
-      console.log("3")
-    dispatch(getMbtiTodoListsFetch(true))
-    }else if(tokenChecker() === true && mbti !== undefined)
-    console.log("4")
-    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
-  },[])
+  console.log(tokenChecker(), mbti);
 
+  //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    if(mbti === undefined){
-      console.log("11")
-      dispatch(getTodoListsFetch(false))
-    }else if(mbti !== undefined){
-      console.log("22")
-      dispatch(getMbtiTodoListsFetch({ login:false, mbti:mbti}))
-    }else if(mbti === undefined){
-      console.log("33")
-    dispatch(getMbtiTodoListsFetch(true))
-    }else if(mbti !== undefined)
-    console.log("44")
-    dispatch(getMbtiTodoListsFetch({login:true, mbti:mbti}))
-  },[mbti])
-  // useEffect(() => {
-  //   console.log("갑니다");
-  //   if ((feedCard.length !== 0 && inView) || tokenChecker() === true) {
-  //     console.log("첫 로딩 이후 무한 스크롤");
-  //     dispatch(getTodoListsFetch(true));
-  //     dispatch(getMbtiTodoListsFetch({login:true,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤1");
-  //   } else if ((feedCard.length !== 0 && inView) || tokenChecker() === false) {
-  //   // } else if ( inView &&   tokenChecker() === false) {
-  //     console.log("첫 로딩 이후 무한 스크롤2");
-  //     dispatch(getTodoListsFetch(false));
-  //     dispatch(getMbtiTodoListsFetch({login:false,mbti:mbti}))
-  //     console.log("첫 로딩 이후 무한 스크롤3");
-  //   }
-  // }, [inView]);
+    if (tokenChecker() === false && mbti === undefined) {
+      dispatch(getTodoListsFetch(false));
+    } else if (tokenChecker() === false && mbti !== undefined) {
+      dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    } else if (tokenChecker() === true && mbti === undefined) {
+      //김대연 지적 사항 1
+      dispatch(getTodoListsFetch(true));
+    } else if (tokenChecker() === true && mbti !== undefined)
+      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  }, []);
+
+  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
+  useEffect(() => {
+    if (mbti === undefined) {
+      dispatch(getTodoListsFetch(false));
+      // 김대연 지적 사항 2
+      // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    } else if (mbti === undefined) {
+      dispatch(getTodoListsFetch(true));
+    } else if (mbti !== undefined)
+      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
-  // 도전완료 이미지 변경state
+  // 도전완료 클릭시 로그인 유무에따라서 1차적으로 거르고 아니면  기본/체크 이미지 변화
   const checkState = () => {
     if (tokenChecker() === false) {
       alert("로그인 후 이용해주세요");
       return;
     } else return checkOff(!checkOn);
   };
-  //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
-  const toggleSortPopUp = (e) => {
-    e.preventDefault();
+
+  // 최신순 클릭 후 클릭한 값에 따라 변화
+  const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-  // 최신순
-  const datebutton = (e) => {
-    e.preventDefault();
+
+  //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
+  // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
+  const sortDate = (e) => {
+    setSortState("최신순");
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
-        console.log("1");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-        console.log("2");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsFetch(true));
-          console.log("3");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-          console.log("4");
         }
       }
     }
-    setSortState("최신순");
-    setSelectSort(!selectSort);
+    console.log(e.target.id);
+
+    // setSelectSort(!selectSort);
   };
-  //댓글순
-  const commentbutton = (e) => {
-    e.preventDefault();
+  //댓글순 정렬
+  const sortComment = (e) => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
-        console.log("1");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsCommentFetch({ login: false, mbti: mbti }));
-        console.log("2");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsCommentFetch(true));
-          console.log("3");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsCommentFetch({ login: true, mbti: mbti }));
-          console.log("4");
         }
       }
     }
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
-  // //도전순
-  const challengebutton = (e) => {
-    e.preventDefault();
+  //도전순 정렬
+  const sortChallenge = (e) => {
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
-        console.log("5");
       } else if (mbti !== undefined) {
         dispatch(getMbtiTodoListsChallengeFetch({ login: false, mbti: mbti }));
-        console.log("6");
       }
     } else {
       if (tokenChecker() === true) {
         if (mbti === undefined) {
           dispatch(getTodoListsChallengeFetch(true));
-          console.log("7");
         } else if (mbti !== undefined) {
           dispatch(getMbtiTodoListsChallengeFetch({ login: true, mbti: mbti }));
-          console.log("8");
         }
       }
     }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
-
+  // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
     navigate("/selectmbtifeed");
-    // window.location.assign("/selectmbtifeed")
   };
-  console.log("리턴전콘솔");
 
   return (
-    <>
+    <StTotalWrap>
       {selectSort === true ? (
-        <StShadowBackgroundDiv>
+        <StShadowBackgroundDiv onClick={toggleSortPopUp}>
           <StPopupBox>
             <StSlideDiv />
             <StSort>
-              <StDate onClick={datebutton}>최신순</StDate>
-              <StComment onClick={commentbutton}>댓글순</StComment>
-              <StChallenge onClick={challengebutton}>도전순</StChallenge>
+              <StDate
+                style={{
+                  color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortDate}
+              >
+                최신순
+              </StDate>
+              <StDateLine />
+              <StComment
+                style={{
+                  color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortComment}
+              >
+                댓글순
+              </StComment>
+              <StCommentLine />
+              <StChallenge
+                style={{
+                  color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
+                }}
+                onClick={sortChallenge}
+              >
+                도전순
+              </StChallenge>
+              <StChallengeLine />
+              <StCommonBar />
             </StSort>
-            <StCommonBar />
           </StPopupBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
       )}
-      <StTotalWrap>
-        <StHideToggle>
+      <StTopWrap>
+        <StHideWrap>
           {/* 거짓이면 체크안한거 참이면 체크한거 */}
           {checkOn === false ? (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/Appear.png`}
+              src={process.env.PUBLIC_URL + `/images/unCheck.png`}
               width="17"
               height="17"
               alt="AppearImg"
@@ -224,13 +219,16 @@ function FeedPageContainer() {
           ) : (
             <StHideImg
               onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/Hide.png`}
+              src={process.env.PUBLIC_URL + `/images/check.png`}
               width="17"
               height="17"
               alt="AppearImg"
             />
           )}
           <StHide>도전완료 가리기</StHide>
+        </StHideWrap>
+        <StToggleImgWrap>
+          {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
           <StToggleImg
             onClick={toggleSortPopUp}
@@ -239,76 +237,93 @@ function FeedPageContainer() {
             height="6"
             alt="ToggleImg"
           />
-        </StHideToggle>
-        <StTodayMyCardWrap>
-          {checkOn === true
-            ? //isChallenged가 true이면 화면에 띄우면 안된다.
-              //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-              feedCard
-                ?.filter((elem) => elem.isChallenged === false)
-                .map((it, idx) => (
-                  <ChallengeCard
-                    id={it.todoId}
-                    data={it}
-                    key={idx}
-                  ></ChallengeCard>
-                ))
-            : feedCard?.map((it, idx) => (
-                <ChallengeCard id={it.todoId} data={it} key={idx}>
-                  ?
-                </ChallengeCard>
-              ))}
-          <div className="hi" style={{ height: 80 }}></div>
-          {/* <div ref={ref} /> 무한스크롤 때 사용 */}
-        </StTodayMyCardWrap>
-        <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
-      </StTotalWrap>
-    </>
+        </StToggleImgWrap>
+      </StTopWrap>
+      <StTodayMyCardWrap>
+        {checkOn === true
+          ? //isChallenged가 true이면 화면에 띄우면 안된다.
+            //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+            feedCard
+              ?.filter((elem) => elem.isChallenged === false)
+              .map((it, idx) => (
+                <ChallengeCard
+                  id={it.todoId}
+                  data={it}
+                  key={idx}
+                ></ChallengeCard>
+              ))
+          : feedCard?.map((it, idx) => (
+              <ChallengeCard id={it.todoId} data={it} key={idx}>
+                ?
+              </ChallengeCard>
+            ))}
+        <div className="hi" style={{ height: 80 }}></div>
+      </StTodayMyCardWrap>
+      <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+    </StTotalWrap>
   );
 }
-
-// <StCardSmallWrap key={idx}>
-//   <StCard id={it.todoId} onClick={goFeedDetail}>
-//     {it.todo.length < 10 ? it.todo : it.todo.substring(0, 10) + "..."}
-//   </StCard>
-//   <StNameCounterBox>
-//     <StName id={it.userId} onClick={goUserProfile}>
-//       {it.nickname}
-//     </StName>
-//     <StCommentCount>댓글{it.commentCounts}</StCommentCount>
-//     <StChallengeCount>도전{it.challengedCounts}</StChallengeCount>
-//   </StNameCounterBox>
-// </StCardSmallWrap>
 const StTotalWrap = styled.div`
+/* background-color: red; */
   display: flex;
   flex-direction: column;
+  /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
-const StHideToggle = styled.div`
+const StTopWrap = styled.div`
+
   display: flex;
   flex-direction: row;
   padding-top: 24px;
   margin: 60px 0px 18px;
-  align-items: center;
+  /* align-items: center; */
   background-color: #edecec;
+  /* background-color: yellow; */
   width: 500px;
   position: fixed;
-`;
+  /* background-color: blue; 범위확인용 */
+  /* gap:60px */
+  @media screen and (max-width: 500px) {
+    /* align-items: center; */
+    width: 360px
+  }
 
+`;
+const StHideWrap = styled.div`
+  /* background-color: red; 범위확인용 */
+  display: flex;
+`;
 const StHideImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
   cursor: pointer;
+  
 `;
 const StHide = styled.div`
   display: flex;
   margin-right: 235px;
-  align-items: center;
+  /* align-items: flex-end; */
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
   color: #000000;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 175px;
+    margin:0px;
+  }
+`;
+const StToggleImgWrap = styled.div`
+
+  /* background-color: yellow; 범위 확인용 */
+  display: flex;
+  /* align-items: flex-end; */
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin:0px;
+  }
 `;
 const StToggle = styled.div`
   margin-right: 8px;
@@ -319,11 +334,18 @@ const StToggle = styled.div`
   line-height: 32px;
   color: #000000;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100.09px;
+    margin:0px 8px 0px 0px;
+    text-align: end;
+  }
 `;
 const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
   cursor: pointer;
   align-items: center;
+
 `;
 const StTodayMyCardWrap = styled.div`
   /* display: inline-block; */
@@ -333,49 +355,47 @@ const StTodayMyCardWrap = styled.div`
   margin-top: 135.33px;
 `;
 const StSelectMbti = styled.button`
-  :hover {
-    background: #FF6D53;
-  }
   display: flex;
   width: 200px;
   position: fixed;
   height: 60px;
-  bottom :110.06px;
-  margin-left: 150px;
-  background: #979797;
-  border-radius: 66px;
+  bottom: 110.06px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
-  line-height: 32px;
-  text-align: center;
+  margin-left: 150px;
   color: #ffffff;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 999px;
+  border: 0px;
+  background: #ff6d53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  @media screen and (max-width: 500px) {
+
+    width: 144px;
+    margin-left:108px;
+  }
 `;
-
 const StShadowBackgroundDiv = styled.div`
+  /* display: flex; */
   background: rgba(0, 0, 0, 0.3);
-
   position: fixed;
   display: block;
-
   top: 0;
   width: 500px;
   height: 100%;
   z-index: 10;
 `;
-
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
   /* height: 683px; */
   height: 335px;
-  box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25); */
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
@@ -392,7 +412,6 @@ const StSort = styled.div`
   flex-direction: column;
   height: 260px;
   width: 59px;
-  position: absolute;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 600;
@@ -401,14 +420,37 @@ const StSort = styled.div`
   text-align: center;
   color: #000000;
   margin-left: 220px;
+  align-items: center;
 `;
-const StDate = styled.div``;
-const StComment = styled.div``;
-const StChallenge = styled.div``;
+const StDate = styled.div`
+  cursor: pointer;
+`;
+const StDateLine = styled.div`
+  display: flex;
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
+`;
+const StComment = styled.div`
+  cursor: pointer;
+`;
+const StCommentLine = styled.div`
+  background: #c7c7c7;
+  width: 450px;
+  height: 1px;
+`;
+const StChallenge = styled.div`
+  cursor: pointer;
+`;
+const StChallengeLine = styled.div`
+  width: 450px;
+  height: 1px;
+  background: #c7c7c7;
+`;
 const StCommonBar = styled.div`
   position: absolute;
   width: 178.23px;
-  margin-top: 315px;
+  margin-top: 250px;
   height: 6.65px;
   left: calc(50% - 178.23px / 2 - 1.33px);
   background: #000000;

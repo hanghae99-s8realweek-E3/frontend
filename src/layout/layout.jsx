@@ -8,8 +8,6 @@ function Layout({ children }) {
     if (
       (window.location.pathname === `/todolists/${params.mbti}` ||
         window.location.pathname === "/todolists" ||
-        window.location.pathname === "/setuptodo" ||
-        window.location.pathname === `/feeddetail/${params.todoId}` ||
         window.location.pathname === `/otherspage/${params.userId}` ||
         window.location.pathname === `/activity`) === true
     )
@@ -38,4 +36,8 @@ const LayoutContainer = styled.div`
 
   max-width: 500px;
   min-height: 100vh;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;

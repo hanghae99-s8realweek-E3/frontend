@@ -161,7 +161,7 @@ const StLoginBtn = styled.button`
   align-items: center;
 `;
 const StSignupBtn = styled.div`
-  display: flex;
+
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -170,6 +170,6 @@ const StSignupBtn = styled.div`
   height: 32px;
   color: #000000;
   cursor: pointer;
-  margin: 0px 0px 439px 218px;
+  margin: 0px 0px 439px auto;
 `;
 export default LoginForm;
