@@ -206,10 +206,10 @@ function FeedPageContainer() {
         <></>
       )}
       <StTopWrap>
-        <StHideWrap>
+        <StChallengeWrap>
           {/* 거짓이면 체크안한거 참이면 체크한거 */}
           {checkOn === false ? (
-            <StHideImg
+            <StChallengeImg
               onClick={checkState}
               src={process.env.PUBLIC_URL + `/images/unCheck.png`}
               width="17"
@@ -217,7 +217,7 @@ function FeedPageContainer() {
               alt="AppearImg"
             />
           ) : (
-            <StHideImg
+            <StChallengeImg
               onClick={checkState}
               src={process.env.PUBLIC_URL + `/images/check.png`}
               width="17"
@@ -225,8 +225,8 @@ function FeedPageContainer() {
               alt="AppearImg"
             />
           )}
-          <StHide>도전완료 가리기</StHide>
-        </StHideWrap>
+          <StChallengeWord>도전완료 가리기</StChallengeWord>
+        </StChallengeWrap>
         <StToggleImgWrap>
           {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
@@ -264,44 +264,33 @@ function FeedPageContainer() {
   );
 }
 const StTotalWrap = styled.div`
-/* background-color: red; */
   display: flex;
   flex-direction: column;
-  /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
 const StTopWrap = styled.div`
-
   display: flex;
   flex-direction: row;
-  padding-top: 24px;
-  margin: 60px 0px 18px;
-  /* align-items: center; */
+  padding-top: 30px;
+  padding-bottom: 15px;
+  margin: 45px 0px 0px;
   background-color: #edecec;
-  /* background-color: yellow; */
   width: 500px;
   position: fixed;
-  /* background-color: blue; 범위확인용 */
-  /* gap:60px */
   @media screen and (max-width: 500px) {
-    /* align-items: center; */
     width: 360px
   }
-
 `;
-const StHideWrap = styled.div`
-  /* background-color: red; 범위확인용 */
+const StChallengeWrap = styled.div`
   display: flex;
 `;
-const StHideImg = styled.img`
+const StChallengeImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
   cursor: pointer;
-  
 `;
-const StHide = styled.div`
+const StChallengeWord = styled.div`
   display: flex;
   margin-right: 235px;
-  /* align-items: flex-end; */
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -315,10 +304,7 @@ const StHide = styled.div`
   }
 `;
 const StToggleImgWrap = styled.div`
-
-  /* background-color: yellow; 범위 확인용 */
   display: flex;
-  /* align-items: flex-end; */
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
@@ -345,14 +331,10 @@ const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
   cursor: pointer;
   align-items: center;
-
 `;
 const StTodayMyCardWrap = styled.div`
-  /* display: inline-block; */
-  /* align-items: start; */
   flex-direction: column;
-  /* position: relative; */
-  margin-top: 135.33px;
+  margin-top: 115px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
@@ -374,13 +356,11 @@ const StSelectMbti = styled.button`
   background: #ff6d53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 500px) {
-
     width: 144px;
     margin-left:108px;
   }
 `;
 const StShadowBackgroundDiv = styled.div`
-  /* display: flex; */
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
   display: block;
@@ -393,9 +373,7 @@ const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
-  /* height: 683px; */
   height: 335px;
-  /* box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25); */
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
@@ -456,5 +434,4 @@ const StCommonBar = styled.div`
   background: #000000;
   border-radius: 133.005px;
 `;
-
 export default FeedPageContainer;
