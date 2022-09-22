@@ -18,8 +18,7 @@ function FeedDetailContainer() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [menuModal, setMenuModal] = useState(false);
-  const [commentId, setCommentId] = useState("")
-
+  const [commentId, setCommentId] = useState("");
 
   //useEffect의 위치 선정 중요.
   useEffect(() => {
@@ -44,7 +43,7 @@ function FeedDetailContainer() {
         navigate("/todolists");
       }
     }
-  },[]);
+  }, []);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -63,9 +62,9 @@ function FeedDetailContainer() {
       try {
         const response = await instance.delete(`/comments/${commentId}`);
         if (response.data.message === "success") {
-            dispatch(getFeedDetailFetch({ todoId: params.todoId }));
-            setCommentId("")
-            setMenuModal(false)
+          dispatch(getFeedDetailFetch({ todoId: params.todoId }));
+          setCommentId("");
+          setMenuModal(false);
         }
       } catch (error) {
         return alert(error.response.data.errorMessage);
@@ -130,7 +129,7 @@ function FeedDetailContainer() {
   };
 
   const myData = decodeMyTokenData();
-  console.log(myData)
+  console.log(myData);
 
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -140,139 +139,160 @@ function FeedDetailContainer() {
 
   return (
     <div style={{ marginTop: "60px", marginBottom: "220px" }}>
-
-    {menuModal === true ?  
+      {menuModal === true ? (
         <StShadowBackgroundDiv>
-            <StPopUpWhiteButton
-              onClick={onClickDeleteComment}
-              transform="translateY(76vh)">
-              삭제
-            </StPopUpWhiteButton>
-          
-            <StPopUpWhiteButton
-              onClick={displayCardMenu}
-              transform="translateY(77vh)">
-              닫기
-            </StPopUpWhiteButton>
-          </StShadowBackgroundDiv> 
-      : <></>
-    }
+          <StPopUpWhiteButton
+            onClick={onClickDeleteComment}
+            transform="translateY(76vh)"
+          >
+            삭제
+          </StPopUpWhiteButton>
+
+          <StPopUpWhiteButton
+            onClick={displayCardMenu}
+            transform="translateY(77vh)"
+          >
+            닫기
+          </StPopUpWhiteButton>
+        </StShadowBackgroundDiv>
+      ) : (
+        <></>
+      )}
 
       {Object.keys(detailState).length === 0 ? (
         <></>
       ) : (
         <div>
-        <StProfilWrap>
-          <StUserIdBox>
-          <StProfileBox>
-            <StProfileImg src={detailState.todoInfo.profile !== "none" ? detailState.todoInfo.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"} />
-          </StProfileBox>
-            <StNickname
-              id={detailState.todoInfo.userId}
-              onClick={onClickGoToOtherspage}>
-              {detailState.todoInfo.nickname}
-            </StNickname>
-            <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
-            {myData.userId === detailState.todoInfo.userId ? <></> : 
-            detailState.isFollowed === false ? (
-              <StFollowBtn
+          <StProfilWrap>
+            <StUserIdBox>
+              <StProfileBox>
+                <StProfileImg
+                  src={
+                    detailState.todoInfo.profile !== "none"
+                      ? detailState.todoInfo.profile
+                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                  }
+                />
+              </StProfileBox>
+              <StNickname
                 id={detailState.todoInfo.userId}
-                onClick={changeFollowState}>
-                팔로우
-              </StFollowBtn>
+                onClick={onClickGoToOtherspage}
+              >
+                {detailState.todoInfo.nickname}
+              </StNickname>
+              <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+              {myData.userId === detailState.todoInfo.userId ? (
+                <></>
+              ) : detailState.isFollowed === false ? (
+                <StFollowBtn
+                  id={detailState.todoInfo.userId}
+                  onClick={changeFollowState}
+                >
+                  팔로우
+                </StFollowBtn>
+              ) : (
+                <StFollowBtn
+                  id={detailState.todoInfo.userId}
+                  onClick={changeFollowState}
+                >
+                  언팔로우
+                </StFollowBtn>
+              )}
+            </StUserIdBox>
+
+            <DetailCard data={detailState.todoInfo} />
+
+            {detailState.isTodayDone === "false" ? (
+              <></>
             ) : (
-              <StFollowBtn
-                id={detailState.todoInfo.userId}
-                onClick={changeFollowState}>
-                언팔로우
-              </StFollowBtn>
+              <StBtnGoToChallenge
+                onClick={setMyTodayChallenge}
+                id={detailState.todoInfo.todoId}
+              >
+                도전할래요!
+              </StBtnGoToChallenge>
             )}
-          </StUserIdBox>
-
-          <DetailCard data={detailState.todoInfo} />
-
-        
-              
-                {detailState.isTodayDone === "false" ? (
-                  <></>
-                ) : (
-                  <StBtnGoToChallenge
-                    onClick={setMyTodayChallenge}
-                    id={detailState.todoInfo.todoId}>
-                    도전할래요!
-                  </StBtnGoToChallenge>
-                )}
-              </StProfilWrap>
-            <div
-              style={{
-                width: "100%",
-                background: "white",
-                padding: "10px 0",
-                
-              }}>
-              {detailState.comments?.map((x, index) => {
-                return (
-                  <div key={index}>
-                    <StCommentBox>
-                      <StImgNickname>
-                      <StProfileBox 
-                          width="32px"
-                          height="32px"
-                      >
+          </StProfilWrap>
+          <div
+            style={{
+              width: "100%",
+              background: "white",
+              padding: "10px 0",
+            }}
+          >
+            {detailState.comments?.map((x, index) => {
+              return (
+                <div key={index}>
+                  <StCommentBox>
+                    <StImgNickname>
+                      <StProfileBox width="32px" height="32px">
                         <StProfileImg
                           width="32px"
                           height="32px"
                           borderRadius="16px"
-                          src={x.profile !== "none" ? x.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"}
+                          src={
+                            x.profile !== "none"
+                              ? x.profile
+                              : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                          }
                         />
-                        </StProfileBox>
-                        <StNicknameComment
-                          id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}>
-                          {x.nickname}
-                        </StNicknameComment>
-                        <StChangeDeleteBtn>
-                        
-                          {myData.userId === x.userId ? (
-      
-                            <StMenuBtn
-                              id={x.commentId}
-                              onClick={displayCardMenu}>
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
-                            </StMenuBtn>
-                          ) : (
-                            <></>
-                          )}
+                      </StProfileBox>
+                      <StNicknameComment
+                        id={x.userId}
+                        onClick={onClickCommentGoToOtherspage}
+                      >
+                        {x.nickname}
+                      </StNicknameComment>
+                      <StChangeDeleteBtn>
+                        {myData.userId === x.userId ? (
+                          <StMenuBtn id={x.commentId} onClick={displayCardMenu}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                          </StMenuBtn>
+                        ) : (
+                          <></>
+                        )}
+                      </StChangeDeleteBtn>
+                    </StImgNickname>
+                    <StComment>{x.comment}</StComment>
+                  </StCommentBox>
+                </div>
+              );
+            })}
+          </div>
 
-
-                        </StChangeDeleteBtn>
-                      </StImgNickname>
-                      <StComment>{x.comment}</StComment>
-                    </StCommentBox>
-                  </div>
-                );
-              })}
-            </div>
-          
           <StWriteComment onSubmit={upLoadCommentData}>
-
-            
             <div
-            style={{width : "50px", height : "50px", margin:"10px", padding:"0", borderRadius:"50%", overflow:"hidden"}}
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "10px",
+                padding: "0",
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
             >
-              <StProfileImg style={{height:"50px", width:"auto", margin:"0", padding:"0"}} 
-              src={myData.profile !== "none" ? myData.profile : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"} />
-            </div> 
-
-              <StInput
-                type="text"
-                name="comment"
-                placeholder="댓글 내용"
-                ref={inputRef} //!ref를 참고하겠다.
+              <StProfileImg
+                style={{
+                  height: "50px",
+                  width: "auto",
+                  margin: "0",
+                  padding: "0",
+                }}
+                src={
+                  myData.profile !== "none"
+                    ? myData.profile
+                    : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                }
               />
-              <StCommentBtn type="submit">작성</StCommentBtn>
-            
+            </div>
 
+            <StInput
+              type="text"
+              name="comment"
+              placeholder="댓글 내용"
+              ref={inputRef} //!ref를 참고하겠다.
+            />
+            <StCommentBtn type="submit">작성</StCommentBtn>
           </StWriteComment>
         </div>
       )}
@@ -296,14 +316,13 @@ const StUserIdBox = styled.div`
   margin: 0px auto 10px 20px;
   align-items: center;
   cursor: pointer;
-
 `;
 
 const StProfilWrap = styled.div`
-  background-color:#EDECEC;
-  padding-top:20px;
-  padding-bottom:10px;
-`
+  background-color: #edecec;
+  padding-top: 20px;
+  padding-bottom: 10px;
+`;
 
 const StImgNickname = styled.div`
   /* background-color:green; */
@@ -312,25 +331,24 @@ const StImgNickname = styled.div`
   align-items: center;
   width: 100%;
   cursor: pointer;
-
 `;
 
 const StProfileBox = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
-  ${({ width, height}) => {
+  align-items: center;
+  ${({ width, height }) => {
     return css`
-    width: ${width || "50px"};
-    height: ${height || "50px"};
-    `
+      width: ${width || "50px"};
+      height: ${height || "50px"};
+    `;
   }}
   /* width:50px;
   height:50px; */
   border-radius:50%;
-  overflow:hidden;
-  margin:10px;
-`
+  overflow: hidden;
+  margin: 10px;
+`;
 
 const StProfileImg = styled.img`
   /* background-color: gray; */
@@ -361,10 +379,10 @@ const StNickname = styled.div`
 const StMBTI = styled.div`
   font-weight: 500;
   font-size: 18px;
-  color: #5E5C5C;
-`
+  color: #5e5c5c;
+`;
 const StFollowBtn = styled.button`
-  background:none;
+  background: none;
   border: none;
   margin-left: auto;
   font-family: "IBM Plex Sans KR";
@@ -379,9 +397,9 @@ const StFollowBtn = styled.button`
 
 const StNicknameComment = styled.div`
   font-weight: 500;
-font-size: 15px;
-line-height: 22px;
-`
+  font-size: 15px;
+  line-height: 22px;
+`;
 const StComment = styled.div`
   align-items: flex-start;
   text-align: start;
@@ -410,8 +428,6 @@ const StDeleteBtn = styled.button`
   cursor: pointer;
 `;
 
-
-
 const StMenuBtn = styled.button`
   background: none;
   font-size: 16px;
@@ -427,23 +443,21 @@ const StMenuBtn = styled.button`
 
 const StWriteComment = styled.form`
   background-color: white;
-  border-top:1px solid #C7C7C7;;
+  border-top: 1px solid #c7c7c7;
   position: fixed;
   display: flex;
-  align-items:center;
+  align-items: center;
   width: 500px;
-  height:70px;
+  height: 70px;
   bottom: 0;
   z-index: 7;
   padding: 4px 0;
-
 `;
 const StItem = styled.div`
   /* background-color:blue; */
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   border-radius: 1px solid red;
-
 `;
 
 const StInputWrap = styled.div`
@@ -453,9 +467,9 @@ const StInputWrap = styled.div`
 
 const StInput = styled.input`
   /* background-color:red; */
-  margin-left:auto; 
+  margin-left: auto;
   margin-right: 15px;
-  
+
   border: 1px solid #979797;
   border-radius: 6px;
   width: 90%;
@@ -465,7 +479,7 @@ const StInput = styled.input`
   padding-right: 70px;
   font-weight: 500;
   font-size: 18px;
-  ::placeholder{
+  ::placeholder {
     font-weight: 500;
     font-size: 18px;
   }
@@ -477,7 +491,7 @@ const StCommentBtn = styled.button`
   width: 60px;
   height: 32px;
   font-weight: 500;
-  position:absolute;
+  position: absolute;
   font-size: 18px;
   background-color: white;
   border: none;
@@ -486,7 +500,6 @@ const StCommentBtn = styled.button`
   right: 0;
   transform: translateX(-40%) translateY(-10%);
   cursor: pointer;
-
 `;
 const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
