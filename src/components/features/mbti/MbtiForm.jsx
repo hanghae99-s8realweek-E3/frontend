@@ -11,7 +11,6 @@ import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 const MbtiForm = () => {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
-  const myToken = decodeMyTokenData();
   // const state = useSelector (state => state.mbti)
   const kakaoToken = new URL(window.location.href).searchParams.get("token");
   if (kakaoToken !== null) {
@@ -21,16 +20,12 @@ const MbtiForm = () => {
   if (tokenChecker() === false) {
     navigate("/mypage");
   }
-  console.log(myToken, kakaoToken);
   //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후,
+  const myToken = decodeMyTokenData();
+
   useEffect(() => {
     if (myToken !== undefined && myToken !== null) {
       if (myToken.mbti !== null) {
-        navigate("/");
-      }
-    }
-    if (kakaoToken !== undefined && kakaoToken !== null) {
-      if (kakaoToken.mbti !== null) {
         navigate("/");
       }
     }
@@ -97,8 +92,7 @@ const MbtiForm = () => {
                     myMbti === elem ? "1px solid #ff6d53" : "1px solid #979797"
                   }
                   onClick={onClickSetMbti}
-                  value={elem}
-                >
+                  value={elem}>
                   {elem}
                 </StMBTIBtn>
               );
