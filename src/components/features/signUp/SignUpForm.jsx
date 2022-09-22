@@ -321,6 +321,7 @@ const StSignUpBtn = styled.button`
   background: #ff6d53;
   font-weight: 500;
   font-size: 22px;
+  cursor: pointer;
 `;
 const StErrorTextMessage = styled.div`
   font-family: "IBM Plex Sans KR";
