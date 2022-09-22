@@ -13,6 +13,7 @@ import {
   getTodoListsCommentFetch,
   getTodoListsFetch,
 } from "../../../app/modules/todolistsSlice";
+import LoadingContainer from "../../../utils/loadingState";
 import { tokenChecker } from "../../../utils/token";
 import ChallengeCard from "../../common/ChallengeCard";
 import ProfileCard from "../../common/ProfileCard";
@@ -31,6 +32,7 @@ function UserProfileContainer() {
 
   const dispatch = useDispatch();
   const params = useParams();
+  const [loading,setLoading] = useState(false);
 
   // 첫 렌더링 일때 userId 인자로 parmas사용
 
@@ -40,8 +42,6 @@ function UserProfileContainer() {
   useEffect(() => {
     dispatch(getOthersTodoFetch(params));
   }, []);
-
-
 
   // 탭을 할 때마다 혅재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
   useEffect(() => {
@@ -58,6 +58,7 @@ function UserProfileContainer() {
       prev.style.borderBottomColor = "gray";
     }
     setPrevClick(todoTab);
+    setLoading(false)
   }, [todoTab]);
 
   // 도전한 TO DO 누를때
@@ -67,7 +68,7 @@ function UserProfileContainer() {
 
   // 제안한 TO DO 누를때
   const SuggestState = (e) => {
-    return setTodoTab(e.target.id);
+    return setTodoTab(e.target.id) ;
   };
 
   // 최신순 정렬
@@ -94,6 +95,8 @@ function UserProfileContainer() {
   };
   console.log(card)
   return (
+    <>
+    {loading === true ? <LoadingContainer/> : <></>}
     <StTotalWrap>
       {Object.keys(card).length === 0 ? (
         <></>
@@ -211,6 +214,7 @@ function UserProfileContainer() {
         </>
       )}
     </StTotalWrap>
+    </>
   );
 }
 
