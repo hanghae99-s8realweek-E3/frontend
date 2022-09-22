@@ -143,6 +143,7 @@ function FeedDetailContainer() {
         <StShadowBackgroundDiv>
           <StPopUpWhiteButton
             onClick={onClickDeleteComment}
+
             transform="translateY(76vh)">
             삭제
           </StPopUpWhiteButton>
@@ -253,6 +254,16 @@ function FeedDetailContainer() {
           </div>
 
           <StWriteComment onSubmit={upLoadCommentData}>
+            <div
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "10px",
+                padding: "0",
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
+            >
             <StCommentProfileBox>
               <StProfileImg
                 style={{
@@ -267,6 +278,7 @@ function FeedDetailContainer() {
                     : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                 }
               />
+            </div>
             </StCommentProfileBox>
 
             <StInput
