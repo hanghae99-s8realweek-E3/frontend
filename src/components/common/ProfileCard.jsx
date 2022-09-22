@@ -69,25 +69,36 @@ function ProfileCard({ profileData }) {
               <FontAwesomeIcon
                 icon={faXmark}
                 style={{
-                  fontSize: "18px",
-                  color: "#ffffff",
+                  fontSize: "24px",
+                  color: "#151522",
                   pointerEvents: "none",
                 }}
               />
             </StCloseButton>
             <StContent>
+              <h2
+                style={{
+                  fontSize: "32px",
+                  lineHeight: "34px",
+                  fontWeight: "700",
+                  color: "#313131",
+                  margin: "17px auto",
+                }}>
+                MBTI 궁합
+              </h2>
+              <StText>
+                나와 천생연분인 MBTI와
+                <br />
+                나와 전혀 다른 MBTI를 확인 후<br />
+                미믹에 도전해보세요!
+                <br />
+                색다른 재미를 느끼실 수 있을거에요!
+              </StText>
               <img
                 src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
                 alt="MBTI matching List Images"
-                style={{ width: "350px", margin: "5px 0" }}
+                style={{ width: "430px", margin: "5px 0" }}
               />
-              <StText>위의 표는 MBTI 간의 궁합을 보여줍니다.</StText>
-              <StText>푸른 색상에 가까울 수록 각 MBTI 간의 궁합이</StText>
-              <StText>잘 맞는 편입니다.</StText>
-              <StText>
-                반대로 붉은 색상에 가까울 수록 각 MBTI 간의 궁합이
-              </StText>
-              <StText>잘 맞지 않는 편입니다.</StText>
             </StContent>
           </StModalContainer>
         </StShadowBackgroundDiv>
@@ -364,22 +375,24 @@ const StContent = styled.div`
 `;
 
 const StText = styled.p`
+  text-align: center;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #919191;
 
   margin: 0;
-  margin-right: auto;
+  margin-bottom: 42px;
 `;
 
 const StModalContainer = styled.div`
-  background: #ff6d53;
+  background: #ffffff;
 
   border-radius: 6px;
   padding: 25px;
-  margin: 18vh auto;
+  margin: 3vh auto;
 
-  width: 80%;
-  height: 520px;
+  width: 90%;
+  height: 700px;
 
   box-sizing: border-box;
 `;

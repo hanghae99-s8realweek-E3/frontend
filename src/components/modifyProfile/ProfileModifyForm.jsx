@@ -63,7 +63,7 @@ function ProfileModifyForm() {
     setSelectMBTI(!selectMBTI);
   }
 
-  // 프로필 이미지를 업로드
+  // 프로필 정보를 업로드
   function submitModifyMyProfileData(event) {
     event.preventDefault();
     setLoading(true);
@@ -77,6 +77,7 @@ function ProfileModifyForm() {
           navigate("/mypage");
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
