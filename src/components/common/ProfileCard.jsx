@@ -99,7 +99,7 @@ function ProfileCard({ profileData }) {
         <StImageBox>
           <StProfileImg
             src={
-              profileData.userInfo.profile !== ""
+              profileData.userInfo.profile !== "none"
                 ? profileData.userInfo.profile
                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
             }
