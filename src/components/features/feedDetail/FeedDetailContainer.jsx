@@ -7,7 +7,10 @@ import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAlignJustify,
+  faEllipsisVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
@@ -143,15 +146,13 @@ function FeedDetailContainer() {
         <StShadowBackgroundDiv>
           <StPopUpWhiteButton
             onClick={onClickDeleteComment}
-            transform="translateY(76vh)"
-          >
+            transform="translateY(76vh)">
             삭제
           </StPopUpWhiteButton>
 
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)"
-          >
+            transform="translateY(77vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -176,8 +177,7 @@ function FeedDetailContainer() {
               </StProfileBox>
               <StNickname
                 id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}
-              >
+                onClick={onClickGoToOtherspage}>
                 {detailState.todoInfo.nickname}
               </StNickname>
               <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
@@ -186,15 +186,13 @@ function FeedDetailContainer() {
               ) : detailState.isFollowed === false ? (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   팔로우
                 </StFollowBtn>
               ) : (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   언팔로우
                 </StFollowBtn>
               )}
@@ -207,8 +205,7 @@ function FeedDetailContainer() {
             ) : (
               <StBtnGoToChallenge
                 onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}
-              >
+                id={detailState.todoInfo.todoId}>
                 도전할래요!
               </StBtnGoToChallenge>
             )}
@@ -218,8 +215,7 @@ function FeedDetailContainer() {
               width: "100%",
               background: "white",
               padding: "10px 0",
-            }}
-          >
+            }}>
             {detailState.comments?.map((x, index) => {
               return (
                 <div key={index}>
@@ -239,8 +235,7 @@ function FeedDetailContainer() {
                       </StProfileBox>
                       <StNicknameComment
                         id={x.userId}
-                        onClick={onClickCommentGoToOtherspage}
-                      >
+                        onClick={onClickCommentGoToOtherspage}>
                         {x.nickname}
                       </StNicknameComment>
                       <StChangeDeleteBtn>
@@ -261,32 +256,21 @@ function FeedDetailContainer() {
           </div>
 
           <StWriteComment onSubmit={upLoadCommentData}>
-            <div
-              style={{
-                width: "50px",
-                height: "50px",
-                margin: "10px",
-                padding: "0",
-                borderRadius: "50%",
-                overflow: "hidden",
-              }}
-            >
-              <StCommentProfileBox>
-                <StProfileImg
-                  style={{
-                    height: "50px",
-                    width: "auto",
-                    margin: "0",
-                    padding: "0",
-                  }}
-                  src={
-                    myData.profile !== "none"
-                      ? myData.profile
-                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                  }
-                />
-              </StCommentProfileBox>
-            </div>
+            <StProfileBox>
+              <StProfileImg
+                style={{
+                  height: "50px",
+                  width: "50px",
+                  margin: "0",
+                  padding: "0",
+                }}
+                src={
+                  myData.profile !== "none"
+                    ? myData.profile
+                    : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                }
+              />
+            </StProfileBox>
             <StInput
               type="text"
               name="comment"
@@ -360,7 +344,7 @@ const StProfileImg = styled.img`
   margin:10px; */
   ${({ width, height, margin, borderRadius }) => {
     return css`
-      width: ${width || "50px"};
+      width: ${width || "auto"};
       height: ${height || "50px"};
       /* margin: ${margin || "10px"}; */
       /* border-radius: ${borderRadius || "25px"}; */
@@ -416,18 +400,6 @@ const StComment = styled.div`
 const StChangeDeleteBtn = styled.div`
   text-align: right;
   margin-left: auto;
-`;
-
-const StCommentProfileBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  margin: 10px;
-  padding: 0;
-  border-radius: 50%;
-  overflow: hidden;
 `;
 
 const StMenuBtn = styled.button`

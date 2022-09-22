@@ -118,20 +118,21 @@ function MyPageFollow() {
               <>
                 {searchList.length !== 0
                   ? searchList?.map((x, index) => {
+                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
-                                height="200px"
-                                width="200px"
-                                src={x.profileImg}
-                              ></StProfileImg>
+                                src={
+                                  x.profile === "none"
+                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                    : x.profile
+                                }
+                              />
                             </StProfileBox>
-
                             <StWrapNicknameMbti>
                               <StNickname>{x.nickname}</StNickname>
                               <StMbti>{x.mbti}</StMbti>
@@ -142,18 +143,20 @@ function MyPageFollow() {
                       );
                     })
                   : followState.follower?.map((x, index) => {
+                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
-                                height="200px"
-                                width="200px"
-                                src={x.profileImg}
-                              ></StProfileImg>
+                                src={
+                                  x.profile === "none"
+                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                    : x.profile
+                                }
+                              />
                             </StProfileBox>
                             <StWrapNicknameMbti>
                               <StNickname>{x.nickname}</StNickname>
@@ -188,12 +191,7 @@ function MyPageFollow() {
                 <StSearchBtn type="submit">
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
-                    style={{
-                      width: "23px",
-                      height: "23px",
-                      color: "#919191",
-                      marginTop: "10px",
-                    }}
+                    style={{ width: "23px", height: "23px", color: "#919191" }}
                   />
                 </StSearchBtn>
               </form>
@@ -203,18 +201,20 @@ function MyPageFollow() {
               <>
                 {searchList.length !== 0
                   ? searchList?.map((x, index) => {
+                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
-                                height="200px"
-                                width="200px"
-                                src={x.profileImg}
-                              ></StProfileImg>
+                                src={
+                                  x.profile === "none"
+                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                    : x.profile
+                                }
+                              />
                             </StProfileBox>
                             <StWrapNicknameMbti>
                               <StNickname>{x.nickname}</StNickname>
@@ -225,8 +225,7 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}
-                              >
+                                onClick={changeMyUnFollowState}>
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -235,14 +234,20 @@ function MyPageFollow() {
                       );
                     })
                   : followState.following?.map((x, index) => {
+                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
-                              <StProfileImg src="https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg" />
+                              <StProfileImg
+                                src={
+                                  x.profile === "none"
+                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                    : x.profile
+                                }
+                              />
                             </StProfileBox>
                             <StWrapNicknameMbti>
                               <StNickname>{x.nickname}</StNickname>
@@ -253,8 +258,7 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}
-                              >
+                                onClick={changeMyUnFollowState}>
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -295,7 +299,7 @@ const StContainer = styled.div`
 `;
 const StWrapBtn = styled.div`
   /* background-color: black; */
-  border-bottom: 1px solid #919191;
+  /* border-bottom: 1px solid #919191; */
   margin: auto;
   width: 450px;
   height: 45px;
@@ -311,8 +315,7 @@ const StWrapBtnFollow = styled.div`
   /* font-size: 18px; */
   font-weight: 500;
   color: #ff6d53;
-  border: none;
-  border-bottom: 2px solid #ff6d53;
+  border-bottom: 3px solid #ff6d53;
   outline: none;
   font-weight: 500;
   font-size: 20px;
@@ -324,12 +327,14 @@ const StWrapBtnFollowing = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 32px;
+  border-bottom: 1px solid #919191;
 `;
 
 const StSearchBarBox = styled.div`
   /* background-color: blue; */
   display: flex;
-  z-index: 1;
+  position: relative;
+  align-items: center;
   opacity: 1;
   width: 450px;
   height: 55px;
@@ -343,6 +348,7 @@ const StInput = styled.input`
   padding-left: 20px;
   border: none;
   border-radius: 6px;
+  font-size: 18px;
   width: 390px;
   height: 50px;
   z-index: -1;
@@ -370,7 +376,7 @@ const StSearchBtn = styled.button`
   align-items: center;
   position: absolute;
   right: 0;
-  transform: translateX(-100%) translateY(-140%);
+  transform: translateX(-60%) translateY(-130%);
 `;
 const StProfileContainer = styled.div`
   /* background-color: red; */
@@ -379,6 +385,7 @@ const StProfileContainer = styled.div`
   outline: none;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
+  align-items: center;
   height: 100px;
   width: 450px;
   margin: auto;
@@ -389,31 +396,28 @@ const StProfileContainer = styled.div`
 `;
 
 const StProfileBox = styled.div`
-  background-color: green;
   display: flex;
   justify-content: center;
   align-items: center;
   ${({ width, height }) => {
     return css`
-      width: ${width || "50px"};
-      height: ${height || "50px"};
+      width: ${width || "60px"};
+      height: ${height || "60px"};
     `;
   }}
   /* width:50px;
   height:50px; */
-  border-radius:50%;
+  border:none;
+  outline: none;
+  border-radius: 50%;
   overflow: hidden;
-  margin: 10px;
-  margin-top: 25px;
 `;
 
 const StProfileImg = styled.img`
   pointer-events: none;
-  border: 1px solid black;
-  border-radius: 30px;
-  width: 50px;
-  height: 50px;
-  margin: auto;
+  width: 60px;
+  height: auto;
+  margin: 0;
 `;
 const StWrapNicknameMbti = styled.div`
   pointer-events: none;
