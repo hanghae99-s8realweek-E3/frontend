@@ -1,19 +1,19 @@
-// 대연 담당 파일
+// 대연 return 구문 쪽 주석 inputCard컴포넌트 이용보류
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
+// import InputCard from "../../common/InputCard";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const [modal, setModal] = useState("");
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-  const [modal, setModal] = useState("");
-
   // 구조 분해 할당
   const onChange = (event) => {
     const { name, value } = event.target;
@@ -51,7 +51,6 @@ function LoginForm() {
     //함수 실행
     postLogin();
   };
-
   // moveSignUpPage
   const moveToSignUp = () => {
     navigate("/signup");
@@ -68,6 +67,13 @@ function LoginForm() {
           placeholder="abcdef@gmail.com"
           onChange={onChange}
         />
+        {/* <InputCard
+          name="email"
+          // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제
+          value={userData.email}
+          placeholder="abcdef@gmail.com"
+          onChange={onChange}
+        /> */}
         <StPassword> 비밀번호 </StPassword>
         <StPasswordInput
           name="password"
@@ -76,6 +82,13 @@ function LoginForm() {
           placeholder="비밀번호 입력"
           onChange={onChange}
         />
+        {/* <InputCard
+          name="password"
+          value={userData.password}
+          placeholder="비밀번호 입력"
+          type="password"
+          onChange={onChange}
+        /> */}
         <StIncorrect>{modal}</StIncorrect>
         <StLoginBtn type="submit">로그인</StLoginBtn>
       </StForm>
@@ -84,8 +97,8 @@ function LoginForm() {
   );
 }
 
-const StTotalWrap = styled.div``;
-
+const StTotalWrap = styled.div`
+`;
 const StForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -161,7 +174,6 @@ const StLoginBtn = styled.button`
   align-items: center;
 `;
 const StSignupBtn = styled.div`
-
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
