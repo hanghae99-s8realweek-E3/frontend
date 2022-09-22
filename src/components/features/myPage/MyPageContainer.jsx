@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker } from "../../../utils/token";
+import Grade from "../../common/Grade";
 import ProfileCard from "../../common/ProfileCard";
 import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
@@ -101,6 +102,7 @@ function MyPageContainer() {
         )}
 
         <StCommonBorder />
+        <Grade/>
 
         <div
           style={{
