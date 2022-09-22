@@ -24,14 +24,14 @@ function ProfileCard({ profileData }) {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
 
   const [, setFollow] = useState("팔로우");
@@ -83,7 +83,8 @@ function ProfileCard({ profileData }) {
                   fontWeight: "700",
                   color: "#313131",
                   margin: "17px auto",
-                }}>
+                }}
+              >
                 MBTI 궁합
               </h2>
               <StText>
