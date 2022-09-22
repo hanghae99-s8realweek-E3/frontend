@@ -7,6 +7,7 @@ import ProfileCard from "../../common/ProfileCard";
 import { useNavigate } from "react-router-dom";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 import SetUpToDoCard from "./SetUpToDoCard";
+import LoadingContainer from "../../../utils/loadingState";
 
 function SetToDoContainer() {
   // 선택된 달과 요일에 따라 값을 보여주기 위해 만든 배열
@@ -36,6 +37,7 @@ function SetToDoContainer() {
   const navigate = useNavigate();
   // 날짜를 적용해주는 상태
   const [calendar, setCalendar] = useState(new Date());
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   // 선택한 날짜에 따라 내용들을 다시 불러올 수 있도록 함.
   const myTodosState = useSelector((state) => state.setuptodos.data);
@@ -46,6 +48,7 @@ function SetToDoContainer() {
   // date:”yyyy-mm-dd”
 
   useEffect(() => {
+    setLoading(true);
     const selectYear = calendar.getFullYear();
     const selectMonth =
       calendar.getMonth() < 9
@@ -55,6 +58,7 @@ function SetToDoContainer() {
       calendar.getDate() < 10 ? "0" + calendar.getDate() : calendar.getDate();
     const selectDate = { date: `${selectYear}-${selectMonth}-${selectDay}` };
     dispatch(getSetUpMyTodoFetch(selectDate));
+    setLoading(false);
   }, [calendar]);
 
   // 도전하러 가기 클릭 시, 피드 선택 화면 출력
@@ -83,115 +87,114 @@ function SetToDoContainer() {
       : new Date().getDate()
   }`;
 
-  console.log(nowDate);
-
   return (
-    <StCommonColumnContainer>
-      {Object.keys(myTodosState).length !== 0 ? (
-        <ProfileCard profileData={myTodosState} />
-      ) : (
-        <></>
-      )}
-      <CalendarContainer>
-        {/* onchange를 통해 선택한 날짜를 저장 -> value를 통해 선택한 날짜를 받아옴. */}
-        {/* maxDate를 통해 선택할 수 있는 최대 날짜(금일), minDate를 통해 선택할 수 있는 최소 날짜 설정 가능 */}
-        <Calendar
-          value={calendar}
-          onChange={setCalendar}
-          maxDate={new Date()}
-          minDate={mindate}
-          locale="en"
-        />
-      </CalendarContainer>
+    <>
+      {loading === true ? <LoadingContainer /> : <></>}
+      <StCommonColumnContainer>
+        {Object.keys(myTodosState).length !== 0 ? (
+          <>
+            <ProfileCard profileData={myTodosState} />
+            <CalendarContainer>
+              {/* onchange를 통해 선택한 날짜를 저장 -> value를 통해 선택한 날짜를 받아옴. */}
+              {/* maxDate를 통해 선택할 수 있는 최대 날짜(금일), minDate를 통해 선택할 수 있는 최소 날짜 설정 가능 */}
+              <Calendar
+                value={calendar}
+                onChange={setCalendar}
+                maxDate={new Date()}
+                minDate={mindate}
+                locale="en"
+              />
+            </CalendarContainer>
 
-      {Object.keys(myTodosState).length === 0 ? (
-        <div>로딩중입니다...</div>
-      ) : (
-        <>
-          <StTodayBox>
-            <StCommonRowBox>
-              {/* getDay()는 배열인 관계로 0 = 일요일이기 때문에 앞서 weekOfDayList 배열을 만들어 이렇게 받아옴. */}
-              <StDayWeekOfDaySpan>
-                {weekOfDayList[calendar.getDay()]}
-              </StDayWeekOfDaySpan>
-              <span
-                style={{
-                  color: "#979797",
-                  margin: "0 12px",
-                  fontSize: "20px",
-                  fontWeight: "600",
-                }}>
-                ·
-              </span>
-              {/* 1~9는 숫자 앞에 0이 붙도록 설정 */}
-              <StDayDateSpan>
-                {calendar.getDate() < 10
-                  ? "0" + calendar.getDate()
-                  : calendar.getDate()}
-              </StDayDateSpan>
-              {/* getMonth()는 배열인 관계로 0 = 1월이기 때문에 앞서 monthList 배열을 만들어 이렇게 받아옴. */}
-              <StDayMonthSpan>{monthList[calendar.getMonth()]}</StDayMonthSpan>
-            </StCommonRowBox>
-          </StTodayBox>
+            <StTodayBox>
+              <StCommonRowBox>
+                {/* getDay()는 배열인 관계로 0 = 일요일이기 때문에 앞서 weekOfDayList 배열을 만들어 이렇게 받아옴. */}
+                <StDayWeekOfDaySpan>
+                  {weekOfDayList[calendar.getDay()]}
+                </StDayWeekOfDaySpan>
+                <span
+                  style={{
+                    color: "#979797",
+                    margin: "0 12px",
+                    fontSize: "20px",
+                    fontWeight: "600",
+                  }}>
+                  ·
+                </span>
+                {/* 1~9는 숫자 앞에 0이 붙도록 설정 */}
+                <StDayDateSpan>
+                  {calendar.getDate() < 10
+                    ? "0" + calendar.getDate()
+                    : calendar.getDate()}
+                </StDayDateSpan>
+                {/* getMonth()는 배열인 관계로 0 = 1월이기 때문에 앞서 monthList 배열을 만들어 이렇게 받아옴. */}
+                <StDayMonthSpan>
+                  {monthList[calendar.getMonth()]}
+                </StDayMonthSpan>
+              </StCommonRowBox>
+            </StTodayBox>
 
-          <StCommonBorder margin="0 25px" />
+            <StCommonBorder margin="0 25px" />
 
-          <StChallengeToDoBox>
-            <StCommonText margin="0 auto 14px 25px" fontSize="18px">
-              오늘의 미믹
-            </StCommonText>
-            {selectingDate !== nowDate ? (
-              Array.isArray(myTodosState.challengedTodo) === true ? (
-                <StNotifyNoSettingBox>
-                  진행한 도전이 없습니다.
-                </StNotifyNoSettingBox>
+            <StChallengeToDoBox>
+              <StCommonText margin="0 auto 14px 25px" fontSize="18px">
+                오늘의 미믹
+              </StCommonText>
+              {selectingDate !== nowDate ? (
+                Array.isArray(myTodosState.challengedTodo) === true ? (
+                  <StNotifyNoSettingBox>
+                    진행한 도전이 없습니다.
+                  </StNotifyNoSettingBox>
+                ) : (
+                  <SetUpToDoCard
+                    id={myTodosState.challengedTodo.todoId}
+                    data={myTodosState.challengedTodo}
+                    hideState={false}
+                    isTodayChallenge={false}
+                  />
+                )
+              ) : Array.isArray(myTodosState.challengedTodo) === true ? (
+                <StSetToDoBtn onClick={moveToSelectFeed}>
+                  도전하러 가기
+                </StSetToDoBtn>
               ) : (
                 <SetUpToDoCard
                   id={myTodosState.challengedTodo.todoId}
                   data={myTodosState.challengedTodo}
                   hideState={false}
-                  isTodayChallenge={false}
+                  isTodayChallenge={true}
                 />
-              )
-            ) : Array.isArray(myTodosState.challengedTodo) === true ? (
-              <StSetToDoBtn onClick={moveToSelectFeed}>
-                도전하러 가기
-              </StSetToDoBtn>
-            ) : (
-              <SetUpToDoCard
-                id={myTodosState.challengedTodo.todoId}
-                data={myTodosState.challengedTodo}
-                hideState={false}
-                isTodayChallenge={true}
-              />
-            )}
-          </StChallengeToDoBox>
+              )}
+            </StChallengeToDoBox>
 
-          <StMakingToDoBox>
-            <StCommonText margin="0 auto 14px 25px" fontSize="18px">
-              내가 만든 미믹
-            </StCommonText>
-            {Array.isArray(myTodosState.createdTodo) === true ? (
-              selectingDate !== nowDate ? (
-                <StNotifyNoSettingBox>
-                  제안한 도전이 없습니다.
-                </StNotifyNoSettingBox>
+            <StMakingToDoBox>
+              <StCommonText margin="0 auto 14px 25px" fontSize="18px">
+                내가 만든 미믹
+              </StCommonText>
+              {Array.isArray(myTodosState.createdTodo) === true ? (
+                selectingDate !== nowDate ? (
+                  <StNotifyNoSettingBox>
+                    제안한 도전이 없습니다.
+                  </StNotifyNoSettingBox>
+                ) : (
+                  <StSetToDoBtn onClick={moveToWriteTodo}>
+                    제안하러 가기
+                  </StSetToDoBtn>
+                )
               ) : (
-                <StSetToDoBtn onClick={moveToWriteTodo}>
-                  제안하러 가기
-                </StSetToDoBtn>
-              )
-            ) : (
-              <SetUpToDoCard
-                id={myTodosState.createdTodo.todoId}
-                data={myTodosState.createdTodo}
-                hideState={true}
-              />
-            )}
-          </StMakingToDoBox>
-        </>
-      )}
-    </StCommonColumnContainer>
+                <SetUpToDoCard
+                  id={myTodosState.createdTodo.todoId}
+                  data={myTodosState.createdTodo}
+                  hideState={true}
+                />
+              )}
+            </StMakingToDoBox>
+          </>
+        ) : (
+          <></>
+        )}
+      </StCommonColumnContainer>
+    </>
   );
 }
 

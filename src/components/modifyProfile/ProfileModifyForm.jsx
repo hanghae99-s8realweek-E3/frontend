@@ -4,17 +4,19 @@ import styled from "styled-components";
 import instance from "../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 import AWS from "aws-sdk";
+import LoadingContainer from "../../utils/loadingState";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
-  // 업로드할 파일 데이터를 저장하기 위한 State
-  // const [imageFile, setImageFile] = useState(null);
-  // const [imageURL, setImageURL] = useState();
+  const [loading, setLoading] = useState(false);
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({
-    profile: myData.profile,
+    profile:
+      myData.profile === "none"
+        ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+        : myData.profile,
     nickname: myData.nickname,
     mbti: myData.mbti,
   });
@@ -64,11 +66,14 @@ function ProfileModifyForm() {
   // 프로필 이미지를 업로드
   function submitModifyMyProfileData(event) {
     event.preventDefault();
+    setLoading(true);
     const modifyConnect = async () => {
       try {
         const response = await instance.put("/accounts", changeProfile);
         if (response.data.message === "success") {
           window.localStorage.setItem("token", response.data.token);
+          setLoading(false);
+          alert("프로필이 변경됐습니다. 내 정보 화면으로 이동합니다.");
           navigate("/mypage");
         }
       } catch (error) {
@@ -103,7 +108,7 @@ function ProfileModifyForm() {
       return;
     }
     // 이후, 업로드할 파일을 state에 저장
-
+    setLoading(true);
     const params = {
       ACL: "public-read",
       Body: imageFile,
@@ -129,6 +134,7 @@ function ProfileModifyForm() {
                 "프로필 이미지가 변경됐습니다. 내 정보 화면으로 이동합니다."
               );
               navigate("/mypage");
+              setLoading(false);
             }
           } catch (error) {
             alert(error.response.data.errorMessage);
@@ -143,43 +149,9 @@ function ProfileModifyForm() {
       });
   }
 
-  // setChangeProfile({
-  //   ...changeProfile,
-  //   profile: URL.createObjectURL(event.target.files[0]),
-  // });
-  // console.log(process.env.REACT_APP_AWS_S3_BUCKET_ROUTE);
-  // setImageFile(imageFile);
-  // }
-
-  // function uploadFile(imageFile) {
-  //   const params = {
-  //     ACL: "public-read",
-  //     Body: imageFile,
-  //     Bucket: process.env.REACT_APP_AWS_S3_BUCKET_NAME,
-  //     ContentType: "image/jpg",
-  //     Key:
-  //       process.env.REACT_APP_AWS_S3_FOLDER_NAME +
-  //       `${new Date().getTime()}.jpg`,
-  //   };
-
-  //   myBucket
-  //     .putObject(params)
-  //     .on("httpUploadProgress", (event) => {
-  //       setTimeout(() => {
-  //         setImageFile(null);
-  //         // setImageURL(process.env.REACT_APP_AWS_S3_BUCKET_ROUTE + params.Key);
-  //         alert("업로드가 완료됐습니다!");
-  //       }, 3000);
-  //     })
-  //     .send((error) => {
-  //       if (error) {
-  //         console.log(error);
-  //       }
-  //     });
-  // }
-
   return (
     <>
+      {loading === true ? <LoadingContainer /> : <></>}
       {selectMBTI === true ? (
         <StPopupBox>
           <StSlideDiv />
