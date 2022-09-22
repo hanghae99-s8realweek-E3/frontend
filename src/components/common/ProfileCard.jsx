@@ -1,13 +1,24 @@
 //대연
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import instance from "../../app/modules/instance";
+import { getOthersTodoFetch } from "../../app/modules/mytodosSlice";
+import { decodeMyTokenData } from "../../utils/token";
+import { StShadowBackgroundDiv } from "../interface/styledCommon";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
 function ProfileCard({ profileData }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const params = useParams();
-  console.log(params);
+  const myData = decodeMyTokenData();
+  const [modalState, setModalState] = useState(false);
+
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
     // window.location.pathname === "/otherspage" ?
@@ -22,60 +33,163 @@ function ProfileCard({ profileData }) {
     // :
     navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
-  
+
+  const [, setFollow] = useState("팔로우");
+
+  // 다른 유저 프로필 정보 페이지에서 팔로우/언팔로우  및 피드를 불러야하고
+  // instance 통신 후 만약 내가 현재 이 유저를 팔로우하고 있다면 state를 이용해 언팔로우, 언팔로우 하고있다면 state를 이용해 팔로우로 바꿔야한다.
+  const changeFollowState = async () => {
+    try {
+      const response = await instance.put(`/follows/${params.userId}`);
+      if (response.data.message === "success") {
+        if (profileData.userInfo.isFollowed === false) {
+          dispatch(getOthersTodoFetch(params));
+          setFollow("언팔로우");
+        } else if (profileData.userInfo.isFollowed === true)
+          dispatch(getOthersTodoFetch(params));
+        setFollow("팔로우");
+      }
+    } catch (error) {
+      return alert(error.response.data.errorMessage);
+    }
+  };
+
+  const changeModalState = () => {
+    setModalState(!modalState);
+  };
+
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
   return (
-    <StTotalWrap>
-      <StProfileImg
-        src="https://img.lostark.co.kr/profile/6/6C35FF38A24FEFDBC538874A5C986C14897E62D13480EC4B8CEF8E7C93D75149.PNG"
-        width="80"
-        height="80"
-        alt="dy"
-      />
-      <StNoImageWrap>
-        <StNickName>{profileData.userInfo.nickname}</StNickName>
-        <StMbtiFollowFollowingWrap>
-          <StMbti>{profileData.userInfo.mbti}</StMbti>
-          <StFollowWrap onClick={goFollow}>
-            <StFollowWord>팔로워</StFollowWord>
-            <StFollowNumber>
-              {window.location.pathname === "/mypage"
-                ? profileData.userInfo.follower
-                : profileData.userInfo.followerCount}
-            </StFollowNumber>
-          </StFollowWrap>
-          <StFollowingWrap onClick={goFollowing}>
-            <StFollowingWord>팔로잉</StFollowingWord>
-            <StFollowingNumber>
-              {window.location.pathname === "/mypage"
-                ? profileData.userInfo.following
-                : profileData.userInfo.followingCount}
-            </StFollowingNumber>
-          </StFollowingWrap>
-        </StMbtiFollowFollowingWrap>
-      </StNoImageWrap>
-    </StTotalWrap>
+    <>
+      {modalState === true ? (
+        <StShadowBackgroundDiv>
+          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+          <StModalContainer onClick={(e) => e.stopPropagation()}>
+            <StCloseButton type="button" onClick={changeModalState}>
+              <FontAwesomeIcon
+                icon={faXmark}
+                style={{
+                  fontSize: "24px",
+                  color: "#151522",
+                  pointerEvents: "none",
+                }}
+              />
+            </StCloseButton>
+            <StContent>
+              <h2
+                style={{
+                  fontSize: "32px",
+                  lineHeight: "34px",
+                  fontWeight: "700",
+                  color: "#313131",
+                  margin: "17px auto",
+                }}>
+                MBTI 궁합
+              </h2>
+              <StText>
+                나와 천생연분인 MBTI와
+                <br />
+                나와 전혀 다른 MBTI를 확인 후<br />
+                미믹에 도전해보세요!
+                <br />
+                색다른 재미를 느끼실 수 있을거에요!
+              </StText>
+              <img
+                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
+                alt="MBTI matching List Images"
+                style={{ width: "430px", margin: "5px 0" }}
+              />
+            </StContent>
+          </StModalContainer>
+        </StShadowBackgroundDiv>
+      ) : (
+        <></>
+      )}
+
+      <StTotalWrap>
+        <StImageBox>
+          <StProfileImg
+            src={
+              profileData.userInfo.profile !== "none"
+                ? profileData.userInfo.profile
+                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+            }
+            alt="dy"
+          />
+        </StImageBox>
+        <StNoImageWrap>
+          <StNickName>{profileData.userInfo.nickname}</StNickName>
+          <StMbtiFollowFollowingWrap>
+            <StMbti>{profileData.userInfo.mbti}</StMbti>
+            <StFollowWrap onClick={goFollow}>
+              <StFollowWord>팔로워</StFollowWord>
+              <StFollowNumber>
+                {window.location.pathname === "/mypage"
+                  ? profileData.userInfo.follower
+                  : profileData.userInfo.followerCount}
+              </StFollowNumber>
+            </StFollowWrap>
+            <StFollowingWrap onClick={goFollowing}>
+              <StFollowingWord>팔로잉</StFollowingWord>
+              <StFollowingNumber>
+                {window.location.pathname === "/mypage"
+                  ? profileData.userInfo.following
+                  : profileData.userInfo.followingCount}
+              </StFollowingNumber>
+            </StFollowingWrap>
+          </StMbtiFollowFollowingWrap>
+        </StNoImageWrap>
+      </StTotalWrap>
+
+      {window.location.pathname === `/otherspage/${params.userId}` ? (
+        <StFollowBtn onClick={changeFollowState}>
+          {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
+          {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우"}
+        </StFollowBtn>
+      ) : (
+        <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+      )}
+    </>
   );
 }
+
 export default ProfileCard;
 
 const StTotalWrap = styled.div`
-background-color: white;
-  width: 500px;
+  background-color: white;
+  width: 100%;
   margin-top: 31.5px;
   display: flex;
   flex-direction: row;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 360px;
-    margin:0px;
+    margin: 0px;
     background-color: white;
     margin-top: 22.68px;
   }
 `;
-const StProfileImg = styled.img`
+const StImageBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  overflow: hidden;
   margin-left: 35px;
-  border-radius: 9999px;
+  border-radius: 50%;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+    margin: 0 0 0 25.2px;
+  }
+`;
+
+const StProfileImg = styled.img`
+  /* border-radius: 9999px; */
+  height: 80px;
+  width: 80px;
   /* @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
@@ -84,8 +198,9 @@ const StProfileImg = styled.img`
   } */
   @media screen and (max-width: 500px) {
     align-items: center;
-    width: 80px;
-    margin : 0 0 0 25.2px;
+    width: 57.6px;
+    height: 57.6px;
+    /* margin: 0 0 0 25.2px; */
   }
 `;
 const StNoImageWrap = styled.div`
@@ -95,7 +210,7 @@ const StNoImageWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     /* width: 100%; */
-    margin:0 0 0 16px;
+    margin: 0 0 0 16px;
   }
 `;
 const StNickName = styled.div`
@@ -111,7 +226,7 @@ const StNickName = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin:0px;
+    margin: 0px;
   }
 `;
 const StMbtiFollowFollowingWrap = styled.div`
@@ -119,7 +234,7 @@ const StMbtiFollowFollowingWrap = styled.div`
     align-items: center;
     width: 230px;
     font-size: 5px;
-    margin:0px;
+    margin: 0px;
   }
   display: flex;
 `;
@@ -135,11 +250,11 @@ const StMbti = styled.div`
   text-align: left;
   color: #979797;
   margin-left: 16px;
-    @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     align-items: flex-start;
     text-align: left;
     width: 100%;
-    margin:0px;
+    margin-left: 2px;
   }
 `;
 const StFollowWrap = styled.div`
@@ -151,7 +266,7 @@ const StFollowWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin:0px;
+    margin: 0px;
   }
 `;
 const StFollowNumber = styled.div`
@@ -181,7 +296,7 @@ const StFollowingWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin:0px;
+    margin: 0px;
   }
 `;
 const StFollowingNumber = styled.div`
@@ -201,4 +316,91 @@ const StFollowingWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+`;
+const StFollowBtn = styled.button`
+  display: flex;
+  width: 60px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  color: #ff6d53;
+  background-color: white;
+  margin: 1.5px 0 22px 125px;
+  border: 0px;
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 115px;
+  }
+`;
+const StInfo = styled.div`
+  /* display: flex; */
+  width: 84.66px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  color: #ff6d53;
+  background: none;
+  border: none;
+  margin: 1.5px 0 22px 125px;
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 95px;
+  }
+`;
+
+const StCloseButton = styled.button`
+  background: none;
+
+  display: block;
+
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+
+  cursor: pointer;
+`;
+const StContent = styled.div`
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: left;
+
+  bottom: 0;
+  height: 90%;
+  box-sizing: border-box;
+`;
+
+const StText = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #919191;
+
+  margin: 0;
+  margin-bottom: 42px;
+`;
+
+const StModalContainer = styled.div`
+  background: #ffffff;
+
+  border-radius: 6px;
+  padding: 25px;
+  margin: 3vh auto;
+
+  width: 90%;
+  height: 700px;
+
+  box-sizing: border-box;
 `;

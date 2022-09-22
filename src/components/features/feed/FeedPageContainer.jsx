@@ -14,6 +14,7 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
+import LoadingContainer from "../../../utils/loadingState";
 
 // check uncheck
 
@@ -22,7 +23,7 @@ function FeedPageContainer() {
   const [sortState, setSortState] = useState("최신순");
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
-
+  const [loading, setLoading] = useState(false)
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
 
@@ -58,6 +59,8 @@ function FeedPageContainer() {
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
+    console.log("로딩시작")
+    setLoading(true)
     if (tokenChecker() === false && mbti === undefined) {
       dispatch(getTodoListsFetch(false));
     } else if (tokenChecker() === false && mbti !== undefined) {
@@ -67,6 +70,8 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (tokenChecker() === true && mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      console.log("로딩끝") 
+      setLoading(false)
   }, []);
 
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
@@ -79,6 +84,7 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      
   }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
@@ -99,7 +105,7 @@ function FeedPageContainer() {
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setSortState("최신순");
+    setLoading(true)
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -115,12 +121,15 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
+    setSortState("최신순");
+    setSelectSort(!selectSort);
     console.log(e.target.id);
-
     // setSelectSort(!selectSort);
   };
   //댓글순 정렬
   const sortComment = (e) => {
+    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -136,11 +145,13 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
   //도전순 정렬
   const sortChallenge = (e) => {
+    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -156,15 +167,19 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
   // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
+    setLoading(true)
     navigate("/selectmbtifeed");
   };
 
   return (
+    <>
+    {loading === true ? <LoadingContainer/> : <></>}
     <StTotalWrap>
       {selectSort === true ? (
         <StShadowBackgroundDiv onClick={toggleSortPopUp}>
@@ -206,10 +221,10 @@ function FeedPageContainer() {
         <></>
       )}
       <StTopWrap>
-        <StHideWrap>
+        <StChallengeWrap>
           {/* 거짓이면 체크안한거 참이면 체크한거 */}
           {checkOn === false ? (
-            <StHideImg
+            <StChallengeImg
               onClick={checkState}
               src={process.env.PUBLIC_URL + `/images/unCheck.png`}
               width="17"
@@ -217,7 +232,7 @@ function FeedPageContainer() {
               alt="AppearImg"
             />
           ) : (
-            <StHideImg
+            <StChallengeImg
               onClick={checkState}
               src={process.env.PUBLIC_URL + `/images/check.png`}
               width="17"
@@ -225,8 +240,8 @@ function FeedPageContainer() {
               alt="AppearImg"
             />
           )}
-          <StHide>도전완료 가리기</StHide>
-        </StHideWrap>
+          <StChallengeWord>도전완료 가리기</StChallengeWord>
+        </StChallengeWrap>
         <StToggleImgWrap>
           {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
           <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
@@ -261,47 +276,37 @@ function FeedPageContainer() {
       </StTodayMyCardWrap>
       <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
     </StTotalWrap>
+    </>
   );
 }
 const StTotalWrap = styled.div`
-/* background-color: red; */
   display: flex;
   flex-direction: column;
-  /* align-items: center; 넣으면 mbti선택버튼은 중앙으로이동 */
 `;
 const StTopWrap = styled.div`
-
   display: flex;
   flex-direction: row;
-  padding-top: 24px;
-  margin: 60px 0px 18px;
-  /* align-items: center; */
+  padding-top: 30px;
+  padding-bottom: 15px;
+  margin: 45px 0px 0px;
   background-color: #edecec;
-  /* background-color: yellow; */
   width: 500px;
   position: fixed;
-  /* background-color: blue; 범위확인용 */
-  /* gap:60px */
   @media screen and (max-width: 500px) {
-    /* align-items: center; */
     width: 360px
   }
-
 `;
-const StHideWrap = styled.div`
-  /* background-color: red; 범위확인용 */
+const StChallengeWrap = styled.div`
   display: flex;
 `;
-const StHideImg = styled.img`
+const StChallengeImg = styled.img`
   justify-content: left;
   margin: 7px 8px 8px 25px;
   cursor: pointer;
-  
 `;
-const StHide = styled.div`
+const StChallengeWord = styled.div`
   display: flex;
   margin-right: 235px;
-  /* align-items: flex-end; */
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -315,10 +320,7 @@ const StHide = styled.div`
   }
 `;
 const StToggleImgWrap = styled.div`
-
-  /* background-color: yellow; 범위 확인용 */
   display: flex;
-  /* align-items: flex-end; */
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
@@ -345,14 +347,10 @@ const StToggleImg = styled.img`
   margin: 13px 0px 13px 0px;
   cursor: pointer;
   align-items: center;
-
 `;
 const StTodayMyCardWrap = styled.div`
-  /* display: inline-block; */
-  /* align-items: start; */
   flex-direction: column;
-  /* position: relative; */
-  margin-top: 135.33px;
+  margin-top: 115px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
@@ -374,13 +372,11 @@ const StSelectMbti = styled.button`
   background: #ff6d53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 500px) {
-
     width: 144px;
     margin-left:108px;
   }
 `;
 const StShadowBackgroundDiv = styled.div`
-  /* display: flex; */
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
   display: block;
@@ -393,9 +389,7 @@ const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
-  /* height: 683px; */
   height: 335px;
-  /* box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25); */
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
@@ -456,5 +450,4 @@ const StCommonBar = styled.div`
   background: #000000;
   border-radius: 133.005px;
 `;
-
 export default FeedPageContainer;

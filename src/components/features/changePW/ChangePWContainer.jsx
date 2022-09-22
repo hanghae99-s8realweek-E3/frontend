@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../../app/modules/instance";
+import LoadingContainer from "../../../utils/loadingState";
 import { passwordFormat } from "../../../utils/reqList";
 
 function ChangePWContainer() {
@@ -10,6 +11,10 @@ function ChangePWContainer() {
     newPassword: "",
     confirmPassword: "",
   });
+
+  // 상황에 따라 로딩 화면이 출력될 수 있도록 관리하는 상태
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   function changeInputPassWord(event) {
@@ -40,12 +45,15 @@ function ChangePWContainer() {
 
     const modifyPassword = async () => {
       try {
+        setLoading(true);
         const response = await instance.put(`/accounts`, inputData);
         console.log(response);
         if (response.data.message === "success") {
+          setLoading(false);
           navigate("/mypage");
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
@@ -53,94 +61,97 @@ function ChangePWContainer() {
   }
 
   return (
-    <StContainer>
-      <form onSubmit={sendToModifyData}>
-        <div style={{ margin: "30px 0", textAlign: "left" }}>
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              color: "#999999",
-              margin: "0",
-            }}>
-            회원님의 소중한 개인정보를 안전하게 보호하기 위해
-          </p>
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              color: "#999999",
-              margin: "0",
-            }}>
-            비밀번호를 입력해주세요.
-          </p>
-        </div>
-        <div style={{}}>
-          <label
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              color: "#000000",
-              display: "block",
-              textAlign: "left",
-            }}>
-            현재 비밀번호
-          </label>
-          <StCommonInput
-            type="password"
-            name="password"
-            placeholder="비밀번호 입력"
-            value={inputData.password}
-            onChange={changeInputPassWord}
-          />
+    <>
+      {loading === true ? <LoadingContainer /> : <></>}
+      <StContainer>
+        <form onSubmit={sendToModifyData}>
+          <div style={{ margin: "30px 0", textAlign: "left" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "#999999",
+                margin: "0",
+              }}>
+              회원님의 소중한 개인정보를 안전하게 보호하기 위해
+            </p>
+            <p
+              style={{
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "#999999",
+                margin: "0",
+              }}>
+              비밀번호를 입력해주세요.
+            </p>
+          </div>
+          <div style={{}}>
+            <label
+              style={{
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "#000000",
+                display: "block",
+                textAlign: "left",
+              }}>
+              현재 비밀번호
+            </label>
+            <StCommonInput
+              type="password"
+              name="password"
+              placeholder="비밀번호 입력"
+              value={inputData.password}
+              onChange={changeInputPassWord}
+            />
+            <StErrorMessage>
+              {inputData.password.length === 0 || inputData.password.length <= 8
+                ? "비밀번호는 8글자 이상이어야 합니다."
+                : passwordFormat.test(inputData.password) === false
+                ? "비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
+                : "　"}
+            </StErrorMessage>
+          </div>
+          <div>
+            <label
+              style={{
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "#000000",
+                display: "block",
+                textAlign: "left",
+              }}>
+              새로운 비밀번호
+            </label>
+            <StCommonInput
+              type="password"
+              name="newPassword"
+              placeholder="변경할 비밀번호 입력"
+              value={inputData.newPassword}
+              onChange={changeInputPassWord}
+            />
+            <StCommonInput
+              type="password"
+              name="confirmPassword"
+              placeholder="변경할 비밀번호 재입력"
+              value={inputData.confirmPassword}
+              onChange={changeInputPassWord}
+            />
+          </div>
           <StErrorMessage>
-            {inputData.password.length === 0 || inputData.password.length <= 8
-              ? "비밀번호는 9글자 이상이어야 합니다."
-              : passwordFormat.test(inputData.password) === false
-              ? "비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
+            {inputData.newPassword.length === 0 ||
+            inputData.newPassword.length <= 8
+              ? "변경할 비밀번호는 9글자 이상이어야 합니다."
+              : passwordFormat.test(inputData.newPassword) === false
+              ? "변경할 비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
+              : inputData.confirmPassword.length === 0 ||
+                inputData.newPassword !== inputData.confirmPassword
+              ? "변경할 비밀번호와 내용이 일치하지 않습니다."
               : "　"}
           </StErrorMessage>
-        </div>
-        <div>
-          <label
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              color: "#000000",
-              display: "block",
-              textAlign: "left",
-            }}>
-            새로운 비밀번호
-          </label>
-          <StCommonInput
-            type="password"
-            name="newPassword"
-            placeholder="변경할 비밀번호 입력"
-            value={inputData.newPassword}
-            onChange={changeInputPassWord}
-          />
-          <StCommonInput
-            type="password"
-            name="confirmPassword"
-            placeholder="변경할 비밀번호 재입력"
-            value={inputData.confirmPassword}
-            onChange={changeInputPassWord}
-          />
-        </div>
-        <StErrorMessage>
-          {inputData.newPassword.length === 0 ||
-          inputData.newPassword.length <= 8
-            ? "변경할 비밀번호는 9글자 이상이어야 합니다."
-            : passwordFormat.test(inputData.newPassword) === false
-            ? "변경할 비밀번호는 숫자와 영어, 특수문자 중 2가지를 포함해야 합니다."
-            : inputData.confirmPassword.length === 0 ||
-              inputData.newPassword !== inputData.confirmPassword
-            ? "변경할 비밀번호와 내용이 일치하지 않습니다."
-            : "　"}
-        </StErrorMessage>
-        <StCommonButton>확인</StCommonButton>
-      </form>
-    </StContainer>
+          <StCommonButton>확인</StCommonButton>
+        </form>
+      </StContainer>
+    </>
   );
 }
 

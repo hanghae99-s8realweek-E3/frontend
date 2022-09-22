@@ -3,14 +3,20 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../utils/token";
+import AWS from "aws-sdk";
+import LoadingContainer from "../../utils/loadingState";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({
-    profile: "https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg",
+    profile:
+      myData.profile === "none"
+        ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+        : myData.profile,
     nickname: myData.nickname,
     mbti: myData.mbti,
   });
@@ -57,24 +63,96 @@ function ProfileModifyForm() {
     setSelectMBTI(!selectMBTI);
   }
 
+  // 프로필 정보를 업로드
   function submitModifyMyProfileData(event) {
     event.preventDefault();
+    setLoading(true);
     const modifyConnect = async () => {
       try {
         const response = await instance.put("/accounts", changeProfile);
         if (response.data.message === "success") {
           window.localStorage.setItem("token", response.data.token);
+          setLoading(false);
+          alert("프로필이 변경됐습니다. 내 정보 화면으로 이동합니다.");
           navigate("/mypage");
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
     modifyConnect();
   }
 
+  // 아마존 설정 사항
+
+  // Bucket 설정, 버킷 이름과 리전 정보를 가진 AWS의 S3를 객체로 생성
+  AWS.config.update({
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+  });
+
+  // 이미지를 업로드할 내 버킷 설정
+  const myBucket = new AWS.S3({
+    params: { Bucket: process.env.REACT_APP_AWS_S3_BUCKET_NAME },
+    region: process.env.REACT_APP_AWS_REGION,
+  });
+
+  // input을 통해 이미지 데이터 불러오기
+  function changeImageFiles(event) {
+    const imageFile = event.target.files[0];
+    // .을 기준으로 자르고, 그 뒤에 있는 pop() 메소드를 이용해 그 뒤에 있는
+    // 확장자를 체크
+    const imageExtention = imageFile.name.split(".").pop();
+    if (imageFile.type !== "image/jpeg" || imageExtention !== "jpg") {
+      alert("이미지 파일은 JPG 확장자인 파일만 업로드하실 수 있습니다.");
+      return;
+    }
+    // 이후, 업로드할 파일을 state에 저장
+    setLoading(true);
+    const params = {
+      ACL: "public-read",
+      Body: imageFile,
+      Bucket: process.env.REACT_APP_AWS_S3_BUCKET_NAME,
+      ContentType: "image/jpg",
+      Key:
+        process.env.REACT_APP_AWS_S3_FOLDER_NAME +
+        `${new Date().getTime()}.jpg`,
+    };
+
+    myBucket
+      .putObject(params)
+      .on("httpUploadProgress", () => {
+        const modifyConnect = async () => {
+          try {
+            const response = await instance.put("/accounts", {
+              ...changeProfile,
+              profile: process.env.REACT_APP_AWS_S3_BUCKET_ROUTE + params.Key,
+            });
+            if (response.data.message === "success") {
+              window.localStorage.setItem("token", response.data.token);
+              alert(
+                "프로필 이미지가 변경됐습니다. 내 정보 화면으로 이동합니다."
+              );
+              navigate("/mypage");
+              setLoading(false);
+            }
+          } catch (error) {
+            alert(error.response.data.errorMessage);
+          }
+        };
+        modifyConnect();
+      })
+      .send((error) => {
+        if (error) {
+          console.log(error);
+        }
+      });
+  }
+
   return (
     <>
+      {loading === true ? <LoadingContainer /> : <></>}
       {selectMBTI === true ? (
         <StPopupBox>
           <StSlideDiv />
@@ -101,9 +179,22 @@ function ProfileModifyForm() {
       <StContainer>
         <StMyProfileSec>
           <StMyImageBox>
-            <StMyImage src="https://livedoor.blogimg.jp/youngjumpkatan/imgs/3/a/3a50d74c.jpg" />
+            <StMyImagePreview
+              src={
+                changeProfile.profile === ""
+                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                  : `${changeProfile.profile}`
+              }
+              htmlFor="inputImage"
+              style={{ pointerEvents: "none" }}
+            />
+            <StMyImageInput
+              id="inputImage"
+              type="file"
+              onChange={changeImageFiles}
+            />
           </StMyImageBox>
-          <StChangeImageBtn type="button">이미지 변경</StChangeImageBtn>
+          <StChangeImageBtn htmlFor="inputImage">이미지 변경</StChangeImageBtn>
         </StMyProfileSec>
         <StCommonBorder />
         <StInputSettingBox>
@@ -173,12 +264,31 @@ const StMyImageBox = styled.div`
   overflow: hidden;
 `;
 
-const StMyImage = styled.img`
+const StMyImagePreview = styled.label`
+  background-image: ${(props) =>
+    `url(${props.src})` ||
+    `url("https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg")`};
+  background-repeat: no-repeat;
+  background-size: auto 144px;
+  background-position: center;
   height: 144px;
   width: 144px;
+  cursor: pointer;
 `;
 
-const StChangeImageBtn = styled.button`
+const StMyImageInput = styled.input`
+  display: none;
+  /* background-image: ${(props) =>
+    props.src ||
+    "url(https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg)"};
+  background-repeat: no-repeat;
+  background-size: 144px 144px;
+  background-position: center;
+  height: 144px;
+  width: 144px; */
+`;
+
+const StChangeImageBtn = styled.label`
   background: none;
 
   font-size: 18px;

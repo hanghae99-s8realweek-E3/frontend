@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getSelectMBTITodoFetch } from "../../../app/modules/todolistsSlice";
 import { decodeMyTokenData } from "../../../utils/token";
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
 function SelectMBTIFeedContainer() {
   const MyData = decodeMyTokenData();
@@ -76,6 +77,72 @@ function SelectMBTIFeedContainer() {
 
   return (
     <>
+      {openModal === true ? (
+        <StShadowBackgroundDiv>
+          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+          <StModalContainer onClick={(e) => e.stopPropagation()}>
+            <StCloseButton type="button" onClick={openToPopUpModal}>
+              <FontAwesomeIcon
+                icon={faXmark}
+                style={{
+                  fontSize: "24px",
+                  color: "#151522",
+                  pointerEvents: "none",
+                }}
+              />
+            </StCloseButton>
+            <StContent>
+              <h2
+                style={{
+                  fontSize: "28px",
+                  lineHeight: "34px",
+                  fontWeight: "700",
+                  color: "#313131",
+                  margin: "17px auto",
+                }}>
+                색상이 다른 이유는 무엇인가요?
+              </h2>
+              <StText>
+                MBTI 사이에서도 상성이 있다는 거, 알고 계세요?
+                <div style={{ height: "7px" }}></div>
+                미믹을 이용하시는 여러분들의 MBTI를 기준으로
+                <br />
+                자신의 MBTI와 다른 MBTI와의 상성을 색으로 표현해봤어요!
+                <div style={{ height: "7px" }}></div>
+                <span style={{ color: "#569AFF" }}>푸른색</span>은 나와 상성이{" "}
+                <span style={{ color: "#569AFF" }}>정말 잘 맞는 MBTI</span>,
+                <br />
+                <span style={{ color: "#FF3A3A" }}>붉은색</span>은 나와 상성이{" "}
+                <span style={{ color: "#FF3A3A" }}>정말 안 맞는 MBTI</span>를
+                가리킵니다.
+                <div style={{ height: "7px" }}></div>
+                색상이 표시되지 않는다고요?
+                <br />
+                그건 자신의 MBTI의 상성이 다른 MBTI들과
+                <br />
+                골고루 잘 맞는다는 이야기랍니다.
+              </StText>
+              <p
+                style={{
+                  marginBottom: "42px",
+                  textAlign: "center",
+                  fontSize: "12px",
+                  fontWeight: "400",
+                  color: "#ff6d53",
+                }}>
+                ※색상은 로그인한 유저에게만 노출되니 이용에 참고해주세요.
+              </p>
+              <img
+                src={process.env.PUBLIC_URL + `/images/selectMBTIHelp.jpg`}
+                alt="MBTI matching List Images"
+                style={{ width: "200px", margin: "5px 0" }}
+              />
+            </StContent>
+          </StModalContainer>
+        </StShadowBackgroundDiv>
+      ) : (
+        <></>
+      )}
       <div style={{ marginTop: "80px" }}>
         <StGrid>
           {mbtiList.map((elem, index) => {
@@ -211,5 +278,56 @@ const StSelectFilterBtn = styled.button`
 
   width: 90%;
   height: 70px;
+  cursor: pointer;
+`;
+
+const StModalContainer = styled.div`
+  background: #ffffff;
+
+  border-radius: 6px;
+  padding: 25px;
+  margin: 5vh auto;
+
+  width: 90%;
+  height: 660px;
+
+  box-sizing: border-box;
+`;
+
+const StContent = styled.div`
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: left;
+
+  bottom: 0;
+  height: 90%;
+  box-sizing: border-box;
+`;
+
+const StText = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #919191;
+
+  margin: 0;
+`;
+
+const StCloseButton = styled.button`
+  background: none;
+
+  display: block;
+
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+
   cursor: pointer;
 `;
