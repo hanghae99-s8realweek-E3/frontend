@@ -24,14 +24,14 @@ function ProfileCard({ profileData }) {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
 
   const [, setFollow] = useState("팔로우");
@@ -178,11 +178,18 @@ const StImageBox = styled.div`
   overflow: hidden;
   margin-left: 35px;
   border-radius: 50%;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+    margin: 0 0 0 25.2px;
+  }
 `;
+
 const StProfileImg = styled.img`
   /* border-radius: 9999px; */
   height: 80px;
-  width: auto;
+  width: 80px;
   /* @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
@@ -191,8 +198,9 @@ const StProfileImg = styled.img`
   } */
   @media screen and (max-width: 500px) {
     align-items: center;
-    width: 80px;
-    margin: 0 0 0 25.2px;
+    width: 57.6px;
+    height: 57.6px;
+    /* margin: 0 0 0 25.2px; */
   }
 `;
 const StNoImageWrap = styled.div`
@@ -246,7 +254,7 @@ const StMbti = styled.div`
     align-items: flex-start;
     text-align: left;
     width: 100%;
-    margin: 0px;
+    margin-left: 2px;
   }
 `;
 const StFollowWrap = styled.div`
@@ -342,7 +350,7 @@ const StInfo = styled.div`
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin-left: 115px;
+    margin-left: 95px;
   }
 `;
 

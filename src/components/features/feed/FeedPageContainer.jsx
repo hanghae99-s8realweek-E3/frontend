@@ -14,6 +14,7 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
+import LoadingContainer from "../../../utils/loadingState";
 
 // check uncheck
 
@@ -22,7 +23,7 @@ function FeedPageContainer() {
   const [sortState, setSortState] = useState("최신순");
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
-
+  const [loading, setLoading] = useState(false)
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
 
@@ -58,6 +59,8 @@ function FeedPageContainer() {
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
+    console.log("로딩시작")
+    setLoading(true)
     if (tokenChecker() === false && mbti === undefined) {
       dispatch(getTodoListsFetch(false));
     } else if (tokenChecker() === false && mbti !== undefined) {
@@ -67,6 +70,8 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (tokenChecker() === true && mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      console.log("로딩끝") 
+      setLoading(false)
   }, []);
 
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
@@ -79,6 +84,7 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      
   }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
@@ -99,7 +105,7 @@ function FeedPageContainer() {
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setSortState("최신순");
+    setLoading(true)
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -115,12 +121,15 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
+    setSortState("최신순");
+    setSelectSort(!selectSort);
     console.log(e.target.id);
-
     // setSelectSort(!selectSort);
   };
   //댓글순 정렬
   const sortComment = (e) => {
+    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -136,11 +145,13 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
   //도전순 정렬
   const sortChallenge = (e) => {
+    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -156,15 +167,19 @@ function FeedPageContainer() {
         }
       }
     }
+    setLoading(false)
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
   // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
+    setLoading(true)
     navigate("/selectmbtifeed");
   };
 
   return (
+    <>
+    {loading === true ? <LoadingContainer/> : <></>}
     <StTotalWrap>
       {selectSort === true ? (
         <StShadowBackgroundDiv onClick={toggleSortPopUp}>
@@ -261,6 +276,7 @@ function FeedPageContainer() {
       </StTodayMyCardWrap>
       <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
     </StTotalWrap>
+    </>
   );
 }
 const StTotalWrap = styled.div`
