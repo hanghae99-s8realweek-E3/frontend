@@ -24,14 +24,14 @@ function ProfileCard({ profileData }) {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
 
   const [, setFollow] = useState("팔로우");
@@ -69,25 +69,36 @@ function ProfileCard({ profileData }) {
               <FontAwesomeIcon
                 icon={faXmark}
                 style={{
-                  fontSize: "18px",
-                  color: "#ffffff",
+                  fontSize: "24px",
+                  color: "#151522",
                   pointerEvents: "none",
                 }}
               />
             </StCloseButton>
             <StContent>
+              <h2
+                style={{
+                  fontSize: "32px",
+                  lineHeight: "34px",
+                  fontWeight: "700",
+                  color: "#313131",
+                  margin: "17px auto",
+                }}>
+                MBTI 궁합
+              </h2>
+              <StText>
+                나와 천생연분인 MBTI와
+                <br />
+                나와 전혀 다른 MBTI를 확인 후<br />
+                미믹에 도전해보세요!
+                <br />
+                색다른 재미를 느끼실 수 있을거에요!
+              </StText>
               <img
                 src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
                 alt="MBTI matching List Images"
-                style={{ width: "350px", margin: "5px 0" }}
+                style={{ width: "430px", margin: "5px 0" }}
               />
-              <StText>위의 표는 MBTI 간의 궁합을 보여줍니다.</StText>
-              <StText>푸른 색상에 가까울 수록 각 MBTI 간의 궁합이</StText>
-              <StText>잘 맞는 편입니다.</StText>
-              <StText>
-                반대로 붉은 색상에 가까울 수록 각 MBTI 간의 궁합이
-              </StText>
-              <StText>잘 맞지 않는 편입니다.</StText>
             </StContent>
           </StModalContainer>
         </StShadowBackgroundDiv>
@@ -167,11 +178,18 @@ const StImageBox = styled.div`
   overflow: hidden;
   margin-left: 35px;
   border-radius: 50%;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+    margin: 0 0 0 25.2px;
+  }
 `;
+
 const StProfileImg = styled.img`
   /* border-radius: 9999px; */
   height: 80px;
-  width: auto;
+  width: 80px;
   /* @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
@@ -180,8 +198,9 @@ const StProfileImg = styled.img`
   } */
   @media screen and (max-width: 500px) {
     align-items: center;
-    width: 80px;
-    margin: 0 0 0 25.2px;
+    width: 57.6px;
+    height: 57.6px;
+    /* margin: 0 0 0 25.2px; */
   }
 `;
 const StNoImageWrap = styled.div`
@@ -235,7 +254,7 @@ const StMbti = styled.div`
     align-items: flex-start;
     text-align: left;
     width: 100%;
-    margin: 0px;
+    margin-left: 2px;
   }
 `;
 const StFollowWrap = styled.div`
@@ -331,7 +350,7 @@ const StInfo = styled.div`
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin-left: 115px;
+    margin-left: 95px;
   }
 `;
 
@@ -364,22 +383,24 @@ const StContent = styled.div`
 `;
 
 const StText = styled.p`
+  text-align: center;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #919191;
 
   margin: 0;
-  margin-right: auto;
+  margin-bottom: 42px;
 `;
 
 const StModalContainer = styled.div`
-  background: #ff6d53;
+  background: #ffffff;
 
   border-radius: 6px;
   padding: 25px;
-  margin: 18vh auto;
+  margin: 3vh auto;
 
-  width: 80%;
-  height: 520px;
+  width: 90%;
+  height: 700px;
 
   box-sizing: border-box;
 `;

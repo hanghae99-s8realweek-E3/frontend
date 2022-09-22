@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import instance from "../../app/modules/instance";
-import { tokenChecker, decodeMyTokenData } from "../../utils/token";
 import AWS from "aws-sdk";
-import LoadingContainer from "../../utils/loadingState";
+import LoadingContainer from "../../../utils/loadingState";
+import instance from "../../../app/modules/instance";
+import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
@@ -63,7 +63,7 @@ function ProfileModifyForm() {
     setSelectMBTI(!selectMBTI);
   }
 
-  // 프로필 이미지를 업로드
+  // 프로필 정보를 업로드
   function submitModifyMyProfileData(event) {
     event.preventDefault();
     setLoading(true);
@@ -77,6 +77,7 @@ function ProfileModifyForm() {
           navigate("/mypage");
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };

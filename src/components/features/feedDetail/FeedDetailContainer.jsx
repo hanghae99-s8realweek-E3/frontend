@@ -143,15 +143,14 @@ function FeedDetailContainer() {
         <StShadowBackgroundDiv>
           <StPopUpWhiteButton
             onClick={onClickDeleteComment}
-            transform="translateY(76vh)"
-          >
+
+            transform="translateY(76vh)">
             삭제
           </StPopUpWhiteButton>
 
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)"
-          >
+            transform="translateY(77vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -176,8 +175,7 @@ function FeedDetailContainer() {
               </StProfileBox>
               <StNickname
                 id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}
-              >
+                onClick={onClickGoToOtherspage}>
                 {detailState.todoInfo.nickname}
               </StNickname>
               <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
@@ -186,15 +184,13 @@ function FeedDetailContainer() {
               ) : detailState.isFollowed === false ? (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   팔로우
                 </StFollowBtn>
               ) : (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   언팔로우
                 </StFollowBtn>
               )}
@@ -207,8 +203,7 @@ function FeedDetailContainer() {
             ) : (
               <StBtnGoToChallenge
                 onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}
-              >
+                id={detailState.todoInfo.todoId}>
                 도전할래요!
               </StBtnGoToChallenge>
             )}
@@ -218,8 +213,7 @@ function FeedDetailContainer() {
               width: "100%",
               background: "white",
               padding: "10px 0",
-            }}
-          >
+            }}>
             {detailState.comments?.map((x, index) => {
               return (
                 <div key={index}>
@@ -227,7 +221,7 @@ function FeedDetailContainer() {
                     <StImgNickname>
                       <StProfileBox width="32px" height="32px">
                         <StProfileImg
-                          width="32px"
+                          width="auto"
                           height="32px"
                           borderRadius="16px"
                           src={
@@ -239,8 +233,7 @@ function FeedDetailContainer() {
                       </StProfileBox>
                       <StNicknameComment
                         id={x.userId}
-                        onClick={onClickCommentGoToOtherspage}
-                      >
+                        onClick={onClickCommentGoToOtherspage}>
                         {x.nickname}
                       </StNicknameComment>
                       <StChangeDeleteBtn>
@@ -271,6 +264,7 @@ function FeedDetailContainer() {
                 overflow: "hidden",
               }}
             >
+            <StCommentProfileBox>
               <StProfileImg
                 style={{
                   height: "50px",
@@ -285,6 +279,7 @@ function FeedDetailContainer() {
                 }
               />
             </div>
+            </StCommentProfileBox>
 
             <StInput
               type="text"
@@ -417,15 +412,16 @@ const StChangeDeleteBtn = styled.div`
   margin-left: auto;
 `;
 
-const StDeleteBtn = styled.button`
-  font-size: 15px;
-  color: gray;
-  margin-right: 10px;
-  border: none;
-  background-color: white;
-  :hover {
-  }
-  cursor: pointer;
+const StCommentProfileBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 const StMenuBtn = styled.button`
