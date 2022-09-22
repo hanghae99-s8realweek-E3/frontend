@@ -106,7 +106,10 @@ function MyPageFollow() {
                   value={inputContext}
                 />
                 <StSearchBtn type="submit">
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{ width: "23px", height: "23px", color: "#919191" }}
+                  />
                 </StSearchBtn>
               </form>
             </StSearchBarBox>
@@ -183,7 +186,15 @@ function MyPageFollow() {
                   value={inputContext}
                 />
                 <StSearchBtn type="submit">
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{
+                      width: "23px",
+                      height: "23px",
+                      color: "#919191",
+                      marginTop: "10px",
+                    }}
+                  />
                 </StSearchBtn>
               </form>
             </StSearchBarBox>
@@ -284,6 +295,7 @@ const StContainer = styled.div`
 `;
 const StWrapBtn = styled.div`
   /* background-color: black; */
+  border-bottom: 1px solid #919191;
   margin: auto;
   width: 450px;
   height: 45px;
@@ -303,14 +315,14 @@ const StWrapBtnFollow = styled.div`
   border-bottom: 2px solid #ff6d53;
   outline: none;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 32px;
 `;
 
 const StWrapBtnFollowing = styled.div`
   /* border-style: outset; */
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 32px;
 `;
 
@@ -322,14 +334,16 @@ const StSearchBarBox = styled.div`
   width: 450px;
   height: 55px;
   margin: auto;
-  border: 2px solid #979797;
-  border-radius: 3px;
+  border: 1px solid #919191;
+  border-radius: 6px;
 `;
 
 const StInput = styled.input`
+  /* background-color: burlywood; */
   padding-left: 20px;
   border: none;
-  width: 395px;
+  border-radius: 6px;
+  width: 390px;
   height: 50px;
   z-index: -1;
   outline: none;
@@ -342,12 +356,21 @@ const StInput = styled.input`
 `;
 
 const StSearchBtn = styled.button`
-  background-color: white;
+  /* background-color: blue; */
+  background: none;
   margin: auto;
   border: none;
   text-align: center;
   outline: none;
   cursor: pointer;
+  width: 33px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  transform: translateX(-100%) translateY(-140%);
 `;
 const StProfileContainer = styled.div`
   /* background-color: red; */
