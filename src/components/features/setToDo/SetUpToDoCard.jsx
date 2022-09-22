@@ -13,10 +13,11 @@ import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 import { settingTodayDate } from "../../../utils/commonFunc";
+import LoadingContainer from "../../../utils/loadingState";
 
 function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
   const [menuModal, setMenuModal] = useState(false);
-  const myData = decodeMyTokenData();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -40,13 +41,16 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
     event.stopPropagation();
     const stateChallenge = async () => {
       try {
+        setLoading(true);
         const response = await instance.put(
           `/mytodos/${data.challengedTodoId}/challenged`
         );
         if (response.data.message === "success") {
           dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
@@ -64,14 +68,17 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
     event.stopPropagation();
     const cancelApply = async () => {
       try {
+        setLoading(true);
         const response = await instance.delete(
           `/mytodos/${data.challengedTodoId}/challenged`,
           { data: { date: settingTodayDate() } }
         );
         if (response.data.message === "success") {
           dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
@@ -83,11 +90,14 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
     event.stopPropagation();
     const deleteApply = async () => {
       try {
+        setLoading(true);
         const response = await instance.delete(`mytodos/${data.todoId}`);
         if (response.data.message === "success") {
           dispatch(getSetUpMyTodoFetch({ date: settingTodayDate() }));
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         alert(error.response.data.errorMessage);
       }
     };
@@ -98,6 +108,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
   // map을 쓰지 않는 경우, key는 예외.
   return (
     <>
+      {loading === true ? <LoadingContainer /> : <></>}
       {menuModal === true ? (
         <StShadowBackgroundDiv>
           {isTodayChallenge === true ? (
