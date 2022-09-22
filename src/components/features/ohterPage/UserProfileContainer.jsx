@@ -1,5 +1,4 @@
 //대연
-import { current } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,15 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import {
-  getMbtiTodoListsChallengeFetch,
-  getMbtiTodoListsCommentFetch,
   getTodoListsChallengeFetch,
   getTodoListsCommentFetch,
   getTodoListsFetch,
 } from "../../../app/modules/todolistsSlice";
 import LoadingContainer from "../../../utils/loadingState";
-import { tokenChecker } from "../../../utils/token";
-import ChallengeCard from "../../common/ChallengeCard";
 import ProfileCard from "../../common/ProfileCard";
 import OthersCard from "./OthersCard";
 
@@ -32,7 +27,16 @@ function UserProfileContainer() {
 
   const dispatch = useDispatch();
   const params = useParams();
-  const [loading,setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  // 탈퇴한 회원 피드 페이지로 이동
+  useEffect(() => {
+    if (params.userId === "none") {
+      alert("탈퇴한 회원입니다.");
+      navigate("/todolists");
+    }
+  }, []);
 
   // 첫 렌더링 일때 userId 인자로 parmas사용
 
@@ -58,7 +62,7 @@ function UserProfileContainer() {
       prev.style.borderBottomColor = "gray";
     }
     setPrevClick(todoTab);
-    setLoading(false)
+    setLoading(false);
   }, [todoTab]);
 
   // 도전한 TO DO 누를때
@@ -68,7 +72,7 @@ function UserProfileContainer() {
 
   // 제안한 TO DO 누를때
   const SuggestState = (e) => {
-    return setTodoTab(e.target.id) ;
+    return setTodoTab(e.target.id);
   };
 
   // 최신순 정렬
@@ -93,127 +97,145 @@ function UserProfileContainer() {
   const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-  console.log(card)
+  console.log(card);
   return (
     <>
-    {loading === true ? <LoadingContainer/> : <></>}
-    <StTotalWrap>
-      {Object.keys(card).length === 0 ? (
-        <></>
-      ) : (
-        <>
-          <StTopWrap>
-            <ProfileCard profileData={card} />
-          </StTopWrap>
-          <StTodoTopLine></StTodoTopLine>
-          <StTodoWrap>
-            <StChallengeTodo id="도전" onClick={ChallengeState}>
-              도전한 TO DO
-            </StChallengeTodo>
-            <StSuggestionTodo id="제안" onClick={SuggestState}>
-              제안한 TO DO
-            </StSuggestionTodo>
-          </StTodoWrap>
-          {/* <StLineWrap>
+      {loading === true ? <LoadingContainer /> : <></>}
+      <StTotalWrap>
+        {Object.keys(card).length === 0 ? (
+          <></>
+        ) : (
+          <>
+            <StTopWrap>
+              <ProfileCard profileData={card} />
+            </StTopWrap>
+            <StTodoTopLine></StTodoTopLine>
+            <StTodoWrap>
+              <StChallengeTodo id="도전" onClick={ChallengeState}>
+                도전한 TO DO
+              </StChallengeTodo>
+              <StSuggestionTodo id="제안" onClick={SuggestState}>
+                제안한 TO DO
+              </StSuggestionTodo>
+            </StTodoWrap>
+            {/* <StLineWrap>
             <StMiddleLeftLine></StMiddleLeftLine>
             <StMiddleRightLine></StMiddleRightLine>
           </StLineWrap> */}
 
-          <StBottomWrap>
-            {selectSort === true ? (
-              <StShadowBackgroundDiv onClick={toggleSortPopUp}>
-                <StPopupBox>
-                  <StSlideDiv />
-                  <StSort>
-                    <StDate style = {{color : sortState === "최신순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortDate}>최신순</StDate>
-                    <StDateLine />
-                    <StComment style = {{color : sortState === "댓글순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortComment}>댓글순</StComment>
-                    <StCommentLine />
-                    <StChallenge style = {{color : sortState === "도전순" ? "#ff6d53" : "#8d8d8d"}} onClick={sortChallenge}>도전순</StChallenge>
-                    <StChallengeLine />
-                    <StCommonBar />
-                  </StSort>
-                </StPopupBox>
-              </StShadowBackgroundDiv>
-            ) : (
-              <></>
-            )}
-            <StToggle onClick={toggleSortPopUp}>
-              {sortState}
-              <img
-                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-                alt="sort list button"
-                style={{ height: "8px", margin: "0 0 0 8px" }}
-              />
-            </StToggle>
-
-            <StTodayMyCardWrap>
-              {todoTab === "도전" ? (
-                // card.challengedTodos?.map((it, idx) => (
-                //   <ChallengeCard
-                //     id={it.todoId}
-                //     data={it}
-                //     key={idx}
-                //   ></ChallengeCard>
-                // ))
-                sortState === sortList[0] ? (
-                  card.challengedTodos?.map((elem, index) => (
-                    <OthersCard data={elem} key={index} />
-                  ))
-                ) : sortState === sortList[1] ? (
-                  card.challengedTodos
-                    ?.slice()
-                    .sort((a, b) => b.commentCounts - a.commentCounts)
-                    .map((elem, index) => (
-                      <OthersCard data={elem} key={index} />
-                    ))
-                ) : sortState === sortList[2] ? (
-                  card.challengedTodos
-                    ?.slice()
-                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
-                    .map((elem, index) => (
-                      <OthersCard data={elem} key={index} />
-                    ))
-                ) : (
-                  <></>
-                )
-              ) : todoTab === "제안" ? (
-                sortState === sortList[0] ? (
-                  card.createdTodos?.map((elem, index) => (
-                    <OthersCard data={elem} key={index} />
-                  ))
-                ) : sortState === sortList[1] ? (
-                  card.createdTodos
-                    ?.slice()
-                    .sort((a, b) => b.commentCounts - a.commentCounts)
-                    .map((elem, index) => (
-                      <OthersCard data={elem} key={index} />
-                    ))
-                ) : sortState === sortList[2] ? (
-                  card.createdTodos
-                    ?.slice()
-                    .sort((a, b) => b.challengedCounts - a.challengedCounts)
-                    .map((elem, index) => (
-                      <OthersCard data={elem} key={index} />
-                    ))
-                ) : (
-                  <></>
-                )
+            <StBottomWrap>
+              {selectSort === true ? (
+                <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+                  <StPopupBox>
+                    <StSlideDiv />
+                    <StSort>
+                      <StDate
+                        style={{
+                          color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
+                        }}
+                        onClick={sortDate}>
+                        최신순
+                      </StDate>
+                      <StDateLine />
+                      <StComment
+                        style={{
+                          color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
+                        }}
+                        onClick={sortComment}>
+                        댓글순
+                      </StComment>
+                      <StCommentLine />
+                      <StChallenge
+                        style={{
+                          color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
+                        }}
+                        onClick={sortChallenge}>
+                        도전순
+                      </StChallenge>
+                      <StChallengeLine />
+                      <StCommonBar />
+                    </StSort>
+                  </StPopupBox>
+                </StShadowBackgroundDiv>
               ) : (
-                // card.createdTodo?.map((it, idx) => (
-                //   <ChallengeCard
-                //     id={it.todoId}
-                //     data={it}
-                //     key={idx}
-                //   ></ChallengeCard>
-                // ))
-                <>다시한번 시도해주세요</>
+                <></>
               )}
-            </StTodayMyCardWrap>
-          </StBottomWrap>
-        </>
-      )}
-    </StTotalWrap>
+              <StToggle onClick={toggleSortPopUp}>
+                {sortState}
+                <img
+                  src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                  alt="sort list button"
+                  style={{ height: "8px", margin: "0 0 0 8px" }}
+                />
+              </StToggle>
+
+              <StTodayMyCardWrap>
+                {todoTab === "도전" ? (
+                  // card.challengedTodos?.map((it, idx) => (
+                  //   <ChallengeCard
+                  //     id={it.todoId}
+                  //     data={it}
+                  //     key={idx}
+                  //   ></ChallengeCard>
+                  // ))
+                  sortState === sortList[0] ? (
+                    card.challengedTodos?.map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                  ) : sortState === sortList[1] ? (
+                    card.challengedTodos
+                      ?.slice()
+                      .sort((a, b) => b.commentCounts - a.commentCounts)
+                      .map((elem, index) => (
+                        <OthersCard data={elem} key={index} />
+                      ))
+                  ) : sortState === sortList[2] ? (
+                    card.challengedTodos
+                      ?.slice()
+                      .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                      .map((elem, index) => (
+                        <OthersCard data={elem} key={index} />
+                      ))
+                  ) : (
+                    <></>
+                  )
+                ) : todoTab === "제안" ? (
+                  sortState === sortList[0] ? (
+                    card.createdTodos?.map((elem, index) => (
+                      <OthersCard data={elem} key={index} />
+                    ))
+                  ) : sortState === sortList[1] ? (
+                    card.createdTodos
+                      ?.slice()
+                      .sort((a, b) => b.commentCounts - a.commentCounts)
+                      .map((elem, index) => (
+                        <OthersCard data={elem} key={index} />
+                      ))
+                  ) : sortState === sortList[2] ? (
+                    card.createdTodos
+                      ?.slice()
+                      .sort((a, b) => b.challengedCounts - a.challengedCounts)
+                      .map((elem, index) => (
+                        <OthersCard data={elem} key={index} />
+                      ))
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  // card.createdTodo?.map((it, idx) => (
+                  //   <ChallengeCard
+                  //     id={it.todoId}
+                  //     data={it}
+                  //     key={idx}
+                  //   ></ChallengeCard>
+                  // ))
+                  <>다시한번 시도해주세요</>
+                )}
+              </StTodayMyCardWrap>
+            </StBottomWrap>
+          </>
+        )}
+      </StTotalWrap>
     </>
   );
 }
@@ -329,7 +351,7 @@ const StSort = styled.div`
   align-items: center;
 `;
 const StDate = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StDateLine = styled.div`
   display: flex;
@@ -338,7 +360,7 @@ const StDateLine = styled.div`
   background: #c7c7c7;
 `;
 const StComment = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StCommentLine = styled.div`
   background: #c7c7c7;
@@ -346,7 +368,7 @@ const StCommentLine = styled.div`
   height: 1px;
 `;
 const StChallenge = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
 const StChallengeLine = styled.div`
   width: 450px;
