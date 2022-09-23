@@ -104,7 +104,11 @@ function ProfileModifyForm() {
     // .을 기준으로 자르고, 그 뒤에 있는 pop() 메소드를 이용해 그 뒤에 있는
     // 확장자를 체크
     const imageExtention = imageFile.name.split(".").pop();
-    if (imageFile.type !== "image/jpeg" || imageExtention !== "jpg") {
+    if (
+      imageFile.type !== "image/jpeg" ||
+      imageExtention !== "jpg" ||
+      imageExtention !== "JPG"
+    ) {
       alert("이미지 파일은 JPG 확장자인 파일만 업로드하실 수 있습니다.");
       return;
     }
