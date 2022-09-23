@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StShadowBackgroundDiv } from "../interface/styledCommon";
+import { decodeMyTokenData } from "../../utils/token";
 
-function Grade() {
+function Grade({profileData}) {
   const [modal, setModal] = useState();
-
+  const [grade, setGrage] = useState();
+  const myData = decodeMyTokenData();
+  console.log(myData)
   const changeModalState = () => {
     setModal(!modal);
   };
@@ -92,7 +95,6 @@ function Grade() {
       ) : (
         <></>
       )}
-
       <StContainer>
         <StContainerIcon
           src={process.env.PUBLIC_URL + `/images/ContainerIcon.png`}
@@ -100,7 +102,6 @@ function Grade() {
         <StName>미콩</StName>
         <StGradeBtn onClick={changeModalState}>성장 등급보기</StGradeBtn>
       </StContainer>
-
       <StCommonBorder />
     </>
   );
@@ -140,6 +141,10 @@ const StIcon = styled.img`
   margin-left: 50px;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 7px;
+  }
 `;
 const StExplain = styled.div`
   display: flex;
@@ -244,6 +249,10 @@ const StModalContainer = styled.div`
   width: 450px;
   height: 750px;
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin:18px
+  }
 `;
 const StCloseButton = styled.button`
   background: none;
@@ -255,4 +264,5 @@ const StCloseButton = styled.button`
   padding: 0;
   cursor: pointer;
 `;
+
 export default Grade;

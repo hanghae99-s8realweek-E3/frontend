@@ -97,7 +97,7 @@ function ProfileCard({ profileData }) {
               <img
                 src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
                 alt="MBTI matching List Images"
-                style={{ width: "430px", margin: "5px 0" }}
+                style={{ width: "324px", margin: "5px 0" }}
               />
             </StContent>
           </StModalContainer>
@@ -249,7 +249,7 @@ const StMbti = styled.div`
   line-height: 32px;
   text-align: left;
   color: #979797;
-  margin-left: 16px;
+  margin-left: 19px;
   @media screen and (max-width: 500px) {
     align-items: flex-start;
     text-align: left;
@@ -327,12 +327,12 @@ const StFollowBtn = styled.button`
   text-align: center;
   color: #ff6d53;
   background-color: white;
-  margin: 1.5px 0 22px 125px;
+  margin: 1.5px 0 22px 12px;
   border: 0px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin-left: 115px;
+    margin-left: 95px;
   }
 `;
 const StInfo = styled.div`
@@ -403,4 +403,8 @@ const StModalContainer = styled.div`
   height: 700px;
 
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin:18px
+  }
 `;
