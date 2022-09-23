@@ -10,12 +10,8 @@ import WelcomeForm from "./WelcomeForm";
 function MainContainer() {
   const firstLoginCheck = getCookie("firstLogin");
   const bannerSlide = [
-    process.env.PUBLIC_URL + `/images/Banner1.jpg`,
-    "https://cdn.class101.net/images/367bcbd9-1311-405f-bb5f-5737e4f9b43a",
-    "https://cdn.class101.net/images/070f5c4e-031b-41b9-9d2b-be4bee95c031/1920xauto.webp",
-    "https://cdn.class101.net/images/12783d2d-308a-49fd-8d5c-096ec8e05c9b/1920xauto.webp",
-    "https://cdn.class101.net/images/63be45f8-20fa-47e4-b503-d2445799ddba/1920xauto.webp",
-    "https://cdn.class101.net/images/dfb0bc2d-5a8a-4adc-9c44-6d5425c18a9d/1920xauto.webp",
+    process.env.PUBLIC_URL + `/images/banner1.png`,
+    process.env.PUBLIC_URL + `/images/banner2.png`,
   ];
   const locationLink = [
     "https://www.16personalities.com/ko",
@@ -86,35 +82,50 @@ function MainContainer() {
             scrollbar={{ draggable: true }}>
             <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[0]} />
+                <SildeImage
+                  width="170px"
+                  src={process.env.PUBLIC_URL + `/images/banner1.png`}
+                />
               </PostImageBox>
               <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
             </SwiperSlide>
 
             <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[1]} />
+                <SildeImage
+                  width="170px"
+                  src={process.env.PUBLIC_URL + `/images/banner1.png`}
+                />
               </PostImageBox>
               <PostText>Lorem ipsum dolor </PostText>
             </SwiperSlide>
 
             <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[2]} />
+                <SildeImage
+                  width="170px"
+                  src={process.env.PUBLIC_URL + `/images/banner2.png`}
+                />
               </PostImageBox>
               <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
             </SwiperSlide>
 
             <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[3]} />
+                <SildeImage
+                  width="170px"
+                  src={process.env.PUBLIC_URL + `/images/banner2.png`}
+                />
               </PostImageBox>
               <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
             </SwiperSlide>
 
             <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
               <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[4]} />
+                <SildeImage
+                  width="170px"
+                  src={process.env.PUBLIC_URL + `/images/banner2.png`}
+                />
               </PostImageBox>
               <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
             </SwiperSlide>

@@ -39,3 +39,8 @@ input,
 select {
   white-space: pre-wrap;
 }
+
+html {
+  background-color: #f0f0f0;
+  /* background-color: #fdb9ad; */
+}
