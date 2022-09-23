@@ -7,10 +7,7 @@ import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
-import {
-  faAlignJustify,
-  faEllipsisVertical,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
@@ -146,13 +143,15 @@ function FeedDetailContainer() {
         <StShadowBackgroundDiv>
           <StPopUpWhiteButton
             onClick={onClickDeleteComment}
-            transform="translateY(76vh)">
+            transform="translateY(76vh)"
+          >
             삭제
           </StPopUpWhiteButton>
 
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)">
+            transform="translateY(77vh)"
+          >
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -177,7 +176,8 @@ function FeedDetailContainer() {
               </StProfileBox>
               <StNickname
                 id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}>
+                onClick={onClickGoToOtherspage}
+              >
                 {detailState.todoInfo.nickname}
               </StNickname>
               <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
@@ -186,26 +186,29 @@ function FeedDetailContainer() {
               ) : detailState.isFollowed === false ? (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}>
+                  onClick={changeFollowState}
+                >
                   팔로우
                 </StFollowBtn>
               ) : (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}>
+                  onClick={changeFollowState}
+                >
                   언팔로우
                 </StFollowBtn>
               )}
             </StUserIdBox>
-
-            <DetailCard data={detailState.todoInfo} />
-
+            <StDetailCard>
+              <DetailCard data={detailState.todoInfo} />
+            </StDetailCard>
             {detailState.isTodayDone === "false" ? (
               <></>
             ) : (
               <StBtnGoToChallenge
                 onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}>
+                id={detailState.todoInfo.todoId}
+              >
                 도전할래요!
               </StBtnGoToChallenge>
             )}
@@ -215,7 +218,8 @@ function FeedDetailContainer() {
               width: "100%",
               background: "white",
               padding: "10px 0",
-            }}>
+            }}
+          >
             {detailState.comments?.map((x, index) => {
               return (
                 <div key={index}>
@@ -235,7 +239,8 @@ function FeedDetailContainer() {
                       </StProfileBox>
                       <StNicknameComment
                         id={x.userId}
-                        onClick={onClickCommentGoToOtherspage}>
+                        onClick={onClickCommentGoToOtherspage}
+                      >
                         {x.nickname}
                       </StNicknameComment>
                       <StChangeDeleteBtn>
@@ -259,8 +264,6 @@ function FeedDetailContainer() {
             <StProfileBox>
               <StProfileImg
                 style={{
-                  height: "50px",
-                  width: "50px",
                   margin: "0",
                   padding: "0",
                 }}
@@ -298,7 +301,8 @@ const StUserIdBox = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
-  margin: 0px auto 10px 20px;
+  /* margin: 0px auto 10px 20px; */
+  margin-left: 21px;
   align-items: center;
   cursor: pointer;
 `;
@@ -333,6 +337,11 @@ const StProfileBox = styled.div`
   border-radius:50%;
   overflow: hidden;
   margin: 10px;
+  @media only screen and (max-width: 500px) {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
 `;
 
 const StProfileImg = styled.img`
@@ -350,6 +359,11 @@ const StProfileImg = styled.img`
       /* border-radius: ${borderRadius || "25px"}; */
     `;
   }}
+  @media only screen and (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
 `;
 const StNickname = styled.div`
   /* background-color:red; */
@@ -380,6 +394,15 @@ const StFollowBtn = styled.button`
   cursor: pointer;
 `;
 
+const StDetailCard = styled.div`
+  /* background-color: red; */
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+    margin-left: -7px;
+    text-align: center;
+    align-items: center;
+  }
+`;
 const StNicknameComment = styled.div`
   font-weight: 500;
   font-size: 15px;
@@ -392,9 +415,12 @@ const StComment = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  margin-left: 40px;
+  margin-left: 50px;
   margin-right: 50px;
   word-wrap: break-word;
+  @media only screen and (max-width: 500px) {
+    margin-left: 70px;
+  }
 `;
 
 const StChangeDeleteBtn = styled.div`
@@ -426,6 +452,9 @@ const StWriteComment = styled.form`
   bottom: 0;
   z-index: 7;
   padding: 4px 0;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 const StItem = styled.div`
   /* background-color:blue; */
@@ -446,7 +475,7 @@ const StInput = styled.input`
 
   border: 1px solid #979797;
   border-radius: 6px;
-  width: 90%;
+  width: 70%;
   max-width: 320px;
   height: 55px;
   padding-left: 20px;
@@ -488,6 +517,10 @@ const StBtnGoToChallenge = styled.button`
   text-align: center;
   cursor: pointer;
   margin: 10px;
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 const StPopUpWhiteButton = styled.button`
@@ -510,4 +543,8 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+    margin: 0 20px;
+  }
 `;

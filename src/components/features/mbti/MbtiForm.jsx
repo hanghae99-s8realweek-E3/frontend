@@ -92,8 +92,9 @@ const MbtiForm = () => {
                     myMbti === elem ? "1px solid #ff6d53" : "1px solid #979797"
                   }
                   onClick={onClickSetMbti}
-                  value={elem}>
-                  {elem}
+                  value={elem}
+                >
+                  <StElem>{elem}</StElem>
                 </StMBTIBtn>
               );
             })}
@@ -117,12 +118,15 @@ const StDiv = styled.div`
 `;
 
 const StGrid = styled.div`
+  /* background-color: red; */
   display: grid;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
   margin-top: 70px;
   padding: 10px;
+  @media only screen and (max-width: 500px) {
+  }
 `;
 const StButton = styled.button`
   outline: none;
@@ -164,6 +168,11 @@ const StMBTIBtn = styled.button`
   width: 105px;
   box-sizing: border-box;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    height: 75px;
+    width: 75px;
+    margin: auto;
+  }
 `;
 
 const StSlideDiv = styled.div`
@@ -174,6 +183,12 @@ const StSlideDiv = styled.div`
 
   border-radius: 133.333px;
   margin: 21px auto 28px auto;
+`;
+
+const StElem = styled.div`
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 const StCommonButton = styled.button`
@@ -192,6 +207,10 @@ const StCommonButton = styled.button`
   height: 70px;
 
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 330px;
+    margin: 15px;
+  }
 `;
 
 const StHelpButton = styled.button`
@@ -206,10 +225,12 @@ const StHelpButton = styled.button`
 
   border: none;
   outline: none;
-  margin: 25px;
+  margin: 15px;
   margin-top: 0px;
 
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+  }
 `;
 
 const helpButton = {
