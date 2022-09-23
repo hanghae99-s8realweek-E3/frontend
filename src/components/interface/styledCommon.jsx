@@ -57,4 +57,7 @@ export const StShadowBackgroundDiv = styled.div`
   width: 500px;
   height: 100%;
   z-index: 10;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
