@@ -259,28 +259,47 @@ const StOutLine = styled.form`
   flex-direction: column;
   height: 961px;
   margin: 50px auto;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StContainer = styled.div`
+  /* background-color: beige; */
+
   width: 450px;
   display: grid;
   display: inline-grid;
   text-align: start;
   gap: 10px;
   margin-top: 30px;
+  @media only screen and (max-width: 500px) {
+    width: 350px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 `;
 
 const StItem = styled.div`
   position: relative;
   display: grid;
   display: inline-grid;
+  @media only screen and (max-width: 500px) {
+    width: 350px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 `;
 
 const StInputWrap = styled.div`
   margin-top: ${(props) => props.marginTop || "10px"};
   margin-bottom: ${(props) => props.marginBottom || "10px"};
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 const StInput = styled.input`
+  /* background-color: red; */
   border: 1px solid #979797;
   border-radius: 6px;
   width: 450px;
@@ -290,6 +309,9 @@ const StInput = styled.input`
   ::placeholder {
     font-size: 18px;
     line-height: 18px;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 325px;
   }
 `;
 const StInsideBtn = styled.button`
@@ -306,6 +328,9 @@ const StInsideBtn = styled.button`
   background-color: white;
   border: none;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    transform: translateX(-120%) translateY(10%);
+  }
 `;
 
 const StSignUpBtn = styled.button`
@@ -322,6 +347,11 @@ const StSignUpBtn = styled.button`
   font-weight: 500;
   font-size: 22px;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 340px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 `;
 const StErrorTextMessage = styled.div`
   font-family: "IBM Plex Sans KR";
