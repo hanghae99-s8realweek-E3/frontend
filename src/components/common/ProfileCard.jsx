@@ -83,8 +83,7 @@ function ProfileCard({ profileData }) {
                   fontWeight: "700",
                   color: "#313131",
                   margin: "17px auto",
-                }}
-              >
+                }}>
                 MBTI 궁합
               </h2>
               <StText>
@@ -190,7 +189,7 @@ const StImageBox = styled.div`
 const StProfileImg = styled.img`
   /* border-radius: 9999px; */
   height: 80px;
-  width: 80px;
+  width: auto;
   /* @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;

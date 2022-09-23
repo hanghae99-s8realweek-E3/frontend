@@ -37,6 +37,8 @@ const LayoutContainer = styled.div`
   max-width: 500px;
   min-height: 100vh;
 
+  box-shadow: 0px 0px 10px 0px rgba(183, 183, 183, 1);
+
   @media screen and (max-width: 500px) {
     width: 360px;
   }

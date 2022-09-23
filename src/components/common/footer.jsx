@@ -92,7 +92,6 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/MimicActive.png`
                   : process.env.PUBLIC_URL + `/images/Mimic.png`
               }
-              style={{ height: "40px", width: "40px" }}
             />
           </div>
           미믹
@@ -139,7 +138,7 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  background: #fafafa;
+  background: #ffffff;
 
   display: flex;
   flex-direction: column;
@@ -152,6 +151,7 @@ const FooterContainer = styled.div`
 
   padding-top: 5px;
   margin: auto;
+  border-top: 1px solid #c7c7c7;
 
   bottom: 0;
   z-index: 6;

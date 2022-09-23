@@ -100,8 +100,8 @@ const MbtiForm = () => {
           </StGrid>
         </div>
         <StHelpButton>
-          <FontAwesomeIcon icon={faQuestion} style={helpButton} /> 색상이 다른
-          이유는 무엇인가요?
+          <FontAwesomeIcon icon={faQuestion} style={helpButton} />
+          MBTI란?
         </StHelpButton>
         <StCommonButton type="submit">확인</StCommonButton>
       </form>
@@ -207,6 +207,7 @@ const StHelpButton = styled.button`
   border: none;
   outline: none;
   margin: 25px;
+  margin-top: 0px;
 
   cursor: pointer;
 `;
