@@ -69,14 +69,14 @@ function Header() {
       )}
       {window.location.pathname === "/" ? (
         <div>
-          <LogoImage src={process.env.PUBLIC_URL + `images/Logo.png`} />
+          <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.png`} />
         </div>
       ) : (
         <HeaderText>
           {changeHeaderName() !== "none" ? (
             changeHeaderName()
           ) : (
-            <LogoImage src={process.env.PUBLIC_URL + `images/Logo.png`} />
+            <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.png`} />
           )}
         </HeaderText>
       )}
