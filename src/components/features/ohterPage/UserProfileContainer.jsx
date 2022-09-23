@@ -218,6 +218,7 @@ function UserProfileContainer() {
                       .map((elem, index) => (
                         <OthersCard data={elem} key={index} />
                       ))
+                      
                   ) : (
                     <></>
                   )
@@ -244,12 +245,17 @@ const StTotalWrap = styled.div`
   display: flex;
   width: 500px;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    display: flex;
+    width: 360px;
+    /* height: auto; */
+  }
 `;
 const StTopWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 60px;
-  padding-bottom: 31.5px;
+  /* padding-bottom: 31.5px; */
   background-color: white;
 `;
 const StTodoTopLine = styled.div`
@@ -259,6 +265,10 @@ const StTodoTopLine = styled.div`
   transform: matrix(1, 0, 0, -1, 0, 0);
   width: 500px;
   margin-bottom: 10px;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    /* margin-bottom: 20px; */
+  }
 `;
 const StTodoWrap = styled.div`
   display: flex;
@@ -301,9 +311,10 @@ const StBottomWrap = styled.div`
   flex-direction: column;
 `;
 const StTodayMyCardWrap = styled.div`
-  display: flex;
-  /* align-items: start; */
+  display: block;
+  align-items: start;
   flex-direction: column;
+  padding-bottom: 71px;
 `;
 const StShadowBackgroundDiv = styled.div`
   background: rgba(0, 0, 0, 0.3);
@@ -327,6 +338,10 @@ const StPopupBox = styled.div`
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    text-align: center; 
+  }
 `;
 const StSlideDiv = styled.div`
   background: #e8e8e8;
@@ -349,6 +364,9 @@ const StSort = styled.div`
   color: #000000;
   margin-left: 220px;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    margin:auto;
+  }
 `;
 const StDate = styled.div`
   cursor: pointer;
@@ -358,6 +376,9 @@ const StDateLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StComment = styled.div`
   cursor: pointer;
@@ -366,6 +387,9 @@ const StCommentLine = styled.div`
   background: #c7c7c7;
   width: 450px;
   height: 1px;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StChallenge = styled.div`
   cursor: pointer;
@@ -374,6 +398,9 @@ const StChallengeLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StCommonBar = styled.div`
   position: absolute;
@@ -395,5 +422,11 @@ const StToggle = styled.div`
   margin: 16px 25px 16px auto;
   height: 32px;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+  }
 `;
 export default UserProfileContainer;

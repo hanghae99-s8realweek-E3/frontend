@@ -96,6 +96,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 margin:0px 25px 25px 25px;
+cursor: pointer;
 `
 
 const KaKaoBtn = styled.button`
@@ -135,5 +136,6 @@ const StNormalLoginBtn = styled.button`
   margin: 0px 25px 340px 25px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 export default LoginSelect;

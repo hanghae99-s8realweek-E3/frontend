@@ -31,14 +31,17 @@ function LoginForm() {
     setLoading(true);
     //req.List.jsx에 있는 정규식 사용
     if (userData.email === "" || !emailFormat.test(userData.email)) {
+      setLoading(false)
       return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     } else if (
       userData.password === "" ||
       !passwordFormat.test(userData.password) ||
       userData.password.length < 8
     ) {
+      setLoading(false)
       return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
+    
     // 로그인 버튼 클릭시 서버와의 통신
     const postLogin = async () => {
       try {
