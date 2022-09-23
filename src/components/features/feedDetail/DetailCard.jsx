@@ -127,6 +127,11 @@ const StChallengeCardDiv = styled.div`
   margin: 6px 25px;
 
   box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    width: 94%;
+    margin: 12px 3%;
+  }
 `;
 
 const StChallengeNameSpan = styled.span`
@@ -140,6 +145,12 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 `;
 
 const StMenuBtn = styled.button`

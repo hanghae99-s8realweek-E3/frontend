@@ -14,5 +14,7 @@ export function decodeMyTokenData() {
   if (myToken !== null && myToken !== undefined) {
     const myData = jwtDecode(myToken);
     return myData;
+  } else {
+    return null;
   }
 }

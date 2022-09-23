@@ -14,6 +14,7 @@ function ChallengeCard({ data }) {
         navigate(`/feeddetail/${data.todoInfo.todoId}`);
       } else if (tokenChecker() === false) {
         alert("로그인 후 이용해주세요.");
+        navigate("/mypage");
         return;
       }
     }
@@ -94,6 +95,12 @@ const StChallengeCardDiv = styled.div`
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
+
+  @media screen and (max-width: 500px) {
+    width: 94%;
+    margin: 12px 3%;
+    height: 80px;
+  }
 `;
 
 const StChallengeNameSpan = styled.span`
@@ -103,6 +110,12 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 `;
 
 const StCountSpan = styled.span`

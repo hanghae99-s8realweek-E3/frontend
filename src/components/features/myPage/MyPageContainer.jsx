@@ -102,7 +102,7 @@ function MyPageContainer() {
         )}
 
         <StCommonBorder />
-        <Grade/>
+        {/* <Grade/> */}
 
         <div
           style={{
