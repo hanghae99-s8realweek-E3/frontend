@@ -123,7 +123,8 @@ function MyPageFollow() {
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}>
+                            onClick={onClickGoToOthersPage}
+                          >
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -148,7 +149,8 @@ function MyPageFollow() {
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}>
+                            onClick={onClickGoToOthersPage}
+                          >
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -206,7 +208,8 @@ function MyPageFollow() {
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}>
+                            onClick={onClickGoToOthersPage}
+                          >
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -225,7 +228,8 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}>
+                                onClick={changeMyUnFollowState}
+                              >
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -239,7 +243,8 @@ function MyPageFollow() {
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}>
+                            onClick={onClickGoToOthersPage}
+                          >
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -258,7 +263,8 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}>
+                                onClick={changeMyUnFollowState}
+                              >
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -300,14 +306,18 @@ const StContainer = styled.div`
 const StWrapBtn = styled.div`
   /* background-color: black; */
   /* border-bottom: 1px solid #919191; */
-  margin: auto;
-  width: 450px;
+  width: 500px;
   height: 45px;
   padding-top: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 60px;
+  justify-content: center;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 const StWrapBtnFollow = styled.div`
   /* border-style: inset; */
@@ -320,6 +330,9 @@ const StWrapBtnFollow = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 32px;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const StWrapBtnFollowing = styled.div`
@@ -328,6 +341,9 @@ const StWrapBtnFollowing = styled.div`
   font-size: 20px;
   line-height: 32px;
   border-bottom: 1px solid #919191;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const StSearchBarBox = styled.div`
@@ -341,6 +357,12 @@ const StSearchBarBox = styled.div`
   margin: auto;
   border: 1px solid #919191;
   border-radius: 6px;
+
+  @media only screen and (max-width: 500px) {
+    width: 330px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 `;
 
 const StInput = styled.input`
@@ -358,6 +380,10 @@ const StInput = styled.input`
     font-weight: 500;
     font-size: 18px;
     line-height: 18px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 308px;
   }
 `;
 
@@ -377,6 +403,9 @@ const StSearchBtn = styled.button`
   position: absolute;
   right: 0;
   transform: translateX(-60%) translateY(-130%);
+  @media screen and (max-width: 500px) {
+    transform: translateX(-20%) translateY(-130%);
+  }
 `;
 const StProfileContainer = styled.div`
   /* background-color: red; */
@@ -393,6 +422,9 @@ const StProfileContainer = styled.div`
     background-color: gainsboro;
   }
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 350px;
+  }
 `;
 
 const StProfileBox = styled.div`

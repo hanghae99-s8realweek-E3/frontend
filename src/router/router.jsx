@@ -20,21 +20,28 @@ import ChangePW from "../pages/changePW";
 import HelpDesk from "../pages/helpDesk";
 import Withdraw from "../pages/withdraw";
 import { getCookie } from "../utils/cookie";
+import TestPage from "../pages/testPage";
 
 const FirstPage = ({ children }) => {
-  console.log(getCookie("firstEnter"))
+  console.log(getCookie("firstEnter"));
   if (getCookie("firstEnter") === undefined) {
-    return <Navigate to="/welcomepage" />
+    return <Navigate to="/welcomepage" />;
   }
   return children;
-}
+};
 
 function Router() {
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FirstPage><Main /></FirstPage>} />
+        <Route
+          path="/"
+          element={
+            <FirstPage>
+              <Main />
+            </FirstPage>
+          }
+        />
         <Route path="/activity" element={<Activity />} />
         <Route path="/errorpage" element={<ErrorPage />} />
         <Route path="/todolists" element={<Feed />} />
@@ -57,6 +64,7 @@ function Router() {
         <Route path="/changepw" element={<ChangePW />} />
         <Route path="/helpdesk" element={<HelpDesk />} />
         <Route path="/withdraw" element={<Withdraw />} />
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </BrowserRouter>
   );
