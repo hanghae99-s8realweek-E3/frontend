@@ -104,6 +104,8 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
     deleteApply();
   }
 
+  console.log(data);
+
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.
   return (
@@ -139,9 +141,9 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         width="90%"
         id={data.todoId}
         onClick={moveToFeedDetail}
-        background={data.isCompleted === 1 ? "#FF6D53" : "#ffffff"}
+        background={data.isCompleted === true ? "#FF6D53" : "#ffffff"}
         border={
-          data.isCompleted === 1 ? "1px solid #FF6D53" : "1px solid #909090"
+          data.isCompleted === true ? "1px solid #FF6D53" : "1px solid #909090"
         }
         cursor="pointer">
         {hideState === true ? (
@@ -151,7 +153,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
             onClick={isTodayChallenge === true ? changeStateChallenge : null}>
             <StTodoStateImage
               src={
-                data.isCompleted === 1
+                data.isCompleted === true
                   ? process.env.PUBLIC_URL + `/images/Complete.png`
                   : process.env.PUBLIC_URL + `/images/Progress.png`
               }
@@ -165,7 +167,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           alignItems="center"
           style={{ textAlign: "left" }}>
           <StChallengeNameSpan
-            color={data.isCompleted === 1 ? "#ffffff" : "#979797"}>
+            color={data.isCompleted === true ? "#ffffff" : "#979797"}>
             {data.challengedTodo !== undefined
               ? data.challengedTodo.length > 30
                 ? `${data.challengedTodo.substring(0, 27)}...`
@@ -182,7 +184,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           <StCommonColumnBox style={{ height: "100%" }}>
             {isTodayChallenge === true ? (
               <StMenuBtn
-                color={data.isCompleted === 1 ? "#ffffff" : "#979797"}
+                color={data.isCompleted === true ? "#ffffff" : "#979797"}
                 onClick={displayCardMenu}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </StMenuBtn>
@@ -218,6 +220,10 @@ const StChallengeCardDiv = styled.div`
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 const StChallengeStateBtn = styled.button`

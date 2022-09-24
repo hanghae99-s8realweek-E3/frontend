@@ -43,6 +43,10 @@ const StNoticeDiv = styled.div`
 
     margin: 10px 0 20px 0;
   }
+  transition: ease 0.1s;
+  &:hover {
+    background: #f4f4f4;
+  }
 `;
 
 const StNoticeAccordionBox = styled.div`

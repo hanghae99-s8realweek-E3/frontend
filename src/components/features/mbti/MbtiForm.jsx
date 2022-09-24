@@ -92,8 +92,7 @@ const MbtiForm = () => {
                     myMbti === elem ? "1px solid #ff6d53" : "1px solid #979797"
                   }
                   onClick={onClickSetMbti}
-                  value={elem}
-                >
+                  value={elem}>
                   <StElem>{elem}</StElem>
                 </StMBTIBtn>
               );
@@ -173,6 +172,10 @@ const StMBTIBtn = styled.button`
     width: 75px;
     margin: auto;
   }
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const StSlideDiv = styled.div`
@@ -210,6 +213,10 @@ const StCommonButton = styled.button`
   @media only screen and (max-width: 500px) {
     width: 330px;
     margin: 15px;
+  }
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
   }
 `;
 

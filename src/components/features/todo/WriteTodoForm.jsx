@@ -165,6 +165,10 @@ const Stbutton = styled.button`
   border: 0px;
   background: #ff6d53;
   border-radius: 6px;
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 
 export default WriteTodoForm;

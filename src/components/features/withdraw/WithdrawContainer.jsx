@@ -149,6 +149,11 @@ const StCommonButton = styled.button`
   height: 70px;
 
   cursor: pointer;
+
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 
 const StGoogleFormBtn = styled.div`
@@ -165,4 +170,9 @@ const StGoogleFormBtn = styled.div`
   margin: 0 0 80px 0;
 
   cursor: pointer;
+
+  transition: ease 0.05s;
+  &:hover {
+    color: #ffa595;
+  }
 `;
