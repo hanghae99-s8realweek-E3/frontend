@@ -50,13 +50,23 @@ function MainContainer() {
     window.open(locationLink[event.target.id]);
   }
 
+  function moveToBannerPage(idx) {
+    if (idx === 0) {
+      window.open(
+        "https://develop-neoguri.notion.site/MIMIC-010c6fa8f221425db53abdbb216f7cd6"
+      );
+    } else if (idx === 1) {
+      window.open("https://forms.gle/ByMhVrN7Gr9pUuBZ9");
+    }
+  }
+
   return (
     <>
       {firstLoginCheck !== undefined ? <WelcomeForm /> : <></>}
 
       <StContainer>
         <StHeadTitle>
-          {myData !== null ? myData.nickname : "미믹"} 님!
+          {myData !== undefined ? myData.nickname : "미믹"} 님!
           <br />
           오늘은 누구를 따라해볼까요?
         </StHeadTitle>
@@ -74,13 +84,16 @@ function MainContainer() {
             pagination={{ clickable: true }}>
             {bannerSlide.map((elem, idx) => (
               <SwiperSlide key={idx} style={SwiperImageCSSData}>
-                <SildeBannerImage src={elem} />
+                <SildeBannerImage
+                  src={elem}
+                  onClick={() => moveToBannerPage(idx)}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </BannerSlideBox>
         <PostSlideBox>
-          <SildeTitle>오늘의 베스트미믹</SildeTitle>
+          <SildeTitle>오늘의 베스트 미믹!</SildeTitle>
 
           {/* 슬라이드 목록 구간 */}
           {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
@@ -416,6 +429,7 @@ const SwiperImageCSSData = {
 
   width: "450px",
   height: "260px",
+  cursor: "pointer",
 };
 
 const SwiperTestCardCSSData = {
