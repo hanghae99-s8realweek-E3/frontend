@@ -28,66 +28,25 @@ function WithdrawContainer() {
   return (
     <StWithdrawContainer>
       <div style={{ margin: "30px 0", textAlign: "left" }}>
-        <p
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#999999",
-            margin: "0",
-          }}>
-          미믹을 떠난다니 아쉬워요.
-        </p>
-        <p
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#999999",
-            margin: "0",
-          }}>
-          미믹을 떠나는 이유를 알려주세요.
-        </p>
+        <p>미믹을 떠난다니 아쉬워요.</p>
+        <p>미믹을 떠나는 이유를 알려주세요.</p>
       </div>
       <StGoogleFormBtn>클릭하여 알려주기</StGoogleFormBtn>
 
       <div style={{ margin: "30px 0", textAlign: "left" }}>
-        <p
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#999999",
-            margin: "0",
-          }}>
-          회원님의 소중한 개인정보를 안전하게 보호하기 위해
-        </p>
-        <p
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#999999",
-            margin: "0",
-          }}>
-          비밀번호를 입력해주세요.
-        </p>
+        <p>회원님의 소중한 개인정보를 안전하게 보호하기 위해</p>
+        <p>비밀번호를 입력해주세요.</p>
       </div>
 
-      <form onSubmit={sendToWithdrawData}>
-        <label
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            color: "#000000",
-            display: "block",
-            textAlign: "left",
-          }}>
-          비밀번호
-        </label>
+      <StWithDrawForm onSubmit={sendToWithdrawData}>
+        <label>비밀번호</label>
         <StCommonInput
           type="password"
           placeholder="비밀번호를 입력"
           ref={passwordRef}
         />
         <StCommonButton>떠나기</StCommonButton>
-      </form>
+      </StWithDrawForm>
     </StWithdrawContainer>
   );
 }
@@ -102,6 +61,18 @@ const StWithdrawContainer = styled.div`
   margin: 60px 25px;
 
   box-sizing: border-box;
+
+  & > div > p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #999999;
+    margin: 0;
+  }
+  @media screen and (max-width: 500px) {
+    & > div > p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const StCommonInput = styled.input`
@@ -126,6 +97,15 @@ const StCommonInput = styled.input`
     font-weight: 500;
     color: #979797;
   }
+  @media screen and (max-width: 500px) {
+    width: 93%;
+    min-width: 200px;
+    height: 48px;
+    font-size: 16px;
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
 `;
 
 const StCommonButton = styled.button`
@@ -142,7 +122,7 @@ const StCommonButton = styled.button`
   border: none;
   border-radius: 6px;
   outline: none;
-  margin: 80px 0;
+  margin: 30px 0 80px 0;
   padding: 0;
 
   width: 100%;
@@ -153,6 +133,10 @@ const StCommonButton = styled.button`
   transition: ease 0.05s;
   &:hover {
     background: #ffa595;
+  }
+  @media screen and (max-width: 500px) {
+    height: 50px;
+    font-size: 18px;
   }
 `;
 
@@ -174,5 +158,23 @@ const StGoogleFormBtn = styled.div`
   transition: ease 0.05s;
   &:hover {
     color: #ffa595;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
+`;
+
+const StWithDrawForm = styled.form`
+  & > label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+    display: block;
+    text-align: left;
+  }
+  @media screen and (max-width: 500px) {
+    & > label {
+      font-size: 14px;
+    }
   }
 `;

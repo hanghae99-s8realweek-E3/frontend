@@ -37,425 +37,272 @@ function StartContainer() {
               background: "#FF6D53",
               height: "100%",
             }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                paddingLeft: "60px",
-                paddingRight: "auto",
-              }}>
-              <h2
+            <StColorPageCard>
+              <StColorPageHead2Text
                 style={{
                   margin:
                     window.innerHeight > 800
                       ? "33vh auto 6px 0"
                       : "27vh auto 6px 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 미믹에 오신
-              </h2>
-              <h2
+              </StColorPageHead2Text>
+              <StColorPageHead2Text
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 여러분을
-              </h2>
-              <h2
+              </StColorPageHead2Text>
+              <StColorPageHead2Text
                 style={{
                   margin: "6px auto 10vh 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 환영합니다!
-              </h2>
-              <div
+              </StColorPageHead2Text>
+              <StColorPageDivText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "51px",
-                  fontSize: "34px",
-                  fontWeight: "400",
                 }}>
-                <span
-                  style={{
-                    color: "#FFFFFF",
-                    fontWeight: "700",
-                  }}>
-                  MIMIC (미믹)
-                </span>{" "}
-                :{"  "}따라쟁이
-              </div>
-              <p
+                <span>MIMIC (미믹)</span> :{"  "}따라쟁이
+              </StColorPageDivText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 따라쟁이라는 의미를 가진 미믹은
-              </p>
+              </StColorPageParapText>
 
-              <p
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>타인의 하루를 체험</span>
                 해보고
-              </p>
-              <p
+              </StColorPageParapText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>내 하루를 공유</span>
                 하는 어플입니다.
-              </p>
-            </div>
+              </StColorPageParapText>
+            </StColorPageCard>
           </SwiperSlide>
           <SwiperSlide
             style={{
               background: "#569AFF",
               height: "100%",
             }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                paddingLeft: "60px",
-                paddingRight: "auto",
-              }}>
-              <h2
+            <StColorPageCard>
+              <StColorPageHead2Text
                 style={{
                   margin:
                     window.innerHeight > 800
                       ? "29vh auto 6px 0"
                       : "22vh auto 6px 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 # 당신의 하루
-              </h2>
-              <h2
+              </StColorPageHead2Text>
+              <StColorPageHead2Text
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 # 그리고
-              </h2>
-              <h2
+              </StColorPageHead2Text>
+              <StColorPageHead2Text
                 style={{
                   margin: "6px auto 10vh 0",
-                  color: "#FFFFFF",
-                  fontSize: "38px",
-                  lineHeight: "57px",
                 }}>
                 # 나의 하루
-              </h2>
-              <div
+              </StColorPageHead2Text>
+              <StColorPageDivText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "51px",
-                  fontSize: "34px",
-                  fontWeight: "700",
                 }}>
                 어느 누군가의 하루 따라하기
-              </div>
-              <p
+              </StColorPageDivText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 평범하고 반복적인 내 일상에
-              </p>
-              <p
+              </StColorPageParapText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>작은 변화</span>를 주는 건
                 어떨까요?
-              </p>
-              <p
+              </StColorPageParapText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 다른 사람의 하루를 빌려와서
-              </p>
-              <p
+              </StColorPageParapText>
+              <StColorPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#FFFFFF",
-                  lineHeight: "39px",
-                  fontSize: "26px",
-                  fontWeight: "300",
                 }}>
                 따라해봐요!
-              </p>
-            </div>
+              </StColorPageParapText>
+            </StColorPageCard>
           </SwiperSlide>
           <SwiperSlide>
             <StBackground backgroundImage={`url(${background1})`}>
-              <h2
+              <StStepHead2Text
+                color="#ff6d53"
                 style={{
                   margin: "6vh auto 6px 0",
-                  color: "#FF6D53",
-                  fontSize: "34px",
-                  lineHeight: "51px",
-                  fontWeight: "500",
                 }}>
                 STEP
-              </h2>
-              <h2
+              </StStepHead2Text>
+              <StStepNumberHead2Text
+                color="#ff6d53"
                 style={{
-                  fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
                   marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
-                  color: "#FF6D53",
-                  fontSize: "74px",
-                  fontWeight: "700",
-                  lineHeight: "82px",
                 }}>
                 01
-              </h2>
-              <div
+              </StStepNumberHead2Text>
+              <StStepPageDivText
+                color="#ff6d53"
                 style={{
                   margin: "6px auto 24px 0",
-                  color: "#FF6D53",
-                  lineHeight: window.innerHeight > 800 ? "26px" : "20px",
-                  fontSize: window.innerHeight > 800 ? "34px" : "28px",
-                  fontWeight: "700",
                 }}>
                 피드 구경하고 도전하기
-              </div>
-              <p
+              </StStepPageDivText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 많은 이용자들이{" "}
                 <span style={{ fontWeight: "600" }}>공유한 하루를</span>
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>피드 페이지에서 구경</span>
                 하고
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 마음에 드는 활동이 있다면
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 주저말고{" "}
                 <span style={{ fontWeight: "600" }}>도전해보세요!</span>
-              </p>
+              </StStepPageParapText>
             </StBackground>
           </SwiperSlide>
           <SwiperSlide>
             <StBackground backgroundImage={`url(${background2})`}>
-              <h2
+              <StStepHead2Text
+                color="#569AFF"
                 style={{
                   bottom: "0",
                   margin: "auto auto 6px 0",
-                  color: "#569AFF",
-                  fontSize: "34px",
-                  lineHeight: "51px",
-                  fontWeight: "500",
                 }}>
                 STEP
-              </h2>
-              <h2
+              </StStepHead2Text>
+              <StStepNumberHead2Text
+                color="#569AFF"
                 style={{
-                  fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
                   marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
-                  color: "#569AFF",
-                  fontSize: "74px",
-                  fontWeight: "700",
-                  lineHeight: "82px",
                 }}>
                 02
-              </h2>
-              <div
+              </StStepNumberHead2Text>
+              <StStepPageDivText
+                color="#569AFF"
                 style={{
                   margin: "6px auto 24px 0",
-                  color: "#569AFF",
-                  lineHeight: window.innerHeight > 800 ? "26px" : "20px",
-                  fontSize: window.innerHeight > 800 ? "34px" : "28px",
-                  fontWeight: "700",
                 }}>
                 나의 하루를 제안하기
-              </div>
-              <p
+              </StStepPageDivText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 나만의 하루 활동을
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>다른 사람에게 제안</span>
                 해주세요!
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 나에게 익숙한 하루지만
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 5vh 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>
                   누군가에겐 색다른 하루가 될거에요!
                 </span>
-              </p>
+              </StStepPageParapText>
             </StBackground>
           </SwiperSlide>
           <SwiperSlide>
             <StBackground backgroundImage={`url(${background3})`}>
-              <h2
+              <StStepHead2Text
+                color="#ff6d53"
                 style={{
                   margin: "6vh auto 6px 0",
-                  color: "#FF6D53",
-                  fontSize: "34px",
-                  lineHeight: "51px",
-                  fontWeight: "500",
                 }}>
                 STEP
-              </h2>
-              <h2
+              </StStepHead2Text>
+              <StStepNumberHead2Text
+                color="#ff6d53"
                 style={{
-                  fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
                   marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
-                  color: "#FF6D53",
-                  fontSize: "74px",
-                  fontWeight: "700",
-                  lineHeight: "82px",
                 }}>
                 03
-              </h2>
-              <div
+              </StStepNumberHead2Text>
+              <StStepPageDivText
+                color="#ff6d53"
                 style={{
                   margin: "6px auto 24px 0",
-                  color: "#FF6D53",
-                  lineHeight: window.innerHeight > 800 ? "26px" : "20px",
-                  fontSize: window.innerHeight > 800 ? "34px" : "28px",
-                  fontWeight: "700",
                 }}>
                 미믹 시작하기
-              </div>
-              <p
+              </StStepPageDivText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 <span style={{ fontWeight: "600" }}>하루에 한 번</span>
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 다른 사람들을 따라해보고,
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 다른 사람이 나의 하루를
-              </p>
-              <p
+              </StStepPageParapText>
+              <StStepPageParapText
                 style={{
                   margin: "6px auto 6px 0",
-                  color: "#000000",
-                  lineHeight: window.innerHeight > 800 ? "39px" : "26px",
-                  fontSize: window.innerHeight > 800 ? "26px" : "20px",
-                  fontWeight: "300",
                 }}>
                 따라하게 해볼까요?
-              </p>
+              </StStepPageParapText>
               <StStartbutton type="button" onClick={startAndGoToMain}>
                 미믹, 시작하기!
               </StStartbutton>
@@ -490,16 +337,6 @@ const BannerSlideBox = styled.div`
   box-sizing: border-box;
 `;
 
-// const SwiperImageCSSData = {
-//   background: "none",
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "flex-start",
-//   alignItems: "center",
-
-//   width: "100%",
-// };
-
 const StStartbutton = styled.button`
   background: #ffffff;
 
@@ -517,31 +354,14 @@ const StStartbutton = styled.button`
   padding: 15px 0;
   margin: auto 0 5vh 0;
 
-  width: 90%;
+  width: 100%;
   cursor: pointer;
-`;
 
-// {startingPageImage.map((elem, idx) => (
-//   <SwiperSlide key={idx} style={SwiperImageCSSData}>
-//     <div
-//       style={{
-//         height: "400px",
-//         display: "flex",
-//         justifyContent: "center",
-//         alignItems: "center",
-//       }}>
-//       <SildeImage width="100%" src={elem} />
-//     </div>
-//     <StContext>{startingPageText[idx]}</StContext>
-//     {idx === 3 ? (
-// <StStartbutton type="button" onClick={startAndGoToMain}>
-//   미믹, 시작해볼까요?
-// </StStartbutton>
-//     ) : (
-//       <div></div>
-//     )}
-//   </SwiperSlide>
-// ))}
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    padding: 10px 0;
+  }
+`;
 
 const StBackground = styled.div`
   background-image: ${(props) => props.backgroundImage};
@@ -553,6 +373,108 @@ const StBackground = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding: 0 60px;
+  @media screen and (max-width: 500px) {
+    padding: 0 30px;
+  }
+`;
+
+const StColorPageHead2Text = styled.h2`
+  color: #ffffff;
+  font-size: 38px;
+  line-height: 57px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 28px;
+    line-height: 40px;
+  }
+`;
+
+const StColorPageDivText = styled.div`
+  color: #ffffff;
+  line-height: 51px;
+  font-size: 34px;
+  font-weight: 400;
+
+  & span {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+  }
+`;
+
+const StColorPageParapText = styled.p`
+  color: #ffffff;
+  line-height: 39px;
+  font-size: 26px;
+  font-weight: 300;
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+`;
+
+const StColorPageCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding-left: 60px;
   padding-right: auto;
+
+  @media screen and (max-width: 500px) {
+    padding-left: 30px;
+  }
+`;
+
+const StStepHead2Text = styled.h2`
+  color: ${(props) => props.color};
+  font-size: 34px;
+  line-height: 51px;
+  font-weight: 500;
+
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
+`;
+
+const StStepNumberHead2Text = styled.h2`
+  font-family: "GmarketSans";
+  font-size: 74px;
+  font-weight: 700;
+  color: ${(props) => props.color};
+  line-height: 82px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 50px;
+    line-height: 60px;
+  }
+`;
+
+const StStepPageDivText = styled.div`
+  color: ${(props) => props.color};
+  line-height: ${window.innerHeight > 800 ? "26px" : "20px"};
+  font-size: ${window.innerHeight > 800 ? "34px" : "28px"};
+  font-weight: 700;
+
+  @media screen and (max-width: 500px) {
+    font-size: 26px;
+    line-height: 26px;
+  }
+`;
+
+const StStepPageParapText = styled.p`
+  color: #000000;
+  line-height: ${window.innerHeight > 800 ? "39px" : "26px"};
+  font-size: ${window.innerHeight > 800 ? "26px" : "20px"};
+  font-weight: 300;
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
