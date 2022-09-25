@@ -39,23 +39,13 @@ function FeedPageContainer() {
   };
   const searchData = (e) => {
     e.preventDefault();
-    let todoData;
-    // 1. 검색어가 빈 값일 때? 그러면 어떻게 처리할 것인가? = 아니면 다 노출시킬 것인지?
-    // console.log(followData)
-    todoData = feedCard.map((x) => x.todoInfo);
-    console.log(todoData);
-    setSearchList(
-      todoData.filter((elem) => elem.todo.indexOf(inputContext) !== -1)
-    );
-    // console.log(searchList)
-    // inputContext === "" ? setPostLIst(data)
+    setSearchList(feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1));
   };
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
   // console.log(mbti);
-  console.log(feedCard);
-  console.log(feedCard.map((x) => x.todoInfo));
+
 
   //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남
   // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
@@ -197,18 +187,20 @@ function FeedPageContainer() {
     setLoading(true);
     navigate("/selectmbtifeed");
   };
-  console.log(searchList?.filter((elem) => elem.isChallenged === false).map((x) => x.todoInfo.todo));
+  console.log(
+    searchList
+      ?.filter((elem) => elem.isChallenged === false)
+      .map((x) => x.todoInfo.todo)
+  );
   // console.log(feedCard?.filter((elem) => elem.isChallenged === true))
-  console.log(searchList?.filter((elem) => elem.isChallenged === false))
-  console.log(searchList)
-  console.log(searchList.todo)
+  console.log(searchList?.filter((elem) => elem.isChallenged === false));
+  console.log(searchList);
+  console.log(searchList.todo);
 
-
-  console.log(searchList?.filter((elem) => elem.todoInfo))
+  console.log(searchList?.filter((elem) => elem.todoInfo));
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
-
       <StTotalWrap>
         {selectSort === true ? (
           <StShadowBackgroundDiv onClick={toggleSortPopUp}>
@@ -320,11 +312,28 @@ function FeedPageContainer() {
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
-          ) : 
-          <StTodayMyCardWrap>
-          {searchList.map((x) => x.todoInfo)}
+          ) : (
+            // <StTodayMyCardWrap>
+            //   {searchList.map((x) => (
+            //     <StTest>{x.todo}</StTest>
+
+            //   ))}
+            // </StTodayMyCardWrap>
+            <StTodayMyCardWrap>
+            {checkOn === true
+              ? //isChallenged가 true이면 화면에 띄우면 안된다.
+                //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+                searchList
+                  ?.filter((elem) => elem.isChallenged === false)
+                  .map((it, idx) => (
+                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                  ))
+              : searchList?.map((it, idx) => (
+                  <ChallengeCard id={it.todoId} data={it} key={idx} />
+                ))}
+            <div className="hi" style={{ height: 80 }}></div>
           </StTodayMyCardWrap>
-                }
+          )}
         </>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
@@ -457,6 +466,10 @@ const StPopupBox = styled.div`
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    text-align: center; 
+  }
 `;
 const StSlideDiv = styled.div`
   background: #e8e8e8;
@@ -479,6 +492,9 @@ const StSort = styled.div`
   color: #000000;
   margin-left: 220px;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    margin:auto;
+  }
 `;
 const StDate = styled.div`
   cursor: pointer;
@@ -488,6 +504,9 @@ const StDateLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StComment = styled.div`
   cursor: pointer;
@@ -496,6 +515,9 @@ const StCommentLine = styled.div`
   background: #c7c7c7;
   width: 450px;
   height: 1px;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StChallenge = styled.div`
   cursor: pointer;
@@ -504,6 +526,9 @@ const StChallengeLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StCommonBar = styled.div`
   position: absolute;
@@ -528,9 +553,9 @@ const StSearchBarBox = styled.div`
   border-radius: 6px; */
 
   @media only screen and (max-width: 500px) {
-    width: 330px;
+    width: 300px;
     margin-left: 15px;
-    margin-right: 15px;
+    /* margin-right: 15px; */
   }
 `;
 
@@ -551,9 +576,12 @@ const StInput = styled.input`
     font-size: 18px;
     line-height: 18px;
   }
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+    padding-right: 10px;
+  }
 `;
 const StSearchBtn = styled.button`
-  /* background-color: blue; */
   background: none;
   margin-right: 20px;
   border: none;
@@ -574,9 +602,10 @@ const StSearchBtn = styled.button`
 `;
 
 const StTest = styled.div`
-  background-color: red;
+  /* background-color: ; */
   width: 500px;
-  height: 200px;
-  padding-top: 200px;
+  height: 50px;
+  padding-top: 20px;
+  color: black;
 `;
 export default FeedPageContainer;
