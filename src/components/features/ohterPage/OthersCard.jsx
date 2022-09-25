@@ -159,6 +159,10 @@ const StChallengeCardDiv = styled.div`
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.01);
+  }
 `;
 
 const StChallengeNameSpan = styled.span`

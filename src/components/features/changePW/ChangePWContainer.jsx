@@ -211,6 +211,10 @@ const StCommonButton = styled.button`
   height: 70px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 
 const StErrorMessage = styled.div`

@@ -335,6 +335,7 @@ const BannerSlideBox = styled.div`
 
   @media screen and (max-width: 500px) {
     width: 324px;
+    height: auto;
   }
 `;
 
@@ -368,6 +369,7 @@ const SildeBannerImage = styled.img`
 
   @media screen and (max-width: 500px) {
     width: 324px;
+    height: auto;
   }
 `;
 

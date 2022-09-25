@@ -304,6 +304,10 @@ const StChangeImageBtn = styled.label`
   margin-bottom: 69px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #ffa595;
+  }
 `;
 
 const StCommonBorder = styled.div`
@@ -354,6 +358,10 @@ const StMBTIBtn = styled.button`
   width: 105px;
   box-sizing: border-box;
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const StSelectMBTIBtn = styled.button`
@@ -373,6 +381,10 @@ const StSelectMBTIBtn = styled.button`
   width: 200px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #ffa595;
+  }
 `;
 
 const StPopupBox = styled.div`
@@ -416,4 +428,8 @@ const StCommonButton = styled.div`
   height: 70px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
 `;

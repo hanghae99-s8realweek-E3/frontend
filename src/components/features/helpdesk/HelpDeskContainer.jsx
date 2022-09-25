@@ -202,4 +202,9 @@ const StContactBox = styled.div`
   align-items: flex-start;
 
   margin: 20px 0;
+
+  transition: ease 0.1s;
+  & > p > span:hover {
+    color: #8e8e8e;
+  }
 `;

@@ -96,6 +96,21 @@ const StChallengeCardDiv = styled.div`
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
 
+  transition: ease 0.2s;
+
+  &:hover {
+    background: #ff6d53;
+    color: #ffffff;
+  }
+
+  &:hover span {
+    color: #ffffff;
+  }
+
+  &:hover path {
+    color: #ffffff;
+  }
+
   @media screen and (max-width: 500px) {
     width: 94%;
     margin: 12px 3%;

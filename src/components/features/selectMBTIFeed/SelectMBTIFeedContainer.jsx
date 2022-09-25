@@ -228,6 +228,11 @@ const StButton = styled.button`
   height: 105px;
   width: 105px;
   cursor: ${(props) => props.cursor};
+
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const StHelpButton = styled.button`
@@ -243,6 +248,7 @@ const StHelpButton = styled.button`
   border: none;
   outline: none;
   margin: 25px;
+  margin-top: 0;
 
   cursor: pointer;
 `;
@@ -279,6 +285,11 @@ const StSelectFilterBtn = styled.button`
   width: 90%;
   height: 70px;
   cursor: pointer;
+
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 
 const StModalContainer = styled.div`

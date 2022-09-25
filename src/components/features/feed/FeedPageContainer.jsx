@@ -371,7 +371,7 @@ const StChallengeWord = styled.div`
   color: #000000;
   @media screen and (max-width: 500px) {
     align-items: center;
-    width: 185px;
+    width: 175px;
     margin: 0px;
   }
 `;
@@ -430,6 +430,12 @@ const StSelectMbti = styled.button`
   @media screen and (max-width: 500px) {
     width: 144px;
     margin-left: 108px;
+  }
+
+  transition: ease 0.2s;
+  &:hover {
+    background: #ffafa1;
+    transform: scale(1.03);
   }
 `;
 const StShadowBackgroundDiv = styled.div`

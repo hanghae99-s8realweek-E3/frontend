@@ -176,7 +176,7 @@ const FooterButtonBox = styled.div`
     align-items: center;
 
     width: 360px;
-    gap: 3rem;
+    gap: 4rem;
   }
 `;
 

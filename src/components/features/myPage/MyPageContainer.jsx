@@ -108,7 +108,6 @@ function MyPageContainer() {
           style={{
             display: "flex",
             flexDirection: "column",
-            paddingLeft: "25px",
             paddingBottom: "25px",
           }}>
           <StMyPageMenu>나의 정보</StMyPageMenu>
@@ -124,8 +123,6 @@ function MyPageContainer() {
           style={{
             display: "flex",
             flexDirection: "column",
-            paddingLeft: "25px",
-            paddingBottom: "25px",
           }}>
           <StMyPageMenu>설정</StMyPageMenu>
           <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
@@ -170,10 +167,14 @@ const StMyPageButton = styled.button`
 
   border: none;
   outline: none;
-  padding: 0;
+  padding: 0 25px;
   margin: 6px 0;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #f4f4f4;
+  }
 `;
 
 const StMyPageMenu = styled.span`
@@ -182,7 +183,7 @@ const StMyPageMenu = styled.span`
   font-weight: 500;
   line-height: 32px;
 
-  margin: 25px 0 12px 0;
+  margin: 25px 0 12px 25px;
 `;
 
 const StModalContainer = styled.div`

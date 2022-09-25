@@ -96,4 +96,8 @@ const StWithdrawButton = styled.button`
   margin-bottom: 20px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #8e8e8e;
+  }
 `;
