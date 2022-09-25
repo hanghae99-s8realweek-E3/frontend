@@ -143,15 +143,13 @@ function FeedDetailContainer() {
         <StShadowBackgroundDiv>
           <StPopUpWhiteButton
             onClick={onClickDeleteComment}
-            transform="translateY(76vh)"
-          >
+            transform="translateY(76vh)">
             삭제
           </StPopUpWhiteButton>
 
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)"
-          >
+            transform="translateY(77vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -176,8 +174,7 @@ function FeedDetailContainer() {
               </StProfileBox>
               <StNickname
                 id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}
-              >
+                onClick={onClickGoToOtherspage}>
                 {detailState.todoInfo.nickname}
               </StNickname>
               <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
@@ -186,15 +183,13 @@ function FeedDetailContainer() {
               ) : detailState.isFollowed === false ? (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   팔로우
                 </StFollowBtn>
               ) : (
                 <StFollowBtn
                   id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}
-                >
+                  onClick={changeFollowState}>
                   언팔로우
                 </StFollowBtn>
               )}
@@ -207,8 +202,7 @@ function FeedDetailContainer() {
             ) : (
               <StBtnGoToChallenge
                 onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}
-              >
+                id={detailState.todoInfo.todoId}>
                 도전할래요!
               </StBtnGoToChallenge>
             )}
@@ -218,8 +212,7 @@ function FeedDetailContainer() {
               width: "100%",
               background: "white",
               padding: "10px 0",
-            }}
-          >
+            }}>
             {detailState.comments?.map((x, index) => {
               return (
                 <div key={index}>
@@ -239,8 +232,7 @@ function FeedDetailContainer() {
                       </StProfileBox>
                       <StNicknameComment
                         id={x.userId}
-                        onClick={onClickCommentGoToOtherspage}
-                      >
+                        onClick={onClickCommentGoToOtherspage}>
                         {x.nickname}
                       </StNicknameComment>
                       <StChangeDeleteBtn>
@@ -373,6 +365,10 @@ const StNickname = styled.div`
   font-size: 22px;
   /* margin-top:5px; */
   /* border:1px solid; */
+  transition: ease 0.1s;
+  &:hover {
+    color: #5e5c5c;
+  }
 `;
 
 const StMBTI = styled.div`
@@ -389,7 +385,9 @@ const StFollowBtn = styled.button`
   font-weight: 500;
   font-size: 18px;
   color: #ff6d53;
+  transition: ease 0.1s;
   :hover {
+    color: #ffafa1;
   }
   cursor: pointer;
 `;
@@ -503,6 +501,12 @@ const StCommentBtn = styled.button`
   right: 0;
   transform: translateX(-40%) translateY(-10%);
   cursor: pointer;
+
+  transition: ease 0.1s;
+  :hover {
+    color: #ffafa1;
+    transform: translateX(-40%) translateY(-10%);
+  }
 `;
 const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
@@ -520,6 +524,11 @@ const StBtnGoToChallenge = styled.button`
 
   @media only screen and (max-width: 500px) {
     width: 90%;
+  }
+
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
   }
 `;
 

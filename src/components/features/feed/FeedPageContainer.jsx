@@ -23,7 +23,7 @@ function FeedPageContainer() {
   const [sortState, setSortState] = useState("최신순");
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
 
@@ -59,8 +59,8 @@ function FeedPageContainer() {
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    console.log("로딩시작")
-    setLoading(true)
+    console.log("로딩시작");
+    setLoading(true);
     if (tokenChecker() === false && mbti === undefined) {
       dispatch(getTodoListsFetch(false));
     } else if (tokenChecker() === false && mbti !== undefined) {
@@ -70,8 +70,8 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (tokenChecker() === true && mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-      console.log("로딩끝") 
-      setLoading(false)
+    console.log("로딩끝");
+    setLoading(false);
   }, []);
 
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
@@ -84,7 +84,6 @@ function FeedPageContainer() {
       dispatch(getTodoListsFetch(true));
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-      
   }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
@@ -105,7 +104,7 @@ function FeedPageContainer() {
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setLoading(true)
+    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -121,7 +120,7 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false)
+    setLoading(false);
     setSortState("최신순");
     setSelectSort(!selectSort);
     console.log(e.target.id);
@@ -145,7 +144,7 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false)
+    setLoading(false);
     setSortState("댓글순");
     setSelectSort(!selectSort);
   };
@@ -167,115 +166,111 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false)
+    setLoading(false);
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
   // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
-    setLoading(true)
+    setLoading(true);
     navigate("/selectmbtifeed");
   };
 
   return (
     <>
-    {loading === true ? <LoadingContainer/> : <></>}
-    <StTotalWrap>
-      {selectSort === true ? (
-        <StShadowBackgroundDiv onClick={toggleSortPopUp}>
-          <StPopupBox>
-            <StSlideDiv />
-            <StSort>
-              <StDate
-                style={{
-                  color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
-                }}
-                onClick={sortDate}
-              >
-                최신순
-              </StDate>
-              <StDateLine />
-              <StComment
-                style={{
-                  color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
-                }}
-                onClick={sortComment}
-              >
-                댓글순
-              </StComment>
-              <StCommentLine />
-              <StChallenge
-                style={{
-                  color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
-                }}
-                onClick={sortChallenge}
-              >
-                도전순
-              </StChallenge>
-              <StChallengeLine />
-              <StCommonBar />
-            </StSort>
-          </StPopupBox>
-        </StShadowBackgroundDiv>
-      ) : (
-        <></>
-      )}
-      <StTopWrap>
-        <StChallengeWrap>
-          {/* 거짓이면 체크안한거 참이면 체크한거 */}
-          {checkOn === false ? (
-            <StChallengeImg
-              onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/unCheck.png`}
-              width="17"
-              height="17"
-              alt="AppearImg"
+      {loading === true ? <LoadingContainer /> : <></>}
+      <StTotalWrap>
+        {selectSort === true ? (
+          <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+            <StPopupBox>
+              <StSlideDiv />
+              <StSort>
+                <StDate
+                  style={{
+                    color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
+                  }}
+                  onClick={sortDate}>
+                  최신순
+                </StDate>
+                <StDateLine />
+                <StComment
+                  style={{
+                    color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
+                  }}
+                  onClick={sortComment}>
+                  댓글순
+                </StComment>
+                <StCommentLine />
+                <StChallenge
+                  style={{
+                    color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
+                  }}
+                  onClick={sortChallenge}>
+                  도전순
+                </StChallenge>
+                <StChallengeLine />
+                <StCommonBar />
+              </StSort>
+            </StPopupBox>
+          </StShadowBackgroundDiv>
+        ) : (
+          <></>
+        )}
+        <StTopWrap>
+          <StChallengeWrap>
+            {/* 거짓이면 체크안한거 참이면 체크한거 */}
+            {checkOn === false ? (
+              <StChallengeImg
+                onClick={checkState}
+                src={process.env.PUBLIC_URL + `/images/unCheck.png`}
+                width="17"
+                height="17"
+                alt="AppearImg"
+              />
+            ) : (
+              <StChallengeImg
+                onClick={checkState}
+                src={process.env.PUBLIC_URL + `/images/check.png`}
+                width="17"
+                height="17"
+                alt="AppearImg"
+              />
+            )}
+            <StChallengeWord>도전완료 가리기</StChallengeWord>
+          </StChallengeWrap>
+          <StToggleImgWrap>
+            {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+            <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+            <StToggleImg
+              onClick={toggleSortPopUp}
+              src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+              width="12"
+              height="6"
+              alt="ToggleImg"
             />
-          ) : (
-            <StChallengeImg
-              onClick={checkState}
-              src={process.env.PUBLIC_URL + `/images/check.png`}
-              width="17"
-              height="17"
-              alt="AppearImg"
-            />
-          )}
-          <StChallengeWord>도전완료 가리기</StChallengeWord>
-        </StChallengeWrap>
-        <StToggleImgWrap>
-          {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-          <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
-          <StToggleImg
-            onClick={toggleSortPopUp}
-            src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-            width="12"
-            height="6"
-            alt="ToggleImg"
-          />
-        </StToggleImgWrap>
-      </StTopWrap>
-      <StTodayMyCardWrap>
-        {checkOn === true
-          ? //isChallenged가 true이면 화면에 띄우면 안된다.
-            //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-            feedCard
-              ?.filter((elem) => elem.isChallenged === false)
-              .map((it, idx) => (
-                <ChallengeCard
-                  id={it.todoId}
-                  data={it}
-                  key={idx}
-                ></ChallengeCard>
-              ))
-          : feedCard?.map((it, idx) => (
-              <ChallengeCard id={it.todoId} data={it} key={idx}>
-                ?
-              </ChallengeCard>
-            ))}
-        <div className="hi" style={{ height: 80 }}></div>
-      </StTodayMyCardWrap>
-      <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
-    </StTotalWrap>
+          </StToggleImgWrap>
+        </StTopWrap>
+        <StTodayMyCardWrap>
+          {checkOn === true
+            ? //isChallenged가 true이면 화면에 띄우면 안된다.
+              //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+              feedCard
+                ?.filter((elem) => elem.isChallenged === false)
+                .map((it, idx) => (
+                  <ChallengeCard
+                    id={it.todoId}
+                    data={it}
+                    key={idx}></ChallengeCard>
+                ))
+            : feedCard?.map((it, idx) => (
+                <ChallengeCard id={it.todoId} data={it} key={idx}>
+                  ?
+                </ChallengeCard>
+              ))}
+          <div className="hi" style={{ height: 80 }}></div>
+        </StTodayMyCardWrap>
+        <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+      </StTotalWrap>
     </>
   );
 }
@@ -293,7 +288,7 @@ const StTopWrap = styled.div`
   width: 500px;
   position: fixed;
   @media screen and (max-width: 500px) {
-    width: 360px
+    width: 360px;
   }
 `;
 const StChallengeWrap = styled.div`
@@ -316,7 +311,7 @@ const StChallengeWord = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 175px;
-    margin:0px;
+    margin: 0px;
   }
 `;
 const StToggleImgWrap = styled.div`
@@ -324,7 +319,7 @@ const StToggleImgWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin:0px;
+    margin: 0px;
   }
 `;
 const StToggle = styled.div`
@@ -339,7 +334,7 @@ const StToggle = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100.09px;
-    margin:0px 8px 0px 0px;
+    margin: 0px 8px 0px 0px;
     text-align: end;
   }
 `;
@@ -373,7 +368,13 @@ const StSelectMbti = styled.button`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 500px) {
     width: 144px;
-    margin-left:108px;
+    margin-left: 108px;
+  }
+
+  transition: ease 0.2s;
+  &:hover {
+    background: #ffafa1;
+    transform: scale(1.03);
   }
 `;
 const StShadowBackgroundDiv = styled.div`

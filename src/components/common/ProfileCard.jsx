@@ -268,6 +268,10 @@ const StFollowWrap = styled.div`
     width: 100%;
     margin: 0px;
   }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
 `;
 const StFollowNumber = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -298,6 +302,10 @@ const StFollowingWrap = styled.div`
     width: 100%;
     margin: 0px;
   }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
 `;
 const StFollowingNumber = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -316,6 +324,7 @@ const StFollowingWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  transition: ease 0.05s;
 `;
 const StFollowBtn = styled.button`
   display: flex;
@@ -405,6 +414,6 @@ const StModalContainer = styled.div`
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin:18px
+    margin: 18px;
   }
 `;

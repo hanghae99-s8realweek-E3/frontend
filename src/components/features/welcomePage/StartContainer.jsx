@@ -49,7 +49,7 @@ function StartContainer() {
                 style={{
                   margin:
                     window.innerHeight > 800
-                      ? "40vh auto 6px 0"
+                      ? "33vh auto 6px 0"
                       : "27vh auto 6px 0",
                   color: "#FFFFFF",
                   fontSize: "38px",
@@ -144,7 +144,7 @@ function StartContainer() {
                 style={{
                   margin:
                     window.innerHeight > 800
-                      ? "35vh auto 6px 0"
+                      ? "29vh auto 6px 0"
                       : "22vh auto 6px 0",
                   color: "#FFFFFF",
                   fontSize: "38px",
@@ -239,7 +239,7 @@ function StartContainer() {
                 style={{
                   fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
-                  marginBottom: window.innerHeight > 800 ? "16vh" : "8vh",
+                  marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
                   color: "#FF6D53",
                   fontSize: "74px",
                   fontWeight: "700",
@@ -319,7 +319,7 @@ function StartContainer() {
                 style={{
                   fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
-                  marginBottom: window.innerHeight > 800 ? "16vh" : "8vh",
+                  marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
                   color: "#569AFF",
                   fontSize: "74px",
                   fontWeight: "700",
@@ -398,7 +398,7 @@ function StartContainer() {
                 style={{
                   fontFamily: "GmarketSans",
                   margin: "6px auto 6px 0",
-                  marginBottom: window.innerHeight > 800 ? "16vh" : "8vh",
+                  marginBottom: window.innerHeight > 800 ? "13vh" : "8vh",
                   color: "#FF6D53",
                   fontSize: "74px",
                   fontWeight: "700",

@@ -480,6 +480,10 @@ const StSetToDoBtn = styled.button`
   margin: 5px 20px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 const StNotifyNoSettingBox = styled.div`

@@ -153,8 +153,7 @@ const SignUpForm = () => {
               <StInsideBtn
                 value={signupData.email}
                 type="button"
-                onClick={onClickEmailCheck}
-              >
+                onClick={onClickEmailCheck}>
                 이메일 인증
               </StInsideBtn>
             </StInputWrap>
@@ -302,7 +301,7 @@ const StInput = styled.input`
   /* background-color: red; */
   border: 1px solid #979797;
   border-radius: 6px;
-  width: 450px;
+  width: 94%;
   height: 55px;
   position: absolute;
   padding-left: 10px;
@@ -323,13 +322,18 @@ const StInsideBtn = styled.button`
   margin-top: 10px;
   width: 100px;
   height: 32px;
-  left: 351px;
+  right: 20px;
   z-index: 1;
   background-color: white;
   border: none;
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     transform: translateX(-120%) translateY(10%);
+  }
+
+  transition: ease 0.05s;
+  &:hover {
+    color: #ffa595;
   }
 `;
 
@@ -351,6 +355,10 @@ const StSignUpBtn = styled.button`
     width: 340px;
     margin-left: 5px;
     margin-right: 5px;
+  }
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
   }
 `;
 const StErrorTextMessage = styled.div`

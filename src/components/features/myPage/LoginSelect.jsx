@@ -18,20 +18,19 @@ function LoginSelect() {
   const code = new URL(window.location.href).searchParams.get("code");
   console.log(window.location.href);
   console.log(code);
-  console.log("하..")
+  console.log("하..");
   console.log(document.URL);
 
-//카카오 계정 로그인
-  const goKakaoLogin = () =>{
-    window.location.href = KAKAO_AUTH_URL
+  //카카오 계정 로그인
+  const goKakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
   };
 
-  useEffect(()=>{
-    if(window.localStorage.getItem('token')){
-    navigate('/mypage')
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      navigate("/mypage");
     }
-    },[])
-
+  }, []);
 
   //일반 로그인 연동
   const goNormalLogin = () => {
@@ -56,10 +55,8 @@ function LoginSelect() {
 const StTotalWrap = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 const StTopMsg = styled.div`
-
   height: 64px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -81,26 +78,30 @@ const StHashMsg = styled.span`
 `;
 
 const StKakaoLoginBtn = styled.button`
-height: 70px;
-background: #FFD600;
-border-radius: 6px;
-border: 1px solid white;
-font-family: 'IBM Plex Sans KR';
-font-style: normal;
-font-weight: 500;
-font-size: 22px;
-line-height: 32px;
-text-align: center;
-color: #313131;
-display: flex;
-align-items: center;
-justify-content: center;
-margin:0px 25px 25px 25px;
-cursor: pointer;
-`
+  height: 70px;
+  background: #ffd600;
+  border-radius: 6px;
+  border: 1px solid white;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  text-align: center;
+  color: #313131;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 25px 25px 25px;
+  cursor: pointer;
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffe668;
+  }
+`;
 
 const KaKaoBtn = styled.button`
-height: 70px;
+  height: 70px;
   background: #f8e041;
   border-radius: 6px;
   width: 100%;
@@ -137,5 +138,10 @@ const StNormalLoginBtn = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 export default LoginSelect;
