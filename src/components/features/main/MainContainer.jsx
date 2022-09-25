@@ -81,7 +81,8 @@ function MainContainer() {
             allowTouchMove
             autoplay={{ delay: 3000 }}
             navigation={true}
-            pagination={{ clickable: true }}>
+            pagination={{ clickable: true }}
+            height={200}>
             {bannerSlide.map((elem, idx) => (
               <SwiperSlide key={idx} style={SwiperImageCSSData}>
                 <SildeBannerImage
@@ -319,6 +320,9 @@ const StHeadTitle = styled.h1`
   font-size: 24px;
   font-weight: 500;
   margin: 0 auto 20px 0;
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 const BannerSlideBox = styled.div`
@@ -430,7 +434,7 @@ const SwiperImageCSSData = {
   alignItems: "center",
 
   width: "450px",
-  height: "260px",
+  height: window.innerWidth > 500 ? "260px" : "170px",
   cursor: "pointer",
 };
 

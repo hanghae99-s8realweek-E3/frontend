@@ -75,11 +75,11 @@ function ActivityContainer() {
                 </StTapButton>
               </StTapBox>
               <StSortBtn type="button" onClick={changePopUpState}>
-                <div style={{ fontSize: "18px" }}>{sortState}</div>
+                <div>{sortState}</div>
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                   alt="sort list button"
-                  style={{ height: "8px", margin: "0 0 0 8px" }}
+                  style={{ margin: "0 0 0 8px" }}
                 />
               </StSortBtn>
 
@@ -118,11 +118,11 @@ function ActivityContainer() {
                 </StActiveTapButton>
               </StTapBox>
               <StSortBtn type="button" onClick={changePopUpState}>
-                <div style={{ fontSize: "18px" }}>{sortState}</div>
+                <div>{sortState}</div>
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                   alt="sort list button"
-                  style={{ height: "8px", margin: "0 0 0 8px" }}
+                  style={{ margin: "0 0 0 8px" }}
                 />
               </StSortBtn>
 
@@ -179,10 +179,10 @@ const StTapBox = styled.div`
   display: flex;
   flex-direction: row;
 
-  padding: 20px 25px 0 25px;
+  padding: 10px 5% 0 5%;
 
   width: 90%;
-  height: 50px;
+  height: 40px;
 `;
 
 const StActiveTapButton = styled.button`
@@ -245,15 +245,25 @@ const StSortBtn = styled.button`
   justify-content: center;
   align-items: center;
 
-  font-size: 18px;
-
   border: none;
   outline: none;
   margin: 16px 25px 16px auto;
 
   height: 32px;
 
+  font-size: 18px;
+
+  & img {
+    height: 8px;
+  }
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin: 8px 25px 8px auto;
+    & img {
+      height: 6px;
+    }
+  }
 `;
 
 const StMyCardListDiv = styled.div`

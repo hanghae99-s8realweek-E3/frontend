@@ -76,16 +76,7 @@ function ProfileCard({ profileData }) {
               />
             </StCloseButton>
             <StContent>
-              <h2
-                style={{
-                  fontSize: "32px",
-                  lineHeight: "34px",
-                  fontWeight: "700",
-                  color: "#313131",
-                  margin: "17px auto",
-                }}>
-                MBTI 궁합
-              </h2>
+              <h2>MBTI 궁합</h2>
               <StText>
                 나와 천생연분인 MBTI와
                 <br />
@@ -389,6 +380,21 @@ const StContent = styled.div`
   bottom: 0;
   height: 90%;
   box-sizing: border-box;
+
+  & > h2 {
+    font-size: 32px;
+    line-height: 34px;
+    font-weight: 700;
+    color: #313131;
+    margin: 17px auto;
+  }
+
+  @media screen and (max-width: 500px) {
+    & > h2 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
 `;
 
 const StText = styled.p`
@@ -399,6 +405,11 @@ const StText = styled.p`
 
   margin: 0;
   margin-bottom: 42px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 const StModalContainer = styled.div`
@@ -406,14 +417,16 @@ const StModalContainer = styled.div`
 
   border-radius: 6px;
   padding: 25px;
-  margin: 3vh auto;
+  margin: 10vh auto;
 
   width: 90%;
-  height: 700px;
+  height: 620px;
 
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: 18px;
+    height: 540px;
+    margin: 7vh auto;
   }
 `;

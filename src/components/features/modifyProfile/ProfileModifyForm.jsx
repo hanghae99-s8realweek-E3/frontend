@@ -242,6 +242,9 @@ const StContainer = styled.form`
 
   width: 500px;
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StMyProfileSec = styled.div`
@@ -251,6 +254,9 @@ const StMyProfileSec = styled.div`
   align-items: center;
 
   margin: 1rem 0;
+  @media screen and (max-width: 500px) {
+    margin: 0;
+  }
 `;
 
 const StMyImageBox = styled.div`
@@ -266,6 +272,9 @@ const StMyImageBox = styled.div`
   height: 135px;
   width: 135px;
   overflow: hidden;
+  @media screen and (max-width: 500px) {
+    margin: 0px;
+  }
 `;
 
 const StMyImagePreview = styled.label`
@@ -308,6 +317,10 @@ const StChangeImageBtn = styled.label`
   &:hover {
     color: #ffa595;
   }
+  @media screen and (max-width: 500px) {
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
 `;
 
 const StCommonBorder = styled.div`
@@ -317,7 +330,10 @@ const StCommonBorder = styled.div`
 `;
 
 const StInputSettingBox = styled.div`
-  padding: 25px 25px;
+  padding: 25px;
+  @media screen and (max-width: 500px) {
+    padding: 20px;
+  }
 `;
 
 const StCommonLabel = styled.label`
@@ -327,6 +343,10 @@ const StCommonLabel = styled.label`
   line-height: 32px;
 
   margin: 20px 0;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    margin: 0;
+  }
 `;
 
 const StCommonInput = styled.input`
@@ -341,6 +361,11 @@ const StCommonInput = styled.input`
   margin-left: 104px;
   padding: 0;
   width: 234px;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    width: 180px;
+    margin-left: 30px;
+  }
 `;
 
 const StMBTIBtn = styled.button`
@@ -361,6 +386,12 @@ const StMBTIBtn = styled.button`
   transition: ease 0.1s;
   &:hover {
     transform: scale(1.03);
+  }
+
+  @media screen and (max-width: 500px) {
+    height: 75px;
+    width: 75px;
+    font-size: 14px;
   }
 `;
 
@@ -385,6 +416,12 @@ const StSelectMBTIBtn = styled.button`
   &:hover {
     color: #ffa595;
   }
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    width: 180px;
+    margin-left: 20px;
+  }
 `;
 
 const StPopupBox = styled.div`
@@ -399,6 +436,11 @@ const StPopupBox = styled.div`
 
   z-index: 10;
   bottom: 0;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    height: 500px;
+  }
 `;
 
 const StSlideDiv = styled.div`
@@ -424,12 +466,18 @@ const StCommonButton = styled.div`
   border-radius: 6px;
   margin: ${(props) => props.margin || "25px"};
 
-  width: 450px;
+  width: 90%;
   height: 70px;
 
   cursor: pointer;
   transition: ease 0.1s;
   &:hover {
     background: #ffa595;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
+    margin: 18px;
   }
 `;

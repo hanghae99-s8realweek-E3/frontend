@@ -328,7 +328,7 @@ const StInsideBtn = styled.button`
   border: none;
   cursor: pointer;
   @media only screen and (max-width: 500px) {
-    transform: translateX(-120%) translateY(10%);
+    transform: translateX(0%) translateY(10%);
   }
 
   transition: ease 0.05s;
