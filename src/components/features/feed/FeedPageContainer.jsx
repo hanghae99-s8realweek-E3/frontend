@@ -367,8 +367,10 @@ const StSelectMbti = styled.button`
   background: #ff6d53;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 500px) {
-    width: 144px;
-    margin-left: 108px;
+    width: 180px;
+    margin: 0 90px;
+    font-size: 18px;
+    height: 50px;
   }
 
   transition: ease 0.2s;
