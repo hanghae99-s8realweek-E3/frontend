@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AWS from "aws-sdk";
 import LoadingContainer from "../../../utils/loadingState";
 import instance from "../../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
@@ -13,10 +12,6 @@ function ProfileModifyForm() {
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({
-    profile:
-      myData.profile === "none"
-        ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-        : myData.profile,
     nickname: myData.nickname,
     mbti: myData.mbti,
   });
@@ -139,9 +134,9 @@ function ProfileModifyForm() {
           <StMyImageBox>
             <StMyImagePreview
               src={
-                changeProfile.profile === ""
+                myData.profile === "none"
                   ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                  : `${changeProfile.profile}`
+                  : `${myData.profile}`
               }
               htmlFor="inputImage"
               style={{ pointerEvents: "none" }}

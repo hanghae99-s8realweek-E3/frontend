@@ -93,7 +93,7 @@ const MbtiForm = () => {
                   }
                   onClick={onClickSetMbti}
                   value={elem}>
-                  <StElem>{elem}</StElem>
+                  {elem}
                 </StMBTIBtn>
               );
             })}
@@ -176,6 +176,9 @@ const StMBTIBtn = styled.button`
   &:hover {
     transform: scale(1.03);
   }
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 const StSlideDiv = styled.div`
@@ -188,11 +191,7 @@ const StSlideDiv = styled.div`
   margin: 21px auto 28px auto;
 `;
 
-const StElem = styled.div`
-  @media only screen and (max-width: 500px) {
-    font-size: 15px;
-  }
-`;
+const StElem = styled.div``;
 
 const StCommonButton = styled.button`
   background: #ff6d53;
