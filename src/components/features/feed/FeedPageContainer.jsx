@@ -243,7 +243,7 @@ function FeedPageContainer() {
         )}
 
         <StTopWrap>
-          <StSearchBarBox>
+          {/* <StSearchBarBox>
             <form onSubmit={searchData}>
               <StInput
                 placeholder="검색"
@@ -258,7 +258,7 @@ function FeedPageContainer() {
                 />
               </StSearchBtn>
             </form>
-          </StSearchBarBox>
+          </StSearchBarBox> */}
 
           <StWrap>
             <StChallengeWrap>
@@ -366,8 +366,13 @@ const StChallengeWrap = styled.div`
 `;
 const StChallengeImg = styled.img`
   justify-content: left;
-  margin: 7px 8px 8px 25px;
+  margin: 8px 8px 8px 25px;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    margin : 8px 8px 8px 15px;
+    width: 15px;
+    height: 15px;
+  }
 `;
 const StChallengeWord = styled.div`
   display: flex;
@@ -382,6 +387,7 @@ const StChallengeWord = styled.div`
     align-items: center;
     width: 175px;
     margin: 0px;
+    font-size : 16px;
   }
 `;
 const StToggleImgWrap = styled.div`
@@ -389,7 +395,7 @@ const StToggleImgWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin: 0px;
+    margin-left: 12px;
   }
 `;
 const StToggle = styled.div`
@@ -406,6 +412,7 @@ const StToggle = styled.div`
     width: 100.09px;
     margin: 0px 8px 0px 0px;
     text-align: end;
+    font-size: 16px;
   }
 `;
 const StToggleImg = styled.img`
@@ -415,7 +422,8 @@ const StToggleImg = styled.img`
 `;
 const StTodayMyCardWrap = styled.div`
   flex-direction: column;
-  margin-top: 153px;
+  /* margin-top: 153px; 검색 */
+  margin-top: 110px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
@@ -578,7 +586,12 @@ const StInput = styled.input`
   }
   @media only screen and (max-width: 500px) {
     width: 300px;
-    padding-right: 10px;
+    padding-right: 12px;
+    ::placeholder {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+  }
   }
 `;
 const StSearchBtn = styled.button`
