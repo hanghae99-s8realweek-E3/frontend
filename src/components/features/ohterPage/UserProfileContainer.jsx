@@ -332,6 +332,10 @@ const StShadowBackgroundDiv = styled.div`
   width: 500px;
   height: 100%;
   z-index: 10;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    text-align: center; 
+  }
 `;
 
 const StPopupBox = styled.div`
