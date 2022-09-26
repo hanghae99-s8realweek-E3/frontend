@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
+import LoadingContainer from "../../../utils/loadingState";
 import { tokenChecker } from "../../../utils/token";
 import Grade from "../../common/Grade";
 import ProfileCard from "../../common/ProfileCard";
@@ -51,43 +52,45 @@ function MyPageContainer() {
   return (
     <StMyPageContainer>
       {Object.keys(accountsState.userInfo).length === 0 ? (
-        <div></div>
+        <LoadingContainer />
       ) : (
         <>
           <ProfileCard profileData={accountsState} />
+
+          <StCommonBorder />
+          {/* <Grade/> */}
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              paddingBottom: "25px",
+            }}>
+            <StMyPageMenu>나의 정보</StMyPageMenu>
+            <StMyPageButton onClick={changeMyProfileData}>
+              프로필 변경
+            </StMyPageButton>
+            <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
+          </div>
+
+          <StCommonBorder />
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}>
+            <StMyPageMenu>설정</StMyPageMenu>
+            <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
+            <StMyPageButton onClick={changeMyPasswordData}>
+              비밀번호 변경
+            </StMyPageButton>
+            <StMyPageButton onClick={moveToHelpDeskPage}>
+              고객센터
+            </StMyPageButton>
+          </div>
         </>
       )}
-
-      <StCommonBorder />
-      {/* <Grade/> */}
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          paddingBottom: "25px",
-        }}>
-        <StMyPageMenu>나의 정보</StMyPageMenu>
-        <StMyPageButton onClick={changeMyProfileData}>
-          프로필 변경
-        </StMyPageButton>
-        <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
-      </div>
-
-      <StCommonBorder />
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}>
-        <StMyPageMenu>설정</StMyPageMenu>
-        <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
-        <StMyPageButton onClick={changeMyPasswordData}>
-          비밀번호 변경
-        </StMyPageButton>
-        <StMyPageButton onClick={moveToHelpDeskPage}>고객센터</StMyPageButton>
-      </div>
     </StMyPageContainer>
   );
 }

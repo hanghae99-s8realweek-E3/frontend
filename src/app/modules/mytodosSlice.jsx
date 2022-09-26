@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
 
 const initialState = {
   message: "",
   errorMessage: "",
   data: {},
-  isCompleted: ""
-}
+  isCompleted: "",
+};
 
 // 9/13 리팩토링
 // export const postmytodosFetch = createAsyncThunk(
@@ -26,27 +26,23 @@ const initialState = {
 
 // 타인의 todo 피드 조회
 export const getOthersTodoFetch = createAsyncThunk(
-  'otherstodos/getOthersTodoFetch',
+  "otherstodos/getOthersTodoFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload)
       const response = await instance.get(`/mytodos/${payload.userId}`);
-      console.log(response)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const mytodosSlice = createSlice({
-  name:"myTodos",
+  name: "myTodos",
   initialState,
-  reducers:{
-  },
-  
-  extraReducers: builder => { 
+  reducers: {},
+
+  extraReducers: (builder) => {
     // builder.addCase(postmytodosFetch.pending , (state, action)=> {
     //   return state;
     // })
@@ -60,25 +56,23 @@ const mytodosSlice = createSlice({
     //   newState.message = action.payload.message;
     //   return newState;
     // })
-    
+
     //타인의 todo
-    builder.addCase(getOthersTodoFetch.pending , (state, action)=> {
+    builder.addCase(getOthersTodoFetch.pending, (state, action) => {
       return state;
-    })
-    builder.addCase(getOthersTodoFetch.fulfilled, (state, action)=> {
-      const newState ={...state}
+    });
+    builder.addCase(getOthersTodoFetch.fulfilled, (state, action) => {
+      const newState = { ...state };
       newState.message = action.payload.message;
       newState.data = action.payload.data;
-      console.log(newState.data);
       return newState;
-    })
-    builder.addCase(getOthersTodoFetch.rejected, (state, action)=> {
-      const newState = {...state };
-      console.log(newState.data);
+    });
+    builder.addCase(getOthersTodoFetch.rejected, (state, action) => {
+      const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;
-    })
-  }
-})
+    });
+  },
+});
 
 export default mytodosSlice;

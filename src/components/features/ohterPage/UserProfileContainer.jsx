@@ -97,7 +97,6 @@ function UserProfileContainer() {
   const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-  console.log(card);
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -218,7 +217,6 @@ function UserProfileContainer() {
                       .map((elem, index) => (
                         <OthersCard data={elem} key={index} />
                       ))
-                      
                   ) : (
                     <></>
                   )
@@ -279,7 +277,7 @@ const StTodoWrap = styled.div`
   padding-top: 10px;
 `;
 const StChallengeTodo = styled.div`
-background: none;
+  background: none;
   justify-content: center;
   display: flex;
   width: 225px;
@@ -301,7 +299,7 @@ background: none;
   }
 `;
 const StSuggestionTodo = styled.div`
-background: none;
+  background: none;
   justify-content: center;
   display: flex;
   width: 225px;
@@ -342,7 +340,7 @@ const StShadowBackgroundDiv = styled.div`
   z-index: 10;
   @media screen and (max-width: 500px) {
     width: 360px;
-    text-align: center; 
+    text-align: center;
   }
 `;
 
@@ -358,7 +356,7 @@ const StPopupBox = styled.div`
   bottom: 0;
   @media screen and (max-width: 500px) {
     width: 360px;
-    text-align: center; 
+    text-align: center;
   }
 `;
 const StSlideDiv = styled.div`
@@ -383,7 +381,7 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
   @media screen and (max-width: 500px) {
-    margin:auto;
+    margin: auto;
   }
 `;
 const StDate = styled.div`

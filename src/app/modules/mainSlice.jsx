@@ -11,7 +11,6 @@ export const getMainFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await preInstance.get("/todolists/ranking");
-      console.log(response.data.data);
       return thunkAPI.fulfillWithValue(response.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
