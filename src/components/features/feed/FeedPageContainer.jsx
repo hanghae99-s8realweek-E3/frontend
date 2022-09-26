@@ -118,15 +118,23 @@ function FeedPageContainer() {
     if (mbti === undefined) {
       dispatch(getTodoListsFetch(false));
       setSortState("최신순")
+      setInterval(() => {
+        setLoading(false);
+      }, 100);
       // 김대연 지적 사항 2
       // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
     } else if (mbti === undefined) {
       dispatch(getTodoListsFetch(true));
       setSortState("최신순")
+      setInterval(() => {
+        setLoading(false);
+      }, 100);
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
       setSortState("최신순")
-      setLoading(false);
+      setInterval(() => {
+        setLoading(false);
+      }, 100);
   }, [mbti]);
 
 
