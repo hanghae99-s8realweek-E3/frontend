@@ -371,7 +371,7 @@ const StInput = styled.input`
   border: none;
   border-radius: 6px;
   font-size: 18px;
-  width: 390px;
+  width: 370px;
   height: 50px;
   z-index: -1;
   outline: none;
@@ -383,7 +383,8 @@ const StInput = styled.input`
   }
 
   @media only screen and (max-width: 500px) {
-    width: 308px;
+    width: 270px;
+    height: 30px;
   }
 `;
 
@@ -404,11 +405,10 @@ const StSearchBtn = styled.button`
   right: 0;
   transform: translateX(-60%) translateY(-130%);
   @media screen and (max-width: 500px) {
-    transform: translateX(-20%) translateY(-130%);
+    transform: translateX(-20%) translateY(-100%);
   }
 `;
 const StProfileContainer = styled.div`
-  /* background-color: red; */
   /* background: none; */
   border: none;
   outline: none;
@@ -423,11 +423,14 @@ const StProfileContainer = styled.div`
   }
   cursor: pointer;
   @media only screen and (max-width: 500px) {
+    grid-template-columns: 42px 4fr 1fr;
     width: 350px;
+    height: 80px;
   }
 `;
 
 const StProfileBox = styled.div`
+/* background-color: red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -443,6 +446,12 @@ const StProfileBox = styled.div`
   outline: none;
   border-radius: 50%;
   overflow: hidden;
+  @media only screen and (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+    margin-top: 0px;
+    transform: translateX(0%) translateY(-15%);
+  }
 `;
 
 const StProfileImg = styled.img`
@@ -450,18 +459,26 @@ const StProfileImg = styled.img`
   width: 60px;
   height: auto;
   margin: 0;
+  @media only screen and (max-width: 500px) {
+    width: 40px;
+    height: auto;
+  }
 `;
 const StWrapNicknameMbti = styled.div`
   pointer-events: none;
   margin-left: 10px;
 `;
 const StNickname = styled.h4`
+  /* background-color:yellowgreen; */
   pointer-events: none;
   left: 0;
   display: grid;
   justify-content: left;
   height: 32px;
   margin-bottom: 0px;
+  @media only screen and (max-width: 500px) {
+    font-size:16px;
+  }
 `;
 
 const StMbti = styled.h6`
@@ -482,4 +499,7 @@ const StDeleteFollowBtn = styled.button`
     background-color: gray;
   }
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    font-size:16px;
+  }
 `;
