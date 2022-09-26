@@ -15,25 +15,37 @@ import {
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
 import LoadingContainer from "../../../utils/loadingState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 // check uncheck
 
 function FeedPageContainer() {
   const [selectSort, setSelectSort] = useState(false);
   const [sortState, setSortState] = useState("최신순");
+  const [inputContext, setInputContext] = useState("");
+  const [searchList, setSearchList] = useState([]);
   // 스토어에서 todolists리듀서 호출
   const feedCard = useSelector((state) => state.todolists.data);
   const [loading, setLoading] = useState(false);
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
-
+  console.log(searchList.length);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const inputSearch = (e) => {
+    setInputContext(e.target.value);
+  };
+  const searchData = (e) => {
+    e.preventDefault();
+    setSearchList(feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1));
+  };
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
   // console.log(mbti);
-  console.log(feedCard);
+
 
   //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남
   // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
@@ -175,7 +187,17 @@ function FeedPageContainer() {
     setLoading(true);
     navigate("/selectmbtifeed");
   };
+  console.log(
+    searchList
+      ?.filter((elem) => elem.isChallenged === false)
+      .map((x) => x.todoInfo.todo)
+  );
+  // console.log(feedCard?.filter((elem) => elem.isChallenged === true))
+  console.log(searchList?.filter((elem) => elem.isChallenged === false));
+  console.log(searchList);
+  console.log(searchList.todo);
 
+  console.log(searchList?.filter((elem) => elem.todoInfo));
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -189,7 +211,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortDate}>
+                  onClick={sortDate}
+                >
                   최신순
                 </StDate>
                 <StDateLine />
@@ -197,7 +220,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortComment}>
+                  onClick={sortComment}
+                >
                   댓글순
                 </StComment>
                 <StCommentLine />
@@ -205,7 +229,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortChallenge}>
+                  onClick={sortChallenge}
+                >
                   도전순
                 </StChallenge>
                 <StChallengeLine />
@@ -216,59 +241,100 @@ function FeedPageContainer() {
         ) : (
           <></>
         )}
+
         <StTopWrap>
-          <StChallengeWrap>
-            {/* 거짓이면 체크안한거 참이면 체크한거 */}
-            {checkOn === false ? (
-              <StChallengeImg
-                onClick={checkState}
-                src={process.env.PUBLIC_URL + `/images/unCheck.png`}
-                width="17"
-                height="17"
-                alt="AppearImg"
+          <StSearchBarBox>
+            <form onSubmit={searchData}>
+              <StInput
+                placeholder="검색"
+                onChange={inputSearch}
+                value={inputContext}
+                maxLength={20}
               />
-            ) : (
-              <StChallengeImg
-                onClick={checkState}
-                src={process.env.PUBLIC_URL + `/images/check.png`}
-                width="17"
-                height="17"
-                alt="AppearImg"
+              <StSearchBtn type="submit">
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ width: "23px", height: "23px", color: "#919191" }}
+                />
+              </StSearchBtn>
+            </form>
+          </StSearchBarBox>
+
+          <StWrap>
+            <StChallengeWrap>
+              {/* 거짓이면 체크안한거 참이면 체크한거 */}
+              {checkOn === false ? (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/unCheck.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              ) : (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/check.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              )}
+              <StChallengeWord>도전완료 가리기</StChallengeWord>
+            </StChallengeWrap>
+            <StToggleImgWrap>
+              {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+              <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+              <StToggleImg
+                onClick={toggleSortPopUp}
+                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                width="12"
+                height="6"
+                alt="ToggleImg"
               />
-            )}
-            <StChallengeWord>도전완료 가리기</StChallengeWord>
-          </StChallengeWrap>
-          <StToggleImgWrap>
-            {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-            <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
-            <StToggleImg
-              onClick={toggleSortPopUp}
-              src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-              width="12"
-              height="6"
-              alt="ToggleImg"
-            />
-          </StToggleImgWrap>
+            </StToggleImgWrap>
+          </StWrap>
         </StTopWrap>
-        <StTodayMyCardWrap>
-          {checkOn === true
-            ? //isChallenged가 true이면 화면에 띄우면 안된다.
-              //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-              feedCard
-                ?.filter((elem) => elem.isChallenged === false)
-                .map((it, idx) => (
-                  <ChallengeCard
-                    id={it.todoId}
-                    data={it}
-                    key={idx}></ChallengeCard>
-                ))
-            : feedCard?.map((it, idx) => (
-                <ChallengeCard id={it.todoId} data={it} key={idx}>
-                  ?
-                </ChallengeCard>
-              ))}
-          <div className="hi" style={{ height: 80 }}></div>
-        </StTodayMyCardWrap>
+
+        <>
+          {searchList.length === 0 ? (
+            <StTodayMyCardWrap>
+              {checkOn === true
+                ? //isChallenged가 true이면 화면에 띄우면 안된다.
+                  //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+                  feedCard
+                    ?.filter((elem) => elem.isChallenged === false)
+                    .map((it, idx) => (
+                      <ChallengeCard id={it.todoId} data={it} key={idx} />
+                    ))
+                : feedCard?.map((it, idx) => (
+                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                  ))}
+              <div className="hi" style={{ height: 80 }}></div>
+            </StTodayMyCardWrap>
+          ) : (
+            // <StTodayMyCardWrap>
+            //   {searchList.map((x) => (
+            //     <StTest>{x.todo}</StTest>
+
+            //   ))}
+            // </StTodayMyCardWrap>
+            <StTodayMyCardWrap>
+            {checkOn === true
+              ? //isChallenged가 true이면 화면에 띄우면 안된다.
+                //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+                searchList
+                  ?.filter((elem) => elem.isChallenged === false)
+                  .map((it, idx) => (
+                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                  ))
+              : searchList?.map((it, idx) => (
+                  <ChallengeCard id={it.todoId} data={it} key={idx} />
+                ))}
+            <div className="hi" style={{ height: 80 }}></div>
+          </StTodayMyCardWrap>
+          )}
+        </>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
     </>
@@ -280,9 +346,9 @@ const StTotalWrap = styled.div`
 `;
 const StTopWrap = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-top: 30px;
-  padding-bottom: 15px;
+  /* padding-bottom: 10px; */
   margin: 45px 0px 0px;
   background-color: #edecec;
   width: 500px;
@@ -290,6 +356,10 @@ const StTopWrap = styled.div`
   @media screen and (max-width: 500px) {
     width: 360px;
   }
+`;
+const StWrap = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 const StChallengeWrap = styled.div`
   display: flex;
@@ -345,7 +415,7 @@ const StToggleImg = styled.img`
 `;
 const StTodayMyCardWrap = styled.div`
   flex-direction: column;
-  margin-top: 115px;
+  margin-top: 153px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
@@ -396,6 +466,10 @@ const StPopupBox = styled.div`
   border-radius: 21.3333px 21.3333px 0px 0px;
   z-index: 10;
   bottom: 0;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    text-align: center; 
+  }
 `;
 const StSlideDiv = styled.div`
   background: #e8e8e8;
@@ -418,6 +492,9 @@ const StSort = styled.div`
   color: #000000;
   margin-left: 220px;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    margin:auto;
+  }
 `;
 const StDate = styled.div`
   cursor: pointer;
@@ -427,6 +504,9 @@ const StDateLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StComment = styled.div`
   cursor: pointer;
@@ -435,6 +515,9 @@ const StCommentLine = styled.div`
   background: #c7c7c7;
   width: 450px;
   height: 1px;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StChallenge = styled.div`
   cursor: pointer;
@@ -443,6 +526,9 @@ const StChallengeLine = styled.div`
   width: 450px;
   height: 1px;
   background: #c7c7c7;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+  }
 `;
 const StCommonBar = styled.div`
   position: absolute;
@@ -452,5 +538,74 @@ const StCommonBar = styled.div`
   left: calc(50% - 178.23px / 2 - 1.33px);
   background: #000000;
   border-radius: 133.005px;
+`;
+
+const StSearchBarBox = styled.div`
+  /* background-color: blue; */
+  display: flex;
+  /* position: relative; */
+  align-items: center;
+  opacity: 1;
+  width: 450px;
+  height: 55px;
+  margin: auto;
+  /* border: 1px solid #919191;
+  border-radius: 6px; */
+
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+    margin-left: 15px;
+    /* margin-right: 15px; */
+  }
+`;
+
+const StInput = styled.input`
+  /* background-color: burlywood; */
+  padding-left: 20px;
+  border: 1px solid #919191;
+  border-radius: 6px;
+  font-size: 18px;
+  width: 430px;
+  height: 50px;
+  z-index: -1;
+  outline: none;
+  /* margin-top:30px; */
+  overflow: auto; //검색어가 길어졌을때 오른쪽으로 자연스럽게 검색되도록 하기 위해
+  ::placeholder {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+    padding-right: 10px;
+  }
+`;
+const StSearchBtn = styled.button`
+  background: none;
+  margin-right: 20px;
+  border: none;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  width: 33px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  transform: translateX(-60%) translateY(-130%);
+  @media screen and (max-width: 500px) {
+    transform: translateX(-20%) translateY(-130%);
+  }
+`;
+
+const StTest = styled.div`
+  /* background-color: ; */
+  width: 500px;
+  height: 50px;
+  padding-top: 20px;
+  color: black;
 `;
 export default FeedPageContainer;

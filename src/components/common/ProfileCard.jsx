@@ -327,7 +327,7 @@ const StFollowBtn = styled.button`
   text-align: center;
   color: #ff6d53;
   background-color: white;
-  margin: 1.5px 0 22px 12px;
+  margin: 1.5px 0 22px 127px;
   border: 0px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
