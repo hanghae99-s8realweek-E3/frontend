@@ -39,13 +39,14 @@ function FeedPageContainer() {
   };
   const searchData = (e) => {
     e.preventDefault();
-    setSearchList(feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1));
+    setSearchList(
+      feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+    );
   };
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
   // console.log(mbti);
-
 
   //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남
   // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
@@ -67,61 +68,77 @@ function FeedPageContainer() {
   //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
   // }, []);
 
-  console.log(tokenChecker(), mbti);
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    setLoading(true);
-
+    // setLoading(true);
     if (tokenChecker() === false && mbti === undefined) {
       dispatch(getTodoListsFetch(false));
       setInterval(() => {
-        setLoading(false)
+        setLoading(false);
       }, 100);
+      setSortState("최신순")
     } else if (tokenChecker() === false && mbti !== undefined) {
       dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
       setInterval(() => {
-        setLoading(false)
+        setLoading(false);
       }, 100);
+      setSortState("최신순")
     } else if (tokenChecker() === true && mbti === undefined) {
       //김대연 지적 사항 1
       dispatch(getTodoListsFetch(true));
       setInterval(() => {
-        setLoading(false)
+        setLoading(false);
       }, 100);
-    } else if (tokenChecker() === true && mbti !== undefined){
+      setSortState("최신순")
+    } else if (tokenChecker() === true && mbti !== undefined) {
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
       setInterval(() => {
-        setLoading(false)
+        setLoading(false);
       }, 100);
+      setSortState("최신순")
     }
-    else if (mbti === undefined) {
-      dispatch(getTodoListsFetch(false));
-      setInterval(() => {
-        setLoading(false)
-      }, 100);
-      // 김대연 지적 사항 2
-      // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-    } else if (mbti !== undefined)
-      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-      setInterval(() => {
-        setLoading(false)
-      }, 100);
-  }, [mbti]);
+    // else if (mbti === undefined) {
+    //   dispatch(getTodoListsFetch(false));
+    //   setInterval(() => {
+    //     setLoading(false);
+    //   }, 100);
+    //   // 김대연 지적 사항 2
+    //   // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    // } else if (mbti !== undefined)
+    //   dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+    // setInterval(() => {
+    //   setLoading(false);
+    // }, 100);
+  }, []);
 
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
+  useEffect(() => {
+    setLoading(true);
+    if (mbti === undefined) {
+      dispatch(getTodoListsFetch(false));
+      setSortState("최신순")
+      // 김대연 지적 사항 2
+      // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+    } else if (mbti === undefined) {
+      dispatch(getTodoListsFetch(true));
+      setSortState("최신순")
+    } else if (mbti !== undefined)
+      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      setSortState("최신순")
+      setLoading(false);
+  }, [mbti]);
+
+
   // useEffect(() => {
-  //   setLoading(true);
-  //   if (mbti === undefined) {
-  //     dispatch(getTodoListsFetch(false));
-  //     // 김대연 지적 사항 2
-  //     // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-  //   } else if (mbti === undefined) {
-  //     dispatch(getTodoListsFetch(true));
-  //   } else if (mbti !== undefined)
-  //     dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-  //     setLoading(false);
-  // }, [mbti]);
+  //   if (Object.keys(followState).length !== 0) {
+  //     if (followTab === true) {
+  //       setSearchList(followState.follower);
+  //     } else if (followTab === false) {
+  //       setSearchList(followState.following);
+  //     }
+  //   }
+  // }, [followTab, followState]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -135,9 +152,7 @@ function FeedPageContainer() {
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
   const toggleSortPopUp = () => {
-    setLoading(true);
     setSelectSort(!selectSort);
-    setLoading(false);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
@@ -162,8 +177,7 @@ function FeedPageContainer() {
     setLoading(false);
     setSortState("최신순");
     setSelectSort(!selectSort);
-    console.log(e.target.id);
-    // setSelectSort(!selectSort);
+
   };
   //댓글순 정렬
   const sortComment = (e) => {
@@ -214,17 +228,7 @@ function FeedPageContainer() {
     setLoading(true);
     navigate("/selectmbtifeed");
   };
-  console.log(
-    searchList
-      ?.filter((elem) => elem.isChallenged === false)
-      .map((x) => x.todoInfo.todo)
-  );
-  // console.log(feedCard?.filter((elem) => elem.isChallenged === true))
-  console.log(searchList?.filter((elem) => elem.isChallenged === false));
-  console.log(searchList);
-  console.log(searchList.todo);
 
-  console.log(searchList?.filter((elem) => elem.todoInfo));
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -347,19 +351,19 @@ function FeedPageContainer() {
             //   ))}
             // </StTodayMyCardWrap>
             <StTodayMyCardWrap>
-            {checkOn === true
-              ? //isChallenged가 true이면 화면에 띄우면 안된다.
-                //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-                searchList
-                  ?.filter((elem) => elem.isChallenged === false)
-                  .map((it, idx) => (
+              {checkOn === true
+                ? //isChallenged가 true이면 화면에 띄우면 안된다.
+                  //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
+                  searchList
+                    ?.filter((elem) => elem.isChallenged === false)
+                    .map((it, idx) => (
+                      <ChallengeCard id={it.todoId} data={it} key={idx} />
+                    ))
+                : searchList?.map((it, idx) => (
                     <ChallengeCard id={it.todoId} data={it} key={idx} />
-                  ))
-              : searchList?.map((it, idx) => (
-                  <ChallengeCard id={it.todoId} data={it} key={idx} />
-                ))}
-            <div className="hi" style={{ height: 80 }}></div>
-          </StTodayMyCardWrap>
+                  ))}
+              <div className="hi" style={{ height: 80 }}></div>
+            </StTodayMyCardWrap>
           )}
         </>
         <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
@@ -387,6 +391,7 @@ const StTopWrap = styled.div`
 const StWrap = styled.div`
   display: flex;
   flex-direction: row;
+  /* margin-top: 30px; 검색 넣을때 */
 `;
 const StChallengeWrap = styled.div`
   display: flex;
@@ -396,7 +401,7 @@ const StChallengeImg = styled.img`
   margin: 8px 8px 8px 25px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
-    margin : 8px 8px 8px 15px;
+    margin: 8px 8px 8px 15px;
     width: 15px;
     height: 15px;
   }
@@ -414,7 +419,7 @@ const StChallengeWord = styled.div`
     align-items: center;
     width: 175px;
     margin: 0px;
-    font-size : 16px;
+    font-size: 16px;
   }
 `;
 const StToggleImgWrap = styled.div`
@@ -449,7 +454,7 @@ const StToggleImg = styled.img`
 `;
 const StTodayMyCardWrap = styled.div`
   flex-direction: column;
-  /* margin-top: 153px; 검색 */
+  /* margin-top: 200px;  검색 넣을때*/ 
   margin-top: 110px;
 `;
 const StSelectMbti = styled.button`
@@ -492,6 +497,11 @@ const StShadowBackgroundDiv = styled.div`
   width: 500px;
   height: 100%;
   z-index: 10;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    text-align: center;
+  }
 `;
 const StPopupBox = styled.div`
   background: #ffffff;
@@ -503,7 +513,7 @@ const StPopupBox = styled.div`
   bottom: 0;
   @media screen and (max-width: 500px) {
     width: 360px;
-    text-align: center; 
+    text-align: center;
   }
 `;
 const StSlideDiv = styled.div`
@@ -528,7 +538,7 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
   @media screen and (max-width: 500px) {
-    margin:auto;
+    margin: auto;
   }
 `;
 const StDate = styled.div`
@@ -584,6 +594,7 @@ const StSearchBarBox = styled.div`
   width: 450px;
   height: 55px;
   margin: auto;
+  /* border: 0px; */
   /* border: 1px solid #919191;
   border-radius: 6px; */
 
@@ -597,14 +608,14 @@ const StSearchBarBox = styled.div`
 const StInput = styled.input`
   /* background-color: burlywood; */
   padding-left: 20px;
-  border: 1px solid #919191;
+  border: none;
   border-radius: 6px;
   font-size: 18px;
   width: 430px;
   height: 50px;
   z-index: -1;
   outline: none;
-  /* margin-top:30px; */
+  margin-top: 21px;
   overflow: auto; //검색어가 길어졌을때 오른쪽으로 자연스럽게 검색되도록 하기 위해
   ::placeholder {
     font-weight: 500;
@@ -615,10 +626,10 @@ const StInput = styled.input`
     width: 300px;
     padding-right: 12px;
     ::placeholder {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 18px;
-  }
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+    }
   }
 `;
 const StSearchBtn = styled.button`
