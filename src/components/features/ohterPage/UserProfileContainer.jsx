@@ -291,6 +291,9 @@ const StChallengeTodo = styled.div`
   line-height: 32px;
   color: #ff6d53;
   padding-bottom: 9px;
+  @media screen and (max-width: 500px) {
+    font-size: 17px;
+  }
 `;
 const StSuggestionTodo = styled.div`
   justify-content: center;
@@ -305,6 +308,9 @@ const StSuggestionTodo = styled.div`
   line-height: 32px;
   color: #000000;
   padding-bottom: 9px;
+  @media screen and (max-width: 500px) {
+    font-size: 17px;
+  }
 `;
 const StBottomWrap = styled.div`
   display: flex;
@@ -419,14 +425,13 @@ const StToggle = styled.div`
   font-size: 18px;
   border: none;
   outline: none;
-  margin: 16px 25px 16px auto;
+  margin: 0px 25px 6px auto;
   height: 32px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
-    width: 80px;
-    justify-content: center;
-    align-items: center;
     margin-top: auto;
+    margin-left: auto;
+    font-size: 16px;
   }
 `;
 export default UserProfileContainer;

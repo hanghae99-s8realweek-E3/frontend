@@ -218,6 +218,7 @@ const StNickName = styled.div`
     align-items: center;
     width: 100%;
     margin: 0px;
+    font-size: 18px;
   }
 `;
 const StMbtiFollowFollowingWrap = styled.div`
@@ -246,6 +247,7 @@ const StMbti = styled.div`
     text-align: left;
     width: 100%;
     margin-left: 2px;
+    font-size: 16px;
   }
 `;
 const StFollowWrap = styled.div`
@@ -257,7 +259,7 @@ const StFollowWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin: 0px;
+    margin-left: 50px;
   }
   transition: ease 0.1s;
   &:hover div {
@@ -271,7 +273,10 @@ const StFollowNumber = styled.div`
   font-size: 20px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #000000; 
+   @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StFollowWord = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -281,6 +286,7 @@ const StFollowWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  
 `;
 const StFollowingWrap = styled.div`
   display: flex;
@@ -306,6 +312,9 @@ const StFollowingNumber = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StFollowingWord = styled.div`
   font-family: "IBM Plex Sans KR";
