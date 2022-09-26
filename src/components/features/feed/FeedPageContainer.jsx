@@ -71,32 +71,57 @@ function FeedPageContainer() {
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    console.log("로딩시작");
     setLoading(true);
+
     if (tokenChecker() === false && mbti === undefined) {
       dispatch(getTodoListsFetch(false));
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
     } else if (tokenChecker() === false && mbti !== undefined) {
       dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
     } else if (tokenChecker() === true && mbti === undefined) {
       //김대연 지적 사항 1
       dispatch(getTodoListsFetch(true));
-    } else if (tokenChecker() === true && mbti !== undefined)
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
+    } else if (tokenChecker() === true && mbti !== undefined){
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-    console.log("로딩끝");
-    setLoading(false);
-  }, []);
-
-  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
-  useEffect(() => {
-    if (mbti === undefined) {
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
+    }
+    else if (mbti === undefined) {
       dispatch(getTodoListsFetch(false));
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
       // 김대연 지적 사항 2
       // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-    } else if (mbti === undefined) {
-      dispatch(getTodoListsFetch(true));
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+      setInterval(() => {
+        setLoading(false)
+      }, 100);
   }, [mbti]);
+
+  // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
+  // useEffect(() => {
+  //   setLoading(true);
+  //   if (mbti === undefined) {
+  //     dispatch(getTodoListsFetch(false));
+  //     // 김대연 지적 사항 2
+  //     // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+  //   } else if (mbti === undefined) {
+  //     dispatch(getTodoListsFetch(true));
+  //   } else if (mbti !== undefined)
+  //     dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+  //     setLoading(false);
+  // }, [mbti]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -110,7 +135,9 @@ function FeedPageContainer() {
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
   const toggleSortPopUp = () => {
+    setLoading(true);
     setSelectSort(!selectSort);
+    setLoading(false);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
