@@ -12,11 +12,13 @@ import { useState } from "react";
 import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
+import { decodeMyTokenData } from "../../../utils/token";
 
 function OthersCard({ data }) {
   const navigate = useNavigate();
   const [menuModal, setMenuModal] = useState(false);
   const dispatch = useDispatch();
+  const myData = decodeMyTokenData();
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
@@ -91,22 +93,25 @@ function OthersCard({ data }) {
               : ""}
           </StChallengeNameSpan>
 
-          <StCommonColumnBox height="100%">
+          <StCommonStatusBox>
             {data.challengedTodo === undefined ? (
-              <StMenuBtn
-                color={data.isCompleted === true ? "#ffffff" : "#979797"}
-                onClick={displayCardMenu}>
-                <FontAwesomeIcon icon={faEllipsisVertical} />
-              </StMenuBtn>
+              myData.userId === data.userId ? (
+                <StMenuBtn
+                  color={data.isCompleted === true ? "#ffffff" : "#979797"}
+                  onClick={displayCardMenu}>
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
+                </StMenuBtn>
+              ) : (
+                <></>
+              )
             ) : (
               <></>
             )}
-            <StCommonRowBox alignItems="center" margin="auto 0 0 0">
+            <StCommonRowBox margin="auto 0 0 0">
               <StCommonRowBox
                 alignItems="center"
                 style={{
                   marginRight: "5px",
-                  lineHeight: "32px",
                 }}>
                 <FontAwesomeIcon
                   style={{
@@ -123,7 +128,7 @@ function OthersCard({ data }) {
               <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
                 <FontAwesomeIcon
                   style={{
-                    margin: "0 0 0 0",
+                    margin: "0",
                     color: data.isChallenged === true ? "#B8B8B8" : "#909090",
                   }}
                   icon={faStar}
@@ -135,7 +140,7 @@ function OthersCard({ data }) {
                 </StCountSpan>
               </StCommonRowBox>
             </StCommonRowBox>
-          </StCommonColumnBox>
+          </StCommonStatusBox>
         </StCommonRowBox>
       </StChallengeCardDiv>
     </>
@@ -159,6 +164,15 @@ const StChallengeCardDiv = styled.div`
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.01);
+  }
+  @media screen and (max-width: 500px) {
+    width: 94%;
+    margin: 6px 3%;
+    height: 80px;
+  }
 `;
 
 const StChallengeNameSpan = styled.span`
@@ -168,6 +182,12 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 `;
 
 const StCountSpan = styled.span`
@@ -181,7 +201,6 @@ const StCountSpan = styled.span`
 const StMenuBtn = styled.button`
   background: none;
   font-size: 16px;
-  line-height: 32px;
   color: ${(props) => props.color};
 
   border: none;
@@ -211,4 +230,22 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
+
+  @media screen and (max-width: 500px) {
+    margin: 0 18px;
+    height: 60px;
+    font-size: 18px;
+  }
+`;
+
+const StCommonStatusBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media screen and (max-width: 500px) {
+    & svg {
+      font-size: 12px;
+    }
+  }
 `;

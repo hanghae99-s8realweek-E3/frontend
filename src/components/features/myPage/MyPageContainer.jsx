@@ -1,18 +1,15 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
 import { tokenChecker } from "../../../utils/token";
+import Grade from "../../common/Grade";
 import ProfileCard from "../../common/ProfileCard";
-import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
 function MyPageContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
     dispatch(getMyPageFetch());
@@ -51,89 +48,47 @@ function MyPageContainer() {
     navigate("/");
   }
 
-  const changeModalState = () => {
-    setModalState(!modalState);
-  };
-
   return (
-    <>
-      {modalState === true ? (
-        <StShadowBackgroundDiv>
-          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
-          <StModalContainer onClick={(e) => e.stopPropagation()}>
-            <StCloseButton type="button" onClick={changeModalState}>
-              <FontAwesomeIcon
-                icon={faXmark}
-                style={{
-                  fontSize: "18px",
-                  color: "#ffffff",
-                  pointerEvents: "none",
-                }}
-              />
-            </StCloseButton>
-            <StContent>
-              <img
-                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
-                alt="MBTI matching List Images"
-                style={{ width: "350px", margin: "5px 0" }}
-              />
-              <StText>위의 표는 MBTI 간의 궁합을 보여줍니다.</StText>
-              <StText>푸른 색상에 가까울 수록 각 MBTI 간의 궁합이</StText>
-              <StText>잘 맞는 편입니다.</StText>
-              <StText>
-                반대로 붉은 색상에 가까울 수록 각 MBTI 간의 궁합이
-              </StText>
-              <StText>잘 맞지 않는 편입니다.</StText>
-            </StContent>
-          </StModalContainer>
-        </StShadowBackgroundDiv>
+    <StMyPageContainer>
+      {Object.keys(accountsState.userInfo).length === 0 ? (
+        <div></div>
       ) : (
-        <></>
+        <>
+          <ProfileCard profileData={accountsState} />
+        </>
       )}
 
-      <StMyPageContainer>
-        {Object.keys(accountsState.userInfo).length === 0 ? (
-          <div></div>
-        ) : (
-          <>
-            <ProfileCard profileData={accountsState} />
-          </>
-        )}
+      <StCommonBorder />
+      {/* <Grade/> */}
 
-        <StCommonBorder />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          paddingBottom: "25px",
+        }}>
+        <StMyPageMenu>나의 정보</StMyPageMenu>
+        <StMyPageButton onClick={changeMyProfileData}>
+          프로필 변경
+        </StMyPageButton>
+        <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
+      </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            paddingLeft: "25px",
-            paddingBottom: "25px",
-          }}>
-          <StMyPageMenu>나의 정보</StMyPageMenu>
-          <StMyPageButton onClick={changeMyProfileData}>
-            프로필 변경
-          </StMyPageButton>
-          <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
-        </div>
+      <StCommonBorder />
 
-        <StCommonBorder />
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            paddingLeft: "25px",
-            paddingBottom: "25px",
-          }}>
-          <StMyPageMenu>설정</StMyPageMenu>
-          <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
-          <StMyPageButton onClick={changeMyPasswordData}>
-            비밀번호 변경
-          </StMyPageButton>
-          <StMyPageButton onClick={moveToHelpDeskPage}>고객센터</StMyPageButton>
-        </div>
-      </StMyPageContainer>
-    </>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}>
+        <StMyPageMenu>설정</StMyPageMenu>
+        <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
+        <StMyPageButton onClick={changeMyPasswordData}>
+          비밀번호 변경
+        </StMyPageButton>
+        <StMyPageButton onClick={moveToHelpDeskPage}>고객센터</StMyPageButton>
+      </div>
+    </StMyPageContainer>
   );
 }
 
@@ -146,11 +101,15 @@ const StMyPageContainer = styled.div`
 
   text-align: left;
 
-  margin: 60px 0;
+  margin: 60px 0 80px 0;
   /* padding: 0 0.6rem; */
 
   width: 500px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StCommonBorder = styled.div`
@@ -168,10 +127,20 @@ const StMyPageButton = styled.button`
 
   border: none;
   outline: none;
-  padding: 0;
+  padding: 0 25px;
   margin: 6px 0;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #f4f4f4;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    padding: 0 25px;
+    line-height: 30px;
+  }
 `;
 
 const StMyPageMenu = styled.span`
@@ -180,7 +149,12 @@ const StMyPageMenu = styled.span`
   font-weight: 500;
   line-height: 32px;
 
-  margin: 25px 0 12px 0;
+  margin: 25px 0 12px 25px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    margin: 15px 0 10px 25px;
+  }
 `;
 
 const StModalContainer = styled.div`

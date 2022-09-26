@@ -1,17 +1,16 @@
-import React from "react";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import ProfileModifyForm from "../components/features/modifyProfile/ProfileModifyForm";
+import TestForm from "../components/features/test/TestForm";
 import Layout from "../layout/layout";
 
-const ModifyProfile = () => {
+function TestPage() {
   return (
     <Layout>
       <Header />
-      <ProfileModifyForm />
+      <TestForm />
       <Footer />
     </Layout>
   );
-};
+}
 
-export default ModifyProfile;
+export default TestPage;

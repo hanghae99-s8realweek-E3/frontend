@@ -70,5 +70,34 @@ const StLoadingScreen = styled.div`
     100% {
       transform: translate(72px, 0);
     }
-  } ;
+  }
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    transform: translateX(28%) translateY(40%);
+    & > div {
+      top: 40px;
+      width: 20px;
+      height: 20px;
+    }
+    & > div:nth-child(1) {
+      left: 8px;
+    }
+    & > div:nth-child(2) {
+      left: 8px;
+    }
+    & > div:nth-child(3) {
+      left: 65px;
+    }
+    & > div:nth-child(4) {
+      left: 130px;
+    }
+    @keyframes lds-ellipsis2 {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(65px, 0);
+      }
+    }
+  }
 `;

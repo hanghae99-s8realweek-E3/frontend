@@ -43,6 +43,21 @@ const StNoticeDiv = styled.div`
 
     margin: 10px 0 20px 0;
   }
+  transition: ease 0.1s;
+  &:hover {
+    background: #f4f4f4;
+  }
+  @media screen and (max-width: 500px) {
+    margin: 0;
+    & > h3 {
+      font-size: 16px;
+    }
+
+    & > p {
+      font-size: 14px;
+      margin: 10px 0 14px 0;
+    }
+  }
 `;
 
 const StNoticeAccordionBox = styled.div`
@@ -57,4 +72,7 @@ const StNoticeAccordionBox = styled.div`
   margin: 0 auto 20px 5px;
 
   width: 100%;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 `;

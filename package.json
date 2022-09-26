@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^14.4.3",
     "aws-sdk": "^2.1219.0",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-aws-s3": "^1.5.0",
@@ -31,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://todaysmimic --profile=todaysmimic"
   },
   "eslintConfig": {
     "extends": [

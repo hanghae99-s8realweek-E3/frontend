@@ -57,6 +57,10 @@ const StFAQAccordTitle = styled.button`
 
   width: 100%;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    margin: 14px 0;
+  }
 `;
 
 const StFQAAccordionBox = styled.div`
@@ -71,6 +75,9 @@ const StFQAAccordionBox = styled.div`
   margin: 0 auto 20px 5px;
 
   width: 100%;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 const StArrowIcon = styled.img`
@@ -80,6 +87,9 @@ const StArrowIcon = styled.img`
 
   transform: ${(props) => props.transform};
   transition: ease 0.2s;
+  @media screen and (max-width: 500px) {
+    height: 4px;
+  }
 `;
 
 const StWithdrawButton = styled.button`
@@ -96,4 +106,11 @@ const StWithdrawButton = styled.button`
   margin-bottom: 20px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #8e8e8e;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 `;

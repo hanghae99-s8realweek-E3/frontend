@@ -172,12 +172,14 @@ function FeedDetailContainer() {
                   }
                 />
               </StProfileBox>
-              <StNickname
-                id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}>
-                {detailState.todoInfo.nickname}
-              </StNickname>
-              <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+              <StNickMBTIWarp>
+                <StNickname
+                  id={detailState.todoInfo.userId}
+                  onClick={onClickGoToOtherspage}>
+                  {detailState.todoInfo.nickname}
+                </StNickname>
+                <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+              </StNickMBTIWarp>
               {myData.userId === detailState.todoInfo.userId ? (
                 <></>
               ) : detailState.isFollowed === false ? (
@@ -194,9 +196,9 @@ function FeedDetailContainer() {
                 </StFollowBtn>
               )}
             </StUserIdBox>
-
-            <DetailCard data={detailState.todoInfo} />
-
+            <StDetailCard>
+              <DetailCard data={detailState.todoInfo} />
+            </StDetailCard>
             {detailState.isTodayDone === "false" ? (
               <></>
             ) : (
@@ -253,11 +255,9 @@ function FeedDetailContainer() {
           </div>
 
           <StWriteComment onSubmit={upLoadCommentData}>
-            <StCommentProfileBox>
+            <StProfileBox>
               <StProfileImg
                 style={{
-                  height: "50px",
-                  width: "auto",
                   margin: "0",
                   padding: "0",
                 }}
@@ -267,8 +267,7 @@ function FeedDetailContainer() {
                     : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                 }
               />
-            </StCommentProfileBox>
-
+            </StProfileBox>
             <StInput
               type="text"
               name="comment"
@@ -295,10 +294,15 @@ const StUserIdBox = styled.div`
   /* background-color:yellow; */
   display: flex;
   flex-direction: row;
-  width: 90%;
-  margin: 0px auto 10px 20px;
+  width: 450px;
+  margin: auto;
+  /* margin: 0px auto 10px 20px; */
+  /* margin-left: 21px; */
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 const StProfilWrap = styled.div`
@@ -331,38 +335,71 @@ const StProfileBox = styled.div`
   border-radius:50%;
   overflow: hidden;
   margin: 10px;
+  @media only screen and (max-width: 500px) {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
 `;
 
 const StProfileImg = styled.img`
   /* background-color: gray; */
   /* border-radius: 15px; */
-  cursor: pointer;
+  /* cursor: pointer; */
   /* width:30px;
   height:30px;
   margin:10px; */
   ${({ width, height, margin, borderRadius }) => {
     return css`
-      width: ${width || "50px"};
+      width: ${width || "auto"};
       height: ${height || "50px"};
       /* margin: ${margin || "10px"}; */
       /* border-radius: ${borderRadius || "25px"}; */
     `;
   }}
+  @media only screen and (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
 `;
+
+const StNickMBTIWarp = styled.div`
+  display:flex;
+  flex-direction: column;
+`
+
 const StNickname = styled.div`
   /* background-color:red; */
   text-align: start;
   margin-right: 18px;
   font-weight: 500;
   font-size: 22px;
+  cursor:pointer;
   /* margin-top:5px; */
   /* border:1px solid; */
+  transition: ease 0.1s;
+  &:hover {
+    color: #5e5c5c;
+  }
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-right:10px;
+  }
 `;
 
 const StMBTI = styled.div`
+/* background-color:red; */
   font-weight: 500;
   font-size: 18px;
   color: #5e5c5c;
+  margin-left: 3px;
+  text-align: start;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 12px;
+    margin-left: 1px;
+  }
 `;
 const StFollowBtn = styled.button`
   background: none;
@@ -373,11 +410,28 @@ const StFollowBtn = styled.button`
   font-weight: 500;
   font-size: 18px;
   color: #ff6d53;
+  transition: ease 0.1s;
   :hover {
+    color: #ffafa1;
   }
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 `;
 
+const StDetailCard = styled.div`
+  /* background-color: red; */
+  margin:auto;
+  margin-top:15px;
+  @media only screen and (max-width: 500px) {
+    width: 345px;
+    margin-left: 5px;
+    margin-top:20px;
+    text-align: center;
+    align-items: center;
+  }
+`;
 const StNicknameComment = styled.div`
   font-weight: 500;
   font-size: 15px;
@@ -390,26 +444,17 @@ const StComment = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  margin-left: 40px;
+  margin-left: 50px;
   margin-right: 50px;
   word-wrap: break-word;
+  @media only screen and (max-width: 500px) {
+    margin-left: 70px;
+  }
 `;
 
 const StChangeDeleteBtn = styled.div`
   text-align: right;
   margin-left: auto;
-`;
-
-const StCommentProfileBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  margin: 10px;
-  padding: 0;
-  border-radius: 50%;
-  overflow: hidden;
 `;
 
 const StMenuBtn = styled.button`
@@ -436,6 +481,9 @@ const StWriteComment = styled.form`
   bottom: 0;
   z-index: 7;
   padding: 4px 0;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 const StItem = styled.div`
   /* background-color:blue; */
@@ -456,7 +504,7 @@ const StInput = styled.input`
 
   border: 1px solid #979797;
   border-radius: 6px;
-  width: 90%;
+  width: 70%;
   max-width: 320px;
   height: 55px;
   padding-left: 20px;
@@ -484,6 +532,12 @@ const StCommentBtn = styled.button`
   right: 0;
   transform: translateX(-40%) translateY(-10%);
   cursor: pointer;
+
+  transition: ease 0.1s;
+  :hover {
+    color: #ffafa1;
+    transform: translateX(-40%) translateY(-10%);
+  }
 `;
 const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
@@ -498,6 +552,15 @@ const StBtnGoToChallenge = styled.button`
   text-align: center;
   cursor: pointer;
   margin: 10px;
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
+
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
+  }
 `;
 
 const StPopUpWhiteButton = styled.button`
@@ -520,4 +583,8 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+    margin: 0 20px;
+  }
 `;

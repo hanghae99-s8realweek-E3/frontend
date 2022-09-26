@@ -82,27 +82,10 @@ function HelpDeskContainer() {
               </StFAQAccordionList>
 
               <StContactBox>
-                <p style={{ fontSize: "18px", margin: "4px 0" }}>
-                  다른 궁금하신 게 있으실까요?
-                </p>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    color: "#979797",
-                    margin: "4px 0",
-                  }}>
+                <p className="uptext">다른 궁금하신 게 있으실까요?</p>
+                <p className="downtext">
                   미믹에 직접{" "}
-                  <span
-                    style={{
-                      fontSize: "16px",
-                      textDecoration: "underline",
-                      lineHeight: "16px",
-                      color: "black",
-                      cursor: "pointer",
-                    }}
-                    onClick={moveToGoogleFormPage}>
-                    문의하기
-                  </span>
+                  <span onClick={moveToGoogleFormPage}>문의하기</span>
                 </p>
               </StContactBox>
             </div>
@@ -118,7 +101,7 @@ function HelpDeskContainer() {
 export default HelpDeskContainer;
 
 const StContainer = styled.div`
-  margin: 80px 25px 0 25px;
+  margin: 60px 5% 80px 5%;
 
   box-sizing: border-box;
 `;
@@ -126,8 +109,11 @@ const StContainer = styled.div`
 const StTapBox = styled.div`
   display: flex;
   flex-direction: row;
+
+  padding: 10px 0 0 0;
+
   width: 100%;
-  height: 50px;
+  height: 40px;
 `;
 
 const StActiveTapButton = styled.button`
@@ -141,7 +127,6 @@ const StActiveTapButton = styled.button`
   border-bottom: 3px solid #ff6d53;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -159,7 +144,6 @@ const StTapButton = styled.button`
   border-bottom: 1px solid #909090;
   outline: none;
   padding-bottom: 10px;
-  margin-bottom: 5px;
 
   width: 100%;
 
@@ -171,10 +155,11 @@ const StFAQTitleBox = styled.div`
   flex-direction: row;
   font-weight: 500;
 
-  margin: 10px 0;
+  margin: 20px 0 10px 0;
 
-  & > h3 {
+  & > h2 {
     font-size: 25px;
+    margin: 5px 0;
   }
 
   & > button {
@@ -187,6 +172,16 @@ const StFAQTitleBox = styled.div`
     margin-left: auto;
 
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 500px) {
+    & > h2 {
+      font-size: 18px;
+    }
+
+    & > button {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -202,4 +197,43 @@ const StContactBox = styled.div`
   align-items: flex-start;
 
   margin: 20px 0;
+
+  .uptext {
+    font-size: 18px;
+    margin: 4px 0;
+  }
+
+  .downtext {
+    font-size: 16px;
+    color: #979797;
+    margin: 4px 0;
+  }
+  & > p > span {
+    font-size: 16px;
+    text-decoration: underline;
+    line-height: 16px;
+    color: #000000;
+    cursor: pointer;
+  }
+
+  transition: ease 0.1s;
+  & > p > span:hover {
+    color: #8e8e8e;
+  }
+
+  @media screen and (max-width: 500px) {
+    .uptext {
+      font-size: 14px;
+      margin: 4px 0;
+    }
+
+    .downtext {
+      font-size: 12px;
+      color: #979797;
+      margin: 4px 0;
+    }
+    & > p > span {
+      font-size: 12px;
+    }
+  }
 `;

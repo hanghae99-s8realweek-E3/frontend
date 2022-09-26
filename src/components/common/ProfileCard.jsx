@@ -24,14 +24,14 @@ function ProfileCard({ profileData }) {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
     // window.location.pathname === "/otherspage" ?
     // navigate(`/follows/${params.userId}`)
     // :
-    navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
+    navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
 
   const [, setFollow] = useState("팔로우");
@@ -76,16 +76,7 @@ function ProfileCard({ profileData }) {
               />
             </StCloseButton>
             <StContent>
-              <h2
-                style={{
-                  fontSize: "32px",
-                  lineHeight: "34px",
-                  fontWeight: "700",
-                  color: "#313131",
-                  margin: "17px auto",
-                }}>
-                MBTI 궁합
-              </h2>
+              <h2>MBTI 궁합</h2>
               <StText>
                 나와 천생연분인 MBTI와
                 <br />
@@ -97,7 +88,7 @@ function ProfileCard({ profileData }) {
               <img
                 src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
                 alt="MBTI matching List Images"
-                style={{ width: "430px", margin: "5px 0" }}
+                style={{ width: "324px", margin: "5px 0" }}
               />
             </StContent>
           </StModalContainer>
@@ -189,7 +180,7 @@ const StImageBox = styled.div`
 const StProfileImg = styled.img`
   /* border-radius: 9999px; */
   height: 80px;
-  width: 80px;
+  width: auto;
   /* @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
@@ -227,6 +218,7 @@ const StNickName = styled.div`
     align-items: center;
     width: 100%;
     margin: 0px;
+    font-size: 18px;
   }
 `;
 const StMbtiFollowFollowingWrap = styled.div`
@@ -249,12 +241,13 @@ const StMbti = styled.div`
   line-height: 32px;
   text-align: left;
   color: #979797;
-  margin-left: 16px;
+  margin-left: 19px;
   @media screen and (max-width: 500px) {
     align-items: flex-start;
     text-align: left;
     width: 100%;
     margin-left: 2px;
+    font-size: 16px;
   }
 `;
 const StFollowWrap = styled.div`
@@ -266,7 +259,11 @@ const StFollowWrap = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    margin: 0px;
+    margin-left: 50px;
+  }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
   }
 `;
 const StFollowNumber = styled.div`
@@ -276,7 +273,10 @@ const StFollowNumber = styled.div`
   font-size: 20px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #000000; 
+   @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StFollowWord = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -286,6 +286,7 @@ const StFollowWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  
 `;
 const StFollowingWrap = styled.div`
   display: flex;
@@ -298,6 +299,10 @@ const StFollowingWrap = styled.div`
     width: 100%;
     margin: 0px;
   }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
 `;
 const StFollowingNumber = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -307,6 +312,9 @@ const StFollowingNumber = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StFollowingWord = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -316,6 +324,7 @@ const StFollowingWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
+  transition: ease 0.05s;
 `;
 const StFollowBtn = styled.button`
   display: flex;
@@ -327,12 +336,12 @@ const StFollowBtn = styled.button`
   text-align: center;
   color: #ff6d53;
   background-color: white;
-  margin: 1.5px 0 22px 125px;
+  margin: 1.5px 0 22px 127px;
   border: 0px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin-left: 115px;
+    margin-left: 95px;
   }
 `;
 const StInfo = styled.div`
@@ -380,6 +389,21 @@ const StContent = styled.div`
   bottom: 0;
   height: 90%;
   box-sizing: border-box;
+
+  & > h2 {
+    font-size: 32px;
+    line-height: 34px;
+    font-weight: 700;
+    color: #313131;
+    margin: 17px auto;
+  }
+
+  @media screen and (max-width: 500px) {
+    & > h2 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
 `;
 
 const StText = styled.p`
@@ -390,6 +414,11 @@ const StText = styled.p`
 
   margin: 0;
   margin-bottom: 42px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 const StModalContainer = styled.div`
@@ -397,10 +426,16 @@ const StModalContainer = styled.div`
 
   border-radius: 6px;
   padding: 25px;
-  margin: 3vh auto;
+  margin: 10vh auto;
 
   width: 90%;
-  height: 700px;
+  height: 620px;
 
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: 18px;
+    height: 540px;
+    margin: 7vh auto;
+  }
 `;

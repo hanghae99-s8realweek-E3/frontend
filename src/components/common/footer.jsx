@@ -43,8 +43,8 @@ function Footer() {
                 window.location.pathname === "/" ||
                 window.location.pathname === "/welcomepage" ||
                 window.location.pathname === "/teaser"
-                  ? process.env.PUBLIC_URL + `/images/HomeActive.png`
-                  : process.env.PUBLIC_URL + `/images/Home.png`
+                  ? process.env.PUBLIC_URL + `/images/HomeActive.svg`
+                  : process.env.PUBLIC_URL + `/images/Home.svg`
               }
             />
           </div>
@@ -69,8 +69,8 @@ function Footer() {
                 window.location.pathname === `/feeddetail/${params.todoId}` ||
                 window.location.pathname === `/follows/${params.userId}` ||
                 window.location.pathname === `/selectmbtifeed`
-                  ? process.env.PUBLIC_URL + `/images/FeedActive.png`
-                  : process.env.PUBLIC_URL + `/images/Feed.png`
+                  ? process.env.PUBLIC_URL + `/images/FeedActive.svg`
+                  : process.env.PUBLIC_URL + `/images/Feed.svg`
               }
             />
           </div>
@@ -89,10 +89,9 @@ function Footer() {
               src={
                 window.location.pathname === "/setuptodo" ||
                 window.location.pathname === "/mytodos"
-                  ? process.env.PUBLIC_URL + `/images/MimicActive.png`
-                  : process.env.PUBLIC_URL + `/images/Mimic.png`
+                  ? process.env.PUBLIC_URL + `/images/MimicActive.svg`
+                  : process.env.PUBLIC_URL + `/images/Mimic.svg`
               }
-              style={{ height: "40px", width: "40px" }}
             />
           </div>
           미믹
@@ -124,8 +123,8 @@ function Footer() {
                 window.location.pathname === "/changepw" ||
                 window.location.pathname === "/helpdesk" ||
                 window.location.pathname === "/withdraw"
-                  ? process.env.PUBLIC_URL + `/images/MyActive.png`
-                  : process.env.PUBLIC_URL + `/images/My.png`
+                  ? process.env.PUBLIC_URL + `/images/MyActive.svg`
+                  : process.env.PUBLIC_URL + `/images/My.svg`
               }
             />
           </div>
@@ -139,7 +138,7 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  background: #fafafa;
+  background: #ffffff;
 
   display: flex;
   flex-direction: column;
@@ -152,6 +151,7 @@ const FooterContainer = styled.div`
 
   padding-top: 5px;
   margin: auto;
+  border-top: 1px solid #c7c7c7;
 
   bottom: 0;
   z-index: 6;
@@ -176,7 +176,7 @@ const FooterButtonBox = styled.div`
     align-items: center;
 
     width: 360px;
-    gap: 3rem;
+    gap: 4rem;
   }
 `;
 
@@ -210,6 +210,6 @@ const StButton = styled.button`
 // `;
 
 const StBtnImage = styled.img`
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
 `;

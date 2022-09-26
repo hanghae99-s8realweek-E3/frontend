@@ -65,37 +65,12 @@ function ChangePWContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StContainer>
         <form onSubmit={sendToModifyData}>
-          <div style={{ margin: "30px 0", textAlign: "left" }}>
-            <p
-              style={{
-                fontSize: "18px",
-                fontWeight: "500",
-                color: "#999999",
-                margin: "0",
-              }}>
-              회원님의 소중한 개인정보를 안전하게 보호하기 위해
-            </p>
-            <p
-              style={{
-                fontSize: "18px",
-                fontWeight: "500",
-                color: "#999999",
-                margin: "0",
-              }}>
-              비밀번호를 입력해주세요.
-            </p>
-          </div>
+          <StContentText>
+            <p>회원님의 소중한 개인정보를 안전하게 보호하기 위해</p>
+            <p>비밀번호를 입력해주세요.</p>
+          </StContentText>
           <div style={{}}>
-            <label
-              style={{
-                fontSize: "18px",
-                fontWeight: "500",
-                color: "#000000",
-                display: "block",
-                textAlign: "left",
-              }}>
-              현재 비밀번호
-            </label>
+            <StContentLabel>현재 비밀번호</StContentLabel>
             <StCommonInput
               type="password"
               name="password"
@@ -112,16 +87,7 @@ function ChangePWContainer() {
             </StErrorMessage>
           </div>
           <div>
-            <label
-              style={{
-                fontSize: "18px",
-                fontWeight: "500",
-                color: "#000000",
-                display: "block",
-                textAlign: "left",
-              }}>
-              새로운 비밀번호
-            </label>
+            <StContentLabel>새로운 비밀번호</StContentLabel>
             <StCommonInput
               type="password"
               name="newPassword"
@@ -188,6 +154,14 @@ const StCommonInput = styled.input`
     font-weight: 500;
     color: #979797;
   }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    height: 45px;
+    font-size: 16px;
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
 `;
 
 const StCommonButton = styled.button`
@@ -211,6 +185,16 @@ const StCommonButton = styled.button`
   height: 70px;
 
   cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
+    margin: 40px 0 80px 0;
+    width: 86%;
+  }
 `;
 
 const StErrorMessage = styled.div`
@@ -221,4 +205,34 @@ const StErrorMessage = styled.div`
 
   height: 32px;
   margin-bottom: 8px;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
+`;
+
+const StContentText = styled.div`
+  margin: 30px 0;
+  text-align: left;
+  & p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #999999;
+    margin: 0;
+  }
+  @media screen and (max-width: 500px) {
+    & p {
+      font-size: 14px;
+    }
+  }
+`;
+
+const StContentLabel = styled.label`
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  display: block;
+  text-align: left;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 `;

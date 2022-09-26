@@ -6,16 +6,28 @@ import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { getCookie } from "../../../utils/cookie";
 import WelcomeForm from "./WelcomeForm";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMainFetch } from "../../../app/modules/mainSlice";
+import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 
 function MainContainer() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const mainState = useSelector((state) => state.main);
+  const myData = decodeMyTokenData();
+
+  useEffect(() => {
+    dispatch(getMainFetch());
+  }, []);
+
   const firstLoginCheck = getCookie("firstLogin");
   const bannerSlide = [
-    process.env.PUBLIC_URL + `/images/Banner1.jpg`,
-    "https://cdn.class101.net/images/367bcbd9-1311-405f-bb5f-5737e4f9b43a",
-    "https://cdn.class101.net/images/070f5c4e-031b-41b9-9d2b-be4bee95c031/1920xauto.webp",
-    "https://cdn.class101.net/images/12783d2d-308a-49fd-8d5c-096ec8e05c9b/1920xauto.webp",
-    "https://cdn.class101.net/images/63be45f8-20fa-47e4-b503-d2445799ddba/1920xauto.webp",
-    "https://cdn.class101.net/images/dfb0bc2d-5a8a-4adc-9c44-6d5425c18a9d/1920xauto.webp",
+    process.env.PUBLIC_URL + `/images/banner1.png`,
+    process.env.PUBLIC_URL + `/images/banner2.png`,
   ];
   const locationLink = [
     "https://www.16personalities.com/ko",
@@ -25,29 +37,36 @@ function MainContainer() {
     "https://doda.app/quiz/l2hrXtybhV",
   ];
 
-  function moveToPage0() {
-    window.location.assign(
-      "https://github.com/hanghae99-s8realweek-E3/frontend"
-    );
-  }
-
-  function moveToPage1() {
-    window.location.assign(
-      "https://develop-neoguri.notion.site/99-8-E-3-eb0b2d4f20354b90b1dc014867f3fd7a"
-    );
+  function moveToFeedPage(event) {
+    if (tokenChecker() === false) {
+      alert("로그인 후 이용해주세요.");
+      navigate("/mypage");
+    } else if (tokenChecker() === true) {
+      navigate(`/feeddetail/${event.target.id}`);
+    }
   }
 
   function moveToPageNewTab(event) {
-    console.log(event.target);
     window.open(locationLink[event.target.id]);
+  }
+
+  function moveToBannerPage(idx) {
+    if (idx === 0) {
+      window.open(
+        "https://develop-neoguri.notion.site/MIMIC-010c6fa8f221425db53abdbb216f7cd6"
+      );
+    } else if (idx === 1) {
+      window.open("https://forms.gle/ByMhVrN7Gr9pUuBZ9");
+    }
   }
 
   return (
     <>
       {firstLoginCheck !== undefined ? <WelcomeForm /> : <></>}
+
       <StContainer>
         <StHeadTitle>
-          미믹님!
+          {myData !== undefined ? myData.nickname : "미믹"} 님!
           <br />
           오늘은 누구를 따라해볼까요?
         </StHeadTitle>
@@ -62,64 +81,122 @@ function MainContainer() {
             allowTouchMove
             autoplay={{ delay: 3000 }}
             navigation={true}
-            pagination={{ clickable: true }}>
+            pagination={{ clickable: true }}
+            height={200}>
             {bannerSlide.map((elem, idx) => (
               <SwiperSlide key={idx} style={SwiperImageCSSData}>
-                <SildeBannerImage src={elem} />
+                <SildeBannerImage
+                  src={elem}
+                  onClick={() => moveToBannerPage(idx)}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </BannerSlideBox>
-        <InfomationSlideBox>
-          <SildeTitle>알려드릴 것이 있어요!</SildeTitle>
+        <PostSlideBox>
+          <SildeTitle>오늘의 베스트 미믹!</SildeTitle>
 
           {/* 슬라이드 목록 구간 */}
           {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
           {/* 문제는 해결했는데 왜 해결된건지 모르겠다. width를 정밀하게 주니까 해결. */}
-          <Swiper
-            modules={[Navigation]}
-            width={350}
-            slidesPerView={2}
-            spaceBetween={12}
-            navigation={true}
-            style={{ margin: "0.5rem 0" }}
-            scrollbar={{ draggable: true }}>
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-              <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[0]} />
-              </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-            </SwiperSlide>
+          {Object.keys(mainState.data).length !== 0 ? (
+            <Swiper
+              width={150}
+              slidesPerView={1}
+              spaceBetween={12}
+              style={{ margin: "0.5rem 0" }}
+              scrollbar={{ draggable: true }}>
+              {mainState.data?.challenge.map((elem, idx) => (
+                <SwiperSlide
+                  key={idx}
+                  style={SwiperPostCSSData}
+                  id={elem.todoId}
+                  onClick={moveToFeedPage}>
+                  <span
+                    style={{
+                      fontSize: "46px",
+                      color: "#FF6D53",
+                      textAlign: "left",
+                      pointerEvents: "none",
+                    }}>
+                    ❝
+                  </span>
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      lineHeight: "22px",
+                      fontWeight: "400",
+                      marginRight: "10%",
+                      height: "14vh",
+                      pointerEvents: "none",
+                    }}>
+                    {elem.todo}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      pointerEvents: "none",
+                    }}>
+                    <div>
+                      {/* <div
+                        style={{
+                          fontSize: "10px",
+                          fontWeight: "400",
+                          lineHeight: "15px",
+                          color: "#919191",
+                        }}>
+                        작성자.
+                      </div> */}
+                      <div
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "500",
+                          lineHeight: "15px",
+                          color: "#919191",
+                          pointerEvents: "none",
+                        }}>
+                        {elem.mbti}
+                      </div>
+                    </div>
+                    <StStatusBox>
+                      <FontAwesomeIcon
+                        style={{
+                          margin: "0 4px",
+                          color: "#919191",
+                          fontSize: "12px",
+                          pointerEvents: "none",
+                        }}
+                        icon={faMessage}
+                      />
+                      <StCountSpan
+                        color={"#919191"}
+                        style={{ marginRight: "10px" }}>
+                        {elem.commentCounts}
+                      </StCountSpan>
+                      <FontAwesomeIcon
+                        style={{
+                          margin: "0 0 0 0",
+                          color: "#919191",
+                          fontSize: "12px",
+                          pointerEvents: "none",
+                        }}
+                        icon={faStar}
+                      />
+                      <StCountSpan color={"#919191"}>
+                        {elem.challengedCounts}
+                      </StCountSpan>
+                    </StStatusBox>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <></>
+          )}
+        </PostSlideBox>
 
-            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-              <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[1]} />
-              </PostImageBox>
-              <PostText>Lorem ipsum dolor </PostText>
-            </SwiperSlide>
-
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-              <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[2]} />
-              </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-            </SwiperSlide>
-
-            <SwiperSlide onClick={moveToPage1} style={SwiperPostCSSData}>
-              <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[3]} />
-              </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-            </SwiperSlide>
-
-            <SwiperSlide onClick={moveToPage0} style={SwiperPostCSSData}>
-              <PostImageBox width="170px" height="110px">
-                <SildeImage width="170px" src={bannerSlide[4]} />
-              </PostImageBox>
-              <PostText>Lorem ipsum dolor sit amet consectetur</PostText>
-            </SwiperSlide>
-          </Swiper>
-        </InfomationSlideBox>
         <InfomationSlideBox>
           <SildeTitle>심심풀이에 이런 테스트들은 어때요?</SildeTitle>
 
@@ -135,7 +212,7 @@ function MainContainer() {
             <SwiperSlide
               id="0"
               onClick={moveToPageNewTab}
-              style={SwiperPostCSSData}>
+              style={SwiperTestCardCSSData}>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="300px"
@@ -151,7 +228,7 @@ function MainContainer() {
             <SwiperSlide
               id="1"
               onClick={moveToPageNewTab}
-              style={SwiperPostCSSData}>
+              style={SwiperTestCardCSSData}>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="190px"
@@ -167,7 +244,7 @@ function MainContainer() {
             <SwiperSlide
               id="2"
               onClick={moveToPageNewTab}
-              style={SwiperPostCSSData}>
+              style={SwiperTestCardCSSData}>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="250px"
@@ -183,7 +260,7 @@ function MainContainer() {
             <SwiperSlide
               id="3"
               onClick={moveToPageNewTab}
-              style={SwiperPostCSSData}>
+              style={SwiperTestCardCSSData}>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="210px"
@@ -199,7 +276,7 @@ function MainContainer() {
             <SwiperSlide
               id="4"
               onClick={moveToPageNewTab}
-              style={SwiperPostCSSData}>
+              style={SwiperTestCardCSSData}>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="180px"
@@ -243,6 +320,9 @@ const StHeadTitle = styled.h1`
   font-size: 24px;
   font-weight: 500;
   margin: 0 auto 20px 0;
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 const BannerSlideBox = styled.div`
@@ -257,6 +337,19 @@ const BannerSlideBox = styled.div`
   overflow: hidden;
   box-sizing: border-box;
 
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    height: auto;
+  }
+`;
+
+const PostSlideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+
+  /* margin: 10px 0; */
+  overflow: hidden;
   @media screen and (max-width: 500px) {
     width: 324px;
   }
@@ -280,6 +373,7 @@ const SildeBannerImage = styled.img`
 
   @media screen and (max-width: 500px) {
     width: 324px;
+    height: auto;
   }
 `;
 
@@ -289,7 +383,7 @@ const SildeImage = styled.img`
 `;
 
 const SildeTitle = styled.h4`
-  font-size: 16px;
+  font-size: 20px;
   text-align: left;
 
   margin: 32px 0 20px 0;
@@ -322,6 +416,17 @@ const PostText = styled.p`
   height: 32px;
 `;
 
+const StStatusBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: 0;
+
+  pointer-events: none;
+`;
+
 const SwiperImageCSSData = {
   display: "flex",
   flexDirection: "column",
@@ -329,10 +434,11 @@ const SwiperImageCSSData = {
   alignItems: "center",
 
   width: "450px",
-  height: "260px",
+  height: window.innerWidth > 500 ? "260px" : "170px",
+  cursor: "pointer",
 };
 
-const SwiperPostCSSData = {
+const SwiperTestCardCSSData = {
   display: "flex",
   flexDirection: "column",
   margin: "0 0.5rem",
@@ -343,6 +449,25 @@ const SwiperPostCSSData = {
   borderRadius: "5px",
   cursor: "pointer",
 };
+
+const SwiperPostCSSData = {
+  background: "#F0F0F0",
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "left",
+  padding: "5%",
+  borderRadius: "6px",
+  height: "50%",
+  cursor: "pointer",
+};
+
+const StCountSpan = styled.span`
+  font-size: 12px;
+  font-weight: 500;
+  color: ${(props) => props.color};
+  pointer-events: none;
+  margin: 0 4px;
+`;
 
 // legacy - 이런 것을 사용해본 적도 있었다거나, 참고할 만했던 내용들 기록.
 

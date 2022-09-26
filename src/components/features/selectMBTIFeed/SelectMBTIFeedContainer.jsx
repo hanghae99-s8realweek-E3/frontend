@@ -92,16 +92,7 @@ function SelectMBTIFeedContainer() {
               />
             </StCloseButton>
             <StContent>
-              <h2
-                style={{
-                  fontSize: "28px",
-                  lineHeight: "34px",
-                  fontWeight: "700",
-                  color: "#313131",
-                  margin: "17px auto",
-                }}>
-                색상이 다른 이유는 무엇인가요?
-              </h2>
+              <h2>색상이 다른 이유는 무엇인가요?</h2>
               <StText>
                 MBTI 사이에서도 상성이 있다는 거, 알고 계세요?
                 <div style={{ height: "7px" }}></div>
@@ -122,20 +113,12 @@ function SelectMBTIFeedContainer() {
                 <br />
                 골고루 잘 맞는다는 이야기랍니다.
               </StText>
-              <p
-                style={{
-                  marginBottom: "42px",
-                  textAlign: "center",
-                  fontSize: "12px",
-                  fontWeight: "400",
-                  color: "#ff6d53",
-                }}>
-                ※색상은 로그인한 유저에게만 노출되니 이용에 참고해주세요.
+              <p className="alertMsg">
+                ※색상은 로그인한 유저만 노출되니 참고 부탁드립니다.
               </p>
               <img
                 src={process.env.PUBLIC_URL + `/images/selectMBTIHelp.jpg`}
                 alt="MBTI matching List Images"
-                style={{ width: "200px", margin: "5px 0" }}
               />
             </StContent>
           </StModalContainer>
@@ -143,7 +126,7 @@ function SelectMBTIFeedContainer() {
       ) : (
         <></>
       )}
-      <div style={{ marginTop: "80px" }}>
+      <div style={{ marginTop: "70px" }}>
         <StGrid>
           {mbtiList.map((elem, index) => {
             return (
@@ -228,6 +211,17 @@ const StButton = styled.button`
   height: 105px;
   width: 105px;
   cursor: ${(props) => props.cursor};
+
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  @media screen and (max-width: 500px) {
+    height: 77px;
+    width: 77px;
+    font-size: 14px;
+  }
 `;
 
 const StHelpButton = styled.button`
@@ -243,8 +237,22 @@ const StHelpButton = styled.button`
   border: none;
   outline: none;
   margin: 25px;
+  margin-top: 0;
+  & svg {
+    height: 21px;
+    width: 21px;
+  }
 
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin: 10px;
+    margin-top: 0;
+    & svg {
+      height: 14px;
+      width: 14px;
+    }
+  }
 `;
 
 const helpButton = {
@@ -255,9 +263,6 @@ const helpButton = {
   borderRadius: "50%",
   margin: "0 10px 0 0",
   padding: "6px",
-
-  height: "21px",
-  width: "21px",
 };
 
 const StSelectFilterBtn = styled.button`
@@ -271,7 +276,7 @@ const StSelectFilterBtn = styled.button`
   font-weight: 500;
   color: #ffffff;
 
-  margin: auto 0 100px 25px;
+  margin: 10px 5% 80px 5%;
   border: none;
   border-radius: 6px;
   outline: none;
@@ -279,6 +284,15 @@ const StSelectFilterBtn = styled.button`
   width: 90%;
   height: 70px;
   cursor: pointer;
+
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
+  }
 `;
 
 const StModalContainer = styled.div`
@@ -292,6 +306,9 @@ const StModalContainer = styled.div`
   height: 660px;
 
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    height: 500px;
+  }
 `;
 
 const StContent = styled.div`
@@ -307,6 +324,40 @@ const StContent = styled.div`
   bottom: 0;
   height: 90%;
   box-sizing: border-box;
+
+  & > h2 {
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+    color: #313131;
+    margin: 17px auto;
+  }
+
+  & > img {
+    width: 150px;
+    margin: 5px 0;
+  }
+
+  .alertMsg {
+    margin-bottom: 42px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff6d53;
+  }
+
+  @media screen and (max-width: 500px) {
+    & > h2 {
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 700;
+      color: #313131;
+      margin: 15px auto;
+    }
+    .alertMsg {
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 const StText = styled.p`
@@ -316,6 +367,9 @@ const StText = styled.p`
   color: #919191;
 
   margin: 0;
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 
 const StCloseButton = styled.button`

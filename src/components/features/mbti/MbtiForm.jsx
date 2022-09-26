@@ -1,3 +1,5 @@
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,79 +11,99 @@ import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 const MbtiForm = () => {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
-  const myToken = decodeMyTokenData();
   // const state = useSelector (state => state.mbti)
   const kakaoToken = new URL(window.location.href).searchParams.get("token");
-  if (kakaoToken !== null ) {
-    window.localStorage.setItem("token", kakaoToken)
+  if (kakaoToken !== null) {
+    window.localStorage.setItem("token", kakaoToken);
   }
 
-  if (tokenChecker() === false){
-    navigate('/mypage')
+  if (tokenChecker() === false) {
+    navigate("/mypage");
   }
-  console.log(myToken,kakaoToken)
-  //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후, 
-  useEffect(()=> {
+  //클라이언트에서 mbti 선택한 정보가 서버로 저장되었는지 확인후,
+  const myToken = decodeMyTokenData();
+
+  useEffect(() => {
     if (myToken !== undefined && myToken !== null) {
       if (myToken.mbti !== null) {
-        navigate('/')
+        navigate("/");
       }
     }
-    if (kakaoToken !== undefined && kakaoToken !== null) {
-      if (kakaoToken.mbti !== null) {
-        navigate('/')
-      }
-    }
-      },[])
+  }, []);
 
-  const [myMbti, setMyMbti] = useState(false);
+  const [myMbti, setMyMbti] = useState("");
   const mbtiList = [
-    "ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ",
+    "ISTJ",
+    "ISFJ",
+    "INFJ",
+    "INTJ",
+    "ISTP",
+    "ISFP",
+    "INFP",
+    "INTP",
+    "ESTP",
+    "ESFP",
+    "ENFP",
+    "ENTP",
+    "ESTJ",
+    "ESFJ",
+    "ENFJ",
+    "ENTJ",
   ];
-  
+
   const onClickSetMbti = (e) => {
     e.preventDefault();
-    setMyMbti(e.target.value)
-  }
-  
+    setMyMbti(e.target.value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     //payload
-    const selectedMbti = {mbti:myMbti} //!api 명세서 키값 확인
+    const selectedMbti = { mbti: myMbti }; //!api 명세서 키값 확인
     //post 만들기
-    const postMbtifetch = async ()=> {
+    const postMbtifetch = async () => {
       try {
         const response = await instance.post("/accounts/mbti", selectedMbti);
-          if (response.data.message === "success") {
-            setCookie("firstLogin", "true", 300);
-            window.localStorage.setItem("token", response.data.token)
-            navigate('/')
-            } 
-        }catch (error) {
-            return alert(error.response.data.errorMessage)
+        if (response.data.message === "success") {
+          setCookie("firstLogin", "true", 300);
+          window.localStorage.setItem("token", response.data.token);
+          navigate("/");
+        }
+      } catch (error) {
+        return alert(error.response.data.errorMessage);
       }
-    }
+    };
     postMbtifetch();
     // dispatch(postMbtifetch(selectedMbti))
-  }
-  
+  };
 
   return (
     <StDiv>
       <form onSubmit={onSubmit}>
-          <div>
-              <p>선택한 MBTI: </p>
-              <h2>{myMbti}</h2>
-            <StGrid>
-              {mbtiList.map((x, index) => {
-                return (
-                  <StButton color={(mbtiList[index] !== setMyMbti ? "gray":"")}  key={index} value={mbtiList[index]} onClick={onClickSetMbti}> 
-                  {mbtiList[index]}  
-                  </StButton>);
-                })}
-            </StGrid>
-          </div>
-              <StButton  color="black" height="50px" type="submit"  >설정완료</StButton>
+        <div>
+          <StGrid>
+            {mbtiList.map((elem, idx) => {
+              return (
+                <StMBTIBtn
+                  key={idx}
+                  color={myMbti === elem ? "#ffffff" : "#909090"}
+                  background={myMbti === elem ? "#ff6d53" : "#ffffff"}
+                  border={
+                    myMbti === elem ? "1px solid #ff6d53" : "1px solid #979797"
+                  }
+                  onClick={onClickSetMbti}
+                  value={elem}>
+                  <StElem>{elem}</StElem>
+                </StMBTIBtn>
+              );
+            })}
+          </StGrid>
+        </div>
+        <StHelpButton>
+          <FontAwesomeIcon icon={faQuestion} style={helpButton} />
+          MBTI란?
+        </StHelpButton>
+        <StCommonButton type="submit">확인</StCommonButton>
       </form>
     </StDiv>
   );
@@ -90,18 +112,20 @@ const MbtiForm = () => {
 export default MbtiForm;
 
 const StDiv = styled.div`
-  height:100%;
-  overflow:scroll;
+  height: 100vh;
+  overflow: scroll;
 `;
 
 const StGrid = styled.div`
+  /* background-color: red; */
   display: grid;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  column-gap: 10px;
-  row-gap: 10px;
-  margin: auto;
+  gap: 10px;
+  margin-top: 70px;
   padding: 10px;
+  @media only screen and (max-width: 500px) {
+  }
 `;
 const StButton = styled.button`
   outline: none;
@@ -111,7 +135,7 @@ const StButton = styled.button`
 
   height: ${(props) => props.height || "80px"};
   width: 80px;
-  font-size: 0.8rem;
+  font-size: 1rem;
 
   cursor: pointer;
 
@@ -127,3 +151,104 @@ const StButton = styled.button`
     color: white;
   }
 `;
+
+const StMBTIBtn = styled.button`
+  background: ${(props) => props.background};
+
+  color: ${(props) => props.color};
+  font-weight: 500;
+  font-size: 18px;
+  padding: auto;
+
+  border: ${(props) => props.border || "1px solid #979797"};
+  border-radius: 6px;
+
+  height: 105px;
+  width: 105px;
+  box-sizing: border-box;
+  cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    height: 75px;
+    width: 75px;
+    margin: auto;
+  }
+  transition: ease 0.1s;
+  &:hover {
+    transform: scale(1.03);
+  }
+`;
+
+const StSlideDiv = styled.div`
+  background: #e8e8e8;
+
+  width: 42.67px;
+  height: 5.33px;
+
+  border-radius: 133.333px;
+  margin: 21px auto 28px auto;
+`;
+
+const StElem = styled.div`
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+  }
+`;
+
+const StCommonButton = styled.button`
+  background: #ff6d53;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+  color: #ffffff;
+
+  border-radius: 6px;
+  margin: ${(props) => props.margin || "25px"};
+  width: 450px;
+  height: 70px;
+
+  cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 330px;
+    margin: 15px;
+  }
+  transition: ease 0.05s;
+  &:hover {
+    background: #ffa595;
+  }
+`;
+
+const StHelpButton = styled.button`
+  background: none;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 18px;
+  color: #979797;
+  font-weight: 500;
+
+  border: none;
+  outline: none;
+  margin: 15px;
+  margin-top: 0px;
+
+  cursor: pointer;
+  @media only screen and (max-width: 500px) {
+  }
+`;
+
+const helpButton = {
+  background: "gray",
+
+  color: "white",
+
+  borderRadius: "50%",
+  margin: "0 10px 0 0",
+  padding: "6px",
+
+  height: "21px",
+  width: "21px",
+};

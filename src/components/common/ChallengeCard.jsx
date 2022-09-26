@@ -3,18 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { tokenChecker } from "../../utils/token";
 
 function ChallengeCard({ data }) {
   const navigate = useNavigate();
-
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
-    if (data.todoInfo.todoId !== "null" && data.todoInfo.todoId !== undefined)
-      navigate(`/feeddetail/${data.todoInfo.todoId}`);
+    if (data.todoInfo.todoId !== "null" && data.todoInfo.todoId !== undefined) {
+      if (tokenChecker() === true) {
+        navigate(`/feeddetail/${data.todoInfo.todoId}`);
+      } else if (tokenChecker() === false) {
+        alert("로그인 후 이용해주세요.");
+        navigate("/mypage");
+        return;
+      }
+    }
   }
-  console.log(data);
-  // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
-  // map을 쓰지 않는 경우, key는 예외.
+
+  // 이용 시, <ChallengeCard data={객체값} />로 작성해줄 것
   return (
     <StChallengeCardDiv
       background={data.isChallenged === true ? "#DDDDDD" : "#ffffff"}>
@@ -89,6 +95,27 @@ const StChallengeCardDiv = styled.div`
 
   box-sizing: border-box;
   cursor: ${(props) => props.cursor || "pointer"};
+
+  transition: ease 0.2s;
+
+  &:hover {
+    background: #ff6d53;
+    color: #ffffff;
+  }
+
+  &:hover span {
+    color: #ffffff;
+  }
+
+  &:hover path {
+    color: #ffffff;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 94%;
+    margin: 12px 3%;
+    height: 80px;
+  }
 `;
 
 const StChallengeNameSpan = styled.span`
@@ -98,6 +125,12 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 `;
 
 const StCountSpan = styled.span`
