@@ -138,7 +138,6 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
 
       {/* 진행중 완료 버튼 출현 여부 결정 */}
       <StChallengeCardDiv
-        width="90%"
         id={data.todoId}
         onClick={moveToFeedDetail}
         background={data.isCompleted === true ? "#FF6D53" : "#ffffff"}
@@ -211,7 +210,7 @@ const StChallengeCardDiv = styled.div`
   flex-direction: row;
   align-items: center;
 
-  width: ${(props) => props.width || "100%"};
+  width: 90%;
   height: 102px;
   border: ${(props) => props.border};
   border-radius: 6px;
@@ -223,6 +222,11 @@ const StChallengeCardDiv = styled.div`
   transition: ease 0.1s;
   &:hover {
     transform: scale(1.02);
+  }
+  @media screen and (max-width: 500px) {
+    width: 90%;
+    margin: 5px 5%;
+    height: 80px;
   }
 `;
 
@@ -242,6 +246,11 @@ const StTodoStateImage = styled.img`
   height: 46px;
   margin-right: 19px;
   pointer-events: none;
+  @media screen and (max-width: 500px) {
+    width: 38px;
+    height: 38px;
+    margin-right: 9px;
+  }
 `;
 
 const StChallengeNameSpan = styled.span`
@@ -251,6 +260,11 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 `;
 
 const StMenuBtn = styled.button`
@@ -264,6 +278,10 @@ const StMenuBtn = styled.button`
   margin-left: auto;
 
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 const StPopUpWhiteButton = styled.button`
@@ -286,4 +304,9 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    margin: 0 18px;
+    height: 60px;
+    font-size: 18px;
+  }
 `;

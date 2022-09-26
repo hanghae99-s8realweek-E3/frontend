@@ -1,7 +1,6 @@
 import {
   StCommonColumnBox,
   StCommonRowBox,
-  StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
@@ -130,7 +129,7 @@ const StChallengeCardDiv = styled.div`
 
   @media screen and (max-width: 500px) {
     width: 94%;
-    margin: 12px 3%;
+    margin: 12px 4%;
   }
 `;
 
@@ -196,4 +195,25 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    margin: 0 18px;
+    height: 60px;
+    font-size: 18px;
+  }
+`;
+
+export const StShadowBackgroundDiv = styled.div`
+  background: rgba(0, 0, 0, 0.3);
+
+  display: block;
+  position: fixed;
+
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+    transform: translateX(2%);
+  }
 `;

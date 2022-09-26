@@ -134,7 +134,7 @@ function SetToDoContainer() {
               </StCommonRowBox>
             </StTodayBox>
 
-            <StCommonBorder margin="0 25px" />
+            <StCommonBorder />
 
             <StChallengeToDoBox>
               <StCommonText margin="0 auto 14px 25px" fontSize="18px">
@@ -210,6 +210,9 @@ const StCommonColumnContainer = styled.div`
 
   width: 500px;
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const CalendarContainer = styled.div`
@@ -218,7 +221,7 @@ const CalendarContainer = styled.div`
     /* max-width: 100%; */
     background: #f4f3f3;
     /* border: 1px solid #a0a096; */
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
     line-height: 1.125em;
   }
   .react-calendar--doubleView {
@@ -334,8 +337,10 @@ const CalendarContainer = styled.div`
   }
   .react-calendar__tile--active {
     background: #ff6d53;
-    color: white;
     border-radius: 50%;
+    & > abbr {
+      color: white;
+    }
   }
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
@@ -374,7 +379,7 @@ const CalendarContainer = styled.div`
     font-size: 18px;
     font-weight: 400;
     line-height: 36px;
-    color: #313131;
+    color: "#313131";
 
     padding: 0;
 
@@ -394,6 +399,28 @@ const CalendarContainer = styled.div`
     font-weight: 400;
     line-height: 36px;
     color: #313131;
+  }
+  .react-calendar__tile.react-calendar__month-view__days__day.react-calendar__month-view__days__day--neighboringMonth {
+    color: gray;
+  }
+  @media screen and (max-width: 500px) {
+    .react-calendar {
+      width: 360px;
+    }
+    .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
+      font-size: 18px;
+    }
+    .react-calendar__tile.react-calendar__month-view__days__day {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 36px;
+      color: #313131;
+
+      padding: 0;
+
+      height: 50px;
+      width: 36px;
+    }
   }
 `;
 
@@ -415,6 +442,10 @@ const StDayWeekOfDaySpan = styled.span`
   color: #979797;
 
   height: 32px;
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 26px;
+  }
 `;
 
 const StDayDateSpan = styled.span`
@@ -427,6 +458,10 @@ const StDayDateSpan = styled.span`
   margin-right: 12px;
 
   height: 32px;
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 26px;
+  }
 `;
 
 const StDayMonthSpan = styled.span`
@@ -437,12 +472,19 @@ const StDayMonthSpan = styled.span`
   color: #979797;
 
   height: 32px;
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 26px;
+  }
 `;
 
 const StCommonBorder = styled.div`
   height: 1px;
   background: gray;
-  margin: ${(props) => props.margin};
+  margin: 0 25px;
+  @media screen and (max-width: 500px) {
+    margin: 0 15px;
+  }
 `;
 
 const StChallengeToDoBox = styled.div`
@@ -474,7 +516,7 @@ const StSetToDoBtn = styled.button`
   border-radius: 6px;
   outline: none;
 
-  width: 450px;
+  width: 90%;
   height: 102px;
 
   margin: 5px 20px;
@@ -483,6 +525,11 @@ const StSetToDoBtn = styled.button`
   transition: ease 0.1s;
   &:hover {
     transform: scale(1.02);
+  }
+  @media screen and (max-width: 500px) {
+    width: 90%;
+    height: 80px;
+    font-size: 18px;
   }
 `;
 
@@ -507,4 +554,9 @@ const StNotifyNoSettingBox = styled.div`
   margin: 5px 20px;
 
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    width: 90%;
+    height: 80px;
+    font-size: 18px;
+  }
 `;
