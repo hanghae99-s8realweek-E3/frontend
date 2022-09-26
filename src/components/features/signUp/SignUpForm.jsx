@@ -109,8 +109,10 @@ const SignUpForm = () => {
       signupData.password !== signupData.confirmPassword
     ) {
       return alert("비밀번호2 형식을 확인해주세요");
-    } else if (signupData.nickname.length === 0) {
-      return alert("닉네임 형식을 확인해주세요 ");
+    } else if (signupData.nickname.length === 0 ||
+      signupData.nickname.length > 15
+      ) {
+      return alert("닉네임 형식(14글자 미만)을 확인해주세요 ");
     }
     //axios
     const postSignUpFetch = async () => {
@@ -231,16 +233,25 @@ const SignUpForm = () => {
 
           <StItem>
             <label>닉네임</label>
-            <StInputWrap marginBottom="100px">
+            <StInputWrap marginBottom="80px" >
               <StInput
                 onChange={onChangeSignupData}
                 type="nickname"
                 name="nickname"
                 value={signupData.nickname}
                 placeholder="닉네임 입력"
-                maxLength="15"
+                maxLength="12"
               />
             </StInputWrap>
+            <StErrorTextMessage>
+              {checkState.confirm === "none"
+                ? "　"
+                : signupData.nickname.length === 0
+                ? ""
+                : signupData.nickname.length < 13
+                ? "　"
+                : "닉네임은 최대 12글자까지 입력 가능합니다"}
+            </StErrorTextMessage>
           </StItem>
 
           <StSignUpBtn>가입하기</StSignUpBtn>
