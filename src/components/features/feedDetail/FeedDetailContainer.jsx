@@ -172,12 +172,14 @@ function FeedDetailContainer() {
                   }
                 />
               </StProfileBox>
-              <StNickname
-                id={detailState.todoInfo.userId}
-                onClick={onClickGoToOtherspage}>
-                {detailState.todoInfo.nickname}
-              </StNickname>
-              <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+              <StNickMBTIWarp>
+                <StNickname
+                  id={detailState.todoInfo.userId}
+                  onClick={onClickGoToOtherspage}>
+                  {detailState.todoInfo.nickname}
+                </StNickname>
+                <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+              </StNickMBTIWarp>
               {myData.userId === detailState.todoInfo.userId ? (
                 <></>
               ) : detailState.isFollowed === false ? (
@@ -292,11 +294,15 @@ const StUserIdBox = styled.div`
   /* background-color:yellow; */
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 450px;
+  margin: auto;
   /* margin: 0px auto 10px 20px; */
-  margin-left: 21px;
+  /* margin-left: 21px; */
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 const StProfilWrap = styled.div`
@@ -339,7 +345,7 @@ const StProfileBox = styled.div`
 const StProfileImg = styled.img`
   /* background-color: gray; */
   /* border-radius: 15px; */
-  cursor: pointer;
+  /* cursor: pointer; */
   /* width:30px;
   height:30px;
   margin:10px; */
@@ -357,24 +363,43 @@ const StProfileImg = styled.img`
     border-radius: 50%;
   }
 `;
+
+const StNickMBTIWarp = styled.div`
+  display:flex;
+  flex-direction: column;
+`
+
 const StNickname = styled.div`
   /* background-color:red; */
   text-align: start;
   margin-right: 18px;
   font-weight: 500;
   font-size: 22px;
+  cursor:pointer;
   /* margin-top:5px; */
   /* border:1px solid; */
   transition: ease 0.1s;
   &:hover {
     color: #5e5c5c;
   }
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-right:10px;
+  }
 `;
 
 const StMBTI = styled.div`
+/* background-color:red; */
   font-weight: 500;
   font-size: 18px;
   color: #5e5c5c;
+  margin-left: 3px;
+  text-align: start;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 12px;
+    margin-left: 1px;
+  }
 `;
 const StFollowBtn = styled.button`
   background: none;
@@ -390,13 +415,19 @@ const StFollowBtn = styled.button`
     color: #ffafa1;
   }
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 `;
 
 const StDetailCard = styled.div`
   /* background-color: red; */
+  margin:auto;
+  margin-top:15px;
   @media only screen and (max-width: 500px) {
-    width: 360px;
-    margin-left: -7px;
+    width: 345px;
+    margin-left: 5px;
+    margin-top:20px;
     text-align: center;
     align-items: center;
   }
