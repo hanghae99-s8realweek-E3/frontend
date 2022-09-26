@@ -131,7 +131,12 @@ export const getSelectMBTITodoFetch = createAsyncThunk(
   "get/getSelectMBTITodoFetch",
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.get("/todolists/mbti");
+      let response;
+      if (payload === true) {
+        response = await instance.get("/todolists/mbti");
+      } else if (payload === false) {
+        response = await preInstance.get("/todolists/mbti");
+      }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.data);
