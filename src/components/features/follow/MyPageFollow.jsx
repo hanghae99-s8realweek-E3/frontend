@@ -290,6 +290,8 @@ const StOutline = styled.div`
     justify-content: unset;
   }
   justify-content: flex-start;
+  -webkit-tap-highlight-color: transparent;
+
 `;
 
 const StContainer = styled.div`
@@ -302,6 +304,7 @@ const StContainer = styled.div`
   row-gap: 20px;
   margin-bottom: 100px;
   /* overflow:scroll; */
+  -webkit-tap-highlight-color: transparent;
 `;
 const StWrapBtn = styled.div`
   /* background-color: black; */
