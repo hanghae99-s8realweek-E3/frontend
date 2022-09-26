@@ -178,20 +178,12 @@ const StImageBox = styled.div`
 `;
 
 const StProfileImg = styled.img`
-  /* border-radius: 9999px; */
   height: 80px;
   width: auto;
-  /* @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 57.6px;
-    height: 57.6px;
-    margin:0px;
-  } */
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
     height: 57.6px;
-    /* margin: 0 0 0 25.2px; */
   }
 `;
 const StNoImageWrap = styled.div`
@@ -200,7 +192,6 @@ const StNoImageWrap = styled.div`
   justify-content: center;
   @media screen and (max-width: 500px) {
     align-items: center;
-    /* width: 100%; */
     margin: 0 0 0 16px;
   }
 `;
@@ -273,8 +264,8 @@ const StFollowNumber = styled.div`
   font-size: 20px;
   line-height: 32px;
   text-align: center;
-  color: #000000; 
-   @media screen and (max-width: 500px) {
+  color: #000000;
+  @media screen and (max-width: 500px) {
     font-size: 16px;
   }
 `;
@@ -286,7 +277,6 @@ const StFollowWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
-  
 `;
 const StFollowingWrap = styled.div`
   display: flex;
@@ -339,6 +329,7 @@ const StFollowBtn = styled.button`
   margin: 1.5px 0 22px 127px;
   border: 0px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 95px;
@@ -357,6 +348,7 @@ const StInfo = styled.div`
   border: none;
   margin: 1.5px 0 22px 125px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 95px;
@@ -365,31 +357,25 @@ const StInfo = styled.div`
 
 const StCloseButton = styled.button`
   background: none;
-
   display: block;
-
   border: none;
   border-radius: none;
   margin: 0;
   margin-left: auto;
   padding: 0;
-
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StContent = styled.div`
   color: #ffffff;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   text-align: left;
-
   bottom: 0;
   height: 90%;
   box-sizing: border-box;
-
   & > h2 {
     font-size: 32px;
     line-height: 34px;
@@ -397,7 +383,6 @@ const StContent = styled.div`
     color: #313131;
     margin: 17px auto;
   }
-
   @media screen and (max-width: 500px) {
     & > h2 {
       font-size: 24px;
@@ -405,16 +390,13 @@ const StContent = styled.div`
     }
   }
 `;
-
 const StText = styled.p`
   text-align: center;
   font-size: 16px;
   font-weight: 500;
   color: #919191;
-
   margin: 0;
   margin-bottom: 42px;
-
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -423,14 +405,11 @@ const StText = styled.p`
 
 const StModalContainer = styled.div`
   background: #ffffff;
-
   border-radius: 6px;
   padding: 25px;
   margin: 10vh auto;
-
   width: 90%;
   height: 620px;
-
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
