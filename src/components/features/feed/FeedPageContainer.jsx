@@ -408,6 +408,7 @@ const StChallengeImg = styled.img`
   justify-content: left;
   margin: 8px 8px 8px 25px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     margin: 8px 8px 8px 15px;
     width: 15px;
@@ -432,6 +433,7 @@ const StChallengeWord = styled.div`
 `;
 const StToggleImgWrap = styled.div`
   display: flex;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
@@ -447,6 +449,7 @@ const StToggle = styled.div`
   line-height: 32px;
   color: #000000;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100.09px;
@@ -551,6 +554,7 @@ const StSort = styled.div`
 `;
 const StDate = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StDateLine = styled.div`
   display: flex;
@@ -563,6 +567,7 @@ const StDateLine = styled.div`
 `;
 const StComment = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StCommentLine = styled.div`
   background: #c7c7c7;
@@ -574,6 +579,7 @@ const StCommentLine = styled.div`
 `;
 const StChallenge = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StChallengeLine = styled.div`
   width: 450px;
