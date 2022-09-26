@@ -129,6 +129,17 @@ function FeedPageContainer() {
       setLoading(false);
   }, [mbti]);
 
+
+  // useEffect(() => {
+  //   if (Object.keys(followState).length !== 0) {
+  //     if (followTab === true) {
+  //       setSearchList(followState.follower);
+  //     } else if (followTab === false) {
+  //       setSearchList(followState.following);
+  //     }
+  //   }
+  // }, [followTab, followState]);
+
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
   // 도전완료 클릭시 로그인 유무에따라서 1차적으로 거르고 아니면  기본/체크 이미지 변화
@@ -141,9 +152,7 @@ function FeedPageContainer() {
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
   const toggleSortPopUp = () => {
-    setLoading(true);
     setSelectSort(!selectSort);
-    setLoading(false);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
@@ -265,7 +274,7 @@ function FeedPageContainer() {
         )}
 
         <StTopWrap>
-          <StSearchBarBox>
+          {/* <StSearchBarBox>
             <form onSubmit={searchData}>
               <StInput
                 placeholder="검색"
@@ -280,7 +289,7 @@ function FeedPageContainer() {
                 />
               </StSearchBtn>
             </form>
-          </StSearchBarBox>
+          </StSearchBarBox> */}
 
           <StWrap>
             <StChallengeWrap>
@@ -382,7 +391,7 @@ const StTopWrap = styled.div`
 const StWrap = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
+  /* margin-top: 30px; 검색 넣을때 */
 `;
 const StChallengeWrap = styled.div`
   display: flex;
@@ -445,8 +454,8 @@ const StToggleImg = styled.img`
 `;
 const StTodayMyCardWrap = styled.div`
   flex-direction: column;
-  margin-top: 200px;
-  /* margin-top: 110px; */
+  /* margin-top: 200px;  검색 넣을때*/ 
+  margin-top: 110px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
