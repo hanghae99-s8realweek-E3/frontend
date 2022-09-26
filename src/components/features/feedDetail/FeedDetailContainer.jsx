@@ -30,7 +30,6 @@ function FeedDetailContainer() {
   }, []);
 
   const detailState = useSelector((state) => state.detail.data);
-  console.log(detailState);
 
   useEffect(() => {
     dispatch(getFeedDetailFetch({ todoId: params.todoId }));
@@ -47,7 +46,6 @@ function FeedDetailContainer() {
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
     navigate(`/otherspage/${e.target.id}`);
   };
 
@@ -129,7 +127,6 @@ function FeedDetailContainer() {
   };
 
   const myData = decodeMyTokenData();
-  console.log(myData);
 
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -285,7 +282,7 @@ function FeedDetailContainer() {
 export default FeedDetailContainer;
 
 const StCommentBox = styled.div`
-/* background-color:red; */
+  /* background-color:red; */
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -349,7 +346,7 @@ const StProfileBox = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-top:20px;
+    margin-top: 20px;
   }
 `;
 
@@ -376,9 +373,9 @@ const StProfileImg = styled.img`
 `;
 
 const StNickMBTIWarp = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
-`
+`;
 
 const StNickname = styled.div`
   /* background-color:red; */
@@ -386,7 +383,7 @@ const StNickname = styled.div`
   margin-right: 18px;
   font-weight: 500;
   font-size: 22px;
-  cursor:pointer;
+  cursor: pointer;
   /* margin-top:5px; */
   /* border:1px solid; */
   transition: ease 0.1s;
@@ -396,12 +393,12 @@ const StNickname = styled.div`
   -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
     font-size: 18px;
-    margin-right:10px;
+    margin-right: 10px;
   }
 `;
 
 const StMBTI = styled.div`
-/* background-color:red; */
+  /* background-color:red; */
   font-weight: 500;
   font-size: 18px;
   color: #5e5c5c;
@@ -435,12 +432,12 @@ const StFollowBtn = styled.button`
 
 const StDetailCard = styled.div`
   /* background-color: red; */
-  margin:auto;
-  margin-top:15px;
+  margin: auto;
+  margin-top: 15px;
   @media only screen and (max-width: 500px) {
     width: 345px;
     margin-left: 5px;
-    margin-top:20px;
+    margin-top: 20px;
     text-align: center;
     align-items: center;
   }

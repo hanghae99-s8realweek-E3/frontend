@@ -4,11 +4,21 @@ import styled from "styled-components";
 import LoadingContainer from "../../../utils/loadingState";
 import instance from "../../../app/modules/instance";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
+import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOthersTodoFetch({ userId: myData.userId }));
+  }, []);
+
+  const userState = useSelector((state) => state.mytodos.data);
 
   // 변경할 프로필의 내용들을 설정하는 상태
   const [changeProfile, setChangeProfile] = useState({
@@ -84,6 +94,7 @@ function ProfileModifyForm() {
   // input을 통해 이미지 데이터 불러오기
   const changeImageFiles = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const requestImageData = async () => {
       let formData = new FormData();
       formData.append("profile", event.target.files[0]);
@@ -129,52 +140,61 @@ function ProfileModifyForm() {
       ) : (
         <></>
       )}
-      <StContainer>
-        <StMyProfileSec>
-          <StMyImageBox>
-            <StMyImagePreview
-              src={
-                myData.profile === "none"
-                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                  : `${myData.profile}`
-              }
-              htmlFor="inputImage"
-              style={{ pointerEvents: "none" }}
+      {Object.keys(userState).length === 0 ? (
+        <LoadingContainer />
+      ) : (
+        <StContainer>
+          <StMyProfileSec>
+            <StMyImageBox>
+              <StMyImagePreview
+                src={
+                  userState.userInfo.profile === "none"
+                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                    : `${userState.userInfo.profile}`
+                }
+                htmlFor="inputImage"
+                style={{ pointerEvents: "none" }}
+              />
+              <StMyImageInput
+                id="inputImage"
+                type="file"
+                name="profile"
+                accept="image/*"
+                encType="multipart/form-data"
+                onChange={changeImageFiles}
+              />
+            </StMyImageBox>
+            <StChangeImageBtn htmlFor="inputImage">
+              이미지 변경
+            </StChangeImageBtn>
+          </StMyProfileSec>
+          <StCommonBorder />
+          <StInputSettingBox>
+            <StCommonLabel>나의 정보</StCommonLabel>
+            <StCommonInput
+              type="text"
+              value={userState.userInfo.nickname}
+              onChange={changeInputData}
             />
-            <StMyImageInput
-              id="inputImage"
-              type="file"
-              name="profile"
-              accept="image/*"
-              encType="multipart/form-data"
-              onChange={changeImageFiles}
-            />
-          </StMyImageBox>
-          <StChangeImageBtn htmlFor="inputImage">이미지 변경</StChangeImageBtn>
-        </StMyProfileSec>
-        <StCommonBorder />
-        <StInputSettingBox>
-          <StCommonLabel>나의 정보</StCommonLabel>
-          <StCommonInput
-            type="text"
-            value={changeProfile.nickname}
-            onChange={changeInputData}
-          />
-        </StInputSettingBox>
-        <StCommonBorder />
-        <StInputSettingBox>
-          <StCommonLabel>나의 MBTI</StCommonLabel>
-          <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
-            {changeProfile.mbti === "" || changeProfile.mbti === null
-              ? "선택하기"
-              : changeProfile.mbti}
-          </StSelectMBTIBtn>
-        </StInputSettingBox>
-        <StCommonBorder />
-        <StCommonButton margin="54px auto" onClick={submitModifyMyProfileData}>
-          확인
-        </StCommonButton>
-      </StContainer>
+          </StInputSettingBox>
+          <StCommonBorder />
+          <StInputSettingBox>
+            <StCommonLabel>나의 MBTI</StCommonLabel>
+            <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
+              {userState.userInfo.mbti === "" ||
+              userState.userInfo.mbti === null
+                ? "선택하기"
+                : userState.userInfo.mbti}
+            </StSelectMBTIBtn>
+          </StInputSettingBox>
+          <StCommonBorder />
+          <StCommonButton
+            margin="54px auto"
+            onClick={submitModifyMyProfileData}>
+            확인
+          </StCommonButton>
+        </StContainer>
+      )}
     </>
   );
 }

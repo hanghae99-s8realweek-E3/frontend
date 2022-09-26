@@ -30,7 +30,6 @@ function FeedPageContainer() {
   const [loading, setLoading] = useState(false);
   // mbti선택하기를 했을때 mbti를 불러옴
   const { mbti } = useParams();
-  console.log(searchList.length);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -68,7 +67,6 @@ function FeedPageContainer() {
   //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
   // }, []);
 
-
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
     // setLoading(true);
@@ -77,26 +75,26 @@ function FeedPageContainer() {
       setInterval(() => {
         setLoading(false);
       }, 100);
-      setSortState("최신순")
+      setSortState("최신순");
     } else if (tokenChecker() === false && mbti !== undefined) {
       dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
       setInterval(() => {
         setLoading(false);
       }, 100);
-      setSortState("최신순")
+      setSortState("최신순");
     } else if (tokenChecker() === true && mbti === undefined) {
       //김대연 지적 사항 1
       dispatch(getTodoListsFetch(true));
       setInterval(() => {
         setLoading(false);
       }, 100);
-      setSortState("최신순")
+      setSortState("최신순");
     } else if (tokenChecker() === true && mbti !== undefined) {
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
       setInterval(() => {
         setLoading(false);
       }, 100);
-      setSortState("최신순")
+      setSortState("최신순");
     }
     // else if (mbti === undefined) {
     //   dispatch(getTodoListsFetch(false));
@@ -117,7 +115,7 @@ function FeedPageContainer() {
     setLoading(true);
     if (mbti === undefined) {
       dispatch(getTodoListsFetch(false));
-      setSortState("최신순")
+      setSortState("최신순");
       setInterval(() => {
         setLoading(false);
       }, 100);
@@ -125,18 +123,17 @@ function FeedPageContainer() {
       // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
     } else if (mbti === undefined) {
       dispatch(getTodoListsFetch(true));
-      setSortState("최신순")
+      setSortState("최신순");
       setInterval(() => {
         setLoading(false);
       }, 100);
     } else if (mbti !== undefined)
       dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-      setSortState("최신순")
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
+    setSortState("최신순");
+    setInterval(() => {
+      setLoading(false);
+    }, 100);
   }, [mbti]);
-
 
   // useEffect(() => {
   //   if (Object.keys(followState).length !== 0) {
@@ -185,7 +182,6 @@ function FeedPageContainer() {
     setLoading(false);
     setSortState("최신순");
     setSelectSort(!selectSort);
-
   };
   //댓글순 정렬
   const sortComment = (e) => {
@@ -250,8 +246,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortDate}
-                >
+                  onClick={sortDate}>
                   최신순
                 </StDate>
                 <StDateLine />
@@ -259,8 +254,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortComment}
-                >
+                  onClick={sortComment}>
                   댓글순
                 </StComment>
                 <StCommentLine />
@@ -268,8 +262,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortChallenge}
-                >
+                  onClick={sortChallenge}>
                   도전순
                 </StChallenge>
                 <StChallengeLine />
@@ -465,7 +458,7 @@ const StToggleImg = styled.img`
 `;
 const StTodayMyCardWrap = styled.div`
   flex-direction: column;
-  /* margin-top: 200px;  검색 넣을때*/ 
+  /* margin-top: 200px;  검색 넣을때*/
   margin-top: 110px;
 `;
 const StSelectMbti = styled.button`

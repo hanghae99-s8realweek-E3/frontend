@@ -64,7 +64,6 @@ function WriteTodoForm() {
     const TodoDateFetchCheck = async () => {
       try {
         const response = await instance.post("/mytodos", todo);
-        console.log(response);
         if (response.data.message === "success") {
           setLoading(false);
           navigate("/setuptodo");

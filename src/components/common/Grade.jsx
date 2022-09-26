@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StShadowBackgroundDiv } from "../interface/styledCommon";
 import { decodeMyTokenData } from "../../utils/token";
 
-function Grade({profileData}) {
+function Grade({ profileData }) {
   const [modal, setModal] = useState();
   const [grade, setGrage] = useState();
   const myData = decodeMyTokenData();
-  console.log(myData)
+
   const changeModalState = () => {
     setModal(!modal);
   };
@@ -97,8 +97,9 @@ function Grade({profileData}) {
       )}
       <StContainer>
         <StContainerIcon
-          src={process.env.PUBLIC_URL + `/images/ContainerIcon.png`}
-        ></StContainerIcon>
+          src={
+            process.env.PUBLIC_URL + `/images/ContainerIcon.png`
+          }></StContainerIcon>
         <StName>미콩</StName>
         <StGradeBtn onClick={changeModalState}>성장 등급보기</StGradeBtn>
       </StContainer>
@@ -251,7 +252,7 @@ const StModalContainer = styled.div`
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin:18px
+    margin: 18px;
   }
 `;
 const StCloseButton = styled.button`
