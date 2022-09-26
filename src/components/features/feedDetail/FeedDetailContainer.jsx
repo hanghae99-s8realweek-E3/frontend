@@ -285,10 +285,12 @@ function FeedDetailContainer() {
 export default FeedDetailContainer;
 
 const StCommentBox = styled.div`
+/* background-color:red; */
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 30px auto 30px 20px;
+  margin: 15px auto 15px 20px;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StUserIdBox = styled.div`
   /* background-color:yellow; */
@@ -306,6 +308,8 @@ const StUserIdBox = styled.div`
 `;
 
 const StProfilWrap = styled.div`
+  /* background-color:yellow; */
+
   background-color: #edecec;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -318,9 +322,15 @@ const StImgNickname = styled.div`
   align-items: center;
   width: 100%;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+    height: 50px;
+  }
 `;
 
 const StProfileBox = styled.div`
+  /* background-color:yellow; */
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -339,6 +349,7 @@ const StProfileBox = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-top:20px;
   }
 `;
 
@@ -382,8 +393,9 @@ const StNickname = styled.div`
   &:hover {
     color: #5e5c5c;
   }
+  -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
-    font-size: 14px;
+    font-size: 18px;
     margin-right:10px;
   }
 `;
@@ -417,6 +429,7 @@ const StFollowBtn = styled.button`
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     font-size: 14px;
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 
@@ -481,6 +494,7 @@ const StWriteComment = styled.form`
   bottom: 0;
   z-index: 7;
   padding: 4px 0;
+  -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
     width: 360px;
   }
@@ -552,7 +566,7 @@ const StBtnGoToChallenge = styled.button`
   text-align: center;
   cursor: pointer;
   margin: 10px;
-
+  -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
     width: 90%;
   }
