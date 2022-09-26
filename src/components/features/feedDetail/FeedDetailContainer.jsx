@@ -10,6 +10,7 @@ import DetailCard from "./DetailCard";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StShadowBackgroundDiv } from "../../interface/styledCommon";
+import LoadingContainer from "../../../utils/loadingState";
 
 function FeedDetailContainer() {
   const inputRef = useRef();
@@ -32,8 +33,15 @@ function FeedDetailContainer() {
   const detailState = useSelector((state) => state.detail.data);
 
   useEffect(() => {
-    dispatch(getFeedDetailFetch({ todoId: params.todoId }));
-    setLoading(true);
+    setLoading(true)
+    async function feedLoading() {
+      await dispatch(getFeedDetailFetch({ todoId: params.todoId }));
+      setLoading(false)
+    }
+    feedLoading()
+    // setTimeout(()=> {
+    //   setLoading(false)
+    // },500)
   }, []);
 
   useEffect(() => {
@@ -135,6 +143,9 @@ function FeedDetailContainer() {
   }
 
   return (
+    <>
+      {loading === true ? <LoadingContainer /> : <></>}
+    
     <div style={{ marginTop: "60px", marginBottom: "220px" }}>
       {menuModal === true ? (
         <StShadowBackgroundDiv>
@@ -276,6 +287,7 @@ function FeedDetailContainer() {
         </div>
       )}
     </div>
+    </>
   );
 }
 
