@@ -23,7 +23,6 @@ import { getCookie } from "../utils/cookie";
 import TestPage from "../pages/testPage";
 
 const FirstPage = ({ children }) => {
-  console.log(getCookie("firstEnter"));
   if (getCookie("firstEnter") === undefined) {
     return <Navigate to="/welcomepage" />;
   }

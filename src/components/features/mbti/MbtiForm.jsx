@@ -25,7 +25,7 @@ const MbtiForm = () => {
 
   useEffect(() => {
     if (myToken !== undefined && myToken !== null) {
-      if (myToken.mbti !== null) {
+      if (myToken.mbti !== undefined) {
         navigate("/");
       }
     }
