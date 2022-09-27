@@ -19,7 +19,7 @@ function WithdrawContainer() {
           data: { password: passwordRef.current.value },
         });
         if (response.data.message === "success") {
-          window.localStorage.clear();
+          window.localStorage.removeItem("token");
           navigate("/");
         }
       } catch (error) {
