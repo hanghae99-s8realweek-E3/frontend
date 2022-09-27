@@ -70,7 +70,7 @@ const MbtiForm = () => {
           navigate("/");
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("MBTI 를 선택해주세요");
       }
     };
     postMbtifetch();

@@ -297,6 +297,7 @@ function FeedDetailContainer() {
                 name="comment"
                 placeholder="댓글 내용"
                 ref={inputRef} //!ref를 참고하겠다.
+                maxLength="159"
               />
               <StCommentBtn type="submit">작성</StCommentBtn>
             </StWriteComment>
