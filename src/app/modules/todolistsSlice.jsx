@@ -5,9 +5,9 @@ import axios from "axios";
 
 const initialState = {
   message: "",
-  errorMessage:"",
+  errorMessage: "",
   data: [],
-  mbtiData: {}
+  mbtiData: {},
 };
 
 // 전체 Feed조회 - 최신순(기본)
@@ -15,21 +15,14 @@ export const getTodoListsFetch = createAsyncThunk(
   "todolists/gettodolistsFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("피드 최신순 시작");
       let response;
-      if (payload === false){
-        console.log(response)
-        console.log(payload + "왼쪽페이로드 값")
+      if (payload === false) {
         response = await preInstance.get("/todolists");
-      console.log(response)
-    }
-      else if (payload=== true) 
-      {
+      } else if (payload === true) {
         response = await instance.get("/todolists");
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("피드 최신순 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -40,20 +33,14 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
   "todolists/getTodoListsChallengeFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("피드 도전순 시작");
-      console.log(payload);
       let response;
-      if (payload === false){
+      if (payload === false) {
         response = await preInstance.get("/todolists?filter=challengedCounts");
-      console.log(response)}
-      else if (payload === true) {
+      } else if (payload === true) {
         response = await instance.get("/todolists?filter=challengedCounts");
       }
-      console.log(response);
-      console.log("피드 도전순 통신 성공 위에 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("피드 도전 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -64,20 +51,14 @@ export const getTodoListsCommentFetch = createAsyncThunk(
   "todolists/getTodoListsCommentFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("피드 댓글순 시작");
-      console.log(payload);
       let response;
-      if (payload === false){
+      if (payload === false) {
         response = await preInstance.get("/todolists?filter=commentCounts");
-      console.log(response)}
-      else if (payload === true) {
+      } else if (payload === true) {
         response = await instance.get("/todolists?filter=commentCounts");
       }
-      console.log(response);
-      console.log("피드 댓글순 통신 성공 위에 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("피드 댓글 통신에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -89,18 +70,13 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       let response;
-      if(payload.login === false){
+      if (payload.login === false) {
         response = await preInstance.get(`/todolists?mbti=${payload.mbti}`);
-        console.log("특정mbti의 통신 시작");
-      }
-      else if(payload.login === true){
+      } else if (payload.login === true) {
         response = await instance.get(`/todolists?mbti=${payload.mbti}`);
-        console.log("6")
       }
-      console.log(response.data)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("특정mbti의 통신 에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -111,19 +87,18 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsChallengeFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
       let response;
-      if(payload.login === false){
-        response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
+      if (payload.login === false) {
+        response = await preInstance.get(
+          `/todolists?mbti=${payload.mbti}&filter=challengedCounts`
+        );
+      } else if (payload.login === true) {
+        response = await instance.get(
+          `/todolists?mbti=${payload.mbti}&filter=challengedCounts`
+        );
       }
-      else if(payload.login === true){
-        response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=challengedCounts`);
-      }
-      console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("특정mbti의 통신 에러");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -134,20 +109,18 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
   "todolists/getMbtiTodoListsCommentFetch",
   async (payload, thunkAPI) => {
     try {
-      console.log("서버와의 통신 시작");
-      console.log(payload);
       let response;
-      if(payload.login === false){
-        response = await preInstance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
+      if (payload.login === false) {
+        response = await preInstance.get(
+          `/todolists?mbti=${payload.mbti}&filter=commentCounts`
+        );
+      } else if (payload.login === true) {
+        response = await instance.get(
+          `/todolists?mbti=${payload.mbti}&filter=commentCounts`
+        );
       }
-      else if(payload.login === true){
-        response = await instance.get(`/todolists?mbti=${payload.mbti}&filter=commentCounts`);
-      }
-      console.log(response);
-      console.log("서버 통신 성공 값 반환해줍니다");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("서버와의 통신 에러6");
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -156,17 +129,20 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
 // 피드에서 내가 원하는 MBTI 피드만을 보고 싶을 때 설정하도록 해주는 Creator
 export const getSelectMBTITodoFetch = createAsyncThunk(
   "get/getSelectMBTITodoFetch",
-  async(payload, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const response = await instance.get("/todolists/mbti")
-      return thunkAPI.fulfillWithValue(response.data)
+      let response;
+      if (payload === true) {
+        response = await instance.get("/todolists/mbti");
+      } else if (payload === false) {
+        response = await preInstance.get("/todolists/mbti");
+      }
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error.data)
-      return thunkAPI.rejectWithValue(error.data)
+      return thunkAPI.rejectWithValue(error.data);
     }
   }
-)
-
+);
 
 const todolistsSlice = createSlice({
   name: "todolists",
@@ -176,18 +152,14 @@ const todolistsSlice = createSlice({
   extraReducers: (builder) => {
     //전체피드조회최신순기본
     builder.addCase(getTodoListsFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(getTodoListsFetch.fulfilled, (state, action) => {
-      console.log(action);
       const newState = { ...state };
       newState.data = action.payload.data;
-      console.log(newState);
       return newState;
     });
     builder.addCase(getTodoListsFetch.rejected, (state, action) => {
-      console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
       return state;
@@ -195,18 +167,14 @@ const todolistsSlice = createSlice({
 
     //전체피드조회 도전순
     builder.addCase(getTodoListsChallengeFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(getTodoListsChallengeFetch.fulfilled, (state, action) => {
-      console.log(action);
       const newState = { ...state };
       newState.data = action.payload.data;
-      console.log(newState);
       return newState;
     });
     builder.addCase(getTodoListsChallengeFetch.rejected, (state, action) => {
-      console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
       return state;
@@ -214,18 +182,14 @@ const todolistsSlice = createSlice({
 
     //전체피드조회 댓글순
     builder.addCase(getTodoListsCommentFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(getTodoListsCommentFetch.fulfilled, (state, action) => {
-      console.log(action);
       const newState = { ...state };
       newState.data = action.payload.data;
-      console.log(newState);
       return newState;
     });
     builder.addCase(getTodoListsCommentFetch.rejected, (state, action) => {
-      console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
       return state;
@@ -233,41 +197,33 @@ const todolistsSlice = createSlice({
 
     //피드 - 특정mbti의 최신순
     builder.addCase(getMbtiTodoListsFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(getMbtiTodoListsFetch.fulfilled, (state, action) => {
-      console.log(action);
       const newState = { ...state };
       newState.data = action.payload.data;
-      console.log(newState);
       return newState;
     });
     builder.addCase(getMbtiTodoListsFetch.rejected, (state, action) => {
-      console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
       return state;
     });
     //피드 - 특정mbti의 도전순
     builder.addCase(getMbtiTodoListsChallengeFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(
       getMbtiTodoListsChallengeFetch.fulfilled,
       (state, action) => {
-        console.log(action);
         const newState = { ...state };
         newState.data = action.payload.data;
-        console.log(newState);
         return newState;
       }
     );
     builder.addCase(
       getMbtiTodoListsChallengeFetch.rejected,
       (state, action) => {
-        console.log(action);
         // const newState = { ...state };
         // newState.error = action.payload.error;
         return state;
@@ -275,18 +231,14 @@ const todolistsSlice = createSlice({
     );
     //피드 - 특정mbti의 댓글순
     builder.addCase(getMbtiTodoListsCommentFetch.pending, (state, action) => {
-      console.log(action);
       return state;
     });
     builder.addCase(getMbtiTodoListsCommentFetch.fulfilled, (state, action) => {
-      console.log(action);
       const newState = { ...state };
       newState.data = action.payload.data;
-      console.log(newState);
       return newState;
     });
     builder.addCase(getMbtiTodoListsCommentFetch.rejected, (state, action) => {
-      console.log(action);
       // const newState = { ...state };
       // newState.error = action.payload.error;
       return state;

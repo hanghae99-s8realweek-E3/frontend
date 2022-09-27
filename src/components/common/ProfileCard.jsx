@@ -144,6 +144,53 @@ function ProfileCard({ profileData }) {
   );
 }
 
+// 프로필카드 변경
+// {/* <StTotalWrap>
+//         <StImageBox>
+//           <StProfileImg
+//             src={
+//               profileData.userInfo.profile !== "none"
+//                 ? profileData.userInfo.profile
+//                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+//             }
+//             alt="dy"
+//           />
+//         </StImageBox>
+//         <StNoImageWrap>
+//           <StNickName>{profileData.userInfo.nickname}</StNickName>
+//           <StMbtiFollowFollowingWrap>
+//             <StMbti>{profileData.userInfo.mbti}</StMbti>
+//             <StFollowWrap onClick={goFollow}>
+//               <StFollowWord>팔로워</StFollowWord>
+//               <StFollowNumber>
+//                 {window.location.pathname === "/mypage"
+//                   ? profileData.userInfo.follower
+//                   : profileData.userInfo.followerCount}
+//               </StFollowNumber>
+//             </StFollowWrap>
+//             <StFollowingWrap onClick={goFollowing}>
+//               <StFollowingWord>팔로잉</StFollowingWord>
+//               <StFollowingNumber>
+//                 {window.location.pathname === "/mypage"
+//                   ? profileData.userInfo.following
+//                   : profileData.userInfo.followingCount}
+//               </StFollowingNumber>
+//             </StFollowingWrap>
+//           </StMbtiFollowFollowingWrap>
+//         </StNoImageWrap>
+//       </StTotalWrap>
+
+//       {window.location.pathname === `/otherspage/${params.userId}` ? (
+//         <StFollowBtn onClick={changeFollowState}>
+
+//           {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우"}
+//         </StFollowBtn>
+//       ) : (
+//         <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+//       )}
+//     </>
+//   );
+// }
 export default ProfileCard;
 
 const StTotalWrap = styled.div`
@@ -178,20 +225,12 @@ const StImageBox = styled.div`
 `;
 
 const StProfileImg = styled.img`
-  /* border-radius: 9999px; */
   height: 80px;
   width: auto;
-  /* @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 57.6px;
-    height: 57.6px;
-    margin:0px;
-  } */
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
     height: 57.6px;
-    /* margin: 0 0 0 25.2px; */
   }
 `;
 const StNoImageWrap = styled.div`
@@ -200,7 +239,6 @@ const StNoImageWrap = styled.div`
   justify-content: center;
   @media screen and (max-width: 500px) {
     align-items: center;
-    /* width: 100%; */
     margin: 0 0 0 16px;
   }
 `;
@@ -273,8 +311,8 @@ const StFollowNumber = styled.div`
   font-size: 20px;
   line-height: 32px;
   text-align: center;
-  color: #000000; 
-   @media screen and (max-width: 500px) {
+  color: #000000;
+  @media screen and (max-width: 500px) {
     font-size: 16px;
   }
 `;
@@ -286,7 +324,6 @@ const StFollowWord = styled.div`
   line-height: 32px;
   text-align: center;
   color: #000000;
-  
 `;
 const StFollowingWrap = styled.div`
   display: flex;
@@ -339,6 +376,7 @@ const StFollowBtn = styled.button`
   margin: 1.5px 0 22px 127px;
   border: 0px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 95px;
@@ -357,6 +395,7 @@ const StInfo = styled.div`
   border: none;
   margin: 1.5px 0 22px 125px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 95px;
@@ -365,31 +404,25 @@ const StInfo = styled.div`
 
 const StCloseButton = styled.button`
   background: none;
-
   display: block;
-
   border: none;
   border-radius: none;
   margin: 0;
   margin-left: auto;
   padding: 0;
-
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StContent = styled.div`
   color: #ffffff;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   text-align: left;
-
   bottom: 0;
   height: 90%;
   box-sizing: border-box;
-
   & > h2 {
     font-size: 32px;
     line-height: 34px;
@@ -397,7 +430,6 @@ const StContent = styled.div`
     color: #313131;
     margin: 17px auto;
   }
-
   @media screen and (max-width: 500px) {
     & > h2 {
       font-size: 24px;
@@ -405,16 +437,13 @@ const StContent = styled.div`
     }
   }
 `;
-
 const StText = styled.p`
   text-align: center;
   font-size: 16px;
   font-weight: 500;
   color: #919191;
-
   margin: 0;
   margin-bottom: 42px;
-
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -423,14 +452,11 @@ const StText = styled.p`
 
 const StModalContainer = styled.div`
   background: #ffffff;
-
   border-radius: 6px;
   padding: 25px;
   margin: 10vh auto;
-
   width: 90%;
   height: 620px;
-
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
@@ -439,3 +465,277 @@ const StModalContainer = styled.div`
     margin: 7vh auto;
   }
 `;
+
+// 프로필 카드 변경
+// const StTotalWrap = styled.div`
+//   background-color: white;
+//   width: 100%;
+//   margin-top: 31.5px;
+//   display: flex;
+//   flex-direction: row;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 360px;
+//     margin: 0px;
+//     background-color: white;
+//     margin-top: 22.68px;
+//   }
+// `;
+// const StImageBox = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 80px;
+//   width: 80px;
+//   overflow: hidden;
+//   margin-left: 35px;
+//   border-radius: 50%;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 57.6px;
+//     height: 57.6px;
+//     margin: 0 0 0 25.2px;
+//   }
+// `;
+
+// const StProfileImg = styled.img`
+//   height: 80px;
+//   width: auto;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 57.6px;
+//     height: 57.6px;
+//   }
+// `;
+// const StNoImageWrap = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     margin: 0 0 0 16px;
+//   }
+// `;
+// const StNickName = styled.div`
+//   flex-direction: row;
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 24px;
+//   line-height: 32px;
+//   color: #000000;
+//   margin-left: 16px;
+//   text-align: left;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 100%;
+//     margin: 0px;
+//     font-size: 18px;
+//   }
+// `;
+// const StMbtiFollowFollowingWrap = styled.div`
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 230px;
+//     font-size: 5px;
+//     margin: 0px;
+//   }
+//   display: flex;
+// `;
+// const StMbti = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 42px;
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 18px;
+//   line-height: 32px;
+//   text-align: left;
+//   color: #979797;
+//   margin-left: 19px;
+//   @media screen and (max-width: 500px) {
+//     align-items: flex-start;
+//     text-align: left;
+//     width: 100%;
+//     margin-left: 2px;
+//     font-size: 16px;
+//   }
+// `;
+// const StFollowWrap = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   margin-left: 100px;
+//   gap: 7px;
+//   cursor: pointer;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 100%;
+//     margin-left: 50px;
+//   }
+//   transition: ease 0.1s;
+//   &:hover div {
+//     color: #8e8e8e;
+//   }
+// `;
+// const StFollowNumber = styled.div`
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 20px;
+//   line-height: 32px;
+//   text-align: center;
+//   color: #000000;
+//   @media screen and (max-width: 500px) {
+//     font-size: 16px;
+//   }
+// `;
+// const StFollowWord = styled.div`
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   line-height: 32px;
+//   text-align: center;
+//   color: #000000;
+// `;
+// const StFollowingWrap = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   margin-left: 55px;
+//   gap: 7px;
+//   cursor: pointer;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     width: 100%;
+//     margin: 0px;
+//   }
+//   transition: ease 0.1s;
+//   &:hover div {
+//     color: #8e8e8e;
+//   }
+// `;
+// const StFollowingNumber = styled.div`
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 20px;
+//   line-height: 32px;
+//   text-align: center;
+//   color: #000000;
+//   @media screen and (max-width: 500px) {
+//     font-size: 16px;
+//   }
+// `;
+// const StFollowingWord = styled.div`
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   line-height: 32px;
+//   text-align: center;
+//   color: #000000;
+//   transition: ease 0.05s;
+// `;
+// const StFollowBtn = styled.button`
+//   display: flex;
+//   width: 60px;
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   text-align: center;
+//   color: #ff6d53;
+//   background-color: white;
+//   margin: 1.5px 0 22px 127px;
+//   border: 0px;
+//   cursor: pointer;
+//   -webkit-tap-highlight-color: transparent;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     margin-left: 95px;
+//   }
+// `;
+// const StInfo = styled.div`
+//   /* display: flex; */
+//   width: 84.66px;
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   text-align: center;
+//   color: #ff6d53;
+//   background: none;
+//   border: none;
+//   margin: 1.5px 0 22px 125px;
+//   cursor: pointer;
+//   -webkit-tap-highlight-color: transparent;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     margin-left: 95px;
+//   }
+// `;
+
+// const StCloseButton = styled.button`
+//   background: none;
+//   display: block;
+//   border: none;
+//   border-radius: none;
+//   margin: 0;
+//   margin-left: auto;
+//   padding: 0;
+//   cursor: pointer;
+//   -webkit-tap-highlight-color: transparent;
+// `;
+// const StContent = styled.div`
+//   color: #ffffff;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: center;
+//   text-align: left;
+//   bottom: 0;
+//   height: 90%;
+//   box-sizing: border-box;
+//   & > h2 {
+//     font-size: 32px;
+//     line-height: 34px;
+//     font-weight: 700;
+//     color: #313131;
+//     margin: 17px auto;
+//   }
+//   @media screen and (max-width: 500px) {
+//     & > h2 {
+//       font-size: 24px;
+//       line-height: 30px;
+//     }
+//   }
+// `;
+// const StText = styled.p`
+//   text-align: center;
+//   font-size: 16px;
+//   font-weight: 500;
+//   color: #919191;
+//   margin: 0;
+//   margin-bottom: 42px;
+//   @media screen and (max-width: 500px) {
+//     font-size: 14px;
+//     margin-bottom: 20px;
+//   }
+// `;
+
+// const StModalContainer = styled.div`
+//   background: #ffffff;
+//   border-radius: 6px;
+//   padding: 25px;
+//   margin: 10vh auto;
+//   width: 90%;
+//   height: 620px;
+//   box-sizing: border-box;
+//   @media screen and (max-width: 500px) {
+//     width: 324px;
+//     margin: 18px;
+//     height: 540px;
+//     margin: 7vh auto;
+//   }
+// `;

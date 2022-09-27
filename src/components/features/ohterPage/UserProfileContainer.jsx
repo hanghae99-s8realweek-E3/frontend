@@ -97,7 +97,6 @@ function UserProfileContainer() {
   const toggleSortPopUp = () => {
     setSelectSort(!selectSort);
   };
-  console.log(card);
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -112,10 +111,10 @@ function UserProfileContainer() {
             <StTodoTopLine></StTodoTopLine>
             <StTodoWrap>
               <StChallengeTodo id="도전" onClick={ChallengeState}>
-                도전한 TO DO
+                도전한 미믹
               </StChallengeTodo>
               <StSuggestionTodo id="제안" onClick={SuggestState}>
-                제안한 TO DO
+                제안한 미믹
               </StSuggestionTodo>
             </StTodoWrap>
             {/* <StLineWrap>
@@ -218,7 +217,6 @@ function UserProfileContainer() {
                       .map((elem, index) => (
                         <OthersCard data={elem} key={index} />
                       ))
-                      
                   ) : (
                     <></>
                   )
@@ -256,15 +254,14 @@ const StTopWrap = styled.div`
   flex-direction: column;
   margin-top: 60px;
   /* padding-bottom: 31.5px; */
-  background-color: white;
+  background-color: #ffffff;
 `;
 const StTodoTopLine = styled.div`
   display: flex;
-  height: 1px;
+  height: 2px;
   background: #bdc5cd;
   transform: matrix(1, 0, 0, -1, 0, 0);
   width: 500px;
-  margin-bottom: 10px;
   @media screen and (max-width: 500px) {
     width: 360px;
     /* margin-bottom: 20px; */
@@ -276,8 +273,11 @@ const StTodoWrap = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  background: white;
+  padding-top: 10px;
 `;
 const StChallengeTodo = styled.div`
+  background: none;
   justify-content: center;
   display: flex;
   width: 225px;
@@ -291,11 +291,15 @@ const StChallengeTodo = styled.div`
   line-height: 32px;
   color: #ff6d53;
   padding-bottom: 9px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     font-size: 17px;
+    background: none;
   }
 `;
 const StSuggestionTodo = styled.div`
+  background: none;
   justify-content: center;
   display: flex;
   width: 225px;
@@ -306,8 +310,10 @@ const StSuggestionTodo = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  /* color: #000000; */
   padding-bottom: 9px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     font-size: 17px;
   }
@@ -334,7 +340,7 @@ const StShadowBackgroundDiv = styled.div`
   z-index: 10;
   @media screen and (max-width: 500px) {
     width: 360px;
-    text-align: center; 
+    text-align: center;
   }
 `;
 
@@ -350,7 +356,7 @@ const StPopupBox = styled.div`
   bottom: 0;
   @media screen and (max-width: 500px) {
     width: 360px;
-    text-align: center; 
+    text-align: center;
   }
 `;
 const StSlideDiv = styled.div`
@@ -375,11 +381,12 @@ const StSort = styled.div`
   margin-left: 220px;
   align-items: center;
   @media screen and (max-width: 500px) {
-    margin:auto;
+    margin: auto;
   }
 `;
 const StDate = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StDateLine = styled.div`
   display: flex;
@@ -392,6 +399,7 @@ const StDateLine = styled.div`
 `;
 const StComment = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StCommentLine = styled.div`
   background: #c7c7c7;
@@ -403,6 +411,7 @@ const StCommentLine = styled.div`
 `;
 const StChallenge = styled.div`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const StChallengeLine = styled.div`
   width: 450px;
@@ -432,6 +441,7 @@ const StToggle = styled.div`
   margin: 0px 25px 6px auto;
   height: 32px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     margin-top: auto;
     margin-left: auto;

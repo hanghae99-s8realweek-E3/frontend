@@ -118,13 +118,11 @@ function MyPageFollow() {
               <>
                 {searchList.length !== 0
                   ? searchList?.map((x, index) => {
-                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -144,13 +142,11 @@ function MyPageFollow() {
                       );
                     })
                   : followState.follower?.map((x, index) => {
-                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -203,13 +199,11 @@ function MyPageFollow() {
               <>
                 {searchList.length !== 0
                   ? searchList?.map((x, index) => {
-                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -228,8 +222,7 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}
-                              >
+                                onClick={changeMyUnFollowState}>
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -238,13 +231,11 @@ function MyPageFollow() {
                       );
                     })
                   : followState.following?.map((x, index) => {
-                      console.log(x.profileImg);
                       return (
                         <div key={index}>
                           <StProfileContainer
                             id={x.userId}
-                            onClick={onClickGoToOthersPage}
-                          >
+                            onClick={onClickGoToOthersPage}>
                             <StProfileBox>
                               <StProfileImg
                                 src={
@@ -263,8 +254,7 @@ function MyPageFollow() {
                             ) : (
                               <StDeleteFollowBtn
                                 id={x.userId}
-                                onClick={changeMyUnFollowState}
-                              >
+                                onClick={changeMyUnFollowState}>
                                 삭제
                               </StDeleteFollowBtn>
                             )}
@@ -290,6 +280,7 @@ const StOutline = styled.div`
     justify-content: unset;
   }
   justify-content: flex-start;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const StContainer = styled.div`
@@ -302,6 +293,7 @@ const StContainer = styled.div`
   row-gap: 20px;
   margin-bottom: 100px;
   /* overflow:scroll; */
+  -webkit-tap-highlight-color: transparent;
 `;
 const StWrapBtn = styled.div`
   /* background-color: black; */
@@ -430,7 +422,7 @@ const StProfileContainer = styled.div`
 `;
 
 const StProfileBox = styled.div`
-/* background-color: red; */
+  /* background-color: red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -477,7 +469,7 @@ const StNickname = styled.h4`
   height: 32px;
   margin-bottom: 0px;
   @media only screen and (max-width: 500px) {
-    font-size:16px;
+    font-size: 16px;
   }
 `;
 
@@ -500,6 +492,6 @@ const StDeleteFollowBtn = styled.button`
   }
   cursor: pointer;
   @media only screen and (max-width: 500px) {
-    font-size:16px;
+    font-size: 16px;
   }
 `;

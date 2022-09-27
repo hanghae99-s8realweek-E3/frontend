@@ -202,10 +202,10 @@ const SignUpForm = () => {
                 : signupData.password.length === 0
                 ? "비밀번호를 입력해주세요"
                 : signupData.password.length < 8
-                ? "사용불가 : 최소 8자 이상 입력해주세요."
+                ? "최소 8자 이상 입력해주세요."
                 : signupData.password.match(passwordFormat)
                 ? ""
-                : "사용불가 : 영문,숫자,특수문자 중 2가지 이상을 조합해주세요."}
+                : "영문,숫자,특수문자 중 2가지 이상을 조합해주세요."}
             </StErrorTextMessage>
           </StItem>
 
@@ -233,7 +233,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>닉네임</label>
-            <StInputWrap marginBottom="80px" >
+            <StInputWrap marginBottom="70px" >
               <StInput
                 onChange={onChangeSignupData}
                 type="nickname"
@@ -340,6 +340,7 @@ const StInsideBtn = styled.button`
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     transform: translateX(0%) translateY(10%);
+    -webkit-tap-highlight-color: transparent;
   }
 
   transition: ease 0.05s;
@@ -371,6 +372,8 @@ const StSignUpBtn = styled.button`
   &:hover {
     background: #ffa595;
   }
+  -webkit-tap-highlight-color: transparent;
+  margin-top:40px;
 `;
 const StErrorTextMessage = styled.div`
   font-family: "IBM Plex Sans KR";

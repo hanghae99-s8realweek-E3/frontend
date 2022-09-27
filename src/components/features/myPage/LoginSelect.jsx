@@ -14,12 +14,7 @@ function LoginSelect() {
   const navigate = useNavigate();
   const location = useLocation;
   // const code = new URL(window.location.href).searchParams.get("code");
-  console.log(location);
   const code = new URL(window.location.href).searchParams.get("code");
-  console.log(window.location.href);
-  console.log(code);
-  console.log("하..");
-  console.log(document.URL);
 
   //카카오 계정 로그인
   const goKakaoLogin = () => {

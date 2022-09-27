@@ -10,8 +10,6 @@ function Header() {
     navigate(-1);
   }
 
-  console.log(window.location.pathname);
-
   function changeHeaderName() {
     switch (window.location.pathname) {
       case "/todolists":
@@ -69,14 +67,14 @@ function Header() {
       )}
       {window.location.pathname === "/" ? (
         <div>
-          <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.png`} />
+          <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
         </div>
       ) : (
         <HeaderText>
           {changeHeaderName() !== "none" ? (
             changeHeaderName()
           ) : (
-            <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.png`} />
+            <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
           )}
         </HeaderText>
       )}
