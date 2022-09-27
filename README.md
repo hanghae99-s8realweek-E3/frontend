@@ -1,7 +1,8 @@
 # 항해 99 8기 3조 실전 프로젝트 - MIMIC!
 
 ![ogimage.png](https://github.com/hanghae99-s8realweek-E3/frontend/blob/develop/public/images/ogimage.png?raw=true)
-
+  
+  
 ---
 
 ### 📖 프로젝트 소개
@@ -14,16 +15,18 @@
 
 ### 👥 프론트엔드 팀원 소개
 
-👨🏻‍💻 [리더] 신도윤: [https://github.com/DrunkenNeoguri](https://github.com/DrunkenNeoguri)
-👨🏻‍💻 [프론트엔드 팀장] 이호진: [https://github.com/hojncode](https://github.com/hojncode)
-👨🏻‍💻 [기술 고문] 김대연: [https://github.com/rlaedous](https://github.com/rlaedous)
-
+👨🏻‍💻 [리더] 신도윤: [https://github.com/DrunkenNeoguri](https://github.com/DrunkenNeoguri)  
+👨🏻‍💻 [프론트엔드 팀장] 이호진: [https://github.com/hojncode](https://github.com/hojncode)  
+👨🏻‍💻 [기술 고문] 김대연: [https://github.com/rlaedous](https://github.com/rlaedous)  
+  
+  
 ### **🔧 담당 작업**
 
 👷🏻‍♂️ 신도윤: 상세 정보, 메인 페이지 및 글 수정/삭제 기능 구현
 👷🏻‍♂️ 이호진: 메인 페이지 필터, 글 작성 페이지 구현
 👷🏼 김대연: 로그인 및 로그아웃 구현
-
+  
+  
 ### 💿 기술 스택
 
 - **React**
@@ -34,7 +37,8 @@
 - styled-components
 - swiper
 - react-calendar
-
+  
+  
 ### 📂 파일 구조
 
 ```
