@@ -1,6 +1,47 @@
 # 항해 99 8기 3조 실전 프로젝트 - MIMIC!
 
-## 파일구조
+![ogimage.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/082bc905-4fba-494b-b36e-b33d4131ccf0/ogimage.png)
+
+---
+
+### 📖 프로젝트 소개
+
+> 미믹(MIMIC)이란, ‘흉내쟁이’ 또는 ‘따라쟁이’라는 의미를 가진 단어입니다.
+>
+> 요즘 뜨는 MBTI에서 영감을 얻어서 나와 다른 성향을 가진 사람들의 일상을 살아보면 어떨까?
+> 또, 나의 일상이 다른 사람들의 일상이 된다면 어떨까? 라는 취지로 제작된,
+> 타인과 나의 일상을 체험해보도록 하는 조금 특이한 SNS입니다.
+
+### 👥 프론트엔드 팀원 소개
+
+👨🏻‍💻 [리더] 신도윤: [https://github.com/DrunkenNeoguri](https://github.com/DrunkenNeoguri)
+
+👨🏻‍💻 [프론트엔드 팀장] 이호진: [https://github.com/hojncode](https://github.com/hojncode)
+
+👨🏻‍💻 [기술 고문] 김대연: [https://github.com/rlaedous](https://github.com/rlaedous)
+
+### **🔧 담당 작업**
+
+👷 김승민: 회원가입 구현
+
+👷🏻‍♂️ 김윤철: 메인 페이지 필터, 글 작성 페이지 구현
+
+👷🏼 김주환: 로그인 및 로그아웃 구현
+
+👷🏻‍♂️ 신도윤: 상세 정보, 메인 페이지 및 글 수정/삭제 기능 구현
+
+### 💿 기술 스택
+
+- **React**
+- **Redux / Toolkit, thunk**
+- **Axios**
+- **AWS (S3, CloudFront, IAM, Route 53, Certificate**
+- FontAwesome
+- styled-components
+- swiper
+- react-calendar
+
+### 📂 파일 구조
 
 ```
 src
@@ -12,6 +53,7 @@ src
 │  │  ├─ instance.jsx
 │  │  ├─ kakaoOauth.jsx
 │  │  ├─ kakaoSlice.jsx
+│  │  ├─ mainSlice.jsx
 │  │  ├─ mytodosSlice.jsx
 │  │  ├─ setUpTodoSlice.jsx
 │  │  └─ todolistsSlice.jsx
@@ -23,7 +65,9 @@ src
 │  ├─ common
 │  │  ├─ ChallengeCard.jsx
 │  │  ├─ footer.jsx
+│  │  ├─ Grade.jsx
 │  │  ├─ header.jsx
+│  │  ├─ InputCard.jsx
 │  │  └─ ProfileCard.jsx
 │  ├─ features
 │  │  ├─ activity
@@ -50,6 +94,8 @@ src
 │  │  │  └─ WelcomeForm.jsx
 │  │  ├─ mbti
 │  │  │  └─ MbtiForm.jsx
+│  │  ├─ modifyProfile
+│  │  │  └─ ProfileModifyForm.jsx
 │  │  ├─ myPage
 │  │  │  ├─ LoginSelect.jsx
 │  │  │  └─ MyPageContainer.jsx
@@ -63,16 +109,20 @@ src
 │  │  │  └─ SetUpToDoCard.jsx
 │  │  ├─ signUp
 │  │  │  └─ SignUpForm.jsx
+│  │  ├─ test
+│  │  │  └─ TestForm.jsx
 │  │  ├─ todo
 │  │  │  └─ WriteTodoForm.jsx
 │  │  ├─ welcomePage
 │  │  │  └─ StartContainer.jsx
 │  │  └─ withdraw
 │  │     └─ WithdrawContainer.jsx
-│  ├─ interface
-│  │  └─ styledCommon.jsx
-│  └─ modifyProfile
-│     └─ ProfileModifyForm.jsx
+│  └─ interface
+│     └─ styledCommon.jsx
+├─ images
+│  ├─ background1.png
+│  ├─ background2.png
+│  └─ background3.png
 ├─ index.css
 ├─ index.js
 ├─ layout
@@ -96,11 +146,11 @@ src
 │  ├─ setUpTodo.jsx
 │  ├─ signUp.jsx
 │  ├─ teaser.jsx
+│  ├─ testPage.jsx
 │  ├─ welcomePage.jsx
 │  ├─ withdraw.jsx
 │  └─ writeTodo.jsx
 ├─ router
-│  ├─ README.md
 │  └─ router.jsx
 ├─ setupTests.js
 └─ utils
