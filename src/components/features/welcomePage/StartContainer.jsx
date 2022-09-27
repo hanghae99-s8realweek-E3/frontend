@@ -5,7 +5,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { setCookie } from "../../../utils/cookie";
 import background1 from "../../../images/background1.png";
 import background2 from "../../../images/background2.png";
 import background3 from "../../../images/background3.png";
@@ -14,7 +13,7 @@ function StartContainer() {
   const navigate = useNavigate();
 
   function startAndGoToMain() {
-    setCookie("firstEnter", true, 30758400);
+    window.localStorage.setItem("firstEnter", true);
     navigate("/");
   }
 

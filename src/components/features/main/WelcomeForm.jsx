@@ -2,7 +2,6 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { removeCookies } from "../../../utils/cookie";
 import { StShadowBackgroundDiv } from "../../interface/styledCommon";
 
 function WelcomeForm() {
@@ -11,7 +10,7 @@ function WelcomeForm() {
 
   const closeToModal = () => {
     setModalState("off");
-    removeCookies("firstLogin");
+    window.localStorage.removeItem("firstLogin");
   };
 
   return (
