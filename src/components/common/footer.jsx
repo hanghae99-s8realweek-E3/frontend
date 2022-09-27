@@ -56,7 +56,6 @@ function Footer() {
             window.location.pathname === "/todolists" ||
             window.location.pathname === `/todolists/${params.mbti}` ||
             window.location.pathname === `/feeddetail/${params.todoId}` ||
-            window.location.pathname === `/follows/${params.userId}` ||
             window.location.pathname === `/selectmbtifeed`
               ? "#FF6D53"
               : "#313131"
@@ -67,7 +66,6 @@ function Footer() {
                 window.location.pathname === "/todolists" ||
                 window.location.pathname === `/todolists/${params.mbti}` ||
                 window.location.pathname === `/feeddetail/${params.todoId}` ||
-                window.location.pathname === `/follows/${params.userId}` ||
                 window.location.pathname === `/selectmbtifeed`
                   ? process.env.PUBLIC_URL + `/images/FeedActive.svg`
                   : process.env.PUBLIC_URL + `/images/Feed.svg`
