@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../../app/modules/instance";
-import { setCookie } from "../../../utils/cookie";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 
 const MbtiForm = () => {
@@ -65,7 +64,7 @@ const MbtiForm = () => {
       try {
         const response = await instance.post("/accounts/mbti", selectedMbti);
         if (response.data.message === "success") {
-          setCookie("firstLogin", "true", 300);
+          window.localStorage.setItem("firstLogin", true);
           window.localStorage.setItem("token", response.data.token);
           navigate("/");
         }

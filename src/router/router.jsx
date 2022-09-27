@@ -19,11 +19,10 @@ import ModifyProfile from "../pages/modifyProfile";
 import ChangePW from "../pages/changePW";
 import HelpDesk from "../pages/helpDesk";
 import Withdraw from "../pages/withdraw";
-import { getCookie } from "../utils/cookie";
 import TestPage from "../pages/testPage";
 
 const FirstPage = ({ children }) => {
-  if (getCookie("firstEnter") === undefined) {
+  if (window.localStorage.getItem("firstEnter") === null) {
     return <Navigate to="/welcomepage" />;
   }
   return children;
