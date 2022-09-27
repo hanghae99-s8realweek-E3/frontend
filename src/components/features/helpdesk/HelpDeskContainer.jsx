@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fqaList, noticeList } from "../../../utils/helpList";
+import { decodeMyTokenData } from "../../../utils/token";
 import { StCommonBorder } from "../../interface/styledCommon";
 import FQAAccordionCard from "./FQAAccordionCard";
 import NoticeAccordionCard from "./NoticeAccordionCard";
 
 function HelpDeskContainer() {
   const [selectTab, setSelectTab] = useState("notice");
-  const navigate = useNavigate();
+  const myData = decodeMyTokenData();
 
   function selectTabMenu(event) {
     if (event.target.value === "notice") setSelectTab("notice");
@@ -17,7 +17,9 @@ function HelpDeskContainer() {
 
   function notifyNowMaking() {}
 
-  function moveToGoogleFormPage() {}
+  function moveToGoogleFormPage() {
+    window.open("https://forms.gle/q1tNtjeTnfr5vfqr9");
+  }
 
   return (
     <StContainer>
@@ -74,10 +76,17 @@ function HelpDeskContainer() {
                 />
                 <StCommonBorder />
 
-                <FQAAccordionCard
-                  title={fqaList[2].title}
-                  content={fqaList[2].content}
-                />
+                {myData.provider === "kakao" ? (
+                  <FQAAccordionCard
+                    title={fqaList[3].title}
+                    content={fqaList[3].content}
+                  />
+                ) : (
+                  <FQAAccordionCard
+                    title={fqaList[2].title}
+                    content={fqaList[2].content}
+                  />
+                )}
                 <StCommonBorder />
               </StFAQAccordionList>
 
