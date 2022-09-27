@@ -45,7 +45,7 @@ function MyPageContainer() {
 
   // 로그아웃 버튼 클릭 시, 로그아웃 진행
   function logOutToSite() {
-    window.localStorage.clear();
+    window.localStorage.removeItem("token");
     navigate("/");
   }
 

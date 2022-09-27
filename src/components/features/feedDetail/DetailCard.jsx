@@ -1,4 +1,5 @@
 import {
+  StBackGroundCloseDiv,
   StCommonColumnBox,
   StCommonRowBox,
 } from "../../interface/styledCommon";
@@ -45,6 +46,7 @@ function DetailCard({ data }) {
     <>
       {menuModal === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
           {myData !== undefined && myData.userId === data.userId ? (
             <>
               <StPopUpWhiteButton
@@ -143,7 +145,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
-
+  word-wrap: break-word;
+  word-break: break-all;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 26px;

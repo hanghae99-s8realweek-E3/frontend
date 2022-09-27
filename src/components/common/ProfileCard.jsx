@@ -8,7 +8,10 @@ import styled from "styled-components";
 import instance from "../../app/modules/instance";
 import { getOthersTodoFetch } from "../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../utils/token";
-import { StShadowBackgroundDiv } from "../interface/styledCommon";
+import {
+  StBackGroundCloseDiv,
+  StShadowBackgroundDiv,
+} from "../interface/styledCommon";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
@@ -63,6 +66,7 @@ function ProfileCard({ profileData }) {
     <>
       {modalState === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={changeModalState} />
           {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
           <StModalContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={changeModalState}>
@@ -452,17 +456,19 @@ const StText = styled.p`
 
 const StModalContainer = styled.div`
   background: #ffffff;
+  position: absolute;
   border-radius: 6px;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 10vh 5%;
   width: 90%;
   height: 620px;
   box-sizing: border-box;
+  z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: 18px;
     height: 540px;
-    margin: 7vh auto;
+    margin: 7vh 5%;
   }
 `;
 
