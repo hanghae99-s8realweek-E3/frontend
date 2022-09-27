@@ -18,6 +18,8 @@ import LoadingContainer from "../../../utils/loadingState";
 import detailSlice, {
   resetFeedDetailData,
 } from "../../../app/modules/detailSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 // check uncheck
 
@@ -283,46 +285,40 @@ function FeedPageContainer() {
             </form>
           </StSearchBarBox> */}
 
-          <>
-            {searchList.length === 0 ? (
-              <StWrap>
-                <StChallengeWrap>
-                  {/* 거짓이면 체크안한거 참이면 체크한거 */}
-                  {checkOn === false ? (
-                    <StChallengeImg
-                      onClick={checkState}
-                      src={process.env.PUBLIC_URL + `/images/unCheck.png`}
-                      width="17"
-                      height="17"
-                      alt="AppearImg"
-                    />
-                  ) : (
-                    <StChallengeImg
-                      onClick={checkState}
-                      src={process.env.PUBLIC_URL + `/images/check.png`}
-                      width="17"
-                      height="17"
-                      alt="AppearImg"
-                    />
-                  )}
-                  <StChallengeWord>도전완료 가리기</StChallengeWord>
-                </StChallengeWrap>
-                <StToggleImgWrap>
-                  {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-                  <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
-                  <StToggleImg
-                    onClick={toggleSortPopUp}
-                    src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-                    width="12"
-                    height="6"
-                    alt="ToggleImg"
-                  />
-                </StToggleImgWrap>
-              </StWrap>
-            ) : (
-              <></>
-            )}
-          </>
+          <StWrap>
+            <StChallengeWrap>
+              {/* 거짓이면 체크안한거 참이면 체크한거 */}
+              {checkOn === false ? (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/unCheck.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              ) : (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/check.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              )}
+              <StChallengeWord>도전완료 가리기</StChallengeWord>
+            </StChallengeWrap>
+            <StToggleImgWrap>
+              {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+              <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+              <StToggleImg
+                onClick={toggleSortPopUp}
+                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                width="12"
+                height="6"
+                alt="ToggleImg"
+              />
+            </StToggleImgWrap>
+          </StWrap>
         </StTopWrap>
 
         <>
@@ -342,12 +338,6 @@ function FeedPageContainer() {
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
           ) : (
-            // <StTodayMyCardWrap>
-            //   {searchList.map((x) => (
-            //     <StTest>{x.todo}</StTest>
-
-            //   ))}
-            // </StTodayMyCardWrap>
             <StTodayMyCardWrap>
               {checkOn === true
                 ? searchList
@@ -455,6 +445,7 @@ const StTodayMyCardWrap = styled.div`
   flex-direction: column;
   /* margin-top: 200px;  검색 넣을때*/
   margin-top: 110px;
+  margin-bottom: 110.06px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
