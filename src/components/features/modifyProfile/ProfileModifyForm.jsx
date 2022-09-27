@@ -173,7 +173,7 @@ function ProfileModifyForm() {
             <StCommonLabel>나의 정보</StCommonLabel>
             <StCommonInput
               type="text"
-              value={userState.userInfo.nickname}
+              value={changeProfile.nickname}
               onChange={changeInputData}
             />
           </StInputSettingBox>
@@ -181,10 +181,9 @@ function ProfileModifyForm() {
           <StInputSettingBox>
             <StCommonLabel>나의 MBTI</StCommonLabel>
             <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
-              {userState.userInfo.mbti === "" ||
-              userState.userInfo.mbti === null
+              {changeProfile.mbti === "" || changeProfile.mbti === null
                 ? "선택하기"
-                : userState.userInfo.mbti}
+                : changeProfile.mbti}
             </StSelectMBTIBtn>
           </StInputSettingBox>
           <StCommonBorder />

@@ -28,7 +28,7 @@ function FQAAccordionCard({ title, content }) {
         display={openState === true ? "flex" : "none"}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {title === fqaList[2].title ? (
+      {content === fqaList[2].content ? (
         <StWithdrawButton
           display={openState === true ? "block" : "none"}
           onClick={moveToWithdrawPage}>

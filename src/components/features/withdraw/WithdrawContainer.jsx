@@ -7,6 +7,10 @@ function WithdrawContainer() {
   const passwordRef = useRef();
   const navigate = useNavigate();
 
+  function moveToPageGoogleForm() {
+    window.open("https://forms.gle/ByMhVrN7Gr9pUuBZ9");
+  }
+
   function sendToWithdrawData(event) {
     event.preventDefault();
     const withdrawApply = async () => {
@@ -31,7 +35,9 @@ function WithdrawContainer() {
         <p>미믹을 떠난다니 아쉬워요.</p>
         <p>미믹을 떠나는 이유를 알려주세요.</p>
       </div>
-      <StGoogleFormBtn>클릭하여 알려주기</StGoogleFormBtn>
+      <StGoogleFormBtn onClick={moveToPageGoogleForm}>
+        클릭하여 알려주기
+      </StGoogleFormBtn>
 
       <div style={{ margin: "30px 0", textAlign: "left" }}>
         <p>회원님의 소중한 개인정보를 안전하게 보호하기 위해</p>

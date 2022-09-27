@@ -30,7 +30,7 @@ function FeedDetailContainer() {
     }
   }, []);
 
-  const detailState = useSelector((state) => state.detail.data);
+  const detailState = useSelector((state) => state.detail);
 
   useEffect(() => {
     setLoading(true);
@@ -46,11 +46,21 @@ function FeedDetailContainer() {
 
   useEffect(() => {
     if (loading === true) {
-      if (detailState.length === 0) {
+      if (detailState.data.length === 0) {
         navigate("/todolists");
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      detailState.errorMessage !== undefined &&
+      detailState.errorMessage !== ""
+    ) {
+      alert(detailState.errorMessage);
+      navigate("/todolists");
+    }
+  }, [detailState]);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -165,7 +175,7 @@ function FeedDetailContainer() {
           <></>
         )}
 
-        {Object.keys(detailState).length === 0 ? (
+        {Object.keys(detailState.data).length === 0 ? (
           <></>
         ) : (
           <div>
@@ -174,45 +184,45 @@ function FeedDetailContainer() {
                 <StProfileBox>
                   <StProfileImg
                     src={
-                      detailState.todoInfo.profile !== "none"
-                        ? detailState.todoInfo.profile
+                      detailState.data.todoInfo.profile !== "none"
+                        ? detailState.data.todoInfo.profile
                         : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                     }
                   />
                 </StProfileBox>
                 <StNickMBTIWarp>
                   <StNickname
-                    id={detailState.todoInfo.userId}
+                    id={detailState.data.todoInfo.userId}
                     onClick={onClickGoToOtherspage}>
-                    {detailState.todoInfo.nickname}
+                    {detailState.data.todoInfo.nickname}
                   </StNickname>
-                  <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+                  <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
                 </StNickMBTIWarp>
-                {myData.userId === detailState.todoInfo.userId ? (
+                {myData.userId === detailState.data.todoInfo.userId ? (
                   <></>
-                ) : detailState.isFollowed === false ? (
+                ) : detailState.data.isFollowed === false ? (
                   <StFollowBtn
-                    id={detailState.todoInfo.userId}
+                    id={detailState.data.todoInfo.userId}
                     onClick={changeFollowState}>
                     팔로우
                   </StFollowBtn>
                 ) : (
                   <StFollowBtn
-                    id={detailState.todoInfo.userId}
+                    id={detailState.data.todoInfo.userId}
                     onClick={changeFollowState}>
                     언팔로우
                   </StFollowBtn>
                 )}
               </StUserIdBox>
               <StDetailCard>
-                <DetailCard data={detailState.todoInfo} />
+                <DetailCard data={detailState.data.todoInfo} />
               </StDetailCard>
-              {detailState.isTodayDone === "false" ? (
+              {detailState.data.isTodayDone === "false" ? (
                 <></>
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.todoInfo.todoId}>
+                  id={detailState.data.todoInfo.todoId}>
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -223,7 +233,7 @@ function FeedDetailContainer() {
                 background: "white",
                 padding: "10px 0",
               }}>
-              {detailState.comments?.map((x, index) => {
+              {detailState.data.comments?.map((x, index) => {
                 return (
                   <div key={index}>
                     <StCommentBox>
@@ -272,8 +282,8 @@ function FeedDetailContainer() {
                     padding: "0",
                   }}
                   src={
-                    detailState.loginUserProfile !== "none"
-                      ? detailState.loginUserProfile
+                    detailState.data.loginUserProfile !== "none"
+                      ? detailState.data.loginUserProfile
                       : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                   }
                 />
