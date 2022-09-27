@@ -144,6 +144,8 @@ function FeedDetailContainer() {
     // dispatch(putMyPageFollowFetch(e.target.id))
   };
 
+  
+
   const myData = decodeMyTokenData();
 
   function displayCardMenu(event) {
@@ -164,7 +166,6 @@ function FeedDetailContainer() {
               transform="translateY(76vh)">
               삭제
             </StPopUpWhiteButton>
-
             <StPopUpWhiteButton
               onClick={displayCardMenu}
               transform="translateY(77vh)">
@@ -620,6 +621,6 @@ const StPopUpWhiteButton = styled.button`
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     width: 90%;
-    margin: 0 20px;
+    margin: -50px 20px 50px 20px;
   }
 `;
