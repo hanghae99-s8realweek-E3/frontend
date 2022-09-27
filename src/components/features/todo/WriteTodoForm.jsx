@@ -22,6 +22,14 @@ function WriteTodoForm() {
   // 구조 분해 할당
   const onChange = (event) => {
     const { name, value } = event.target;
+
+    if (value.length > 30) {
+      return setTodo({
+        ...todo,
+        [name]: value.slice(0, 30),
+      });
+    }
+
     setTodo({
       ...todo,
       [name]: value,
@@ -54,8 +62,13 @@ function WriteTodoForm() {
 
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
+    e.preventDefault();
     if (todo.todo.length < 10) {
       return alert("10자 이상 작성해 주세요.");
+    }
+
+    if (todo.todo.length > 30) {
+      return alert("입력한 미믹 내용은 30자를 넘지 않아야 합니다.");
     }
     // 새로고침 이벤트 막기
     else e.preventDefault();
@@ -93,6 +106,10 @@ function WriteTodoForm() {
             value={todo.todo}
             onChange={onChange}
           />
+          <StTextCount
+            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}>
+            {30 - todo.todo.length}
+          </StTextCount>
           {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
         <span>
           입력할 수 있는 글자 수 :{" "}
@@ -137,7 +154,7 @@ const StWriteTodoForm = styled.form`
 
 const StWriteTodoTextArea = styled.textarea`
   resize: none; // 크기 조절하는 커서 안뜨게할려고
-  height: 150px;
+  height: 100px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -146,7 +163,7 @@ const StWriteTodoTextArea = styled.textarea`
   color: #979797;
   border: none;
   outline: none;
-  margin-left: 27px;
+  margin: 0 25px;
 `;
 
 const Stbutton = styled.button`
@@ -168,6 +185,14 @@ const Stbutton = styled.button`
   &:hover {
     background: #ffa595;
   }
+`;
+
+const StTextCount = styled.div`
+  color: ${(props) => props.color};
+  margin-left: auto;
+  margin-right: 25px;
+  font-size: 24px;
+  font-weight: 500;
 `;
 
 export default WriteTodoForm;

@@ -116,55 +116,59 @@ function MyPageFollow() {
 
             <div>
               <>
-                {searchList.length !== 0
-                  ? searchList?.map((x, index) => {
-                      return (
-                        <div key={index}>
-                          <StProfileContainer
-                            id={x.userId}
-                            onClick={onClickGoToOthersPage}>
-                            <StProfileBox>
-                              <StProfileImg
-                                src={
-                                  x.profile === "none"
-                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                                    : x.profile
-                                }
-                              />
-                            </StProfileBox>
-                            <StWrapNicknameMbti>
-                              <StNickname>{x.nickname}</StNickname>
-                              <StMbti>{x.mbti}</StMbti>
-                            </StWrapNicknameMbti>
-                            {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
-                          </StProfileContainer>
-                        </div>
-                      );
-                    })
-                  : followState.follower?.map((x, index) => {
-                      return (
-                        <div key={index}>
-                          <StProfileContainer
-                            id={x.userId}
-                            onClick={onClickGoToOthersPage}>
-                            <StProfileBox>
-                              <StProfileImg
-                                src={
-                                  x.profile === "none"
-                                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                                    : x.profile
-                                }
-                              />
-                            </StProfileBox>
-                            <StWrapNicknameMbti>
-                              <StNickname>{x.nickname}</StNickname>
-                              <StMbti>{x.mbti}</StMbti>
-                            </StWrapNicknameMbti>
-                            {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
-                          </StProfileContainer>
-                        </div>
-                      );
-                    })}
+                {searchList.length !== 0 ? (
+                  searchList?.map((x, index) => {
+                    return (
+                      <div key={index}>
+                        <StProfileContainer
+                          id={x.userId}
+                          onClick={onClickGoToOthersPage}>
+                          <StProfileBox>
+                            <StProfileImg
+                              src={
+                                x.profile === "none"
+                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  : x.profile
+                              }
+                            />
+                          </StProfileBox>
+                          <StWrapNicknameMbti>
+                            <StNickname>{x.nickname}</StNickname>
+                            <StMbti>{x.mbti}</StMbti>
+                          </StWrapNicknameMbti>
+                          {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
+                        </StProfileContainer>
+                      </div>
+                    );
+                  })
+                ) : inputContext.length === 0 ? (
+                  followState.follower?.map((x, index) => {
+                    return (
+                      <div key={index}>
+                        <StProfileContainer
+                          id={x.userId}
+                          onClick={onClickGoToOthersPage}>
+                          <StProfileBox>
+                            <StProfileImg
+                              src={
+                                x.profile === "none"
+                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  : x.profile
+                              }
+                            />
+                          </StProfileBox>
+                          <StWrapNicknameMbti>
+                            <StNickname>{x.nickname}</StNickname>
+                            <StMbti>{x.mbti}</StMbti>
+                          </StWrapNicknameMbti>
+                          {/* <StDeleteFollowBtn id={x.userId} onClick={changeMyUnFollowState}>삭제</StDeleteFollowBtn> */}
+                        </StProfileContainer>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <StInfoText>검색된 결과가 없습니다.</StInfoText>
+                )}
               </>
             </div>
           </StContainer>
@@ -494,4 +498,8 @@ const StDeleteFollowBtn = styled.button`
   @media only screen and (max-width: 500px) {
     font-size: 16px;
   }
+`;
+
+const StInfoText = styled.div`
+  font-size: 18px;
 `;

@@ -115,10 +115,14 @@ function FeedDetailContainer() {
     if (inputRef.current.value === "") {
       return alert("댓글을 입력해주세요");
     }
+    if (inputRef.current.value.trim().length === 0) {
+      console.log(inputRef.current.value.trim().length);
+      return alert("댓글을 입력해주세요");
+    }
     const postCommentFetch = async () => {
       try {
         const response = await instance.post(`/comments/${params.todoId}`, {
-          comment: inputRef.current.value,
+          comment: inputRef.current.value.trim(),
         });
         if (response.data.message === "success") {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
