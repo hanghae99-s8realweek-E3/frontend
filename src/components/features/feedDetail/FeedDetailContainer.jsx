@@ -33,12 +33,12 @@ function FeedDetailContainer() {
   const detailState = useSelector((state) => state.detail.data);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     async function feedLoading() {
       await dispatch(getFeedDetailFetch({ todoId: params.todoId }));
-      setLoading(false)
+      setLoading(false);
     }
-    feedLoading()
+    feedLoading();
     // setTimeout(()=> {
     //   setLoading(false)
     // },500)
@@ -145,148 +145,150 @@ function FeedDetailContainer() {
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
-    
-    <div style={{ marginTop: "60px", marginBottom: "220px" }}>
-      {menuModal === true ? (
-        <StShadowBackgroundDiv>
-          <StPopUpWhiteButton
-            onClick={onClickDeleteComment}
-            transform="translateY(76vh)">
-            삭제
-          </StPopUpWhiteButton>
 
-          <StPopUpWhiteButton
-            onClick={displayCardMenu}
-            transform="translateY(77vh)">
-            닫기
-          </StPopUpWhiteButton>
-        </StShadowBackgroundDiv>
-      ) : (
-        <></>
-      )}
+      <div style={{ marginTop: "60px", marginBottom: "220px" }}>
+        {menuModal === true ? (
+          <StShadowBackgroundDiv>
+            <StPopUpWhiteButton
+              onClick={onClickDeleteComment}
+              transform="translateY(76vh)">
+              삭제
+            </StPopUpWhiteButton>
 
-      {Object.keys(detailState).length === 0 ? (
-        <></>
-      ) : (
-        <div>
-          <StProfilWrap>
-            <StUserIdBox>
+            <StPopUpWhiteButton
+              onClick={displayCardMenu}
+              transform="translateY(77vh)">
+              닫기
+            </StPopUpWhiteButton>
+          </StShadowBackgroundDiv>
+        ) : (
+          <></>
+        )}
+
+        {Object.keys(detailState).length === 0 ? (
+          <></>
+        ) : (
+          <div>
+            <StProfilWrap>
+              <StUserIdBox>
+                <StProfileBox>
+                  <StProfileImg
+                    src={
+                      detailState.todoInfo.profile !== "none"
+                        ? detailState.todoInfo.profile
+                        : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                    }
+                  />
+                </StProfileBox>
+                <StNickMBTIWarp>
+                  <StNickname
+                    id={detailState.todoInfo.userId}
+                    onClick={onClickGoToOtherspage}>
+                    {detailState.todoInfo.nickname}
+                  </StNickname>
+                  <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
+                </StNickMBTIWarp>
+                {myData.userId === detailState.todoInfo.userId ? (
+                  <></>
+                ) : detailState.isFollowed === false ? (
+                  <StFollowBtn
+                    id={detailState.todoInfo.userId}
+                    onClick={changeFollowState}>
+                    팔로우
+                  </StFollowBtn>
+                ) : (
+                  <StFollowBtn
+                    id={detailState.todoInfo.userId}
+                    onClick={changeFollowState}>
+                    언팔로우
+                  </StFollowBtn>
+                )}
+              </StUserIdBox>
+              <StDetailCard>
+                <DetailCard data={detailState.todoInfo} />
+              </StDetailCard>
+              {detailState.isTodayDone === "false" ? (
+                <></>
+              ) : (
+                <StBtnGoToChallenge
+                  onClick={setMyTodayChallenge}
+                  id={detailState.todoInfo.todoId}>
+                  도전할래요!
+                </StBtnGoToChallenge>
+              )}
+            </StProfilWrap>
+            <div
+              style={{
+                width: "100%",
+                background: "white",
+                padding: "10px 0",
+              }}>
+              {detailState.comments?.map((x, index) => {
+                return (
+                  <div key={index}>
+                    <StCommentBox>
+                      <StImgNickname>
+                        <StProfileBox width="32px" height="32px">
+                          <StProfileImg
+                            width="auto"
+                            height="32px"
+                            borderRadius="16px"
+                            src={
+                              x.profile !== "none"
+                                ? x.profile
+                                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                            }
+                          />
+                        </StProfileBox>
+                        <StNicknameComment
+                          id={x.userId}
+                          onClick={onClickCommentGoToOtherspage}>
+                          {x.nickname}
+                        </StNicknameComment>
+                        <StChangeDeleteBtn>
+                          {myData.userId === x.userId ? (
+                            <StMenuBtn
+                              id={x.commentId}
+                              onClick={displayCardMenu}>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </StMenuBtn>
+                          ) : (
+                            <></>
+                          )}
+                        </StChangeDeleteBtn>
+                      </StImgNickname>
+                      <StComment>{x.comment}</StComment>
+                    </StCommentBox>
+                  </div>
+                );
+              })}
+            </div>
+
+            <StWriteComment onSubmit={upLoadCommentData}>
               <StProfileBox>
                 <StProfileImg
+                  style={{
+                    margin: "0",
+                    padding: "0",
+                  }}
                   src={
-                    detailState.todoInfo.profile !== "none"
-                      ? detailState.todoInfo.profile
+                    detailState.loginUserProfile !== "none"
+                      ? detailState.loginUserProfile
                       : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                   }
                 />
               </StProfileBox>
-              <StNickMBTIWarp>
-                <StNickname
-                  id={detailState.todoInfo.userId}
-                  onClick={onClickGoToOtherspage}>
-                  {detailState.todoInfo.nickname}
-                </StNickname>
-                <StMBTI>{detailState.todoInfo.mbti}</StMBTI>
-              </StNickMBTIWarp>
-              {myData.userId === detailState.todoInfo.userId ? (
-                <></>
-              ) : detailState.isFollowed === false ? (
-                <StFollowBtn
-                  id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}>
-                  팔로우
-                </StFollowBtn>
-              ) : (
-                <StFollowBtn
-                  id={detailState.todoInfo.userId}
-                  onClick={changeFollowState}>
-                  언팔로우
-                </StFollowBtn>
-              )}
-            </StUserIdBox>
-            <StDetailCard>
-              <DetailCard data={detailState.todoInfo} />
-            </StDetailCard>
-            {detailState.isTodayDone === "false" ? (
-              <></>
-            ) : (
-              <StBtnGoToChallenge
-                onClick={setMyTodayChallenge}
-                id={detailState.todoInfo.todoId}>
-                도전할래요!
-              </StBtnGoToChallenge>
-            )}
-          </StProfilWrap>
-          <div
-            style={{
-              width: "100%",
-              background: "white",
-              padding: "10px 0",
-            }}>
-            {detailState.comments?.map((x, index) => {
-              return (
-                <div key={index}>
-                  <StCommentBox>
-                    <StImgNickname>
-                      <StProfileBox width="32px" height="32px">
-                        <StProfileImg
-                          width="auto"
-                          height="32px"
-                          borderRadius="16px"
-                          src={
-                            x.profile !== "none"
-                              ? x.profile
-                              : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                          }
-                        />
-                      </StProfileBox>
-                      <StNicknameComment
-                        id={x.userId}
-                        onClick={onClickCommentGoToOtherspage}>
-                        {x.nickname}
-                      </StNicknameComment>
-                      <StChangeDeleteBtn>
-                        {myData.userId === x.userId ? (
-                          <StMenuBtn id={x.commentId} onClick={displayCardMenu}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                          </StMenuBtn>
-                        ) : (
-                          <></>
-                        )}
-                      </StChangeDeleteBtn>
-                    </StImgNickname>
-                    <StComment>{x.comment}</StComment>
-                  </StCommentBox>
-                </div>
-              );
-            })}
-          </div>
-
-          <StWriteComment onSubmit={upLoadCommentData}>
-            <StProfileBox>
-              <StProfileImg
-                style={{
-                  margin: "0",
-                  padding: "0",
-                }}
-                src={
-                  myData.profile !== "none"
-                    ? myData.profile
-                    : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                }
+              <StInput
+                type="text"
+                name="comment"
+                placeholder="댓글 내용"
+                ref={inputRef} //!ref를 참고하겠다.
               />
-            </StProfileBox>
-            <StInput
-              type="text"
-              name="comment"
-              placeholder="댓글 내용"
-              ref={inputRef} //!ref를 참고하겠다.
-            />
-            <StCommentBtn type="submit">작성</StCommentBtn>
-          </StWriteComment>
-        </div>
-      )}
-    </div>
+              <StCommentBtn type="submit">작성</StCommentBtn>
+            </StWriteComment>
+          </div>
+        )}
+      </div>
     </>
   );
 }
