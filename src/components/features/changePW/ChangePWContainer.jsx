@@ -47,7 +47,6 @@ function ChangePWContainer() {
       try {
         setLoading(true);
         const response = await instance.put(`/accounts`, inputData);
-        console.log(response);
         if (response.data.message === "success") {
           setLoading(false);
           navigate("/mypage");

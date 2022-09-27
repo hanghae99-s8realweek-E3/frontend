@@ -8,7 +8,6 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
@@ -23,7 +22,6 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
 
   // 상세 피드 페이지로 이동시켜줌.
   function moveToFeedDetail() {
-    console.log("들어가나요");
     if (data.challengedTodo !== undefined) {
       if (data.originTodoId !== "null" && data.originTodoId !== undefined) {
         navigate(`/feeddetail/${data.originTodoId}`);
@@ -103,8 +101,6 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
     };
     deleteApply();
   }
-
-  console.log(data);
 
   // 이용 시, <ChallengeCard id={todoId} data={객체값} key={idx} hideState={true/false} isTodayChallenge={true/false} />로 작성해줄 것
   // map을 쓰지 않는 경우, key는 예외.

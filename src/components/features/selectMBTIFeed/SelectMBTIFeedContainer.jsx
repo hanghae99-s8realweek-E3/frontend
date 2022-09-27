@@ -35,15 +35,18 @@ function SelectMBTIFeedContainer() {
     MyData === undefined || MyData.mbti === null ? "" : MyData.mbti
   );
   const [openModal, setOpenModal] = useState(false);
-  const mbtiState = useSelector((state) => state.todolists.mbtiData);
 
   // 로그인되어 있고 mbti가 설정되어 있을 경우에만 상성 정보를 받아오도록 설정
   useEffect(() => {
-    if (MyData !== undefined)
-      if (MyData.mbti !== "" && MyData.mbti !== null)
-        dispatch(getSelectMBTITodoFetch());
+    if (MyData !== undefined) {
+      if (MyData.mbti !== "" && MyData.mbti !== null) {
+        dispatch(getSelectMBTITodoFetch(true));
+      }
+    }
+    dispatch(getSelectMBTITodoFetch(false));
   }, []);
 
+  const mbtiState = useSelector((state) => state.todolists.mbtiData);
   // mbti 상성이나 로그인 상태에 따라 나타나는 색상을 다르게 적용.
   function buttonColorSet(elem, index) {
     if (mbtiList[index] === selectMBTI) {

@@ -33,7 +33,6 @@ const setUpTodosSlice = createSlice({
       const newState = { ...state };
       newState.message = action.payload.message;
       newState.data = action.payload.data;
-      console.log(newState.data);
       return newState;
     });
     builder.addCase(getSetUpMyTodoFetch.rejected, (state, action) => {

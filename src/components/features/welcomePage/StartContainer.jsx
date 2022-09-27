@@ -17,7 +17,6 @@ function StartContainer() {
     setCookie("firstEnter", true, 30758400);
     navigate("/");
   }
-  console.log(process.env.PUBLIC_URL);
 
   return (
     <StContainer>
