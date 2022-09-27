@@ -74,32 +74,24 @@ function FeedPageContainer() {
 
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
-    // setLoading(true);
-    if (tokenChecker() === false && mbti === undefined) {
-      dispatch(getTodoListsFetch(false));
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-      setSortState("최신순");
-    } else if (tokenChecker() === false && mbti !== undefined) {
-      dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-      setSortState("최신순");
-    } else if (tokenChecker() === true && mbti === undefined) {
-      dispatch(getTodoListsFetch(true));
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-      setSortState("최신순");
-    } else if (tokenChecker() === true && mbti !== undefined) {
-      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-      setSortState("최신순");
+    setLoading(true);
+    async function loading() {
+      if (tokenChecker() === false && mbti === undefined) {
+        await dispatch(getTodoListsFetch(false));
+        setSortState("최신순");
+      } else if (tokenChecker() === false && mbti !== undefined) {
+        await dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+        setSortState("최신순");
+      } else if (tokenChecker() === true && mbti === undefined) {
+        await dispatch(getTodoListsFetch(true));
+        setSortState("최신순");
+      } else if (tokenChecker() === true && mbti !== undefined) {
+        await dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
+        setSortState("최신순");
+      }
+      setLoading(false);
     }
+    loading();
     // else if (mbti === undefined) {
     //   dispatch(getTodoListsFetch(false));
     //   setInterval(() => {
@@ -116,26 +108,20 @@ function FeedPageContainer() {
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
   useEffect(() => {
     setLoading(true);
-    if (mbti === undefined) {
-      dispatch(getTodoListsFetch(false));
+    async function loading() {
+      if (mbti === undefined) {
+        await dispatch(getTodoListsFetch(false));
+        setSortState("최신순");
+        // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
+      } else if (mbti === undefined) {
+        await dispatch(getTodoListsFetch(true));
+        setSortState("최신순");
+      } else if (mbti !== undefined)
+        await dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
       setSortState("최신순");
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-      // 김대연 지적 사항 2
-      // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-    } else if (mbti === undefined) {
-      dispatch(getTodoListsFetch(true));
-      setSortState("최신순");
-      setInterval(() => {
-        setLoading(false);
-      }, 100);
-    } else if (mbti !== undefined)
-      dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-    setSortState("최신순");
-    setInterval(() => {
       setLoading(false);
-    }, 100);
+    }
+    loading();
   }, [mbti]);
 
   // useEffect(() => {
@@ -232,7 +218,6 @@ function FeedPageContainer() {
   };
   // MBTI 선택 버튼 클릭시
   const moveToSelectMBTI = () => {
-    setLoading(true);
     navigate("/selectmbtifeed");
   };
 
@@ -249,7 +234,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortDate}>
+                  onClick={sortDate}
+                >
                   최신순
                 </StDate>
                 <StDateLine />
@@ -257,7 +243,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortComment}>
+                  onClick={sortComment}
+                >
                   댓글순
                 </StComment>
                 <StCommentLine />
@@ -265,7 +252,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortChallenge}>
+                  onClick={sortChallenge}
+                >
                   도전순
                 </StChallenge>
                 <StChallengeLine />
@@ -295,40 +283,46 @@ function FeedPageContainer() {
             </form>
           </StSearchBarBox> */}
 
-          <StWrap>
-            <StChallengeWrap>
-              {/* 거짓이면 체크안한거 참이면 체크한거 */}
-              {checkOn === false ? (
-                <StChallengeImg
-                  onClick={checkState}
-                  src={process.env.PUBLIC_URL + `/images/unCheck.png`}
-                  width="17"
-                  height="17"
-                  alt="AppearImg"
-                />
-              ) : (
-                <StChallengeImg
-                  onClick={checkState}
-                  src={process.env.PUBLIC_URL + `/images/check.png`}
-                  width="17"
-                  height="17"
-                  alt="AppearImg"
-                />
-              )}
-              <StChallengeWord>도전완료 가리기</StChallengeWord>
-            </StChallengeWrap>
-            <StToggleImgWrap>
-              {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-              <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
-              <StToggleImg
-                onClick={toggleSortPopUp}
-                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-                width="12"
-                height="6"
-                alt="ToggleImg"
-              />
-            </StToggleImgWrap>
-          </StWrap>
+          <>
+            {searchList.length === 0 ? (
+              <StWrap>
+                <StChallengeWrap>
+                  {/* 거짓이면 체크안한거 참이면 체크한거 */}
+                  {checkOn === false ? (
+                    <StChallengeImg
+                      onClick={checkState}
+                      src={process.env.PUBLIC_URL + `/images/unCheck.png`}
+                      width="17"
+                      height="17"
+                      alt="AppearImg"
+                    />
+                  ) : (
+                    <StChallengeImg
+                      onClick={checkState}
+                      src={process.env.PUBLIC_URL + `/images/check.png`}
+                      width="17"
+                      height="17"
+                      alt="AppearImg"
+                    />
+                  )}
+                  <StChallengeWord>도전완료 가리기</StChallengeWord>
+                </StChallengeWrap>
+                <StToggleImgWrap>
+                  {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+                  <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+                  <StToggleImg
+                    onClick={toggleSortPopUp}
+                    src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                    width="12"
+                    height="6"
+                    alt="ToggleImg"
+                  />
+                </StToggleImgWrap>
+              </StWrap>
+            ) : (
+              <></>
+            )}
+          </>
         </StTopWrap>
 
         <>
@@ -356,9 +350,7 @@ function FeedPageContainer() {
             // </StTodayMyCardWrap>
             <StTodayMyCardWrap>
               {checkOn === true
-                ? //isChallenged가 true이면 화면에 띄우면 안된다.
-                  //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-                  searchList
+                ? searchList
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
                       <ChallengeCard id={it.todoId} data={it} key={idx} />
