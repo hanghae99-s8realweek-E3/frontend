@@ -147,11 +147,11 @@ function FeedDetailContainer() {
   const myData = decodeMyTokenData();
 
   function displayCardMenu(event) {
+    setCommentId(event.target.id);
     event.stopPropagation();
     setMenuModal(!menuModal);
     setCommentId(event.target.id);
   }
-
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -260,7 +260,10 @@ function FeedDetailContainer() {
                             <StMenuBtn
                               id={x.commentId}
                               onClick={displayCardMenu}>
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
+                              <FontAwesomeIcon
+                                style={{ pointerEvents: "none" }}
+                                icon={faEllipsisVertical}
+                              />
                             </StMenuBtn>
                           ) : (
                             <></>
