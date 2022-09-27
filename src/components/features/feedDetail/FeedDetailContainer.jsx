@@ -9,7 +9,10 @@ import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StShadowBackgroundDiv } from "../../interface/styledCommon";
+import {
+  StBackGroundCloseDiv,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
 import LoadingContainer from "../../../utils/loadingState";
 
 function FeedDetailContainer() {
@@ -144,8 +147,6 @@ function FeedDetailContainer() {
     // dispatch(putMyPageFollowFetch(e.target.id))
   };
 
-  
-
   const myData = decodeMyTokenData();
 
   function displayCardMenu(event) {
@@ -154,6 +155,10 @@ function FeedDetailContainer() {
     setMenuModal(!menuModal);
     setCommentId(event.target.id);
   }
+
+  function closeToPopUp() {
+    setMenuModal(!menuModal);
+  }
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -161,6 +166,7 @@ function FeedDetailContainer() {
       <div style={{ marginTop: "60px", marginBottom: "220px" }}>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
+            <StBackGroundCloseDiv onClick={closeToPopUp} />
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
               transform="translateY(76vh)">
@@ -168,7 +174,7 @@ function FeedDetailContainer() {
             </StPopUpWhiteButton>
             <StPopUpWhiteButton
               onClick={displayCardMenu}
-              transform="translateY(77vh)">
+              transform="translateY(87vh)">
               닫기
             </StPopUpWhiteButton>
           </StShadowBackgroundDiv>
@@ -609,6 +615,7 @@ const StPopUpWhiteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 
   font-size: 22px;
   font-weight: 500;
@@ -621,6 +628,7 @@ const StPopUpWhiteButton = styled.button`
 
   width: 90%;
   height: 70px;
+  z-index: 11;
   transform: ${(props) => props.transform};
   cursor: pointer;
   @media only screen and (max-width: 500px) {

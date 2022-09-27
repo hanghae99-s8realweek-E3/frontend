@@ -12,6 +12,7 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import LoadingContainer from "../../../utils/loadingState";
 import ProfileCard from "../../common/ProfileCard";
+import { StBackGroundCloseDiv } from "../../interface/styledCommon";
 import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
@@ -124,7 +125,8 @@ function UserProfileContainer() {
 
             <StBottomWrap>
               {selectSort === true ? (
-                <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+                <StShadowBackgroundDiv>
+                  <StBackGroundCloseDiv onClick={toggleSortPopUp} />
                   <StPopupBox>
                     <StSlideDiv />
                     <StSort>

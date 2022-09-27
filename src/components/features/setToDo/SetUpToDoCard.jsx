@@ -1,4 +1,5 @@
 import {
+  StBackGroundCloseDiv,
   StCommonColumnBox,
   StCommonRowBox,
   StShadowBackgroundDiv,
@@ -109,6 +110,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
       {loading === true ? <LoadingContainer /> : <></>}
       {menuModal === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
           {isTodayChallenge === true ? (
             <StPopUpWhiteButton
               onClick={cancelTodayChallenge}
@@ -124,7 +126,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           )}
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)">
+            transform="translateY(87vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -282,6 +284,7 @@ const StMenuBtn = styled.button`
 
 const StPopUpWhiteButton = styled.button`
   background: #ffffff;
+  position: absolute;
 
   display: flex;
   justify-content: center;
@@ -295,7 +298,7 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-
+  z-index: 11;
   width: 90%;
   height: 70px;
   transform: ${(props) => props.transform};
