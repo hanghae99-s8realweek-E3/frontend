@@ -15,8 +15,9 @@ import {
 import ChallengeCard from "../../common/ChallengeCard";
 import { tokenChecker } from "../../../utils/token";
 import LoadingContainer from "../../../utils/loadingState";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import detailSlice, {
+  resetFeedDetailData,
+} from "../../../app/modules/detailSlice";
 
 // check uncheck
 
@@ -42,6 +43,10 @@ function FeedPageContainer() {
       feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
     );
   };
+
+  useEffect(() => {
+    dispatch(detailSlice.actions.resetFeedDetailData());
+  }, []);
   // 무한 스크롤 때 사용
   // console.log(inView);
   // console.log(card.length);
@@ -83,7 +88,6 @@ function FeedPageContainer() {
       }, 100);
       setSortState("최신순");
     } else if (tokenChecker() === true && mbti === undefined) {
-      //김대연 지적 사항 1
       dispatch(getTodoListsFetch(true));
       setInterval(() => {
         setLoading(false);
@@ -101,7 +105,6 @@ function FeedPageContainer() {
     //   setInterval(() => {
     //     setLoading(false);
     //   }, 100);
-    //   // 김대연 지적 사항 2
     //   // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
     // } else if (mbti !== undefined)
     //   dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));

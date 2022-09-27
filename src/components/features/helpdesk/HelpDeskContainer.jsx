@@ -15,7 +15,9 @@ function HelpDeskContainer() {
     else if (event.target.value === "faq") setSelectTab("faq");
   }
 
-  function notifyNowMaking() {}
+  function notifyNowMaking() {
+    alert("현재 준비중에 있습니다. 조금만 기다려주세요.");
+  }
 
   function moveToGoogleFormPage() {
     window.open("https://forms.gle/q1tNtjeTnfr5vfqr9");
