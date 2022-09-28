@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance, { preInstance } from "./instance";
 // import { setCookie } from "../../utils/cookie";
-import axios from "axios";
 
 const initialState = {
   message: "",

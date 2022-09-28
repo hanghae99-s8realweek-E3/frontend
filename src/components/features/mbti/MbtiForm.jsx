@@ -24,6 +24,16 @@ const MbtiForm = () => {
 
   useEffect(() => {
     if (myToken !== undefined && myToken !== null) {
+      if (myToken.provider === undefined) {
+        alert("카카오 약관에 동의해주지 않아 메인페이지로 돌아갑니다.");
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (myToken !== undefined && myToken !== null) {
       if (myToken.mbti !== undefined && myToken.mbti !== null) {
         navigate("/");
       }

@@ -4,12 +4,14 @@ import { emailFormat, passwordFormat } from "../../../utils/reqList";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
+import LoadingContainer from "../../../utils/loadingState";
 
 const SignUpForm = () => {
   //hook
   const confirmNumberRef = useRef();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [checkState, setCheckState] = useState({
     email: "none",
     password: "none",
@@ -109,11 +111,13 @@ const SignUpForm = () => {
       signupData.password !== signupData.confirmPassword
     ) {
       return alert("비밀번호2 형식을 확인해주세요");
-    } else if (signupData.nickname.length === 0 ||
+    } else if (
+      signupData.nickname.length === 0 ||
       signupData.nickname.length > 12
-      ) {
+    ) {
       return alert("닉네임 형식(12글자 이하)을 확인해주세요 ");
     }
+    setLoading(true);
     //axios
     const postSignUpFetch = async () => {
       try {
@@ -123,9 +127,11 @@ const SignUpForm = () => {
           //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
           window.localStorage.setItem("token", response.data.token);
           navigate("/mbti");
+          setLoading(false);
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        setLoading(false);
+        return alert("회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오.");
       }
     };
     postSignUpFetch(); //함수 발동
@@ -140,6 +146,7 @@ const SignUpForm = () => {
 
   return (
     <div>
+      {loading === true ? <LoadingContainer /> : <></>}
       <StOutLine type="submit" onSubmit={onSubmitSignUpComplete}>
         <StContainer>
           <StItem>
@@ -233,7 +240,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>닉네임</label>
-            <StInputWrap marginBottom="70px" >
+            <StInputWrap marginBottom="70px">
               <StInput
                 onChange={onChangeSignupData}
                 type="nickname"
@@ -373,7 +380,7 @@ const StSignUpBtn = styled.button`
     background: #ffa595;
   }
   -webkit-tap-highlight-color: transparent;
-  margin-top:40px;
+  margin-top: 40px;
 `;
 const StErrorTextMessage = styled.div`
   font-family: "IBM Plex Sans KR";
