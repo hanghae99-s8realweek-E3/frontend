@@ -51,7 +51,8 @@ function Header() {
 
   return (
     <HeaderContainer>
-      {window.location.pathname === "/" ? (
+      {window.location.pathname === "/" ||
+      window.location.pathname === "/mbti" ? (
         <div></div>
       ) : (
         <StBackBtn type="button" onClick={moveToPrevPage}>

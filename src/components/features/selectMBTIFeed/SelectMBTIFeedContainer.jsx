@@ -9,6 +9,7 @@ import { decodeMyTokenData } from "../../../utils/token";
 import { faQuestion, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   StBackGroundCloseDiv,
+  StCommonRowBox,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 
@@ -79,6 +80,10 @@ function SelectMBTIFeedContainer() {
   // 도움말 팝업창 상태 열고 닫기 적용
   function openToPopUpModal() {
     setOpenModal(!openModal);
+  }
+
+  function resetMBTIFilter() {
+    setSelectMBTI("");
   }
 
   return (
@@ -183,10 +188,15 @@ function SelectMBTIFeedContainer() {
           })}
         </StGrid>
       </div>
-      <StHelpButton onClick={openToPopUpModal}>
-        <FontAwesomeIcon icon={faQuestion} style={helpButton} /> 색상이 다른
-        이유는 무엇인가요?
-      </StHelpButton>
+      <StCommonRowBox>
+        <StHelpButton onClick={openToPopUpModal}>
+          <FontAwesomeIcon icon={faQuestion} style={helpButton} /> 색상이 다른
+          이유는 무엇인가요?
+        </StHelpButton>
+        <StFilterResetButton onClick={resetMBTIFilter}>
+          필터 초기화
+        </StFilterResetButton>
+      </StCommonRowBox>
       <StSelectFilterBtn onClick={moveToMBTIFeedPage}>확인</StSelectFilterBtn>
     </>
   );
@@ -243,8 +253,7 @@ const StHelpButton = styled.button`
 
   border: none;
   outline: none;
-  margin: 25px;
-  margin-top: 0;
+  margin: 0 auto 25px 25px;
   & svg {
     height: 21px;
     width: 21px;
@@ -253,8 +262,7 @@ const StHelpButton = styled.button`
   cursor: pointer;
   @media screen and (max-width: 500px) {
     font-size: 14px;
-    margin: 10px;
-    margin-top: 0;
+    margin: 0 auto 10px 10px;
     & svg {
       height: 14px;
       width: 14px;
@@ -391,4 +399,21 @@ const StCloseButton = styled.button`
   padding: 0;
 
   cursor: pointer;
+`;
+const StFilterResetButton = styled.button`
+  font-size: 14px;
+  color: #ff6d53;
+  font-weight: 500;
+
+  background: none;
+  border: none;
+  outline: none;
+  margin: 0 25px 25px auto;
+
+  cursor: pointer;
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+    margin: 0 10px 10px auto;
+  }
 `;
