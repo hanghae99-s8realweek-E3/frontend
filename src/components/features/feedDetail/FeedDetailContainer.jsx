@@ -86,7 +86,7 @@ function FeedDetailContainer() {
           setMenuModal(false);
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     deleteCommentFetch();
@@ -103,7 +103,9 @@ function FeedDetailContainer() {
           return navigate("/setuptodo");
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert(
+          "도전하기 설정에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     postFeedDetailFetch();
@@ -128,7 +130,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("댓글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     postCommentFetch();
@@ -144,7 +146,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     putMyPageFollowFetch();

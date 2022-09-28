@@ -190,8 +190,7 @@ function SelectMBTIFeedContainer() {
       </div>
       <StCommonRowBox>
         <StHelpButton onClick={openToPopUpModal}>
-          <FontAwesomeIcon icon={faQuestion} style={helpButton} /> 색상이 다른
-          이유는 무엇인가요?
+          <FontAwesomeIcon icon={faQuestion} /> 색상이 다른 이유는 무엇인가요?
         </StHelpButton>
         <StFilterResetButton onClick={resetMBTIFilter}>
           필터 초기화
@@ -255,8 +254,17 @@ const StHelpButton = styled.button`
   outline: none;
   margin: 0 auto 25px 25px;
   & svg {
-    height: 21px;
-    width: 21px;
+    background: gray;
+
+    color: white;
+
+    border-radius: 50%;
+    margin: 0 5px 0 0;
+    padding: 6px;
+
+    height: 14px;
+    width: 14px;
+    pointer-events: none;
   }
 
   cursor: pointer;
@@ -264,21 +272,12 @@ const StHelpButton = styled.button`
     font-size: 14px;
     margin: 0 auto 10px 10px;
     & svg {
-      height: 14px;
-      width: 14px;
+      margin-right: 0px;
+      height: 10px;
+      width: 10px;
     }
   }
 `;
-
-const helpButton = {
-  background: "gray",
-
-  color: "white",
-
-  borderRadius: "50%",
-  margin: "0 10px 0 0",
-  padding: "6px",
-};
 
 const StSelectFilterBtn = styled.button`
   background: #ff6d53;

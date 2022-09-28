@@ -83,7 +83,7 @@ function ProfileModifyForm() {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert("프로필 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     modifyConnect();
@@ -107,7 +107,7 @@ function ProfileModifyForm() {
           setLoading(false);
         }
       } catch (error) {
-        alert(error.response.data.errorMessage);
+        alert("프로필 이미지 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
         setLoading(false);
       }
     };
