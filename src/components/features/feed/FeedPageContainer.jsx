@@ -147,14 +147,14 @@ function FeedPageContainer() {
   };
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
-  const toggleSortPopUp = () => {
+  const toggleSortPopUp = (e) => {
     setSelectSort(!selectSort);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -170,13 +170,16 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
   //댓글순 정렬
   const sortComment = (e) => {
-    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -192,13 +195,18 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("댓글순");
     setSelectSort(!selectSort);
+
   };
   //도전순 정렬
   const sortChallenge = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -214,7 +222,11 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
@@ -268,7 +280,7 @@ function FeedPageContainer() {
         )}
 
         <StTopWrap>
-          {/* <StSearchBarBox>
+          <StSearchBarBox>
             <form onSubmit={searchData}>
               <StInput
                 placeholder="검색"
@@ -283,7 +295,7 @@ function FeedPageContainer() {
                 />
               </StSearchBtn>
             </form>
-          </StSearchBarBox> */}
+          </StSearchBarBox>
 
           <StWrap>
             <StChallengeWrap>

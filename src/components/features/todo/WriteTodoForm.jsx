@@ -93,13 +93,13 @@ function WriteTodoForm() {
             value={todo.todo}
             onChange={onChange}
           />
-          {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
+          {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌 */}
         <span>
-          입력할 수 있는 글자 수 :{" "}
+          {/* 입력할 수 있는 글자 수 :{" "} */}
           <StTextCount color={200 - todo.todo.length < 10 ? "red" : "black"}>
-            {200 - todo.todo.length}
+            {40 - todo.todo.length}
           </StTextCount>
-        </span> */}
+        </span>
           <Stbutton type="submit">등록하기</Stbutton>
         </StWriteTodoForm>
       </StTotalWrap>
@@ -148,6 +148,11 @@ const StWriteTodoTextArea = styled.textarea`
   outline: none;
   margin-left: 27px;
 `;
+
+const StTextCount = styled.div`
+display: flex;
+margin-left: 27px;
+`
 
 const Stbutton = styled.button`
   /* width: 450px; */

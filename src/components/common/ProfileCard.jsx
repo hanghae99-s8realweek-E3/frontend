@@ -1,6 +1,7 @@
 //대연
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,6 +19,22 @@ function ProfileCard({ profileData }) {
   const params = useParams();
   const myData = decodeMyTokenData();
   const [modalState, setModalState] = useState(false);
+  const gradeList = ["미콩", "미알", "미돌", "미킹"];
+  const [gradeState, setGradeState] = useState(gradeList[0]);
+
+  const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
+  const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
+  
+  useEffect(() => {
+    if (profileData.userInfo?.mimicCounts < 3) {
+      return setGradeState(gradeList[0]), setGradeeWordState(gradeWordList[0]);
+    } else if (profileData.userInfo?.mimicCounts < 5) {
+      return setGradeState(gradeList[1]), setGradeeWordState(gradeWordList[1]);
+    } else if (profileData.userInfo?.mimicCounts < 7) {
+      return setGradeState(gradeList[2]), setGradeeWordState(gradeWordList[2]);
+    } else
+      return setGradeState(gradeList[3]), setGradeeWordState(gradeWordList[3]);
+  }, []);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
@@ -59,11 +76,12 @@ function ProfileCard({ profileData }) {
   };
 
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
+
   return (
     <>
-      {modalState === true ? (
+      {/* {modalState === true ? (
         <StShadowBackgroundDiv>
-          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+          e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음)
           <StModalContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={changeModalState}>
               <FontAwesomeIcon
@@ -96,7 +114,6 @@ function ProfileCard({ profileData }) {
       ) : (
         <></>
       )}
-
       <StTotalWrap>
         <StImageBox>
           <StProfileImg
@@ -131,342 +148,105 @@ function ProfileCard({ profileData }) {
           </StMbtiFollowFollowingWrap>
         </StNoImageWrap>
       </StTotalWrap>
-
       {window.location.pathname === `/otherspage/${params.userId}` ? (
         <StFollowBtn onClick={changeFollowState}>
-          {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
+          현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼
           {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우"}
         </StFollowBtn>
       ) : (
         <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
-      )}
+      )} */}
+
+      <StTotalWrap>
+        <StImageBox>
+          <StProfileImg
+            src={
+              profileData.userInfo.profile !== "none"
+                ? profileData.userInfo.profile
+                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+            }
+            alt="dy"
+          />
+        </StImageBox>
+        <StNoImageWrap>
+          <StNickName>{profileData.userInfo.nickname}</StNickName>
+          <StMmtiFollowWrap>
+            <StMbti>{profileData.userInfo.mbti}</StMbti>
+            {window.location.pathname === `/otherspage/${params.userId}` ? (
+              <StFollowBtn onClick={changeFollowState}>
+                {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
+                {profileData.userInfo.isFollowed === false
+                  ? "팔로우"
+                  : "언팔로우"}
+              </StFollowBtn>
+            ) : (
+              <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+            )}
+          </StMmtiFollowWrap>
+        </StNoImageWrap>
+        <StGradeImageBox>
+          {gradeState === gradeList[0] ? (
+            <StImage
+              src={process.env.PUBLIC_URL + `/images/미콩.png`}
+              width="59.38"
+              height="71"
+            />
+          ) : gradeState === gradeList[1] ? (
+            <StImage
+              src={process.env.PUBLIC_URL + `/images/미알.png`}
+              width="59.38"
+              height="71"
+            />
+          ) : gradeState === gradeList[2] ? (
+            <StImage
+              src={process.env.PUBLIC_URL + `/images/미돌.png`}
+              width="59.38"
+              height="71"
+            />
+          ) : gradeState === gradeList[3] ? (
+            <StImage
+              src={process.env.PUBLIC_URL + `/images/미킹.png`}
+              width="59.38"
+              height="71"
+            />
+          ) : (
+            <></>
+          )}
+        </StGradeImageBox>
+      </StTotalWrap>
+      <StFollowGradeWrap>
+        {/* <StMbtiFollowFollowingWrap> */}
+        <StFollowWrap onClick={goFollow}>
+          <StFollowWord>팔로워</StFollowWord>
+          <StFollowNumber>
+            {window.location.pathname === "/mypage"
+              ? profileData.userInfo.follower
+              : profileData.userInfo.followerCount}
+          </StFollowNumber>
+        </StFollowWrap>
+        <StFollowingWrap onClick={goFollowing}>
+          <StFollowingWord>팔로잉</StFollowingWord>
+          <StFollowingNumber>
+            {window.location.pathname === "/mypage"
+              ? profileData.userInfo.following
+              : profileData.userInfo.followingCount}
+          </StFollowingNumber>
+        </StFollowingWrap>
+        <StGradeWrap>
+          <StGradebox>
+            <StGradeWord>등급</StGradeWord>
+            <StWhatGrade>예진님이미지</StWhatGrade>
+          </StGradebox>
+          <StGradeNumber>{gradeWordState}</StGradeNumber>
+        </StGradeWrap>
+        {/* </StMbtiFollowFollowingWrap> */}
+      </StFollowGradeWrap>
     </>
   );
 }
 
-// 프로필카드 변경
-// {/* <StTotalWrap>
-//         <StImageBox>
-//           <StProfileImg
-//             src={
-//               profileData.userInfo.profile !== "none"
-//                 ? profileData.userInfo.profile
-//                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-//             }
-//             alt="dy"
-//           />
-//         </StImageBox>
-//         <StNoImageWrap>
-//           <StNickName>{profileData.userInfo.nickname}</StNickName>
-//           <StMbtiFollowFollowingWrap>
-//             <StMbti>{profileData.userInfo.mbti}</StMbti>
-//             <StFollowWrap onClick={goFollow}>
-//               <StFollowWord>팔로워</StFollowWord>
-//               <StFollowNumber>
-//                 {window.location.pathname === "/mypage"
-//                   ? profileData.userInfo.follower
-//                   : profileData.userInfo.followerCount}
-//               </StFollowNumber>
-//             </StFollowWrap>
-//             <StFollowingWrap onClick={goFollowing}>
-//               <StFollowingWord>팔로잉</StFollowingWord>
-//               <StFollowingNumber>
-//                 {window.location.pathname === "/mypage"
-//                   ? profileData.userInfo.following
-//                   : profileData.userInfo.followingCount}
-//               </StFollowingNumber>
-//             </StFollowingWrap>
-//           </StMbtiFollowFollowingWrap>
-//         </StNoImageWrap>
-//       </StTotalWrap>
-
-//       {window.location.pathname === `/otherspage/${params.userId}` ? (
-//         <StFollowBtn onClick={changeFollowState}>
-
-//           {profileData.userInfo.isFollowed === false ? "팔로우" : "언팔로우"}
-//         </StFollowBtn>
-//       ) : (
-//         <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
-//       )}
-//     </>
-//   );
-// }
 export default ProfileCard;
 
-const StTotalWrap = styled.div`
-  background-color: white;
-  width: 100%;
-  margin-top: 31.5px;
-  display: flex;
-  flex-direction: row;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 360px;
-    margin: 0px;
-    background-color: white;
-    margin-top: 22.68px;
-  }
-`;
-const StImageBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 80px;
-  overflow: hidden;
-  margin-left: 35px;
-  border-radius: 50%;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 57.6px;
-    height: 57.6px;
-    margin: 0 0 0 25.2px;
-  }
-`;
-
-const StProfileImg = styled.img`
-  height: 80px;
-  width: auto;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 57.6px;
-    height: 57.6px;
-  }
-`;
-const StNoImageWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    margin: 0 0 0 16px;
-  }
-`;
-const StNickName = styled.div`
-  flex-direction: row;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 32px;
-  color: #000000;
-  margin-left: 16px;
-  text-align: left;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 100%;
-    margin: 0px;
-    font-size: 18px;
-  }
-`;
-const StMbtiFollowFollowingWrap = styled.div`
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 230px;
-    font-size: 5px;
-    margin: 0px;
-  }
-  display: flex;
-`;
-const StMbti = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 42px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 32px;
-  text-align: left;
-  color: #979797;
-  margin-left: 19px;
-  @media screen and (max-width: 500px) {
-    align-items: flex-start;
-    text-align: left;
-    width: 100%;
-    margin-left: 2px;
-    font-size: 16px;
-  }
-`;
-const StFollowWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 100px;
-  gap: 7px;
-  cursor: pointer;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 100%;
-    margin-left: 50px;
-  }
-  transition: ease 0.1s;
-  &:hover div {
-    color: #8e8e8e;
-  }
-`;
-const StFollowNumber = styled.div`
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-  @media screen and (max-width: 500px) {
-    font-size: 16px;
-  }
-`;
-const StFollowWord = styled.div`
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-`;
-const StFollowingWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 55px;
-  gap: 7px;
-  cursor: pointer;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 100%;
-    margin: 0px;
-  }
-  transition: ease 0.1s;
-  &:hover div {
-    color: #8e8e8e;
-  }
-`;
-const StFollowingNumber = styled.div`
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-  @media screen and (max-width: 500px) {
-    font-size: 16px;
-  }
-`;
-const StFollowingWord = styled.div`
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 32px;
-  text-align: center;
-  color: #000000;
-  transition: ease 0.05s;
-`;
-const StFollowBtn = styled.button`
-  display: flex;
-  width: 60px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  text-align: center;
-  color: #ff6d53;
-  background-color: white;
-  margin: 1.5px 0 22px 127px;
-  border: 0px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    margin-left: 95px;
-  }
-`;
-const StInfo = styled.div`
-  /* display: flex; */
-  width: 84.66px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  text-align: center;
-  color: #ff6d53;
-  background: none;
-  border: none;
-  margin: 1.5px 0 22px 125px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    margin-left: 95px;
-  }
-`;
-
-const StCloseButton = styled.button`
-  background: none;
-  display: block;
-  border: none;
-  border-radius: none;
-  margin: 0;
-  margin-left: auto;
-  padding: 0;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-`;
-const StContent = styled.div`
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: left;
-  bottom: 0;
-  height: 90%;
-  box-sizing: border-box;
-  & > h2 {
-    font-size: 32px;
-    line-height: 34px;
-    font-weight: 700;
-    color: #313131;
-    margin: 17px auto;
-  }
-  @media screen and (max-width: 500px) {
-    & > h2 {
-      font-size: 24px;
-      line-height: 30px;
-    }
-  }
-`;
-const StText = styled.p`
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
-  color: #919191;
-  margin: 0;
-  margin-bottom: 42px;
-  @media screen and (max-width: 500px) {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-`;
-
-const StModalContainer = styled.div`
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 25px;
-  margin: 10vh auto;
-  width: 90%;
-  height: 620px;
-  box-sizing: border-box;
-  @media screen and (max-width: 500px) {
-    width: 324px;
-    margin: 18px;
-    height: 540px;
-    margin: 7vh auto;
-  }
-`;
-
-// 프로필 카드 변경
 // const StTotalWrap = styled.div`
 //   background-color: white;
 //   width: 100%;
@@ -739,3 +519,347 @@ const StModalContainer = styled.div`
 //     margin: 7vh auto;
 //   }
 // `;
+
+// 프로필 카드 변경
+const StTotalWrap = styled.div`
+  background-color: white;
+  width: 100%;
+  margin-top: 31.5px;
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 360px;
+    margin: 0px;
+    background-color: white;
+    margin-top: 22.68px;
+  }
+`;
+const StGradeImageBox = styled.div`
+  display: flex;
+`;
+const StImageBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  overflow: hidden;
+  margin-left: 35px;
+  border-radius: 50%;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+    margin: 0 0 0 25.2px;
+  }
+`;
+const StImage = styled.img`
+  display: flex;
+  margin-left: 20px;
+  transform: scaleX(-1);
+  /* justify-content: center; */
+`;
+
+const StProfileImg = styled.img`
+  height: 80px;
+  width: 80px;
+
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 57.6px;
+    height: 57.6px;
+  }
+`;
+// const StNoImageWrap = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   @media screen and (max-width: 500px) {
+//     align-items: center;
+//     margin: 0 0 0 16px;
+//   }
+// `;
+const StNoImageWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+`;
+const StMmtiFollowWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const StNickName = styled.div`
+  flex-direction: row;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: #000000;
+  margin-left: 16px;
+  text-align: left;
+  width: 256.91px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin: 0px;
+    font-size: 18px;
+  }
+`;
+const StMbtiFollowFollowingWrap = styled.div`
+  display: flex;
+  margin-left: 20px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 230px;
+    font-size: 5px;
+    margin: 0px;
+  }
+`;
+const StFollowGradeWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 49px;
+  margin-bottom: 41px;
+`;
+const StMbti = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  width: 42px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  /* line-height: 32px; */
+  text-align: left;
+  color: #979797;
+  margin-left: 19px;
+  @media screen and (max-width: 500px) {
+    /* align-items: flex-start; */
+    text-align: left;
+    margin-left: 2px;
+    font-size: 16px;
+  }
+`;
+const StFollowWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 100px; */
+
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    /* margin-left: 50px; */
+  }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
+`;
+const StFollowNumber = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  /* line-height: 32px; */
+  text-align: center;
+  color: #000000;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
+`;
+const StFollowWord = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
+`;
+const StFollowingWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 55px;
+
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin: 0px;
+  }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
+`;
+
+const StGradeWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 55px;
+
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 100%;
+    margin: 0px;
+  }
+  transition: ease 0.1s;
+  &:hover div {
+    color: #8e8e8e;
+  }
+`;
+
+const StGradebox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const StGradeWord = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
+`;
+const StWhatGrade = styled.div``;
+const StGradeNumber = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
+`;
+const StFollowingNumber = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
+`;
+const StFollowingWord = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
+  transition: ease 0.05s;
+`;
+const StFollowBtn = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #ff6d53;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+  -webkit-tap-highlight-color: transparent;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin: 0px;
+    font-size: 13px;
+  }
+`;
+const StInfo = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #ff6d53;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin: auto;
+  margin-left: 20px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 95px;
+  }
+`;
+
+const StCloseButton = styled.button`
+  background: none;
+  display: block;
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+`;
+const StContent = styled.div`
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  bottom: 0;
+  height: 90%;
+  box-sizing: border-box;
+  & > h2 {
+    font-size: 32px;
+    line-height: 34px;
+    font-weight: 700;
+    color: #313131;
+    margin: 17px auto;
+  }
+  @media screen and (max-width: 500px) {
+    & > h2 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
+`;
+const StText = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #919191;
+  margin: 0;
+  margin-bottom: 42px;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+`;
+
+const StModalContainer = styled.div`
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 25px;
+  margin: 10vh auto;
+  width: 90%;
+  height: 620px;
+  box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: 18px;
+    height: 540px;
+    margin: 7vh auto;
+  }
+`;

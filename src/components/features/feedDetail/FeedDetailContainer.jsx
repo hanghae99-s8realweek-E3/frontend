@@ -21,6 +21,69 @@ function FeedDetailContainer() {
   const [menuModal, setMenuModal] = useState(false);
   const [commentId, setCommentId] = useState("");
 
+  const gradeList = ["미돌", "미알", "미콩", "미킹"];
+  const [gradeState, setGradeState] = useState(gradeList[0]);
+  const gradeWordList = ["Lv.1 미돌", "Lv.2 미알", "Lv.3 미콩", "Lv.4 미킹"];
+  const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
+  const detailState = useSelector((state) => state.detail);
+  console.log(detailState);
+  console.log(detailState.data.comments?.map((x) => x.challengeCounts));
+  console.log(detailState.data.comments?.map((x) => x.todoCounts));
+  //옵셔널 체이닝 해제했을 때
+  //console.log(detailState)의 값을 확인하면 좋아요
+  //https://velog.io/@yiseul/Cannot-read-properties-of-undefined-%EC%97%90%EB%9F%AC
+  useEffect(() => {
+    if (
+      detailState.data.todoInfo?.challengedCounts +
+        detailState.data.todoInfo?.todoCounts <
+      4
+    ) {
+      return setGradeState(gradeList[0]);
+    } else if (
+      detailState.data.comments?.map((x) => x.challengeCounts) +
+        detailState.data.comments?.map((x) => x.todoCounts) <
+      4
+    ) {
+      return setGradeeWordState(gradeWordList[0]);
+    } else if (
+      detailState.data.todoInfo?.challengedCounts +
+        detailState.data.todoInfo?.todoCounts <
+      5
+    ) {
+      return setGradeState(gradeList[1]);
+    } else if (
+      detailState.data.comments?.map((x) => x.challengeCounts) +
+        detailState.data.comments?.map((x) => x.todoCounts) <
+      5
+    ) {
+      return setGradeeWordState(gradeWordList[1]);
+    } else if (
+      detailState.data.todoInfo?.challengedCounts +
+        detailState.data.todoInfo?.todoCounts <
+      7
+    ) {
+      return setGradeState(gradeList[2]);
+    } else if (
+      detailState.data.comments?.map((x) => x.challengeCounts) +
+        detailState.data.comments?.map((x) => x.todoCounts) <
+      7
+    ) {
+      return setGradeeWordState(gradeWordList[2]);
+    } else if (
+      detailState.data.todoInfo?.challengedCounts +
+        detailState.data.todoInfo?.todoCounts <
+      9
+    ) {
+      return setGradeState(gradeList[3]);
+    } else if (
+      detailState.data.comments?.map((x) => x.challengeCounts) +
+        detailState.data.comments?.map((x) => x.todoCounts) <
+      9
+    ) {
+      return setGradeState(gradeWordList[3]);
+    }
+  }, []);
+
   //useEffect의 위치 선정 중요.
   useEffect(() => {
     //토큰체크 후 없으면 로그인페이지 이동
@@ -29,8 +92,6 @@ function FeedDetailContainer() {
       navigate("/mypage");
     }
   }, []);
-
-  const detailState = useSelector((state) => state.detail);
 
   useEffect(() => {
     setLoading(true);
@@ -44,23 +105,23 @@ function FeedDetailContainer() {
     // },500)
   }, []);
 
-  useEffect(() => {
-    if (loading === true) {
-      if (detailState.data.length === 0) {
-        navigate("/todolists");
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (
-      detailState.errorMessage !== undefined &&
-      detailState.errorMessage !== ""
-    ) {
-      alert(detailState.errorMessage);
-      navigate("/todolists");
-    }
-  }, [detailState]);
+  // 대연 -> 일단 주석 처리했습니다
+  // useEffect(() => {
+  //   if (loading === true) {
+  //     if (detailState.data.length === 0) {
+  //       navigate("/todolists");
+  //     }
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   if (
+  //     detailState.errorMessage !== undefined &&
+  //     detailState.errorMessage !== ""
+  //   ) {
+  //     alert(detailState.errorMessage);
+  //     navigate("/todolists");
+  //   }
+  // }, [detailState]);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -155,19 +216,20 @@ function FeedDetailContainer() {
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
-
       <div style={{ marginTop: "60px", marginBottom: "220px" }}>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
-              transform="translateY(76vh)">
+              transform="translateY(76vh)"
+            >
               삭제
             </StPopUpWhiteButton>
 
             <StPopUpWhiteButton
               onClick={displayCardMenu}
-              transform="translateY(77vh)">
+              transform="translateY(77vh)"
+            >
               닫기
             </StPopUpWhiteButton>
           </StShadowBackgroundDiv>
@@ -193,12 +255,44 @@ function FeedDetailContainer() {
                 <StNickMBTIWarp>
                   <StNickname
                     id={detailState.data.todoInfo.userId}
-                    onClick={onClickGoToOtherspage}>
+                    onClick={onClickGoToOtherspage}
+                  >
                     {detailState.data.todoInfo.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
                 </StNickMBTIWarp>
-                {myData.userId === detailState.data.todoInfo.userId ? (
+
+                <StGradeImageBox>
+                  {gradeState === gradeList[0] ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : gradeState === gradeList[1] ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : gradeState === gradeList[2] ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : gradeState === gradeList[3] ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </StGradeImageBox>
+
+                {/* {myData.userId === detailState.data.todoInfo.userId ? (
                   <></>
                 ) : detailState.data.isFollowed === false ? (
                   <StFollowBtn
@@ -212,7 +306,7 @@ function FeedDetailContainer() {
                     onClick={changeFollowState}>
                     언팔로우
                   </StFollowBtn>
-                )}
+                )} */}
               </StUserIdBox>
               <StDetailCard>
                 <DetailCard data={detailState.data.todoInfo} />
@@ -222,7 +316,8 @@ function FeedDetailContainer() {
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo.todoId}>
+                  id={detailState.data.todoInfo.todoId}
+                >
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -232,7 +327,8 @@ function FeedDetailContainer() {
                 width: "100%",
                 background: "white",
                 padding: "10px 0",
-              }}>
+              }}
+            >
               {detailState.data.comments?.map((x, index) => {
                 return (
                   <div key={index}>
@@ -250,16 +346,20 @@ function FeedDetailContainer() {
                             }
                           />
                         </StProfileBox>
+
                         <StNicknameComment
                           id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}>
+                          onClick={onClickCommentGoToOtherspage}
+                        >
                           {x.nickname}
                         </StNicknameComment>
+                        <div>{gradeWordState}</div>
                         <StChangeDeleteBtn>
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}>
+                              onClick={displayCardMenu}
+                            >
                               <FontAwesomeIcon icon={faEllipsisVertical} />
                             </StMenuBtn>
                           ) : (
@@ -622,4 +722,13 @@ const StPopUpWhiteButton = styled.button`
     width: 90%;
     margin: 0 20px;
   }
+`;
+
+const StGradeImageBox = styled.div`
+  display: flex;
+`;
+const StImage = styled.img`
+  display: flex;
+  margin-left: 190px;
+  /* justify-content: center; */
 `;
