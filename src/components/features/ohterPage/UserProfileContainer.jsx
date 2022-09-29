@@ -252,8 +252,9 @@ function UserProfileContainer() {
 
 const StTotalWrap = styled.div`
   display: flex;
-  width: 500px;
+  /* width: 500px; */
   flex-direction: column;
+  justify-content: flex-start;
   @media screen and (max-width: 500px) {
     display: flex;
     width: 360px;
@@ -261,11 +262,12 @@ const StTotalWrap = styled.div`
   }
 `;
 const StTopWrap = styled.div`
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 60px;
   /* padding-bottom: 31.5px; */
   background-color: #ffffff;
+
 `;
 const StTodoTopLine = styled.div`
   display: flex;

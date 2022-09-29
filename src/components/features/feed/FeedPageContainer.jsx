@@ -280,7 +280,7 @@ function FeedPageContainer() {
         )}
 
         <StTopWrap>
-          <StSearchBarBox>
+          {/* <StSearchBarBox>
             <form onSubmit={searchData}>
               <StInput
                 placeholder="검색"
@@ -295,7 +295,7 @@ function FeedPageContainer() {
                 />
               </StSearchBtn>
             </form>
-          </StSearchBarBox>
+          </StSearchBarBox> */}
 
           <StWrap>
             <StChallengeWrap>
