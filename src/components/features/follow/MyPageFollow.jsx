@@ -436,6 +436,8 @@ const StProfileBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
+
   ${({ width, height }) => {
     return css`
       width: ${width || "60px"};
@@ -461,6 +463,7 @@ const StProfileImg = styled.img`
   width: 60px;
   height: auto;
   margin: 0;
+  pointer-events: none;
   @media only screen and (max-width: 500px) {
     width: 40px;
     height: auto;
