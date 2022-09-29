@@ -7,7 +7,7 @@ import { getFeedDetailFetch } from "../../../app/modules/detailSlice";
 import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   StBackGroundCloseDiv,
@@ -23,6 +23,32 @@ function FeedDetailContainer() {
   const [loading, setLoading] = useState(false);
   const [menuModal, setMenuModal] = useState(false);
   const [commentId, setCommentId] = useState("");
+  const [gradeModalState, setGradeModalState] = useState(false);
+  const gradeList = ["미돌", "미알", "미콩", "미킹"];
+  const [gradeState, setGradeState] = useState(gradeList[0]);
+  const gradeWordList = ["Lv.1 미돌", "Lv.2 미알", "Lv.3 미콩", "Lv.4 미킹"];
+  const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
+  const detailState = useSelector((state) => state.detail);
+  console.log(detailState);
+  console.log(detailState.data.comments?.map((x) => x.challengeCounts));
+  console.log(detailState.data.comments?.map((x) => x.todoCounts));
+  const arrA = detailState.data.comments?.map((x) => x.challengeCounts);
+  const arrB = detailState.data.comments?.map((x) => x.todoCounts);
+  console.log(arrA);
+  console.log(arrB);
+  console.log(arrA?.map((x, y) => x + arrB[y])); // [6, 8, 10, 12,]
+  const cardImg =
+    detailState.data.todoInfo?.challengeCounts +
+    detailState.data.todoInfo?.todoCounts;
+  const comment = arrA?.map((x, y) => x + arrB[y]);
+  console.log(comment);
+  console.log(comment?.map((x, idx) => x));
+  console.log(cardImg);
+  // const cardImg = detailState.data.todoInfo?.challengeCounts + detailState.data.todoInfo?.todoCounts
+  // const comment =  detailState.data.comments?.map((x) => x.challengeCounts) + detailState.data.comments?.map((x) => x.todoCounts)
+  //옵셔널 체이닝 해제했을 때
+  //console.log(detailState)의 값을 확인하면 좋아요
+  //https://velog.io/@yiseul/Cannot-read-properties-of-undefined-%EC%97%90%EB%9F%AC
 
   //useEffect의 위치 선정 중요.
   useEffect(() => {
@@ -32,8 +58,6 @@ function FeedDetailContainer() {
       navigate("/mypage");
     }
   }, []);
-
-  const detailState = useSelector((state) => state.detail);
 
   useEffect(() => {
     setLoading(true);
@@ -47,23 +71,23 @@ function FeedDetailContainer() {
     // },500)
   }, []);
 
-  useEffect(() => {
-    if (loading === true) {
-      if (detailState.data.length === 0) {
-        navigate("/todolists");
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (
-      detailState.errorMessage !== undefined &&
-      detailState.errorMessage !== ""
-    ) {
-      alert(detailState.errorMessage);
-      navigate("/todolists");
-    }
-  }, [detailState]);
+  // 대연 -> 일단 주석 처리했습니다
+  // useEffect(() => {
+  //   if (loading === true) {
+  //     if (detailState.data.length === 0) {
+  //       navigate("/todolists");
+  //     }
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   if (
+  //     detailState.errorMessage !== undefined &&
+  //     detailState.errorMessage !== ""
+  //   ) {
+  //     alert(detailState.errorMessage);
+  //     navigate("/todolists");
+  //   }
+  // }, [detailState]);
 
   const onClickGoToOtherspage = (e) => {
     e.preventDefault();
@@ -164,24 +188,113 @@ function FeedDetailContainer() {
   function closeToPopUp() {
     setMenuModal(!menuModal);
   }
+
+  const gradeChangeModalState = () => {
+    setGradeModalState(!gradeModalState);
+  };
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
-
-      <div style={{ marginTop: "60px", marginBottom: "220px" }}>
+      <StTotalWrap>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
             <StBackGroundCloseDiv onClick={closeToPopUp} />
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
-              transform="translateY(76vh)">
+              transform="translateY(76vh)"
+            >
               삭제
             </StPopUpWhiteButton>
             <StPopUpWhiteButton
               onClick={displayCardMenu}
-              transform="translateY(87vh)">
+              transform="translateY(77vh)"
+            >
               닫기
             </StPopUpWhiteButton>
+          </StShadowBackgroundDiv>
+        ) : (
+          <></>
+        )}
+
+        {gradeModalState === true ? (
+          <StShadowBackgroundDiv>
+            {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+            <StGradeModalContainer onClick={(e) => e.stopPropagation()}>
+              <StGradeCloseButton type="button" onClick={gradeChangeModalState}>
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  style={{
+                    fontSize: "18px",
+                    color: "black",
+                    pointerEvents: "none",
+                  }}
+                />
+              </StGradeCloseButton>
+              <StGradeModalTotalWrap>
+                <StTitle>미믹 성장 등급</StTitle>
+                <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
+                <StIconExplainWrap>
+                  <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} />
+                  <StExplain>
+                    <StExplainName>미콩</StExplainName>
+                    <StExplainContentWrap>
+                      <StExplainContent>
+                        <span style={{ fontWeight: 700 }}>월 0~3회</span>
+                      </StExplainContent>
+                      <StExplainContent>
+                        미믹 도전완료 + 미믹 제안
+                      </StExplainContent>
+                    </StExplainContentWrap>
+                  </StExplain>
+                </StIconExplainWrap>
+
+                <StIconExplainWrap>
+                  <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`} />
+                  <StExplain>
+                    <StExplainName>미알</StExplainName>
+                    <StExplainContent>
+                      <span style={{ fontWeight: 700 }}>월4~5회</span>
+                    </StExplainContent>
+                    <StExplainContent>
+                      미믹 도전완료 + 미믹 제안
+                    </StExplainContent>
+                  </StExplain>
+                </StIconExplainWrap>
+
+                <StIconExplainWrap>
+                  <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} />
+                  <StExplain>
+                    <StExplainName>미돌</StExplainName>
+                    <StExplainContent>
+                      <span style={{ fontWeight: 700 }}>월6~7회</span> 미믹 도전
+                    </StExplainContent>
+                    <StExplainContent>
+                      미믹 도전완료 + 미믹 제안
+                    </StExplainContent>
+                    <StExplainContent>
+                      {/* 명예의 전당<span style={{ fontWeight: 700 }}>1회 등극</span> */}
+                    </StExplainContent>
+                  </StExplain>
+                </StIconExplainWrap>
+
+                <StIconExplainWrap>
+                  <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} />
+                  <StExplain>
+                    <StExplainName>미킹</StExplainName>
+                    <StExplainContent>
+                      <span style={{ fontWeight: 700 }}>월8회 이상</span> 미믹
+                      도전
+                    </StExplainContent>
+                    <StExplainContent>
+                      미믹 도전완료 + 미믹 제안
+                    </StExplainContent>
+                    <StExplainContent>
+                      {/* 명예의 전당<span style={{ fontWeight: 700 }}>3회 등극</span> */}
+                    </StExplainContent>
+                  </StExplain>
+                </StIconExplainWrap>
+              </StGradeModalTotalWrap>
+            </StGradeModalContainer>
           </StShadowBackgroundDiv>
         ) : (
           <></>
@@ -205,12 +318,44 @@ function FeedDetailContainer() {
                 <StNickMBTIWarp>
                   <StNickname
                     id={detailState.data.todoInfo.userId}
-                    onClick={onClickGoToOtherspage}>
+                    onClick={onClickGoToOtherspage}
+                  >
                     {detailState.data.todoInfo.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
                 </StNickMBTIWarp>
-                {myData.userId === detailState.data.todoInfo.userId ? (
+
+                <StGradeImageBox>
+                  {cardImg < 3 ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : cardImg < 5 ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미알.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : cardImg < 7 ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : cardImg < 9 ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </StGradeImageBox>
+
+                {/* {myData.userId === detailState.data.todoInfo.userId ? (
                   <></>
                 ) : detailState.data.isFollowed === false ? (
                   <StFollowBtn
@@ -224,8 +369,28 @@ function FeedDetailContainer() {
                     onClick={changeFollowState}>
                     언팔로우
                   </StFollowBtn>
-                )}
+                )} */}
+                <StGradeWrap>
+                  <StGradeWrod>
+                    {" "}
+                    {cardImg < 3 ? (
+                      gradeList[0]
+                    ) : cardImg < 5 ? (
+                      gradeList[1]
+                    ) : cardImg < 7 ? (
+                      gradeList[2]
+                    ) : cardImg < 9 ? (
+                      gradeList[3]
+                    ) : (
+                      <></>
+                    )}
+                  </StGradeWrod>
+                  <StGradeExplain onClick={gradeChangeModalState}>
+                    미믹등급
+                  </StGradeExplain>
+                </StGradeWrap>
               </StUserIdBox>
+
               <StDetailCard>
                 <DetailCard data={detailState.data.todoInfo} />
               </StDetailCard>
@@ -236,7 +401,8 @@ function FeedDetailContainer() {
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo.todoId}>
+                  id={detailState.data.todoInfo.todoId}
+                >
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -245,8 +411,10 @@ function FeedDetailContainer() {
               style={{
                 width: "100%",
                 background: "white",
-                padding: "10px 0",
-              }}>
+                padding: "30px 0",
+            
+              }}
+            >
               {detailState.data.comments?.map((x, index) => {
                 return (
                   <div key={index}>
@@ -264,16 +432,34 @@ function FeedDetailContainer() {
                             }
                           />
                         </StProfileBox>
+
                         <StNicknameComment
                           id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}>
+                          onClick={onClickCommentGoToOtherspage}
+                        >
                           {x.nickname}
                         </StNicknameComment>
+                        <div id={x.userId}></div>
+                        <StCommentGrade>
+                          {x.challengeCounts + x.todoCounts < 3 ? (
+                            gradeWordList[0]
+                          ) : x.challengeCounts + x.todoCounts < 5 ? (
+                            gradeWordList[1]
+                          ) : x.challengeCounts + x.todoCounts < 7 ? (
+                            gradeWordList[2]
+                          ) : x.challengeCounts + x.todoCounts < 9 ? (
+                            gradeWordList[3]
+                          ) : (
+                            <></>
+                          )}
+                        </StCommentGrade>
+
                         <StChangeDeleteBtn>
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}>
+                              onClick={displayCardMenu}
+                            >
                               <FontAwesomeIcon
                                 style={{ pointerEvents: "none" }}
                                 icon={faEllipsisVertical}
@@ -316,59 +502,65 @@ function FeedDetailContainer() {
             </StWriteComment>
           </div>
         )}
-      </div>
+      </StTotalWrap>
     </>
   );
 }
 
 export default FeedDetailContainer;
 
+const StTotalWrap = styled.div`
+  display: flex;
+  margin-top: 60px;
+  width: 500px;
+  margin-bottom: 60px;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+    margin-top: 60px;
+  }
+`;
 const StCommentBox = styled.div`
-  /* background-color:red; */
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 15px auto 15px 20px;
+  margin: 0px auto 15px 20px;
   -webkit-tap-highlight-color: transparent;
 `;
 const StUserIdBox = styled.div`
-  /* background-color:yellow; */
   display: flex;
   flex-direction: row;
-  width: 450px;
-  margin: auto;
-  /* margin: 0px auto 10px 20px; */
-  /* margin-left: 21px; */
+  width: 500px;
+  margin-left: 20px;
   align-items: center;
-  /* cursor: pointer; */
   @media only screen and (max-width: 500px) {
-    width: 90%;
+    /* width: 90%; */
+    margin: 0px;
   }
 `;
 
 const StProfilWrap = styled.div`
-  /* background-color:yellow; */
-
+  width: 500px;
   background-color: #edecec;
   padding-top: 20px;
   padding-bottom: 10px;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StImgNickname = styled.div`
-  /* background-color:green; */
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
   @media only screen and (max-width: 500px) {
     width: 90%;
-    height: 50px;
+    /* height: 50px; */
+    height: 27px;
   }
 `;
 
 const StProfileBox = styled.div`
-  /* background-color:yellow; */
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -385,32 +577,18 @@ const StProfileBox = styled.div`
   overflow: hidden;
   margin: 10px;
   @media only screen and (max-width: 500px) {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-top: 20px;
+    margin-left: 8.64px;
   }
 `;
 
 const StProfileImg = styled.img`
-  /* background-color: gray; */
-  /* border-radius: 15px; */
-  /* cursor: pointer; */
-  /* width:30px;
-  height:30px;
-  margin:10px; */
-  ${({ width, height, margin, borderRadius }) => {
-    return css`
-      width: ${width || "auto"};
-      height: ${height || "50px"};
-      /* margin: ${margin || "10px"}; */
-      /* border-radius: ${borderRadius || "25px"}; */
-    `;
-  }}
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: arrow;
   @media only screen and (max-width: 500px) {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
   }
 `;
@@ -418,34 +596,36 @@ const StProfileImg = styled.img`
 const StNickMBTIWarp = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin-left: 16px;
+  @media only screen and (max-width: 500px) {
+    margin-left: 0px;
+  }
 `;
 
 const StNickname = styled.div`
-  /* background-color:red; */
   text-align: start;
-  margin-right: 18px;
   font-weight: 500;
   font-size: 22px;
   cursor: pointer;
-  /* margin-top:5px; */
-  /* border:1px solid; */
+  width: 260px;
   transition: ease 0.1s;
   &:hover {
     color: #5e5c5c;
   }
   -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
-    font-size: 18px;
+    font-size: 17px;
     margin-right: 10px;
+    width: 185px;
   }
 `;
 
 const StMBTI = styled.div`
-  /* background-color:red; */
   font-weight: 500;
   font-size: 18px;
   color: #5e5c5c;
-  margin-left: 3px;
+
   text-align: start;
 
   @media only screen and (max-width: 500px) {
@@ -474,7 +654,6 @@ const StFollowBtn = styled.button`
 `;
 
 const StDetailCard = styled.div`
-  /* background-color: red; */
   margin: auto;
   margin-top: 15px;
   @media only screen and (max-width: 500px) {
@@ -494,6 +673,22 @@ const StNicknameComment = styled.div`
   &:hover {
     color: #5e5c5c;
   }
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+  }
+`;
+const StCommentGrade = styled.div`
+  display: flex;
+  margin-left: 12px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  color: #ff6d53;
+  height: 18px;
+  @media only screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 const StComment = styled.div`
   align-items: flex-start;
@@ -506,7 +701,8 @@ const StComment = styled.div`
   margin-right: 50px;
   word-wrap: break-word;
   @media only screen and (max-width: 500px) {
-    margin-left: 70px;
+    margin-left: 50px;
+    font-size: 12px;
   }
 `;
 
@@ -546,10 +742,8 @@ const StWriteComment = styled.form`
 `;
 
 const StInput = styled.input`
-  /* background-color:red; */
   margin-left: auto;
   margin-right: 15px;
-
   border: 1px solid #979797;
   border-radius: 6px;
   width: 70%;
@@ -659,5 +853,148 @@ const StPopUpWhiteButton = styled.button`
   @media only screen and (max-width: 500px) {
     width: 90%;
     margin: -50px 20px 50px 20px;
+  }
+`;
+
+const StGradeImageBox = styled.div`
+  display: flex;
+`;
+const StImage = styled.img`
+  display: flex;
+  width: 46px;
+  height: 55px;
+  @media only screen and (max-width: 500px) {
+    width: 33px;
+    height: 40px;
+  }
+`;
+
+const StGradeModalContainer = styled.div`
+  background: white;
+  border-radius: 6px;
+  padding: 25px;
+  margin: 10vh auto;
+  width: 450px;
+  height: 750px;
+  box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: 18px;
+    height: 660px;
+  }
+`;
+
+const StGradeCloseButton = styled.button`
+  background: none;
+  display: block;
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const StGradeModalTotalWrap = styled.div`
+  flex-direction: column;
+`;
+const StTitle = styled.div`
+  text-align: center;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 34px;
+  color: #313131;
+  margin-bottom: 6px;
+`;
+const StText = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #919191;
+  margin: 0;
+  margin-bottom: 42px;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+`;
+const StIconExplainWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 12px;
+  text-align: start;
+`;
+const StIcon = styled.img`
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 7px;
+  }
+`;
+const StExplain = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-left: 42px;
+`;
+const StExplainName = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ff6d53;
+`;
+const StExplainContentWrap = styled.div`
+  display: flex;
+  margin-top: 8px;
+  flex-direction: column;
+`;
+const StExplainContent = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 23px;
+  letter-spacing: -0.05em;
+  color: #313131;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+`;
+const StGradeWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin-left: 11px;
+`;
+const StGradeWrod = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  color: #ff6d53;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+`;
+const StGradeExplain = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  text-decoration-line: underline;
+  color: #919191;
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
   }
 `;

@@ -20,7 +20,6 @@ import detailSlice, {
 } from "../../../app/modules/detailSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { StBackGroundCloseDiv } from "../../interface/styledCommon";
 
 // check uncheck
 
@@ -148,14 +147,14 @@ function FeedPageContainer() {
   };
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
-  const toggleSortPopUp = () => {
+  const toggleSortPopUp = (e) => {
     setSelectSort(!selectSort);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -171,13 +170,16 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
   //댓글순 정렬
   const sortComment = (e) => {
-    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -193,13 +195,18 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("댓글순");
     setSelectSort(!selectSort);
+
   };
   //도전순 정렬
   const sortChallenge = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -215,7 +222,11 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
@@ -229,8 +240,7 @@ function FeedPageContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {selectSort === true ? (
-          <StShadowBackgroundDiv>
-            <StBackGroundCloseDiv onClick={toggleSortPopUp} />
+          <StShadowBackgroundDiv onClick={toggleSortPopUp}>
             <StPopupBox>
               <StSlideDiv />
               <StSort>
@@ -238,7 +248,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortDate}>
+                  onClick={sortDate}
+                >
                   최신순
                 </StDate>
                 <StDateLine />
@@ -246,7 +257,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortComment}>
+                  onClick={sortComment}
+                >
                   댓글순
                 </StComment>
                 <StCommentLine />
@@ -254,7 +266,8 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortChallenge}>
+                  onClick={sortChallenge}
+                >
                   도전순
                 </StChallenge>
                 <StChallengeLine />
