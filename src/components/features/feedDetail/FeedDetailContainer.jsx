@@ -9,7 +9,10 @@ import instance from "../../../app/modules/instance";
 import DetailCard from "./DetailCard";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StShadowBackgroundDiv } from "../../interface/styledCommon";
+import {
+  StBackGroundCloseDiv,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
 import LoadingContainer from "../../../utils/loadingState";
 
 function FeedDetailContainer() {
@@ -173,10 +176,14 @@ function FeedDetailContainer() {
     if (inputRef.current.value === "") {
       return alert("댓글을 입력해주세요");
     }
+    if (inputRef.current.value.trim().length === 0) {
+      console.log(inputRef.current.value.trim().length);
+      return alert("댓글을 입력해주세요");
+    }
     const postCommentFetch = async () => {
       try {
         const response = await instance.post(`/comments/${params.todoId}`, {
-          comment: inputRef.current.value,
+          comment: inputRef.current.value.trim(),
         });
         if (response.data.message === "success") {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
@@ -208,24 +215,28 @@ function FeedDetailContainer() {
   const myData = decodeMyTokenData();
 
   function displayCardMenu(event) {
+    setCommentId(event.target.id);
     event.stopPropagation();
     setMenuModal(!menuModal);
     setCommentId(event.target.id);
   }
 
+  function closeToPopUp() {
+    setMenuModal(!menuModal);
+  }
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
       <div style={{ marginTop: "60px", marginBottom: "220px" }}>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
+            <StBackGroundCloseDiv onClick={closeToPopUp} />
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
               transform="translateY(76vh)"
             >
               삭제
             </StPopUpWhiteButton>
-
             <StPopUpWhiteButton
               onClick={displayCardMenu}
               transform="translateY(77vh)"
@@ -358,9 +369,11 @@ function FeedDetailContainer() {
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}
-                            >
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
+                              onClick={displayCardMenu}>
+                              <FontAwesomeIcon
+                                style={{ pointerEvents: "none" }}
+                                icon={faEllipsisVertical}
+                              />
                             </StMenuBtn>
                           ) : (
                             <></>
@@ -393,6 +406,7 @@ function FeedDetailContainer() {
                 name="comment"
                 placeholder="댓글 내용"
                 ref={inputRef} //!ref를 참고하겠다.
+                maxLength="159"
               />
               <StCommentBtn type="submit">작성</StCommentBtn>
             </StWriteComment>
@@ -704,6 +718,7 @@ const StPopUpWhiteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 
   font-size: 22px;
   font-weight: 500;
@@ -716,11 +731,12 @@ const StPopUpWhiteButton = styled.button`
 
   width: 90%;
   height: 70px;
+  z-index: 11;
   transform: ${(props) => props.transform};
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     width: 90%;
-    margin: 0 20px;
+    margin: -50px 20px 50px 20px;
   }
 `;
 

@@ -80,7 +80,7 @@ const SignUpForm = () => {
           emailAuthNumber: confirmNumberRef.current.value,
         });
         if (response.data.message === "success") {
-          return alert("인증 성공 했습니다");
+          return alert("인증 성공!!");
         }
       } catch (error) {
         return alert(error.response.data.errorMessage);
@@ -110,9 +110,9 @@ const SignUpForm = () => {
     ) {
       return alert("비밀번호2 형식을 확인해주세요");
     } else if (signupData.nickname.length === 0 ||
-      signupData.nickname.length > 15
+      signupData.nickname.length > 12
       ) {
-      return alert("닉네임 형식(14글자 미만)을 확인해주세요 ");
+      return alert("닉네임 형식(12글자 이하)을 확인해주세요 ");
     }
     //axios
     const postSignUpFetch = async () => {

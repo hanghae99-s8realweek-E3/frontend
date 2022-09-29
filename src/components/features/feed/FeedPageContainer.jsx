@@ -20,6 +20,7 @@ import detailSlice, {
 } from "../../../app/modules/detailSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { StBackGroundCloseDiv } from "../../interface/styledCommon";
 
 // check uncheck
 
@@ -240,7 +241,8 @@ function FeedPageContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {selectSort === true ? (
-          <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+          <StShadowBackgroundDiv>
+            <StBackGroundCloseDiv onClick={toggleSortPopUp} />
             <StPopupBox>
               <StSlideDiv />
               <StSort>
@@ -248,8 +250,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortDate}
-                >
+                  onClick={sortDate}>
                   최신순
                 </StDate>
                 <StDateLine />
@@ -257,8 +258,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortComment}
-                >
+                  onClick={sortComment}>
                   댓글순
                 </StComment>
                 <StCommentLine />
@@ -266,8 +266,7 @@ function FeedPageContainer() {
                   style={{
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
-                  onClick={sortChallenge}
-                >
+                  onClick={sortChallenge}>
                   도전순
                 </StChallenge>
                 <StChallengeLine />

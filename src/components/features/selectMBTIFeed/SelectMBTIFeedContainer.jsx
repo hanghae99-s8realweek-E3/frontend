@@ -7,7 +7,10 @@ import styled from "styled-components";
 import { getSelectMBTITodoFetch } from "../../../app/modules/todolistsSlice";
 import { decodeMyTokenData } from "../../../utils/token";
 import { faQuestion, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { StShadowBackgroundDiv } from "../../interface/styledCommon";
+import {
+  StBackGroundCloseDiv,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
 
 function SelectMBTIFeedContainer() {
   const MyData = decodeMyTokenData();
@@ -82,6 +85,7 @@ function SelectMBTIFeedContainer() {
     <>
       {openModal === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={openToPopUpModal} />
           {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
           <StModalContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={openToPopUpModal}>

@@ -1,5 +1,5 @@
 import {
-  StCommonColumnBox,
+  StBackGroundCloseDiv,
   StCommonRowBox,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
@@ -57,6 +57,7 @@ function OthersCard({ data }) {
     <>
       {menuModal === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
           <StPopUpWhiteButton
             onClick={deleteMyTodayMakingChallenge}
             transform="translateY(76vh)">
@@ -65,7 +66,7 @@ function OthersCard({ data }) {
 
           <StPopUpWhiteButton
             onClick={displayCardMenu}
-            transform="translateY(77vh)">
+            transform="translateY(87vh)">
             닫기
           </StPopUpWhiteButton>
         </StShadowBackgroundDiv>
@@ -182,6 +183,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+  word-wrap: break-word;
+  word-break: break-all;
 
   @media screen and (max-width: 500px) {
     font-size: 16px;
@@ -216,6 +219,7 @@ const StPopUpWhiteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 
   font-size: 22px;
   font-weight: 500;
@@ -225,7 +229,7 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-
+  z-index: 11;
   width: 90%;
   height: 70px;
   transform: ${(props) => props.transform};

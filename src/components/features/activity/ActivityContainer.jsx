@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
+import LoadingContainer from "../../../utils/loadingState";
 import { decodeMyTokenData } from "../../../utils/token";
 import {
+  StBackGroundCloseDiv,
   StCommonBorder,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
@@ -43,6 +45,7 @@ function ActivityContainer() {
         <>
           {popUpState === true ? (
             <StShadowBackgroundDiv>
+              <StBackGroundCloseDiv onClick={changePopUpState} />
               <StPopupBox>
                 <StSlideDiv />
                 {sortList?.map((elem, index) => (
@@ -155,7 +158,7 @@ function ActivityContainer() {
           )}
         </>
       ) : (
-        <div>로딩중입니다.</div>
+        <LoadingContainer />
       )}
     </StContainer>
   );
