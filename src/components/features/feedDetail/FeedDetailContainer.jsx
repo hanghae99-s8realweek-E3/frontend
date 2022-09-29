@@ -199,18 +199,18 @@ function FeedDetailContainer() {
         {menuModal === true ? (
           <StShadowBackgroundDiv>
             <StBackGroundCloseDiv onClick={closeToPopUp} />
-            <StButtonBox>
-              <StPopUpWhiteButton
-                onClick={onClickDeleteComment}
-                transform="translateY(76vh)">
-                삭제
-              </StPopUpWhiteButton>
-              <StPopUpWhiteButton
-                onClick={displayCardMenu}
-                transform="translateY(77vh)">
-                닫기
-              </StPopUpWhiteButton>
-            </StButtonBox>
+            <StPopUpWhiteButton
+              onClick={onClickDeleteComment}
+              transform="translateY(68vh)"
+            >
+              삭제
+            </StPopUpWhiteButton>
+            <StPopUpWhiteButton
+              onClick={displayCardMenu}
+              transform="translateY(77vh)"
+            >
+              닫기
+            </StPopUpWhiteButton>
           </StShadowBackgroundDiv>
         ) : (
           <></>
@@ -303,7 +303,7 @@ function FeedDetailContainer() {
         {Object.keys(detailState.data).length === 0 ? (
           <></>
         ) : (
-          <div>
+          <div style={{ background: "white" }}>
             <StProfilWrap>
               <StUserIdBox>
                 <StProfileBox>
@@ -405,15 +405,10 @@ function FeedDetailContainer() {
                 </StBtnGoToChallenge>
               )}
             </StProfilWrap>
-            <div
-              style={{
-                width: "100%",
-                background: "white",
-                padding: "30px 0",
-              }}>
+            <StCommentWrap>
               {detailState.data.comments?.map((x, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} style={{ background: "white" }}>
                     <StCommentBox>
                       <StImgNickname>
                         <StProfileBox width="32px" height="32px">
@@ -469,31 +464,31 @@ function FeedDetailContainer() {
                   </div>
                 );
               })}
-            </div>
-
-            <StWriteComment onSubmit={upLoadCommentData}>
-              <StProfileBox>
-                <StProfileImg
-                  style={{
-                    margin: "0",
-                    padding: "0",
-                  }}
-                  src={
-                    detailState.data.loginUserProfile !== "none"
-                      ? detailState.data.loginUserProfile
-                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                  }
+                          </StCommentWrap>
+              <StWriteComment onSubmit={upLoadCommentData}>
+                <StProfileBox>
+                  <StProfileImg
+                    style={{
+                      margin: "0",
+                      padding: "0",
+                    }}
+                    src={
+                      detailState.data.loginUserProfile !== "none"
+                        ? detailState.data.loginUserProfile
+                        : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                    }
+                  />
+                </StProfileBox>
+                <StInput
+                  type="text"
+                  name="comment"
+                  placeholder="댓글 내용"
+                  ref={inputRef} //!ref를 참고하겠다.
+                  maxLength="159"
                 />
-              </StProfileBox>
-              <StInput
-                type="text"
-                name="comment"
-                placeholder="댓글 내용"
-                ref={inputRef} //!ref를 참고하겠다.
-                maxLength="159"
-              />
-              <StCommentBtn type="submit">작성</StCommentBtn>
-            </StWriteComment>
+                <StCommentBtn type="submit">작성</StCommentBtn>
+              </StWriteComment>
+
           </div>
         )}
       </StTotalWrap>
@@ -502,24 +497,36 @@ function FeedDetailContainer() {
 }
 
 export default FeedDetailContainer;
-
+const StWhite = styled.div`
+  /* display: flex; */
+  background-color: yellow;
+`;
 const StTotalWrap = styled.div`
   display: flex;
   margin-top: 60px;
   width: 500px;
+
   margin-bottom: 60px;
+
   @media only screen and (max-width: 500px) {
     width: 360px;
-    margin-top: 60px;
   }
 `;
 const StCommentBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 0px auto 15px 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
   -webkit-tap-highlight-color: transparent;
+  /* margin: 0px auto 20px 20px; */
+  /* -webkit-tap-highlight-color: transparent; */
+  @media only screen and (max-width: 500px) {
+    margin: 0px 0px 14.4px 14.4px;
+    width: 360px;
+  }
 `;
+
 const StUserIdBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -529,6 +536,7 @@ const StUserIdBox = styled.div`
   @media only screen and (max-width: 500px) {
     /* width: 90%; */
     margin: 0px;
+    width: 360px;
   }
 `;
 
@@ -539,9 +547,20 @@ const StProfilWrap = styled.div`
   padding-bottom: 10px;
   @media only screen and (max-width: 500px) {
     width: 360px;
+    padding-top: 14.4px;
+    padding-bottom: 7.2px;
   }
 `;
+const StCommentWrap = styled.div`
+  width: 500px;
+  background: white;
+  padding: 30px 0px;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
 
+    padding-top: 21.6px;
+  }
+`;
 const StImgNickname = styled.div`
   display: flex;
   flex-direction: row;
@@ -549,7 +568,6 @@ const StImgNickname = styled.div`
   width: 100%;
   @media only screen and (max-width: 500px) {
     width: 90%;
-    /* height: 50px; */
     height: 27px;
   }
 `;
@@ -571,10 +589,9 @@ const StProfileBox = styled.div`
   overflow: hidden;
   margin: 10px;
   @media only screen and (max-width: 500px) {
-    margin-left: 8.64px;
+    margin: 0px 0px 0px 15px;
   }
 `;
-
 const StProfileImg = styled.img`
   width: 50px;
   height: 50px;
@@ -593,7 +610,7 @@ const StNickMBTIWarp = styled.div`
 
   margin-left: 16px;
   @media only screen and (max-width: 500px) {
-    margin-left: 0px;
+    margin-left: 5px;
   }
 `;
 
@@ -610,8 +627,8 @@ const StNickname = styled.div`
   -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
     font-size: 17px;
-    margin-right: 10px;
     width: 185px;
+    margin-right: 5px;
   }
 `;
 
@@ -653,7 +670,7 @@ const StDetailCard = styled.div`
   @media only screen and (max-width: 500px) {
     width: 345px;
     margin-left: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
     align-items: center;
   }
@@ -669,6 +686,7 @@ const StNicknameComment = styled.div`
   }
   @media only screen and (max-width: 500px) {
     font-size: 14px;
+    margin-left: 8.64px;
   }
 `;
 const StCommentGrade = styled.div`
@@ -691,11 +709,11 @@ const StComment = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 55px;
+  margin-right: 55px;
+
   word-wrap: break-word;
   @media only screen and (max-width: 500px) {
-    margin-left: 50px;
     font-size: 12px;
   }
 `;
@@ -984,6 +1002,7 @@ const StGradeExplain = styled.div`
   font-size: 12px;
   text-decoration-line: underline;
   color: #919191;
+  cursor: pointer;
   @media screen and (max-width: 500px) {
     font-size: 8px;
   }

@@ -702,6 +702,7 @@ const StExplain = styled.div`
   flex-direction: column;
   margin-top: 12px;
   margin-left: 42px;
+  text-align: start;
 `;
 const StExplainName = styled.div`
   display: flex;

@@ -46,11 +46,13 @@ const TotalWrap = styled.div`
   /* margin-top: 100px; */
 `;
 const StErrorImg = styled.img`
-  width: 169px;
-  height: 169px;
   border-radius: 5px;
-  margin-top: 213.33px;
+  margin-top: 222px;
   margin-bottom: 5px;
+  @media only screen and (max-width: 500px) {
+    margin-top: 160px;
+    width: 124px;
+  }
 `;
 const StContent = styled.div`
   height: 32px;
@@ -60,8 +62,10 @@ const StContent = styled.div`
   line-height: 32px;
   margin-bottom: 14px;
   /* identical to box height, or 133% */
-
   color: #000000;
+  @media only screen and (max-width: 500px) {
+    font-size: 20px;
+  }
 `;
 const StErrorMsg = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -69,18 +73,21 @@ const StErrorMsg = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
-  margin-bottom: 88.7px;
-  /* or 162% */
-
+  margin-bottom: 105px;
   text-align: center;
-
   color: #000000;
+  @media only screen and (max-width: 500px) {
+    margin-bottom: 75.6px;
+    font-size: 14px;
+  }
 `;
 const StBtnWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0 auto;
   gap: 26px;
+  cursor: pointer;
+  
 `;
 const StBackBtn = styled.button`
   width: 162px;
@@ -90,29 +97,37 @@ const StBackBtn = styled.button`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 17.82px;
+  font-size: 16px;
   line-height: 26px;
-  /* identical to box height, or 145% */
-
+  cursor: pointer;
   text-align: center;
-
+border: none;
   color: #ffffff;
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+
+    width: 116px;
+    height: 36px;
+  }
 `;
 const StMainBtn = styled.button`
   width: 162px;
   height: 48.6px;
-  background: #979797;
+  background:#FF6D53;;
   border-radius: 53.46px;
-
+  border: none;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 17.82px;
+  font-size: 16px;
   line-height: 26px;
-  /* identical to box height, or 145% */
-
   text-align: center;
-
   color: #ffffff;
+  @media only screen and (max-width: 500px) {
+    font-size: 14px;
+    width: 116px;
+
+    height:36px ;
+  }
 `;
 export default ErrorPageContainer;
