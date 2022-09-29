@@ -13,6 +13,7 @@ import {
   StBackGroundCloseDiv,
   StShadowBackgroundDiv,
 } from "../interface/styledCommon";
+import Grade from "./Grade";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
@@ -22,22 +23,24 @@ function ProfileCard({ profileData }) {
   const params = useParams();
   const myData = decodeMyTokenData();
   const [modalState, setModalState] = useState(false);
-  const gradeList = ["미콩", "미알", "미돌", "미킹"];
-  const [gradeState, setGradeState] = useState(gradeList[0]);
+  const [gradeModalState,setGradeModalState] = useState(false)
+  // const gradeList = ["미콩", "미알", "미돌", "미킹"];
+  // const [gradeState, setGradeState] = useState(gradeList[0]);
 
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
-  const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
-  
-  useEffect(() => {
-    if (profileData.userInfo?.mimicCounts < 3) {
-      return setGradeState(gradeList[0]), setGradeeWordState(gradeWordList[0]);
-    } else if (profileData.userInfo?.mimicCounts < 5) {
-      return setGradeState(gradeList[1]), setGradeeWordState(gradeWordList[1]);
-    } else if (profileData.userInfo?.mimicCounts < 7) {
-      return setGradeState(gradeList[2]), setGradeeWordState(gradeWordList[2]);
-    } else
-      return setGradeState(gradeList[3]), setGradeeWordState(gradeWordList[3]);
-  }, []);
+  // const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
+
+  // useEffect(() => {
+  //   if (profileData.userInfo?.mimicCounts < 3) {
+  //     return setGradeState(gradeList[0]), setGradeeWordState(gradeWordList[0]);
+  //   } else if (profileData.userInfo?.mimicCounts < 5) {
+  //     return setGradeState(gradeList[1]), setGradeeWordState(gradeWordList[1]);
+  //   } else if (profileData.userInfo?.mimicCounts < 7) {
+  //     return setGradeState(gradeList[2]), setGradeeWordState(gradeWordList[2]);
+  //   } else if (profileData.userInfo?.mimicCounts < 9) {
+  //     return setGradeState(gradeList[3]), setGradeeWordState(gradeWordList[3]);
+  //   }
+  // }, []);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
@@ -78,14 +81,17 @@ function ProfileCard({ profileData }) {
     setModalState(!modalState);
   };
 
+  const gradeChangeModalState = () => {
+    setGradeModalState(!gradeModalState)
+  }
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
 
   return (
     <>
-      {/* {modalState === true ? (
+      {modalState === true ? (
         <StShadowBackgroundDiv>
           <StBackGroundCloseDiv onClick={changeModalState} />
-          {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+          {/* {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
           <StModalContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={changeModalState}>
               <FontAwesomeIcon
@@ -118,7 +124,87 @@ function ProfileCard({ profileData }) {
       ) : (
         <></>
       )}
-      <StTotalWrap>
+
+      {gradeModalState === true ? (
+                <StShadowBackgroundDiv>
+                  {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
+                  <StGradeModalContainer onClick={(e) => e.stopPropagation()}>
+                    <StGradeCloseButton type="button" onClick={gradeChangeModalState}>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        style={{
+                          fontSize: "18px",
+                          color: "black",
+                          pointerEvents: "none",
+                        }}
+                      />
+                    </StGradeCloseButton>
+                    <StGradeModalTotalWrap>
+                      <StTitle>미믹 성장 등급</StTitle>
+                      <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
+                      <StIconExplainWrap>
+                        <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} />
+                        <StExplain>
+                          <StExplainName>미콩</StExplainName>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월 0회</span> 미믹 도전
+                          </StExplainContent>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월 0회</span> 미믹 제안
+                          </StExplainContent>
+                        </StExplain>
+                      </StIconExplainWrap>
+        
+                      <StIconExplainWrap>
+                        <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`} />
+                        <StExplain>
+                          <StExplainName>미알</StExplainName>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월10회</span> 미믹 도전
+                          </StExplainContent>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월10회</span> 미믹 제안
+                          </StExplainContent>
+                        </StExplain>
+                      </StIconExplainWrap>
+        
+                      <StIconExplainWrap>
+                        <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} />
+                        <StExplain>
+                          <StExplainName>미돌</StExplainName>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월20회</span> 미믹 도전
+                          </StExplainContent>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월20회</span> 미믹 제안
+                          </StExplainContent>
+                          <StExplainContent>
+                            명예의 전당<span style={{ fontWeight: 700 }}>1회 등극</span>
+                          </StExplainContent>
+                        </StExplain>
+                      </StIconExplainWrap>
+        
+                      <StIconExplainWrap>
+                        <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} />
+                        <StExplain>
+                          <StExplainName>미킹</StExplainName>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월25회</span> 미믹 도전
+                          </StExplainContent>
+                          <StExplainContent>
+                            <span style={{ fontWeight: 700 }}>월25회</span> 미믹 제안
+                          </StExplainContent>
+                          <StExplainContent>
+                            명예의 전당<span style={{ fontWeight: 700 }}>3회 등극</span>
+                          </StExplainContent>
+                        </StExplain>
+                      </StIconExplainWrap>
+                    </StGradeModalTotalWrap>
+                  </StGradeModalContainer>
+                </StShadowBackgroundDiv>
+      ):<></>}
+
+      {/* <StTotalWrap>
         <StImageBox>
           <StProfileImg
             src={
@@ -159,7 +245,7 @@ function ProfileCard({ profileData }) {
         </StFollowBtn>
       ) : (
         <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
-      )} */}
+      )}  */}
 
       <StTotalWrap>
         <StImageBox>
@@ -189,25 +275,25 @@ function ProfileCard({ profileData }) {
           </StMmtiFollowWrap>
         </StNoImageWrap>
         <StGradeImageBox>
-          {gradeState === gradeList[0] ? (
+          {profileData.userInfo.mimicCounts < 3 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미콩.png`}
               width="59.38"
               height="71"
             />
-          ) : gradeState === gradeList[1] ? (
+          ) : profileData.userInfo.mimicCounts < 5 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미알.png`}
               width="59.38"
               height="71"
             />
-          ) : gradeState === gradeList[2] ? (
+          ) : profileData.userInfo.mimicCounts < 7 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미돌.png`}
               width="59.38"
               height="71"
             />
-          ) : gradeState === gradeList[3] ? (
+          ) : profileData.userInfo.mimicCounts < 9 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미킹.png`}
               width="59.38"
@@ -237,11 +323,25 @@ function ProfileCard({ profileData }) {
           </StFollowingNumber>
         </StFollowingWrap>
         <StGradeWrap>
+          {/* <Grade></Grade> */}
           <StGradebox>
-            <StGradeWord>등급</StGradeWord>
-            <StWhatGrade>예진님이미지</StWhatGrade>
+            
+            <StGradeWord onClick={gradeChangeModalState}>등급</StGradeWord>
+            <StWhatGrade src={process.env.PUBLIC_URL + `/images/grade.png`}/>
           </StGradebox>
-          <StGradeNumber>{gradeWordState}</StGradeNumber>
+          <StGradeNumber>
+            {profileData.userInfo.mimicCounts < 3 ? (
+              gradeWordList[0]
+            ) : profileData.userInfo.mimicCounts < 5 ? (
+              gradeWordList[1]
+            ) : profileData.userInfo.mimicCounts < 7 ? (
+              gradeWordList[2]
+            ) : profileData.userInfo.mimicCounts < 9 ? (
+              gradeWordList[3]
+            ) : (
+              <></>
+            )}
+          </StGradeNumber>
         </StGradeWrap>
         {/* </StMbtiFollowFollowingWrap> */}
       </StFollowGradeWrap>
@@ -555,20 +655,24 @@ const StImageBox = styled.div`
     align-items: center;
     width: 57.6px;
     height: 57.6px;
-    margin: 0 0 0 25.2px;
+    margin-left:20px;
   }
 `;
 const StImage = styled.img`
   display: flex;
-  margin-left: 20px;
   transform: scaleX(-1);
-  /* justify-content: center; */
+  margin-left: 15px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    width: 43.2px;
+    height: 50px;
+    margin-left: 5px;
+  }
 `;
 
 const StProfileImg = styled.img`
   height: 80px;
   width: 80px;
-
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 57.6px;
@@ -589,10 +693,14 @@ const StNoImageWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 5px;
+  @media screen and (max-width: 500px) {
+    gap:3.6px
+  }
 `;
 const StMmtiFollowWrap = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `;
 const StNickName = styled.div`
   flex-direction: row;
@@ -607,9 +715,9 @@ const StNickName = styled.div`
   width: 256.91px;
   @media screen and (max-width: 500px) {
     align-items: center;
-    width: 100%;
-    margin: 0px;
-    font-size: 18px;
+    width: 200px;
+    margin-left: 13.68px;
+    font-size: 17px;
   }
 `;
 const StMbtiFollowFollowingWrap = styled.div`
@@ -628,6 +736,11 @@ const StFollowGradeWrap = styled.div`
   justify-content: space-evenly;
   margin-top: 49px;
   margin-bottom: 41px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-top: 35px;
+    margin-bottom: 29px;
+  }
 `;
 const StMbti = styled.div`
   display: flex;
@@ -644,7 +757,7 @@ const StMbti = styled.div`
   @media screen and (max-width: 500px) {
     /* align-items: flex-start; */
     text-align: left;
-    margin-left: 2px;
+    margin-left: 13.68px;
     font-size: 16px;
   }
 `;
@@ -722,6 +835,8 @@ const StGradeWrap = styled.div`
 const StGradebox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 const StGradeWord = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -732,7 +847,10 @@ const StGradeWord = styled.div`
   text-align: center;
   color: #000000;
 `;
-const StWhatGrade = styled.div``;
+const StWhatGrade = styled.img`
+width: 18px;
+height: 18px;
+`;
 const StGradeNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -800,7 +918,8 @@ const StInfo = styled.div`
   margin-left: 20px;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin-left: 95px;
+    margin-left: 14.4px;
+    font-size: 11px;
   }
 `;
 
@@ -863,7 +982,166 @@ const StModalContainer = styled.div`
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: 18px;
-    height: 540px;
+    height: 750x;
     margin: 7vh auto;
+  }
+
+  
+`;
+const StTitle = styled.div`
+  text-align: center;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 34px;
+  color: #313131;
+  margin-bottom: 6px;
+`;
+// const StText = styled.div`
+//   text-align: center;
+//   font-family: "IBM Plex Sans KR";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 16px;
+//   line-height: 34px;
+//   color: #919191;
+//   margin-bottom: 39px;
+// `;
+const StIconExplainWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 12px;
+`;
+const StIcon = styled.img`
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 7px;
+  }
+`;
+const StExplain = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-left: 42px;
+`;
+const StExplainName = styled.div`
+  display: flex;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ff6d53;
+`;
+const StExplainContent = styled.div`
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 23px;
+  letter-spacing: -0.05em;
+  color: #313131;
+`;
+const StContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    align-items: center;
+  }
+`;
+const StContainerIcon = styled.img`
+  display: flex;
+  width: 80px;
+  height: 80px;
+  margin: 18px 18px 18px 35px;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    margin-left: 20px;
+    width: 57.9px;
+    height: 57.9px;
+  }
+`;
+const StName = styled.div`
+  display: flex;
+  margin: 39.5px 0px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  color: #000000;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 500px) {
+    width: 40px;
+  }
+`;
+const StGradeBtn = styled.button`
+  display: flex;
+  width: 130px;
+  height: 36px;
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  background: none;
+  border: 1px solid black;
+  border-radius: 9999px;
+  margin: 40px 0px 40px 160px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 50px auto;
+  cursor: pointer;
+  @media screen and (max-width: 500px) {
+    width: 111px;
+    align-items: center;
+    margin-left: 90px;
+  }
+`;
+const StCommonBorder = styled.div`
+  height: 1px;
+  background: #bdc5cd;
+  @media screen and (max-width: 500px) {
+    width: 360px;
+    align-items: center;
+  }
+`;
+const StGradeModalTotalWrap = styled.div`
+  flex-direction: column;
+`;
+
+const StGradeCloseButton = styled.button`
+  background: none;
+  display: block;
+  border: none;
+  border-radius: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+  cursor: pointer;
+`;
+const StGradeModalContainer = styled.div`
+  background: white;
+  border-radius: 6px;
+  padding: 25px;
+  margin: 10vh auto;
+  width: 450px;
+  height: 750px;
+  box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: 18px;
   }
 `;

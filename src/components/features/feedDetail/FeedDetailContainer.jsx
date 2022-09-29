@@ -32,60 +32,23 @@ function FeedDetailContainer() {
   console.log(detailState);
   console.log(detailState.data.comments?.map((x) => x.challengeCounts));
   console.log(detailState.data.comments?.map((x) => x.todoCounts));
+  const arrA = detailState.data.comments?.map((x) => x.challengeCounts);
+  const arrB = detailState.data.comments?.map((x) => x.todoCounts);
+  console.log(arrA);
+  console.log(arrB);
+  console.log(arrA?.map((x, y) => x + arrB[y])); // [6, 8, 10, 12,]
+  const cardImg =
+    detailState.data.todoInfo?.challengeCounts +
+    detailState.data.todoInfo?.todoCounts;
+  const comment = arrA?.map((x, y) => x + arrB[y]);
+  console.log(comment);
+  console.log(comment?.map((x,idx)=>x))
+ console.log(cardImg)
+  // const cardImg = detailState.data.todoInfo?.challengeCounts + detailState.data.todoInfo?.todoCounts
+  // const comment =  detailState.data.comments?.map((x) => x.challengeCounts) + detailState.data.comments?.map((x) => x.todoCounts)
   //옵셔널 체이닝 해제했을 때
   //console.log(detailState)의 값을 확인하면 좋아요
   //https://velog.io/@yiseul/Cannot-read-properties-of-undefined-%EC%97%90%EB%9F%AC
-  useEffect(() => {
-    if (
-      detailState.data.todoInfo?.challengedCounts +
-        detailState.data.todoInfo?.todoCounts <
-      4
-    ) {
-      return setGradeState(gradeList[0]);
-    } else if (
-      detailState.data.comments?.map((x) => x.challengeCounts) +
-        detailState.data.comments?.map((x) => x.todoCounts) <
-      4
-    ) {
-      return setGradeeWordState(gradeWordList[0]);
-    } else if (
-      detailState.data.todoInfo?.challengedCounts +
-        detailState.data.todoInfo?.todoCounts <
-      5
-    ) {
-      return setGradeState(gradeList[1]);
-    } else if (
-      detailState.data.comments?.map((x) => x.challengeCounts) +
-        detailState.data.comments?.map((x) => x.todoCounts) <
-      5
-    ) {
-      return setGradeeWordState(gradeWordList[1]);
-    } else if (
-      detailState.data.todoInfo?.challengedCounts +
-        detailState.data.todoInfo?.todoCounts <
-      7
-    ) {
-      return setGradeState(gradeList[2]);
-    } else if (
-      detailState.data.comments?.map((x) => x.challengeCounts) +
-        detailState.data.comments?.map((x) => x.todoCounts) <
-      7
-    ) {
-      return setGradeeWordState(gradeWordList[2]);
-    } else if (
-      detailState.data.todoInfo?.challengedCounts +
-        detailState.data.todoInfo?.todoCounts <
-      9
-    ) {
-      return setGradeState(gradeList[3]);
-    } else if (
-      detailState.data.comments?.map((x) => x.challengeCounts) +
-        detailState.data.comments?.map((x) => x.todoCounts) <
-      9
-    ) {
-      return setGradeState(gradeWordList[3]);
-    }
-  }, []);
 
   //useEffect의 위치 선정 중요.
   useEffect(() => {
@@ -100,7 +63,50 @@ function FeedDetailContainer() {
     setLoading(true);
     async function feedLoading() {
       await dispatch(getFeedDetailFetch({ todoId: params.todoId }));
+
       setLoading(false);
+
+      // if(cardImg < 3){
+      //   if(comment < 3){
+      //     return (setGradeState(gradeList[0]),setGradeeWordState(gradeWordList[0]))
+      //   }else if(comment < 5){
+      //     return (setGradeState(gradeList[0]),setGradeeWordState(gradeWordList[1]))
+      //   }else if(comment < 7){
+      //     return (setGradeState(gradeList[0]),setGradeeWordState(gradeWordList[2]))
+      //   }else if(comment < 9){
+      //     return (setGradeState(gradeList[0]),setGradeeWordState(gradeWordList[3]))
+      //   }
+      // }else if(cardImg < 5){
+      //   if(comment < 3){
+      //     return (setGradeState(gradeList[1]),setGradeeWordState(gradeWordList[0]))
+      //   }else if(comment < 5){
+      //     return (setGradeState(gradeList[1]),setGradeeWordState(gradeWordList[1]))
+      //   }else if(comment < 7){
+      //     return (setGradeState(gradeList[1]),setGradeeWordState(gradeWordList[2]))
+      //   }else if(comment < 9){
+      //     return (setGradeState(gradeList[1]),setGradeeWordState(gradeWordList[3]))
+      //   }
+      // }else if(cardImg < 7){
+      //   if(comment < 3){
+      //     return (setGradeState(gradeList[2]),setGradeeWordState(gradeWordList[0]))
+      //   }else if(comment < 5){
+      //     return (setGradeState(gradeList[2]),setGradeeWordState(gradeWordList[1]))
+      //   }else if(comment < 7){
+      //     return (setGradeState(gradeList[2]),setGradeeWordState(gradeWordList[2]))
+      //   }else if(comment < 9){
+      //     return (setGradeState(gradeList[2]),setGradeeWordState(gradeWordList[3]))
+      //   }
+      // }else if(cardImg < 9){
+      //   if(comment < 3){
+      //     return (setGradeState(gradeList[3]),setGradeeWordState(gradeWordList[0]))
+      //   }else if(comment < 5){
+      //     return (setGradeState(gradeList[3]),setGradeeWordState(gradeWordList[1]))
+      //   }else if(comment < 7){
+      //     return (setGradeState(gradeList[3]),setGradeeWordState(gradeWordList[2]))
+      //   }else if(comment < 9){
+      //     return (setGradeState(gradeList[3]),setGradeeWordState(gradeWordList[3]))
+      //   }
+      // }
     }
     feedLoading();
     // setTimeout(()=> {
@@ -274,25 +280,25 @@ function FeedDetailContainer() {
                 </StNickMBTIWarp>
 
                 <StGradeImageBox>
-                  {gradeState === gradeList[0] ? (
+                  {cardImg < 3 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미콩.png`}
                       width="59.38"
                       height="71"
                     />
-                  ) : gradeState === gradeList[1] ? (
+                  ) : cardImg < 5 ? (
+                    <StImage
+                      src={process.env.PUBLIC_URL + `/images/미알.png`}
+                      width="59.38"
+                      height="71"
+                    />
+                  ) : cardImg < 7 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미돌.png`}
                       width="59.38"
                       height="71"
                     />
-                  ) : gradeState === gradeList[2] ? (
-                    <StImage
-                      src={process.env.PUBLIC_URL + `/images/미콩.png`}
-                      width="59.38"
-                      height="71"
-                    />
-                  ) : gradeState === gradeList[3] ? (
+                  ) : cardImg < 9 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미킹.png`}
                       width="59.38"
@@ -364,12 +370,27 @@ function FeedDetailContainer() {
                         >
                           {x.nickname}
                         </StNicknameComment>
-                        <div>{gradeWordState}</div>
+                        <div
+                          id={x.userId}></div>
+                          <>
+                          {x.challengeCounts + x.todoCounts < 3 ? (
+                            gradeWordList[0]
+                          ) : x.challengeCounts + x.todoCounts< 5 ? (
+                            gradeWordList[1]
+                          ) : x.challengeCounts + x.todoCounts < 7 ? (
+                            gradeWordList[2]
+                          ) : x.challengeCounts + x.todoCounts < 9 ? (
+                            gradeWordList[3]
+                          ) : (
+                            <></>
+                          )}</>
+                        
                         <StChangeDeleteBtn>
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}>
+                              onClick={displayCardMenu}
+                            >
                               <FontAwesomeIcon
                                 style={{ pointerEvents: "none" }}
                                 icon={faEllipsisVertical}
