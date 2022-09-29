@@ -83,7 +83,7 @@ function WriteTodoForm() {
         }
       } catch (error) {
         setLoading(false);
-        return alert(error.response.data.errorMessage);
+        return alert("미믹 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     // 실행
