@@ -201,7 +201,7 @@ function FeedDetailContainer() {
             <StBackGroundCloseDiv onClick={closeToPopUp} />
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
-              transform="translateY(76vh)"
+              transform="translateY(68vh)"
             >
               삭제
             </StPopUpWhiteButton>
@@ -303,7 +303,7 @@ function FeedDetailContainer() {
         {Object.keys(detailState.data).length === 0 ? (
           <></>
         ) : (
-          <div>
+          <div style={{background:"white"}}>
             <StProfilWrap>
               <StUserIdBox>
                 <StProfileBox>
@@ -407,17 +407,13 @@ function FeedDetailContainer() {
                 </StBtnGoToChallenge>
               )}
             </StProfilWrap>
-            <div
-              style={{
-                width: "100%",
-                background: "white",
-                padding: "30px 0",
-            
-              }}
+            <StCommentWrap
             >
+            
               {detailState.data.comments?.map((x, index) => {
                 return (
-                  <div key={index}>
+                  <StWhite>
+                  <div key={index} style={{background:"white"}}>
                     <StCommentBox>
                       <StImgNickname>
                         <StProfileBox width="32px" height="32px">
@@ -473,9 +469,11 @@ function FeedDetailContainer() {
                       <StComment>{x.comment}</StComment>
                     </StCommentBox>
                   </div>
+                  </StWhite>
                 );
+                
               })}
-            </div>
+            </StCommentWrap>
 
             <StWriteComment onSubmit={upLoadCommentData}>
               <StProfileBox>
@@ -508,12 +506,17 @@ function FeedDetailContainer() {
 }
 
 export default FeedDetailContainer;
-
+const StWhite =styled.div`
+  /* display: flex; */
+  background-color: yellow;
+`
 const StTotalWrap = styled.div`
   display: flex;
   margin-top: 60px;
   width: 500px;
+
   margin-bottom: 60px;
+  
   @media only screen and (max-width: 500px) {
     width: 360px;
     margin-top: 60px;
@@ -523,9 +526,16 @@ const StCommentBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 0px auto 15px 20px;
+  margin-bottom:20px;
+  margin-left: 20px;
   -webkit-tap-highlight-color: transparent;
+  /* margin: 0px auto 20px 20px; */
+  /* -webkit-tap-highlight-color: transparent; */
+  @media only screen and (max-width: 500px) {
+    margin:0px 0px 14.4px 14.4px;
+  }
 `;
+
 const StUserIdBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -545,9 +555,21 @@ const StProfilWrap = styled.div`
   padding-bottom: 10px;
   @media only screen and (max-width: 500px) {
     width: 360px;
+    padding-top: 14.4px;
+  padding-bottom: 7.2px;
   }
 `;
+const StCommentWrap =styled.div`
+  width: 500px;
+  background: white;
+  padding: 30px 0px;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
 
+    padding-top:21.6px;
+  }
+  
+`
 const StImgNickname = styled.div`
   display: flex;
   flex-direction: row;
@@ -555,12 +577,12 @@ const StImgNickname = styled.div`
   width: 100%;
   @media only screen and (max-width: 500px) {
     width: 90%;
-    /* height: 50px; */
     height: 27px;
   }
 `;
 
 const StProfileBox = styled.div`
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -569,6 +591,7 @@ const StProfileBox = styled.div`
     return css`
       width: ${width || "50px"};
       height: ${height || "50px"};
+
     `;
   }}
   /* width:50px;
@@ -580,7 +603,6 @@ const StProfileBox = styled.div`
     margin-left: 8.64px;
   }
 `;
-
 const StProfileImg = styled.img`
   width: 50px;
   height: 50px;
@@ -654,6 +676,7 @@ const StFollowBtn = styled.button`
 `;
 
 const StDetailCard = styled.div`
+
   margin: auto;
   margin-top: 15px;
   @media only screen and (max-width: 500px) {
@@ -994,6 +1017,7 @@ const StGradeExplain = styled.div`
   font-size: 12px;
   text-decoration-line: underline;
   color: #919191;
+  cursor: pointer;
   @media screen and (max-width: 500px) {
     font-size: 8px;
   }
