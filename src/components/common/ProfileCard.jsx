@@ -30,7 +30,6 @@ function ProfileCard({ profileData }) {
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
   // const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
 
-
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
     // window.location.pathname === "/otherspage" ?
@@ -74,7 +73,9 @@ function ProfileCard({ profileData }) {
     setGradeModalState(!gradeModalState);
   };
   // 이미지영역/이미지없는영역 묶음    이미지없는영역 -> 닉네임 / [   [mbti (팔로우 팔로우 숫자)]  or  [mbti(팔로잉 팔로잉 숫자)]  ] 묶음
-
+  // onError={
+  //   (this.src = this.src.replace(/\/resizingMimic\//, "/mimic"))
+  // }
   return (
     <>
       {modalState === true ? (
@@ -136,12 +137,12 @@ function ProfileCard({ profileData }) {
                 <StExplain>
                   <StExplainName>미콩</StExplainName>
                   <StExplainContentWrap>
-                  <StExplainContent>
-                    <span style={{ fontWeight: 700 }}>월 0~3회</span> 
-                  </StExplainContent>
-                  <StExplainContent>
-                    미믹 도전완료 + 미믹 제안
-                  </StExplainContent>
+                    <StExplainContent>
+                      <span style={{ fontWeight: 700 }}>월 0~3회</span>
+                    </StExplainContent>
+                    <StExplainContent>
+                      미믹 도전완료 + 미믹 제안
+                    </StExplainContent>
                   </StExplainContentWrap>
                 </StExplain>
               </StIconExplainWrap>
@@ -151,11 +152,9 @@ function ProfileCard({ profileData }) {
                 <StExplain>
                   <StExplainName>미알</StExplainName>
                   <StExplainContent>
-                    <span style={{ fontWeight: 700 }}>월4~5회</span> 
+                    <span style={{ fontWeight: 700 }}>월4~5회</span>
                   </StExplainContent>
-                  <StExplainContent>
-                  미믹 도전완료 + 미믹 제안
-                  </StExplainContent>
+                  <StExplainContent>미믹 도전완료 + 미믹 제안</StExplainContent>
                 </StExplain>
               </StIconExplainWrap>
 
@@ -166,9 +165,7 @@ function ProfileCard({ profileData }) {
                   <StExplainContent>
                     <span style={{ fontWeight: 700 }}>월6~7회</span> 미믹 도전
                   </StExplainContent>
-                  <StExplainContent>
-                  미믹 도전완료 + 미믹 제안
-                  </StExplainContent>
+                  <StExplainContent>미믹 도전완료 + 미믹 제안</StExplainContent>
                   <StExplainContent>
                     {/* 명예의 전당<span style={{ fontWeight: 700 }}>1회 등극</span> */}
                   </StExplainContent>
@@ -180,11 +177,10 @@ function ProfileCard({ profileData }) {
                 <StExplain>
                   <StExplainName>미킹</StExplainName>
                   <StExplainContent>
-                    <span style={{ fontWeight: 700 }}>월8회 이상</span> 미믹 도전
+                    <span style={{ fontWeight: 700 }}>월8회 이상</span> 미믹
+                    도전
                   </StExplainContent>
-                  <StExplainContent>
-                  미믹 도전완료 + 미믹 제안
-                  </StExplainContent>
+                  <StExplainContent>미믹 도전완료 + 미믹 제안</StExplainContent>
                   <StExplainContent>
                     {/* 명예의 전당<span style={{ fontWeight: 700 }}>3회 등극</span> */}
                   </StExplainContent>
@@ -300,8 +296,6 @@ function ProfileCard({ profileData }) {
 
 export default ProfileCard;
 
-
-
 // 프로필 카드 변경
 const StTotalWrap = styled.div`
   background-color: white;
@@ -340,7 +334,7 @@ const StImage = styled.img`
   display: flex;
   transform: scaleX(-1);
   margin-left: 15px;
-    border-radius: 9999px;
+  border-radius: 9999px;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 43.2px;
@@ -722,7 +716,7 @@ const StExplainContentWrap = styled.div`
   display: flex;
   margin-top: 8px;
   flex-direction: column;
-`
+`;
 const StExplainContent = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
