@@ -73,7 +73,7 @@ function ProfileCard({ profileData }) {
         setFollow("팔로우");
       }
     } catch (error) {
-      return alert(error.response.data.errorMessage);
+      return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
 

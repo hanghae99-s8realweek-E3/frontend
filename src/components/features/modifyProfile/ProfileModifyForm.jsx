@@ -54,7 +54,7 @@ function ProfileModifyForm() {
 
   // 작성한 닉네임의 값으로 상태를 변경
   function changeInputData(event) {
-    setChangeProfile({ ...changeProfile, nickname: event.target.value });
+    setChangeProfile({ ...changeProfile, nickname: event.target.value.trim() });
   }
 
   // 선택한 MBTI의 값으로 상태를 변경
@@ -71,6 +71,20 @@ function ProfileModifyForm() {
   // 프로필 정보를 업로드
   function submitModifyMyProfileData(event) {
     event.preventDefault();
+    if (
+      myData.nickname === changeProfile.nickname &&
+      myData.mbti === changeProfile.mbti
+    ) {
+      alert("프로필 변경 사항이 없습니다.\n수정 후, 버튼을 눌러주십시오.");
+    }
+    if (
+      changeProfile.nickname.length === 0 ||
+      changeProfile.nickname.length > 12
+    ) {
+      return alert("닉네임은 1글자부터 12글자 사이만 가능합니다.");
+    } else if (changeProfile.nickname.trim().length === 0) {
+      return alert("정확한 닉네임을 입력해 주십시오.");
+    }
     setLoading(true);
     const modifyConnect = async () => {
       try {
@@ -83,7 +97,7 @@ function ProfileModifyForm() {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert("프로필 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     modifyConnect();
@@ -107,7 +121,7 @@ function ProfileModifyForm() {
           setLoading(false);
         }
       } catch (error) {
-        alert(error.response.data.errorMessage);
+        alert("프로필 이미지 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
         setLoading(false);
       }
     };

@@ -50,7 +50,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     stateChallenge();
@@ -78,7 +78,9 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert(
+          "미믹 도전을 취소하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     cancelApply();
@@ -97,7 +99,9 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert(
+          "제안한 미믹을 삭제하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     deleteApply();

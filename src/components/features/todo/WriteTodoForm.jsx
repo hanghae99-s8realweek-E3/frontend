@@ -26,14 +26,14 @@ function WriteTodoForm() {
     if (value.length > 30) {
       return setTodo({
         ...todo,
-        [name]: value.slice(0, 30),
+        [name]: value.slice(0, 30).trim(),
+      });
+    } else {
+      setTodo({
+        ...todo,
+        [name]: value.trim(),
       });
     }
-
-    setTodo({
-      ...todo,
-      [name]: value,
-    });
   };
 
   // state와 ref의 차이 state는 값이 바뀔 때마다 렌더링 ref는 값은 바뀌고 있으나 렌더링을 직접해주지 않으면 값이 나타나지 않음 *별코딩 youtube https://www.youtube.com/watch?v=VxqZrL4FLz8&t=0s 7분~*
@@ -63,6 +63,12 @@ function WriteTodoForm() {
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
     e.preventDefault();
+    if (todo.todo.trim().length === 0) {
+      return alert(
+        "미믹 내용엔 공백만 들어갈 수 없습니다.\n정확한 내용을 작성해주세요."
+      );
+    }
+
     if (todo.todo.length < 10) {
       return alert("10자 이상 작성해 주세요.");
     }
@@ -83,7 +89,7 @@ function WriteTodoForm() {
         }
       } catch (error) {
         setLoading(false);
-        return alert(error.response.data.errorMessage);
+        return alert("미믹 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     // 실행

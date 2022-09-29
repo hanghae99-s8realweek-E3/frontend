@@ -153,7 +153,7 @@ function FeedDetailContainer() {
           setMenuModal(false);
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     deleteCommentFetch();
@@ -170,7 +170,9 @@ function FeedDetailContainer() {
           return navigate("/setuptodo");
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert(
+          "도전하기 설정에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     postFeedDetailFetch();
@@ -183,7 +185,6 @@ function FeedDetailContainer() {
       return alert("댓글을 입력해주세요");
     }
     if (inputRef.current.value.trim().length === 0) {
-      console.log(inputRef.current.value.trim().length);
       return alert("댓글을 입력해주세요");
     }
     const postCommentFetch = async () => {
@@ -195,7 +196,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("댓글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     postCommentFetch();
@@ -211,7 +212,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     putMyPageFollowFetch();
@@ -328,8 +329,10 @@ function FeedDetailContainer() {
               <StDetailCard>
                 <DetailCard data={detailState.data.todoInfo} />
               </StDetailCard>
-              {detailState.data.isTodayDone === "false" ? (
-                <></>
+              {detailState.data.isTodayDone === true ? (
+                <StBtnNowChallenged>
+                  이미 오늘의 도전이 진행중입니다.
+                </StBtnNowChallenged>
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
@@ -477,7 +480,6 @@ const StImgNickname = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  cursor: pointer;
   @media only screen and (max-width: 500px) {
     width: 90%;
     height: 50px;
@@ -490,6 +492,7 @@ const StProfileBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: arrow;
   ${({ width, height }) => {
     return css`
       width: ${width || "50px"};
@@ -524,6 +527,7 @@ const StProfileImg = styled.img`
       /* border-radius: ${borderRadius || "25px"}; */
     `;
   }}
+  cursor: arrow;
   @media only screen and (max-width: 500px) {
     width: 40px;
     height: 40px;
@@ -605,6 +609,11 @@ const StNicknameComment = styled.div`
   font-weight: 500;
   font-size: 15px;
   line-height: 22px;
+  cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #5e5c5c;
+  }
 `;
 const StComment = styled.div`
   align-items: flex-start;
@@ -655,17 +664,6 @@ const StWriteComment = styled.form`
     width: 360px;
   }
 `;
-const StItem = styled.div`
-  /* background-color:blue; */
-  display: flex;
-  flex-direction: row;
-  border-radius: 1px solid red;
-`;
-
-const StInputWrap = styled.div`
-  margin-top: 5px;
-  margin-bottom: 75px;
-`;
 
 const StInput = styled.input`
   /* background-color:red; */
@@ -713,8 +711,8 @@ const StBtnGoToChallenge = styled.button`
   background: #ff6d53;
   border-radius: 6px;
   border: none;
-  width: 450px;
-  height: 70px;
+  width: 90%;
+  height: 60px;
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
@@ -724,12 +722,35 @@ const StBtnGoToChallenge = styled.button`
   margin: 10px;
   -webkit-tap-highlight-color: transparent;
   @media only screen and (max-width: 500px) {
-    width: 90%;
+    font-size: 18px;
+    height: 50px;
   }
 
   transition: ease 0.05s;
   &:hover {
     background: #ffa595;
+  }
+`;
+
+const StBtnNowChallenged = styled.button`
+  background: #979797;
+  border-radius: 6px;
+  border: none;
+  width: 90%;
+  height: 60px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  color: #ffffff;
+  text-align: center;
+  cursor: arrow;
+  margin: 10px;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: ease 0.05s;
+  @media only screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
   }
 `;
 

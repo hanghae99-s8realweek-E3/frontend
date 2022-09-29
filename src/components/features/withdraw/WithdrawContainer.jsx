@@ -7,10 +7,12 @@ function WithdrawContainer() {
   const passwordRef = useRef();
   const navigate = useNavigate();
 
+  // 구글 폼 이동
   function moveToPageGoogleForm() {
     window.open("https://forms.gle/ByMhVrN7Gr9pUuBZ9");
   }
 
+  // 탈퇴 처리
   function sendToWithdrawData(event) {
     event.preventDefault();
     const withdrawApply = async () => {
@@ -23,7 +25,7 @@ function WithdrawContainer() {
           navigate("/");
         }
       } catch (error) {
-        alert(error.response.data.errorMessage);
+        alert("탈퇴 처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     withdrawApply();
