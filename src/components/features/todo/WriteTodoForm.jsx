@@ -26,12 +26,12 @@ function WriteTodoForm() {
     if (value.length > 30) {
       return setTodo({
         ...todo,
-        [name]: value.slice(0, 30).trim(),
+        [name]: value.slice(0, 30),
       });
     } else {
       setTodo({
         ...todo,
-        [name]: value.trim(),
+        [name]: value,
       });
     }
   };
@@ -80,6 +80,7 @@ function WriteTodoForm() {
     else e.preventDefault();
     setLoading(true);
     // instance통신 선언
+    const todoData = { ...todo, todo: todo.todo.trim() };
     const TodoDateFetchCheck = async () => {
       try {
         const response = await instance.post("/mytodos", todo);

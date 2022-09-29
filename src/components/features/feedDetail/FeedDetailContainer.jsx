@@ -318,8 +318,7 @@ function FeedDetailContainer() {
                 <StNickMBTIWarp>
                   <StNickname
                     id={detailState.data.todoInfo.userId}
-                    onClick={onClickGoToOtherspage}
-                  >
+                    onClick={onClickGoToOtherspage}>
                     {detailState.data.todoInfo.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
@@ -401,8 +400,7 @@ function FeedDetailContainer() {
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo.todoId}
-                >
+                  id={detailState.data.todoInfo.todoId}>
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -428,8 +426,7 @@ function FeedDetailContainer() {
 
                         <StNicknameComment
                           id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}
-                        >
+                          onClick={onClickCommentGoToOtherspage}>
                           {x.nickname}
                         </StNicknameComment>
                         <div id={x.userId}></div>
@@ -451,8 +448,7 @@ function FeedDetailContainer() {
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}
-                            >
+                              onClick={displayCardMenu}>
                               <FontAwesomeIcon
                                 style={{ pointerEvents: "none" }}
                                 icon={faEllipsisVertical}
@@ -850,7 +846,6 @@ const StPopUpWhiteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
 
   font-size: 22px;
   font-weight: 500;
@@ -860,18 +855,15 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-
-  width: 90%;
+  width: 450px;
   height: 70px;
-  z-index: 11;
-  transform: ${(props) => props.transform};
   cursor: pointer;
-  @media only screen and (max-width: 500px) {
-    width: 90%;
-    margin: -50px 20px 50px 20px;
+  @media screen and (max-width: 500px) {
+    margin: 0 18px;
+    height: 60px;
+    font-size: 18px;
   }
 `;
-
 const StGradeImageBox = styled.div`
   display: flex;
 `;
@@ -1014,4 +1006,14 @@ const StGradeExplain = styled.div`
   @media screen and (max-width: 500px) {
     font-size: 8px;
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

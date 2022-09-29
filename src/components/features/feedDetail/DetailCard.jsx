@@ -14,10 +14,8 @@ import instance from "../../../app/modules/instance";
 
 function DetailCard({ data }) {
   const [menuModal, setMenuModal] = useState(false);
-  const params = useParams();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
-
   // 팝업창 열고 닫기 위한 함수
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -48,7 +46,7 @@ function DetailCard({ data }) {
         <StShadowBackgroundDiv>
           <StBackGroundCloseDiv onClick={displayCardMenu} />
           {myData !== undefined && myData.userId === data.userId ? (
-            <>
+            <StButtonBox>
               <StPopUpWhiteButton
                 onClick={deleteMyTodayMakingChallenge}
                 transform="translateY(76vh)">
@@ -59,7 +57,7 @@ function DetailCard({ data }) {
                 transform="translateY(77vh)">
                 닫기
               </StPopUpWhiteButton>
-            </>
+            </StButtonBox>
           ) : (
             <></>
           )}
@@ -164,6 +162,13 @@ const StMenuBtn = styled.button`
   outline: none;
   margin-left: auto;
   margin-bottom: auto;
+  & svg {
+    pointer-events: none;
+  }
+
+  & path {
+    pointer-events: none;
+  }
 
   cursor: pointer;
 `;
@@ -192,10 +197,8 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-
-  width: 90%;
+  width: 450px;
   height: 70px;
-  transform: ${(props) => props.transform};
   cursor: pointer;
   @media screen and (max-width: 500px) {
     margin: 0 18px;
@@ -218,4 +221,14 @@ export const StShadowBackgroundDiv = styled.div`
     width: 360px;
     transform: translateX(2%);
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

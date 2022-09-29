@@ -36,7 +36,7 @@ const SignUpForm = () => {
     if (name === "nickname" && signupData.nickname.length > 12) {
       setSignupData({
         ...signupData,
-        [name]: value.slice(0, 12).trim(),
+        [name]: value.slice(0, 12),
       });
     } else {
       setSignupData({ ...signupData, [name]: value });
@@ -131,9 +131,16 @@ const SignUpForm = () => {
     }
     setLoading(true);
     //axios
+    const sendSignUpData = {
+      ...signupData,
+      nickname: signupData.nickname.trim(),
+    };
     const postSignUpFetch = async () => {
       try {
-        const response = await preInstance.post("/accounts/signup", signupData);
+        const response = await preInstance.post(
+          "/accounts/signup",
+          sendSignUpData
+        );
         //request
         if (response.data.message === "success") {
           //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
