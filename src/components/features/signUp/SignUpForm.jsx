@@ -33,13 +33,21 @@ const SignUpForm = () => {
   //onChangeEventHandler
   const onChangeSignupData = (e) => {
     const { name, value } = e.target;
-    setSignupData({ ...signupData, [name]: value });
+    if (name === "nickname" && signupData.nickname.length > 12) {
+      setSignupData({
+        ...signupData,
+        [name]: value.slice(0, 12).trim(),
+      });
+    } else {
+      setSignupData({ ...signupData, [name]: value });
+    }
     if (
       checkState.email === "none" ||
       checkState.password === "none" ||
       checkState.confirm === "none"
-    );
-    setCheckState({ ...checkState, [name]: "block" });
+    ) {
+      setCheckState({ ...checkState, [name]: "block" });
+    }
   };
 
   //email중복확인
@@ -118,6 +126,8 @@ const SignUpForm = () => {
       signupData.nickname.length > 12
     ) {
       return alert("닉네임 형식(12글자 이하)을 확인해주세요 ");
+    } else if (signupData.nickname.trim().length === 0) {
+      return alert("정확한 닉네임을 입력해 주십시오.");
     }
     setLoading(true);
     //axios
@@ -133,7 +143,19 @@ const SignUpForm = () => {
         }
       } catch (error) {
         setLoading(false);
-        return alert("회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오.");
+        console.log(error.response);
+        if (
+          error.response.data.errorMessage ===
+          "이메일 인증이 완료되지 않았습니다."
+        ) {
+          return alert(
+            "이메일 인증이 완료되지 않았습니다.\n이메일 인증 후 다시 시도해주십시오."
+          );
+        } else {
+          return alert(
+            "회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오."
+          );
+        }
       }
     };
     postSignUpFetch(); //함수 발동
@@ -201,6 +223,7 @@ const SignUpForm = () => {
                 onChange={onChangeSignupData}
                 type="password"
                 name="password"
+                maxLength={20}
                 value={signupData.password}
                 placeholder="비밀번호 입력"
               />
@@ -225,6 +248,7 @@ const SignUpForm = () => {
                 onChange={onChangeSignupData}
                 type="password"
                 name="confirmPassword"
+                maxLength={20}
                 value={signupData.confirmPassword}
                 placeholder="비밀번호 확인"
               />
