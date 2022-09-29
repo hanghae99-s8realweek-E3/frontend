@@ -54,7 +54,7 @@ function ProfileModifyForm() {
 
   // 작성한 닉네임의 값으로 상태를 변경
   function changeInputData(event) {
-    setChangeProfile({ ...changeProfile, nickname: event.target.value.trim() });
+    setChangeProfile({ ...changeProfile, nickname: event.target.value });
   }
 
   // 선택한 MBTI의 값으로 상태를 변경
@@ -86,9 +86,13 @@ function ProfileModifyForm() {
       return alert("정확한 닉네임을 입력해 주십시오.");
     }
     setLoading(true);
+    const profileData = {
+      ...changeProfile,
+      nickname: event.target.value.trim(),
+    };
     const modifyConnect = async () => {
       try {
-        const response = await instance.put("/accounts", changeProfile);
+        const response = await instance.put("/accounts", profileData);
         if (response.data.message === "success") {
           window.localStorage.setItem("token", response.data.token);
           setLoading(false);
