@@ -1,4 +1,5 @@
 import {
+  StBackGroundCloseDiv,
   StCommonColumnBox,
   StCommonRowBox,
   StShadowBackgroundDiv,
@@ -49,7 +50,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     stateChallenge();
@@ -77,7 +78,9 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert(
+          "미믹 도전을 취소하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     cancelApply();
@@ -96,7 +99,9 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
         }
       } catch (error) {
         setLoading(false);
-        alert(error.response.data.errorMessage);
+        alert(
+          "제안한 미믹을 삭제하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     deleteApply();
@@ -109,24 +114,21 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
       {loading === true ? <LoadingContainer /> : <></>}
       {menuModal === true ? (
         <StShadowBackgroundDiv>
-          {isTodayChallenge === true ? (
-            <StPopUpWhiteButton
-              onClick={cancelTodayChallenge}
-              transform="translateY(76vh)">
-              등록 취소
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
+          <StButtonBox>
+            {isTodayChallenge === true ? (
+              <StPopUpWhiteButton onClick={cancelTodayChallenge}>
+                등록 취소
+              </StPopUpWhiteButton>
+            ) : (
+              <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
+                삭제
+              </StPopUpWhiteButton>
+            )}
+            <StPopUpWhiteButton onClick={displayCardMenu}>
+              닫기
             </StPopUpWhiteButton>
-          ) : (
-            <StPopUpWhiteButton
-              onClick={deleteMyTodayMakingChallenge}
-              transform="translateY(76vh)">
-              삭제
-            </StPopUpWhiteButton>
-          )}
-          <StPopUpWhiteButton
-            onClick={displayCardMenu}
-            transform="translateY(77vh)">
-            닫기
-          </StPopUpWhiteButton>
+          </StButtonBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
@@ -256,6 +258,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+  word-wrap: break-word;
+  word-break: break-all;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 26px;
@@ -293,16 +297,27 @@ const StPopUpWhiteButton = styled.button`
 
   border: none;
   outline: none;
-  margin: 0 25px;
+  margin: 0 5%;
   border-radius: 6px;
-
-  width: 90%;
+  z-index: 11;
+  width: 450px;
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
   @media screen and (max-width: 500px) {
+    width: 324px;
     margin: 0 18px;
     height: 60px;
     font-size: 18px;
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

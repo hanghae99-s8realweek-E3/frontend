@@ -22,10 +22,18 @@ function WriteTodoForm() {
   // 구조 분해 할당
   const onChange = (event) => {
     const { name, value } = event.target;
-    setTodo({
-      ...todo,
-      [name]: value,
-    });
+
+    if (value.length > 30) {
+      return setTodo({
+        ...todo,
+        [name]: value.slice(0, 30),
+      });
+    } else {
+      setTodo({
+        ...todo,
+        [name]: value,
+      });
+    }
   };
 
   // state와 ref의 차이 state는 값이 바뀔 때마다 렌더링 ref는 값은 바뀌고 있으나 렌더링을 직접해주지 않으면 값이 나타나지 않음 *별코딩 youtube https://www.youtube.com/watch?v=VxqZrL4FLz8&t=0s 7분~*
@@ -54,13 +62,29 @@ function WriteTodoForm() {
 
   // 등록하기 버튼클릭시 실행
   const submitTodoData = (e) => {
+    e.preventDefault();
+    if (todo.todo.trim().length === 0) {
+      return alert(
+        "미믹 내용엔 공백만 들어갈 수 없습니다.\n정확한 내용을 작성해주세요."
+      );
+    }
+
+    if (todo.todo.trim().length < 10) {
+      return alert("10자 이상 작성해 주세요.");
+    }
+
     if (todo.todo.length < 10) {
       return alert("10자 이상 작성해 주세요.");
+    }
+
+    if (todo.todo.length > 30) {
+      return alert("입력한 미믹 내용은 30자를 넘지 않아야 합니다.");
     }
     // 새로고침 이벤트 막기
     else e.preventDefault();
     setLoading(true);
     // instance통신 선언
+    const todoData = { ...todo, todo: todo.todo.trim() };
     const TodoDateFetchCheck = async () => {
       try {
         const response = await instance.post("/mytodos", todo);
@@ -70,7 +94,7 @@ function WriteTodoForm() {
         }
       } catch (error) {
         setLoading(false);
-        return alert(error.response.data.errorMessage);
+        return alert("미믹 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     // 실행
@@ -93,6 +117,10 @@ function WriteTodoForm() {
             value={todo.todo}
             onChange={onChange}
           />
+          <StTextCount
+            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}>
+            {30 - todo.todo.length}
+          </StTextCount>
           {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
         <span>
           입력할 수 있는 글자 수 :{" "}
@@ -137,7 +165,7 @@ const StWriteTodoForm = styled.form`
 
 const StWriteTodoTextArea = styled.textarea`
   resize: none; // 크기 조절하는 커서 안뜨게할려고
-  height: 150px;
+  height: 100px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -146,7 +174,7 @@ const StWriteTodoTextArea = styled.textarea`
   color: #979797;
   border: none;
   outline: none;
-  margin-left: 27px;
+  margin: 0 25px;
 `;
 
 const Stbutton = styled.button`
@@ -168,6 +196,14 @@ const Stbutton = styled.button`
   &:hover {
     background: #ffa595;
   }
+`;
+
+const StTextCount = styled.div`
+  color: ${(props) => props.color};
+  margin-left: auto;
+  margin-right: 25px;
+  font-size: 24px;
+  font-weight: 500;
 `;
 
 export default WriteTodoForm;

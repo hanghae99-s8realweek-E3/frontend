@@ -61,3 +61,25 @@ export const StShadowBackgroundDiv = styled.div`
     width: 360px;
   }
 `;
+
+export const StBackGroundCloseDiv = styled.button`
+  background: none;
+
+  display: block;
+  position: fixed;
+
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+    transform: ${(props) => props.transform};
+  }
+`;

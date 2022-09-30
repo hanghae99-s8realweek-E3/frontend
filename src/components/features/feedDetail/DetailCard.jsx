@@ -1,4 +1,5 @@
 import {
+  StBackGroundCloseDiv,
   StCommonColumnBox,
   StCommonRowBox,
 } from "../../interface/styledCommon";
@@ -13,10 +14,8 @@ import instance from "../../../app/modules/instance";
 
 function DetailCard({ data }) {
   const [menuModal, setMenuModal] = useState(false);
-  const params = useParams();
   const myData = decodeMyTokenData();
   const navigate = useNavigate();
-
   // 팝업창 열고 닫기 위한 함수
   function displayCardMenu(event) {
     event.stopPropagation();
@@ -33,7 +32,7 @@ function DetailCard({ data }) {
           navigate("/todolists");
         }
       } catch (error) {
-        alert(error.response.data.errorMessage);
+        alert("미믹을 삭제하는 데에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     deleteApply();
@@ -45,19 +44,16 @@ function DetailCard({ data }) {
     <>
       {menuModal === true ? (
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
           {myData !== undefined && myData.userId === data.userId ? (
-            <>
-              <StPopUpWhiteButton
-                onClick={deleteMyTodayMakingChallenge}
-                transform="translateY(76vh)">
+            <StButtonBox>
+              <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
                 삭제
               </StPopUpWhiteButton>
-              <StPopUpWhiteButton
-                onClick={displayCardMenu}
-                transform="translateY(77vh)">
+              <StPopUpWhiteButton onClick={displayCardMenu}>
                 닫기
               </StPopUpWhiteButton>
-            </>
+            </StButtonBox>
           ) : (
             <></>
           )}
@@ -143,7 +139,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
-
+  word-wrap: break-word;
+  word-break: break-all;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 26px;
@@ -161,6 +158,13 @@ const StMenuBtn = styled.button`
   outline: none;
   margin-left: auto;
   margin-bottom: auto;
+  & svg {
+    pointer-events: none;
+  }
+
+  & path {
+    pointer-events: none;
+  }
 
   cursor: pointer;
 `;
@@ -189,12 +193,11 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-
-  width: 90%;
+  width: 450px;
   height: 70px;
-  transform: ${(props) => props.transform};
   cursor: pointer;
   @media screen and (max-width: 500px) {
+    width: 324px;
     margin: 0 18px;
     height: 60px;
     font-size: 18px;
@@ -213,6 +216,16 @@ export const StShadowBackgroundDiv = styled.div`
   z-index: 10;
   @media only screen and (max-width: 500px) {
     width: 360px;
-    transform: translateX(2%);
+    transform: translateX(-1.4%);
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

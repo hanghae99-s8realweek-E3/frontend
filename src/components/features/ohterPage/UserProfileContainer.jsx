@@ -12,10 +12,12 @@ import {
 } from "../../../app/modules/todolistsSlice";
 import LoadingContainer from "../../../utils/loadingState";
 import ProfileCard from "../../common/ProfileCard";
+import { StBackGroundCloseDiv } from "../../interface/styledCommon";
 import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
+  console.log(card);
   // 첫 화면 진입시 challenge로 값을 지정
   const [todoTab, setTodoTab] = useState("도전");
   const [prevClick, setPrevClick] = useState(null);
@@ -44,7 +46,12 @@ function UserProfileContainer() {
   //   dispatch(getOthersTodoFetch(params));
   // }, []);
   useEffect(() => {
-    dispatch(getOthersTodoFetch(params));
+    setLoading(true);
+    async function loading(){
+    await dispatch(getOthersTodoFetch(params));
+    setLoading(false)
+    }
+    loading();
   }, []);
 
   // 탭을 할 때마다 혅재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
@@ -62,7 +69,6 @@ function UserProfileContainer() {
       prev.style.borderBottomColor = "gray";
     }
     setPrevClick(todoTab);
-    setLoading(false);
   }, [todoTab]);
 
   // 도전한 TO DO 누를때
@@ -102,6 +108,7 @@ function UserProfileContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {Object.keys(card).length === 0 ? (
+          // <LoadingContainer />
           <></>
         ) : (
           <>
@@ -124,7 +131,8 @@ function UserProfileContainer() {
 
             <StBottomWrap>
               {selectSort === true ? (
-                <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+                <StShadowBackgroundDiv>
+                  <StBackGroundCloseDiv onClick={toggleSortPopUp} />
                   <StPopupBox>
                     <StSlideDiv />
                     <StSort>
@@ -132,7 +140,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortDate}>
+                        onClick={sortDate}
+                      >
                         최신순
                       </StDate>
                       <StDateLine />
@@ -140,7 +149,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortComment}>
+                        onClick={sortComment}
+                      >
                         댓글순
                       </StComment>
                       <StCommentLine />
@@ -148,7 +158,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortChallenge}>
+                        onClick={sortChallenge}
+                      >
                         도전순
                       </StChallenge>
                       <StChallengeLine />
@@ -241,8 +252,9 @@ function UserProfileContainer() {
 
 const StTotalWrap = styled.div`
   display: flex;
-  width: 500px;
+  /* width: 500px; */
   flex-direction: column;
+  justify-content: flex-start;
   @media screen and (max-width: 500px) {
     display: flex;
     width: 360px;
@@ -250,11 +262,12 @@ const StTotalWrap = styled.div`
   }
 `;
 const StTopWrap = styled.div`
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 60px;
   /* padding-bottom: 31.5px; */
   background-color: #ffffff;
+
 `;
 const StTodoTopLine = styled.div`
   display: flex;

@@ -18,6 +18,8 @@ import LoadingContainer from "../../../utils/loadingState";
 import detailSlice, {
   resetFeedDetailData,
 } from "../../../app/modules/detailSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 // check uncheck
 
@@ -145,14 +147,14 @@ function FeedPageContainer() {
   };
 
   // 최신순 클릭 후 클릭한 값에 따라 변화
-  const toggleSortPopUp = () => {
+  const toggleSortPopUp = (e) => {
     setSelectSort(!selectSort);
   };
 
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -168,13 +170,16 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("최신순");
     setSelectSort(!selectSort);
   };
   //댓글순 정렬
   const sortComment = (e) => {
-    setLoading(true);
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsCommentFetch(false));
@@ -190,13 +195,18 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("댓글순");
     setSelectSort(!selectSort);
+
   };
   //도전순 정렬
   const sortChallenge = (e) => {
-    setLoading(true);
+
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -212,7 +222,11 @@ function FeedPageContainer() {
         }
       }
     }
-    setLoading(false);
+    if(searchList.length !== 0){
+      setSearchList(
+        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+      );
+    }
     setSortState("도전순");
     setSelectSort(!selectSort);
   };
@@ -226,7 +240,9 @@ function FeedPageContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {selectSort === true ? (
-          <StShadowBackgroundDiv onClick={toggleSortPopUp}>
+          
+          <StShadowBackgroundDiv>
+            <StBackGroundCloseDiv onClick={toggleSortPopUp} />
             <StPopupBox>
               <StSlideDiv />
               <StSort>
@@ -259,8 +275,9 @@ function FeedPageContainer() {
                 <StChallengeLine />
                 <StCommonBar />
               </StSort>
-            </StPopupBox>
+            </StPopupBox> 
           </StShadowBackgroundDiv>
+
         ) : (
           <></>
         )}
@@ -283,46 +300,40 @@ function FeedPageContainer() {
             </form>
           </StSearchBarBox> */}
 
-          <>
-            {searchList.length === 0 ? (
-              <StWrap>
-                <StChallengeWrap>
-                  {/* 거짓이면 체크안한거 참이면 체크한거 */}
-                  {checkOn === false ? (
-                    <StChallengeImg
-                      onClick={checkState}
-                      src={process.env.PUBLIC_URL + `/images/unCheck.png`}
-                      width="17"
-                      height="17"
-                      alt="AppearImg"
-                    />
-                  ) : (
-                    <StChallengeImg
-                      onClick={checkState}
-                      src={process.env.PUBLIC_URL + `/images/check.png`}
-                      width="17"
-                      height="17"
-                      alt="AppearImg"
-                    />
-                  )}
-                  <StChallengeWord>도전완료 가리기</StChallengeWord>
-                </StChallengeWrap>
-                <StToggleImgWrap>
-                  {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-                  <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
-                  <StToggleImg
-                    onClick={toggleSortPopUp}
-                    src={process.env.PUBLIC_URL + `/images/Toggle.png`}
-                    width="12"
-                    height="6"
-                    alt="ToggleImg"
-                  />
-                </StToggleImgWrap>
-              </StWrap>
-            ) : (
-              <></>
-            )}
-          </>
+          <StWrap>
+            <StChallengeWrap>
+              {/* 거짓이면 체크안한거 참이면 체크한거 */}
+              {checkOn === false ? (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/unCheck.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              ) : (
+                <StChallengeImg
+                  onClick={checkState}
+                  src={process.env.PUBLIC_URL + `/images/check.png`}
+                  width="17"
+                  height="17"
+                  alt="AppearImg"
+                />
+              )}
+              <StChallengeWord>도전완료 가리기</StChallengeWord>
+            </StChallengeWrap>
+            <StToggleImgWrap>
+              {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
+              <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+              <StToggleImg
+                onClick={toggleSortPopUp}
+                src={process.env.PUBLIC_URL + `/images/Toggle.png`}
+                width="12"
+                height="6"
+                alt="ToggleImg"
+              />
+            </StToggleImgWrap>
+          </StWrap>
         </StTopWrap>
 
         <>
@@ -342,12 +353,6 @@ function FeedPageContainer() {
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
           ) : (
-            // <StTodayMyCardWrap>
-            //   {searchList.map((x) => (
-            //     <StTest>{x.todo}</StTest>
-
-            //   ))}
-            // </StTodayMyCardWrap>
             <StTodayMyCardWrap>
               {checkOn === true
                 ? searchList
@@ -455,6 +460,7 @@ const StTodayMyCardWrap = styled.div`
   flex-direction: column;
   /* margin-top: 200px;  검색 넣을때*/
   margin-top: 110px;
+  margin-bottom: 110.06px;
 `;
 const StSelectMbti = styled.button`
   display: flex;
@@ -660,5 +666,23 @@ const StTest = styled.div`
   height: 50px;
   padding-top: 20px;
   color: black;
+`;
+
+export const StBackGroundCloseDiv = styled.button`
+  background: none;
+  display: block;
+  position: fixed;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 10;
+  /* cursor: pointer; */
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 export default FeedPageContainer;

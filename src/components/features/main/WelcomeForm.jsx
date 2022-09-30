@@ -2,8 +2,10 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { removeCookies } from "../../../utils/cookie";
-import { StShadowBackgroundDiv } from "../../interface/styledCommon";
+import {
+  StBackGroundCloseDiv,
+  StShadowBackgroundDiv,
+} from "../../interface/styledCommon";
 
 function WelcomeForm() {
   //modalState
@@ -11,7 +13,7 @@ function WelcomeForm() {
 
   const closeToModal = () => {
     setModalState("off");
-    removeCookies("firstLogin");
+    window.localStorage.removeItem("firstLogin");
   };
 
   return (
@@ -19,6 +21,7 @@ function WelcomeForm() {
       {modalState === "on" ? (
         //바같쪽 배경
         <StShadowBackgroundDiv>
+          <StBackGroundCloseDiv onClick={closeToModal} />
           {/* //e.stopPropagation() 는 배경만 눌렀을때 모달이 꺼지게한다 (모달창눌럿을때는 변화없음) */}
           <StContainer onClick={(e) => e.stopPropagation()}>
             <StCloseButton type="button" onClick={closeToModal}>

@@ -60,9 +60,9 @@ function HelpDeskContainer() {
             <div>
               <StFAQTitleBox>
                 <h2>자주 묻는 질문 TOP 3</h2>
-                <button type="button" onClick={notifyNowMaking}>
+                {/* <button type="button" onClick={notifyNowMaking}>
                   더보기
-                </button>
+                </button> */}
               </StFAQTitleBox>
 
               <StFAQAccordionList>
@@ -150,7 +150,6 @@ const StTapButton = styled.button`
   font-size: 18px;
   font-weight: 500;
   color: #313131;
-
   border: none;
   border-bottom: 1px solid #909090;
   outline: none;

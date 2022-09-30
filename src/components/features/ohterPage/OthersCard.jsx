@@ -1,5 +1,5 @@
 import {
-  StCommonColumnBox,
+  StBackGroundCloseDiv,
   StCommonRowBox,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
@@ -45,7 +45,7 @@ function OthersCard({ data }) {
           dispatch(getOthersTodoFetch({ userId: data.userId }));
         }
       } catch (error) {
-        alert(error.response.data.errorMessage);
+        alert("미믹 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     deleteApply();
@@ -57,17 +57,15 @@ function OthersCard({ data }) {
     <>
       {menuModal === true ? (
         <StShadowBackgroundDiv>
-          <StPopUpWhiteButton
-            onClick={deleteMyTodayMakingChallenge}
-            transform="translateY(76vh)">
-            삭제
-          </StPopUpWhiteButton>
-
-          <StPopUpWhiteButton
-            onClick={displayCardMenu}
-            transform="translateY(77vh)">
-            닫기
-          </StPopUpWhiteButton>
+          <StBackGroundCloseDiv onClick={displayCardMenu} />
+          <StButtonBox>
+            <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
+              삭제
+            </StPopUpWhiteButton>
+            <StPopUpWhiteButton onClick={displayCardMenu}>
+              닫기
+            </StPopUpWhiteButton>
+          </StButtonBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
@@ -182,6 +180,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+  word-wrap: break-word;
+  word-break: break-all;
 
   @media screen and (max-width: 500px) {
     font-size: 16px;
@@ -226,7 +226,7 @@ const StPopUpWhiteButton = styled.button`
   margin: 0 25px;
   border-radius: 6px;
 
-  width: 90%;
+  width: 450px;
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
@@ -248,4 +248,14 @@ const StCommonStatusBox = styled.div`
       font-size: 12px;
     }
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

@@ -4,12 +4,14 @@ import { emailFormat, passwordFormat } from "../../../utils/reqList";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
+import LoadingContainer from "../../../utils/loadingState";
 
 const SignUpForm = () => {
   //hook
   const confirmNumberRef = useRef();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [checkState, setCheckState] = useState({
     email: "none",
     password: "none",
@@ -31,13 +33,21 @@ const SignUpForm = () => {
   //onChangeEventHandler
   const onChangeSignupData = (e) => {
     const { name, value } = e.target;
-    setSignupData({ ...signupData, [name]: value });
+    if (name === "nickname" && signupData.nickname.length > 12) {
+      setSignupData({
+        ...signupData,
+        [name]: value.slice(0, 12),
+      });
+    } else {
+      setSignupData({ ...signupData, [name]: value });
+    }
     if (
       checkState.email === "none" ||
       checkState.password === "none" ||
       checkState.confirm === "none"
-    );
-    setCheckState({ ...checkState, [name]: "block" });
+    ) {
+      setCheckState({ ...checkState, [name]: "block" });
+    }
   };
 
   //email중복확인
@@ -59,10 +69,12 @@ const SignUpForm = () => {
           email: payload,
         });
         if (response.data.message === "success") {
-          return alert("이메일로 인증번호를 보냈습니다");
+          return alert("입력하신 이메일로 인증 번호를 전송했습니다.");
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert(
+          "이메일로 인증 번호를 보내는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     emailCheck(); // 최종 동작
@@ -80,10 +92,10 @@ const SignUpForm = () => {
           emailAuthNumber: confirmNumberRef.current.value,
         });
         if (response.data.message === "success") {
-          return alert("인증 성공 했습니다");
+          return alert("인증에 성공했습니다.");
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        return alert("인증에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
     certificate();
@@ -109,23 +121,48 @@ const SignUpForm = () => {
       signupData.password !== signupData.confirmPassword
     ) {
       return alert("비밀번호2 형식을 확인해주세요");
-    } else if (signupData.nickname.length === 0 ||
-      signupData.nickname.length > 15
-      ) {
-      return alert("닉네임 형식(14글자 미만)을 확인해주세요 ");
+    } else if (
+      signupData.nickname.length === 0 ||
+      signupData.nickname.length > 12
+    ) {
+      return alert("닉네임 형식(12글자 이하)을 확인해주세요 ");
+    } else if (signupData.nickname.trim().length === 0) {
+      return alert("정확한 닉네임을 입력해 주십시오.");
     }
+    setLoading(true);
     //axios
+    const sendSignUpData = {
+      ...signupData,
+      nickname: signupData.nickname.trim(),
+    };
     const postSignUpFetch = async () => {
       try {
-        const response = await preInstance.post("/accounts/signup", signupData);
+        const response = await preInstance.post(
+          "/accounts/signup",
+          sendSignUpData
+        );
         //request
         if (response.data.message === "success") {
           //localStorage 에 토큰 저장후 , navigate로 다음페이지로 이동시키기
           window.localStorage.setItem("token", response.data.token);
           navigate("/mbti");
+          setLoading(false);
         }
       } catch (error) {
-        return alert(error.response.data.errorMessage);
+        setLoading(false);
+        console.log(error.response);
+        if (
+          error.response.data.errorMessage ===
+          "이메일 인증이 완료되지 않았습니다."
+        ) {
+          return alert(
+            "이메일 인증이 완료되지 않았습니다.\n이메일 인증 후 다시 시도해주십시오."
+          );
+        } else {
+          return alert(
+            "회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오."
+          );
+        }
       }
     };
     postSignUpFetch(); //함수 발동
@@ -140,6 +177,7 @@ const SignUpForm = () => {
 
   return (
     <div>
+      {loading === true ? <LoadingContainer /> : <></>}
       <StOutLine type="submit" onSubmit={onSubmitSignUpComplete}>
         <StContainer>
           <StItem>
@@ -192,6 +230,7 @@ const SignUpForm = () => {
                 onChange={onChangeSignupData}
                 type="password"
                 name="password"
+                maxLength={20}
                 value={signupData.password}
                 placeholder="비밀번호 입력"
               />
@@ -216,6 +255,7 @@ const SignUpForm = () => {
                 onChange={onChangeSignupData}
                 type="password"
                 name="confirmPassword"
+                maxLength={20}
                 value={signupData.confirmPassword}
                 placeholder="비밀번호 확인"
               />
@@ -233,7 +273,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>닉네임</label>
-            <StInputWrap marginBottom="70px" >
+            <StInputWrap marginBottom="70px">
               <StInput
                 onChange={onChangeSignupData}
                 type="nickname"
@@ -373,7 +413,7 @@ const StSignUpBtn = styled.button`
     background: #ffa595;
   }
   -webkit-tap-highlight-color: transparent;
-  margin-top:40px;
+  margin-top: 40px;
 `;
 const StErrorTextMessage = styled.div`
   font-family: "IBM Plex Sans KR";

@@ -4,7 +4,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper";
-import { getCookie } from "../../../utils/cookie";
 import WelcomeForm from "./WelcomeForm";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +23,7 @@ function MainContainer() {
     dispatch(getMainFetch());
   }, []);
 
-  const firstLoginCheck = getCookie("firstLogin");
+  const firstLoginCheck = window.localStorage.getItem("firstLogin");
   const bannerSlide = [
     process.env.PUBLIC_URL + `/images/banner1.png`,
     process.env.PUBLIC_URL + `/images/banner2.png`,
@@ -62,7 +61,7 @@ function MainContainer() {
 
   return (
     <>
-      {firstLoginCheck !== undefined ? <WelcomeForm /> : <></>}
+      {firstLoginCheck !== null ? <WelcomeForm /> : <></>}
 
       <StContainer>
         <StHeadTitle>

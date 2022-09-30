@@ -125,7 +125,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
-
+  word-wrap: break-word;
+  word-break: break-all;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 26px;
