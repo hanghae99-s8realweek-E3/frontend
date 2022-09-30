@@ -7,6 +7,7 @@ import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
@@ -125,7 +126,9 @@ function ProfileModifyForm() {
           setLoading(false);
         }
       } catch (error) {
-        alert("프로필 이미지 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        alert(
+          "프로필 이미지 변경에 실패했습니다.\n파일 용량 또는 확장자를 확인해주시거나\n잠시 후, 다시 시도해 주십시오."
+        );
         setLoading(false);
       }
     };
@@ -185,6 +188,7 @@ function ProfileModifyForm() {
             <StChangeImageBtn htmlFor="inputImage">
               이미지 변경
             </StChangeImageBtn>
+            <StInfoImgText>파일 제한: 10MB 미만의 jpg, jpeg, png</StInfoImgText>
           </StMyProfileSec>
           <StCommonBorder />
           <StInputSettingBox>
@@ -291,7 +295,7 @@ const StChangeImageBtn = styled.label`
 
   border: none;
   outline: none;
-  margin-bottom: 69px;
+  margin-bottom: 20px;
 
   cursor: pointer;
   transition: ease 0.1s;
@@ -300,7 +304,26 @@ const StChangeImageBtn = styled.label`
   }
   @media screen and (max-width: 500px) {
     margin-top: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+  }
+`;
+
+const StInfoImgText = styled.div`
+  background: none;
+
+  font-size: 12px;
+  color: #979797;
+  font-weight: 500;
+
+  border: none;
+  outline: none;
+  margin-bottom: 37px;
+
+  transition: ease 0.1s;
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
+    margin-top: 10px;
+    margin-bottom: 40px;
   }
 `;
 

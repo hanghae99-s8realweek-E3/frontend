@@ -344,7 +344,11 @@ function FeedDetailContainer() {
               <StDetailCard>
                 <DetailCard data={detailState.data.todoInfo} />
               </StDetailCard>
-              {detailState.data.isTodayDone === true ? (
+              {detailState.data.todoInfo.userId === myData.userId ? (
+                <StBtnNowChallenged>
+                  내가 만든 미믹은 도전할 수 없습니다.
+                </StBtnNowChallenged>
+              ) : detailState.data.isTodayDone === true ? (
                 <StBtnNowChallenged>
                   이미 오늘의 도전이 진행중입니다.
                 </StBtnNowChallenged>
