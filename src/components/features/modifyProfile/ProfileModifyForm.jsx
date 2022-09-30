@@ -88,7 +88,7 @@ function ProfileModifyForm() {
     setLoading(true);
     const profileData = {
       ...changeProfile,
-      nickname: event.target.value.trim(),
+      nickname: changeProfile.nickname.trim(),
     };
     const modifyConnect = async () => {
       try {

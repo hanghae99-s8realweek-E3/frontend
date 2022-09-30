@@ -76,6 +76,10 @@ function ProfileCard({ profileData }) {
   // onError={
   //   (this.src = this.src.replace(/\/resizingMimic\//, "/mimic"))
   // }
+  const changeMyOriginalImage = (event) => {
+    event.target.src = event.target.src.replace(/\/resizingMimic\//, "/mimic/");
+  };
+
   return (
     <>
       {modalState === true ? (
@@ -201,6 +205,7 @@ function ProfileCard({ profileData }) {
                 ? profileData.userInfo.profile
                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
             }
+            onError={changeMyOriginalImage}
             alt="dy"
           />
         </StImageBox>
@@ -818,7 +823,7 @@ const StGradeModalContainer = styled.div`
   background: white;
   border-radius: 6px;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 5vh auto;
   width: 450px;
   height: 750px;
   box-sizing: border-box;
