@@ -24,9 +24,9 @@ function FeedDetailContainer() {
   const [menuModal, setMenuModal] = useState(false);
   const [commentId, setCommentId] = useState("");
   const [gradeModalState, setGradeModalState] = useState(false);
-  const gradeList = ["미돌", "미알", "미콩", "미킹"];
+  const gradeList = ["미콩", "미알", "미돌", "미킹"];
   const [gradeState, setGradeState] = useState(gradeList[0]);
-  const gradeWordList = ["Lv.1 미돌", "Lv.2 미알", "Lv.3 미콩", "Lv.4 미킹"];
+  const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
   const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
   const detailState = useSelector((state) => state.detail);
   console.log(detailState);
@@ -313,9 +313,10 @@ function FeedDetailContainer() {
                 </StProfileBox>
                 <StNickMBTIWarp>
                   <StNickname
-                    id={detailState.data.todoInfo.userId}
-                    onClick={onClickGoToOtherspage}>
-                    {detailState.data.todoInfo.nickname}
+                    id={detailState.data.todoInfo?.userId}
+                    onClick={onClickGoToOtherspage}
+                  >
+                    {detailState.data.todoInfo?.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
                 </StNickMBTIWarp>
@@ -368,17 +369,13 @@ function FeedDetailContainer() {
                 <StGradeWrap>
                   <StGradeWrod>
                     {" "}
-                    {cardImg < 3 ? (
-                      gradeList[0]
-                    ) : cardImg < 5 ? (
-                      gradeList[1]
-                    ) : cardImg < 7 ? (
-                      gradeList[2]
-                    ) : cardImg < 9 ? (
-                      gradeList[3]
-                    ) : (
-                      <></>
-                    )}
+                    {cardImg < 3
+                      ? gradeList[0]
+                      : cardImg < 5
+                      ? gradeList[1]
+                      : cardImg < 7
+                      ? gradeList[2]
+                      : gradeList[3]}
                   </StGradeWrod>
                   <StGradeExplain onClick={gradeChangeModalState}>
                     미믹등급
@@ -387,7 +384,7 @@ function FeedDetailContainer() {
               </StUserIdBox>
 
               <StDetailCard>
-                <DetailCard data={detailState.data.todoInfo} />
+                <DetailCard data={detailState.data?.todoInfo} />
               </StDetailCard>
               {detailState.data.isTodayDone === true ? (
                 <StBtnNowChallenged>
@@ -396,7 +393,8 @@ function FeedDetailContainer() {
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo.todoId}>
+                  id={detailState.data.todoInfo?.todoId}
+                >
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -422,29 +420,27 @@ function FeedDetailContainer() {
 
                         <StNicknameComment
                           id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}>
+                          onClick={onClickCommentGoToOtherspage}
+                        >
                           {x.nickname}
                         </StNicknameComment>
                         <div id={x.userId}></div>
                         <StCommentGrade>
-                          {x.challengeCounts + x.todoCounts < 3 ? (
-                            gradeWordList[0]
-                          ) : x.challengeCounts + x.todoCounts < 5 ? (
-                            gradeWordList[1]
-                          ) : x.challengeCounts + x.todoCounts < 7 ? (
-                            gradeWordList[2]
-                          ) : x.challengeCounts + x.todoCounts < 9 ? (
-                            gradeWordList[3]
-                          ) : (
-                            <></>
-                          )}
+                          {x.challengeCounts + x.todoCounts < 4
+                            ? gradeWordList[0]
+                            : x.challengeCounts + x.todoCounts < 6
+                            ? gradeWordList[1]
+                            : x.challengeCounts + x.todoCounts < 8
+                            ? gradeWordList[2]
+                            : gradeWordList[3]}
                         </StCommentGrade>
 
                         <StChangeDeleteBtn>
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}>
+                              onClick={displayCardMenu}
+                            >
                               <FontAwesomeIcon
                                 style={{ pointerEvents: "none" }}
                                 icon={faEllipsisVertical}
