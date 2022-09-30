@@ -58,17 +58,14 @@ function OthersCard({ data }) {
       {menuModal === true ? (
         <StShadowBackgroundDiv>
           <StBackGroundCloseDiv onClick={displayCardMenu} />
-          <StPopUpWhiteButton
-            onClick={deleteMyTodayMakingChallenge}
-            transform="translateY(76vh)">
-            삭제
-          </StPopUpWhiteButton>
-
-          <StPopUpWhiteButton
-            onClick={displayCardMenu}
-            transform="translateY(87vh)">
-            닫기
-          </StPopUpWhiteButton>
+          <StButtonBox>
+            <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
+              삭제
+            </StPopUpWhiteButton>
+            <StPopUpWhiteButton onClick={displayCardMenu}>
+              닫기
+            </StPopUpWhiteButton>
+          </StButtonBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
@@ -219,7 +216,6 @@ const StPopUpWhiteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
 
   font-size: 22px;
   font-weight: 500;
@@ -229,8 +225,8 @@ const StPopUpWhiteButton = styled.button`
   outline: none;
   margin: 0 25px;
   border-radius: 6px;
-  z-index: 11;
-  width: 90%;
+
+  width: 450px;
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
@@ -252,4 +248,14 @@ const StCommonStatusBox = styled.div`
       font-size: 12px;
     }
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;

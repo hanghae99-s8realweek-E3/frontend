@@ -80,5 +80,6 @@ export const StBackGroundCloseDiv = styled.button`
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     width: 360px;
+    transform: ${(props) => props.transform};
   }
 `;

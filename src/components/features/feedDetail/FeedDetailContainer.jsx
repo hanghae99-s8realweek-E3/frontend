@@ -198,19 +198,15 @@ function FeedDetailContainer() {
       <StTotalWrap>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
-            {/* <StBackGroundCloseDiv onClick={closeToPopUp} /> */}
-            <StPopUpWhiteButton
-              onClick={onClickDeleteComment}
-              transform="translateY(68vh)"
-            >
-              삭제
-            </StPopUpWhiteButton>
-            <StPopUpWhiteButton
-              onClick={displayCardMenu}
-              transform="translateY(77vh)"
-            >
-              닫기
-            </StPopUpWhiteButton>
+            <StBackGroundCloseDiv onClick={closeToPopUp} />
+            <StButtonBox>
+              <StPopUpWhiteButton onClick={onClickDeleteComment}>
+                삭제
+              </StPopUpWhiteButton>
+              <StPopUpWhiteButton onClick={displayCardMenu}>
+                닫기
+              </StPopUpWhiteButton>
+            </StButtonBox>
           </StShadowBackgroundDiv>
         ) : (
           <></>
@@ -464,31 +460,30 @@ function FeedDetailContainer() {
                   </div>
                 );
               })}
-                          </StCommentWrap>
-              <StWriteComment onSubmit={upLoadCommentData}>
-                <StProfileBox>
-                  <StProfileImg
-                    style={{
-                      margin: "0",
-                      padding: "0",
-                    }}
-                    src={
-                      detailState.data.loginUserProfile !== "none"
-                        ? detailState.data.loginUserProfile
-                        : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                    }
-                  />
-                </StProfileBox>
-                <StInput
-                  type="text"
-                  name="comment"
-                  placeholder="댓글 내용"
-                  ref={inputRef} //!ref를 참고하겠다.
-                  maxLength="159"
+            </StCommentWrap>
+            <StWriteComment onSubmit={upLoadCommentData}>
+              <StProfileBox>
+                <StProfileImg
+                  style={{
+                    margin: "0",
+                    padding: "0",
+                  }}
+                  src={
+                    detailState.data.loginUserProfile !== "none"
+                      ? detailState.data.loginUserProfile
+                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                  }
                 />
-                <StCommentBtn type="submit">작성</StCommentBtn>
-              </StWriteComment>
-
+              </StProfileBox>
+              <StInput
+                type="text"
+                name="comment"
+                placeholder="댓글 내용"
+                ref={inputRef} //!ref를 참고하겠다.
+                maxLength="159"
+              />
+              <StCommentBtn type="submit">작성</StCommentBtn>
+            </StWriteComment>
           </div>
         )}
       </StTotalWrap>
@@ -853,12 +848,13 @@ const StPopUpWhiteButton = styled.button`
 
   border: none;
   outline: none;
-  margin: 0 25px;
+  margin: 0 5%;
   border-radius: 6px;
   width: 450px;
   height: 70px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
+    width: 324px;
     margin: 0 18px;
     height: 60px;
     font-size: 18px;

@@ -47,14 +47,10 @@ function DetailCard({ data }) {
           <StBackGroundCloseDiv onClick={displayCardMenu} />
           {myData !== undefined && myData.userId === data.userId ? (
             <StButtonBox>
-              <StPopUpWhiteButton
-                onClick={deleteMyTodayMakingChallenge}
-                transform="translateY(76vh)">
+              <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
                 삭제
               </StPopUpWhiteButton>
-              <StPopUpWhiteButton
-                onClick={displayCardMenu}
-                transform="translateY(77vh)">
+              <StPopUpWhiteButton onClick={displayCardMenu}>
                 닫기
               </StPopUpWhiteButton>
             </StButtonBox>
@@ -201,6 +197,7 @@ const StPopUpWhiteButton = styled.button`
   height: 70px;
   cursor: pointer;
   @media screen and (max-width: 500px) {
+    width: 324px;
     margin: 0 18px;
     height: 60px;
     font-size: 18px;
@@ -219,7 +216,7 @@ export const StShadowBackgroundDiv = styled.div`
   z-index: 10;
   @media only screen and (max-width: 500px) {
     width: 360px;
-    transform: translateX(2%);
+    transform: translateX(-1.4%);
   }
 `;
 
