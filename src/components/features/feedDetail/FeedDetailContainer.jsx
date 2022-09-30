@@ -198,7 +198,7 @@ function FeedDetailContainer() {
       <StTotalWrap>
         {menuModal === true ? (
           <StShadowBackgroundDiv>
-            <StBackGroundCloseDiv onClick={closeToPopUp} />
+            {/* <StBackGroundCloseDiv onClick={closeToPopUp} /> */}
             <StPopUpWhiteButton
               onClick={onClickDeleteComment}
               transform="translateY(68vh)"
@@ -505,7 +505,7 @@ const StTotalWrap = styled.div`
   display: flex;
   margin-top: 60px;
   width: 500px;
-
+  overflow: hidden;
   margin-bottom: 60px;
 
   @media only screen and (max-width: 500px) {
@@ -536,7 +536,7 @@ const StUserIdBox = styled.div`
   @media only screen and (max-width: 500px) {
     /* width: 90%; */
     margin: 0px;
-    width: 360px;
+    /* width: 360px; */
   }
 `;
 
