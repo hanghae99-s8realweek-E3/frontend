@@ -69,6 +69,10 @@ function WriteTodoForm() {
       );
     }
 
+    if (todo.todo.trim().length < 10) {
+      return alert("10자 이상 작성해 주세요.");
+    }
+
     if (todo.todo.length < 10) {
       return alert("10자 이상 작성해 주세요.");
     }

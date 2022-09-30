@@ -115,24 +115,20 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
       {menuModal === true ? (
         <StShadowBackgroundDiv>
           <StBackGroundCloseDiv onClick={displayCardMenu} />
-          {isTodayChallenge === true ? (
-            <StPopUpWhiteButton
-              onClick={cancelTodayChallenge}
-              transform="translateY(76vh)">
-              등록 취소
+          <StButtonBox>
+            {isTodayChallenge === true ? (
+              <StPopUpWhiteButton onClick={cancelTodayChallenge}>
+                등록 취소
+              </StPopUpWhiteButton>
+            ) : (
+              <StPopUpWhiteButton onClick={deleteMyTodayMakingChallenge}>
+                삭제
+              </StPopUpWhiteButton>
+            )}
+            <StPopUpWhiteButton onClick={displayCardMenu}>
+              닫기
             </StPopUpWhiteButton>
-          ) : (
-            <StPopUpWhiteButton
-              onClick={deleteMyTodayMakingChallenge}
-              transform="translateY(76vh)">
-              삭제
-            </StPopUpWhiteButton>
-          )}
-          <StPopUpWhiteButton
-            onClick={displayCardMenu}
-            transform="translateY(87vh)">
-            닫기
-          </StPopUpWhiteButton>
+          </StButtonBox>
         </StShadowBackgroundDiv>
       ) : (
         <></>
@@ -262,6 +258,8 @@ const StChallengeNameSpan = styled.span`
   line-height: 32px;
 
   margin-right: auto;
+  word-wrap: break-word;
+  word-break: break-all;
   @media screen and (max-width: 500px) {
     font-size: 16px;
     line-height: 26px;
@@ -288,7 +286,6 @@ const StMenuBtn = styled.button`
 
 const StPopUpWhiteButton = styled.button`
   background: #ffffff;
-  position: absolute;
 
   display: flex;
   justify-content: center;
@@ -300,16 +297,27 @@ const StPopUpWhiteButton = styled.button`
 
   border: none;
   outline: none;
-  margin: 0 25px;
+  margin: 0 5%;
   border-radius: 6px;
   z-index: 11;
-  width: 90%;
+  width: 450px;
   height: 70px;
   transform: ${(props) => props.transform};
   cursor: pointer;
   @media screen and (max-width: 500px) {
+    width: 324px;
     margin: 0 18px;
     height: 60px;
     font-size: 18px;
   }
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 11;
+  transform: translateY(-5vh);
 `;
