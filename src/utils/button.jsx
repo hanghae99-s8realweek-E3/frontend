@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 
 const Button = (props) => {
-    const {_onClick, children ,_width ,_height ,_bgColor, borderColor} = props;
+    const {onClick, children ,_width ,_height ,_bgColor, borderColor, value} = props;
     const styles = {_width, _height, _bgColor, borderColor};
     return (
-        <StButton onClick={_onClick} {...styles}>
+        <StButton onClick={onClick} value={value} {...styles}>
         {children}
         </StButton>
     )
@@ -14,7 +14,6 @@ const Button = (props) => {
 export default Button;
 
 Button.defaultPorps = {
-    _onClick : () => {},
     _width : "450px",
     _height: "55px" ,
     _bgColor : "#42e3f5",//!
