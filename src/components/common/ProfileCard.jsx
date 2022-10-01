@@ -28,6 +28,7 @@ function ProfileCard({ profileData }) {
   // const [gradeState, setGradeState] = useState(gradeList[0]);
 
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
+
   // const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
@@ -226,32 +227,30 @@ function ProfileCard({ profileData }) {
           </StMmtiFollowWrap>
         </StNoImageWrap>
         <StGradeImageBox>
-          {profileData.userInfo.mimicCounts < 4 ? (
+          {profileData.userInfo?.mimicCounts < 4 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미콩.png`}
               width="59.38"
               height="71"
             />
-          ) : profileData.userInfo.mimicCounts < 6 ? (
+          ) : profileData.userInfo?.mimicCounts < 6 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미알.png`}
               width="59.38"
               height="71"
             />
-          ) : profileData.userInfo.mimicCounts < 8 ? (
+          ) : profileData.userInfo?.mimicCounts < 8 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미돌.png`}
               width="59.38"
               height="71"
             />
-          ) : profileData.userInfo.mimicCounts < 10 ? (
+          ) : (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미킹.png`}
               width="59.38"
               height="71"
             />
-          ) : (
-            <></>
           )}
         </StGradeImageBox>
       </StTotalWrap>
@@ -280,17 +279,13 @@ function ProfileCard({ profileData }) {
             <StWhatGrade src={process.env.PUBLIC_URL + `/images/grade.png`} />
           </StGradebox>
           <StGradeNumber>
-            {profileData.userInfo.mimicCounts < 4 ? (
-              gradeWordList[0]
-            ) : profileData.userInfo.mimicCounts < 6 ? (
-              gradeWordList[1]
-            ) : profileData.userInfo.mimicCounts < 8 ? (
-              gradeWordList[2]
-            ) : profileData.userInfo.mimicCounts < 10 ? (
-              gradeWordList[3]
-            ) : (
-              <></>
-            )}
+            {profileData.userInfo.mimicCounts < 4
+              ? gradeWordList[0]
+              : profileData.userInfo.mimicCounts < 6
+              ? gradeWordList[1]
+              : profileData.userInfo.mimicCounts < 8
+              ? gradeWordList[2]
+              : gradeWordList[3]}
           </StGradeNumber>
         </StGradeWrap>
         {/* </StMbtiFollowFollowingWrap> */}

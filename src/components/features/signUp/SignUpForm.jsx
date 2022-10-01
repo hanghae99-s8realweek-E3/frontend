@@ -150,7 +150,6 @@ const SignUpForm = () => {
         }
       } catch (error) {
         setLoading(false);
-        console.log(error.response);
         if (
           error.response.data.errorMessage ===
           "이메일 인증이 완료되지 않았습니다."
