@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Button from "../../../utils/button";
 
 function TestForm() {
   const [questionState, setQuestionState] = useState("0");
@@ -214,9 +215,15 @@ function TestForm() {
 
   return (
     <StOutLineDiv>
-      {questionState === "0" ? (
-        <button onClick={GoToFirstQ}>테스트 시작</button>
-      ) : (
+      {questionState === "0" ? (<div>
+        <text>
+          <p>초간단</p> 
+              MBTI 테스트
+        </text>
+
+        <text>5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?</text>
+        <Button _onClick={GoToFirstQ} _bgColor="#ff6d53">테스트 시작</Button>
+        </div>) : (
         <div>
           {questionState === "1" ? (
             <StQuestionContainer>
@@ -225,8 +232,8 @@ function TestForm() {
                   <div>{listMBTI.one[randomNumber].title}</div>
                   <div>{listMBTI.one[randomNumber].type}</div>
                   <form onSubmit={onSubmitGoToNextQuestion}>
-                    <button onClick={onClickSaveValue}>{listMBTI.one[randomNumber].sortA}</button>
-                    <button>{listMBTI.one[randomNumber].sortB}</button>
+                    <Button _onClick={onClickSaveValue}>{listMBTI.one[randomNumber].sortA}</Button>
+                    <Button>{listMBTI.one[randomNumber].sortB}</Button>
                   </form>
                 </StChoiceBtnDiv>
               
