@@ -62,20 +62,26 @@ function Header() {
               pointerEvents: "none",
             }}
             src={process.env.PUBLIC_URL + `/images/back.png`}
-            alt="button for move to previous page"
+            alt="이전 화면으로 돌아가기"
           />
         </StBackBtn>
       )}
       {window.location.pathname === "/" ? (
         <div>
-          <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
+          <LogoImage
+            src={process.env.PUBLIC_URL + `/images/Logo.svg`}
+            aria-hidden="true"
+          />
         </div>
       ) : (
         <HeaderText>
           {changeHeaderName() !== "none" ? (
             changeHeaderName()
           ) : (
-            <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
+            <LogoImage
+              src={process.env.PUBLIC_URL + `/images/Logo.svg`}
+              aria-hidden="true"
+            />
           )}
         </HeaderText>
       )}

@@ -214,7 +214,8 @@ function ProfileCard({ profileData }) {
           <StNickName>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
             <StMbti>{profileData.userInfo.mbti}</StMbti>
-            {window.location.pathname === `/otherspage/${params.userId}` ? (
+            {window.location.pathname === `/otherspage/${params.userId}` &&
+            myData.userId !== params.userId ? (
               <StFollowBtn onClick={changeFollowState}>
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false

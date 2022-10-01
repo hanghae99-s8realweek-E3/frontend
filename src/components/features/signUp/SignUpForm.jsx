@@ -72,6 +72,9 @@ const SignUpForm = () => {
           return alert("입력하신 이메일로 인증 번호를 전송했습니다.");
         }
       } catch (error) {
+        if (error.response.data.errorMessage === "이미 가입된 이메일입니다.") {
+          return alert("입력하신 이메일은 이미 가입된 이메일입니다.");
+        }
         return alert(
           "이메일로 인증 번호를 보내는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
