@@ -369,11 +369,11 @@ function FeedDetailContainer() {
                 <StGradeWrap>
                   <StGradeWrod>
                     {" "}
-                    {cardImg < 3
+                    {cardImg < 4
                       ? gradeList[0]
-                      : cardImg < 5
+                      : cardImg < 6
                       ? gradeList[1]
-                      : cardImg < 7
+                      : cardImg < 8
                       ? gradeList[2]
                       : gradeList[3]}
                   </StGradeWrod>
