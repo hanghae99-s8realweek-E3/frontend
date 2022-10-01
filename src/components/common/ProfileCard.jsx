@@ -77,6 +77,10 @@ function ProfileCard({ profileData }) {
   // onError={
   //   (this.src = this.src.replace(/\/resizingMimic\//, "/mimic"))
   // }
+  const changeMyOriginalImage = (event) => {
+    event.target.src = event.target.src.replace(/\/resizingMimic\//, "/mimic/");
+  };
+
   return (
     <>
       {modalState === true ? (
@@ -202,6 +206,7 @@ function ProfileCard({ profileData }) {
                 ? profileData.userInfo.profile
                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
             }
+            onError={changeMyOriginalImage}
             alt="dy"
           />
         </StImageBox>
@@ -209,7 +214,8 @@ function ProfileCard({ profileData }) {
           <StNickName>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
             <StMbti>{profileData.userInfo.mbti}</StMbti>
-            {window.location.pathname === `/otherspage/${params.userId}` ? (
+            {window.location.pathname === `/otherspage/${params.userId}` &&
+            myData.userId !== params.userId ? (
               <StFollowBtn onClick={changeFollowState}>
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
@@ -813,7 +819,7 @@ const StGradeModalContainer = styled.div`
   background: white;
   border-radius: 6px;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 5vh auto;
   width: 450px;
   height: 750px;
   box-sizing: border-box;

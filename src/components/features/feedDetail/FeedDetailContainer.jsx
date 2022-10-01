@@ -29,21 +29,9 @@ function FeedDetailContainer() {
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
   const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
   const detailState = useSelector((state) => state.detail);
-  console.log(detailState);
-  console.log(detailState.data.comments?.map((x) => x.challengeCounts));
-  console.log(detailState.data.comments?.map((x) => x.todoCounts));
-  const arrA = detailState.data.comments?.map((x) => x.challengeCounts);
-  const arrB = detailState.data.comments?.map((x) => x.todoCounts);
-  console.log(arrA);
-  console.log(arrB);
-  console.log(arrA?.map((x, y) => x + arrB[y])); // [6, 8, 10, 12,]
   const cardImg =
     detailState.data.todoInfo?.challengeCounts +
     detailState.data.todoInfo?.todoCounts;
-  const comment = arrA?.map((x, y) => x + arrB[y]);
-  console.log(comment);
-  console.log(comment?.map((x, idx) => x));
-  console.log(cardImg);
   // const cardImg = detailState.data.todoInfo?.challengeCounts + detailState.data.todoInfo?.todoCounts
   // const comment =  detailState.data.comments?.map((x) => x.challengeCounts) + detailState.data.comments?.map((x) => x.todoCounts)
   //옵셔널 체이닝 해제했을 때
@@ -66,9 +54,6 @@ function FeedDetailContainer() {
       setLoading(false);
     }
     feedLoading();
-    // setTimeout(()=> {
-    //   setLoading(false)
-    // },500)
   }, []);
 
   // 대연 -> 일단 주석 처리했습니다
@@ -161,21 +146,6 @@ function FeedDetailContainer() {
     inputRef.current.value = "";
   };
 
-  const changeFollowState = (e) => {
-    const putMyPageFollowFetch = async () => {
-      try {
-        const response = await instance.put(`/follows/${e.target.id}`);
-        if (response.data.message === "success") {
-          return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
-        }
-      } catch (error) {
-        return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
-      }
-    };
-    putMyPageFollowFetch();
-    // dispatch(putMyPageFollowFetch(e.target.id))
-  };
-
   const myData = decodeMyTokenData();
 
   function displayCardMenu(event) {
@@ -192,6 +162,11 @@ function FeedDetailContainer() {
   const gradeChangeModalState = () => {
     setGradeModalState(!gradeModalState);
   };
+
+  const changeMyOriginalImage = (event) => {
+    event.target.src = event.target.src.replace(/\/resizingMimic\//, "/mimic/");
+  };
+
   return (
     <>
       {loading === true ? <LoadingContainer /> : <></>}
@@ -267,9 +242,7 @@ function FeedDetailContainer() {
                     <StExplainContent>
                       미믹 도전완료 + 미믹 제안
                     </StExplainContent>
-                    <StExplainContent>
-                      {/* 명예의 전당<span style={{ fontWeight: 700 }}>1회 등극</span> */}
-                    </StExplainContent>
+                    <StExplainContent></StExplainContent>
                   </StExplain>
                 </StIconExplainWrap>
 
@@ -284,9 +257,7 @@ function FeedDetailContainer() {
                     <StExplainContent>
                       미믹 도전완료 + 미믹 제안
                     </StExplainContent>
-                    <StExplainContent>
-                      {/* 명예의 전당<span style={{ fontWeight: 700 }}>3회 등극</span> */}
-                    </StExplainContent>
+                    <StExplainContent></StExplainContent>
                   </StExplain>
                 </StIconExplainWrap>
               </StGradeModalTotalWrap>
@@ -309,13 +280,13 @@ function FeedDetailContainer() {
                         ? detailState.data.todoInfo.profile
                         : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                     }
+                    onError={changeMyOriginalImage}
                   />
                 </StProfileBox>
                 <StNickMBTIWarp>
                   <StNickname
                     id={detailState.data.todoInfo?.userId}
-                    onClick={onClickGoToOtherspage}
-                  >
+                    onClick={onClickGoToOtherspage}>
                     {detailState.data.todoInfo?.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
@@ -351,21 +322,6 @@ function FeedDetailContainer() {
                   )}
                 </StGradeImageBox>
 
-                {/* {myData.userId === detailState.data.todoInfo.userId ? (
-                  <></>
-                ) : detailState.data.isFollowed === false ? (
-                  <StFollowBtn
-                    id={detailState.data.todoInfo.userId}
-                    onClick={changeFollowState}>
-                    팔로우
-                  </StFollowBtn>
-                ) : (
-                  <StFollowBtn
-                    id={detailState.data.todoInfo.userId}
-                    onClick={changeFollowState}>
-                    언팔로우
-                  </StFollowBtn>
-                )} */}
                 <StGradeWrap>
                   <StGradeWrod>
                     {" "}
@@ -386,15 +342,18 @@ function FeedDetailContainer() {
               <StDetailCard>
                 <DetailCard data={detailState.data?.todoInfo} />
               </StDetailCard>
-              {detailState.data.isTodayDone === true ? (
+              {detailState.data.todoInfo.userId === myData.userId ? (
+                <StBtnNowChallenged>
+                  내가 만든 미믹은 도전할 수 없습니다.
+                </StBtnNowChallenged>
+              ) : detailState.data.isTodayDone === true ? (
                 <StBtnNowChallenged>
                   이미 오늘의 도전이 진행중입니다.
                 </StBtnNowChallenged>
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo?.todoId}
-                >
+                  id={detailState.data.todoInfo?.todoId}>
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -415,13 +374,13 @@ function FeedDetailContainer() {
                                 ? x.profile
                                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
                             }
+                            onError={changeMyOriginalImage}
                           />
                         </StProfileBox>
 
                         <StNicknameComment
                           id={x.userId}
-                          onClick={onClickCommentGoToOtherspage}
-                        >
+                          onClick={onClickCommentGoToOtherspage}>
                           {x.nickname}
                         </StNicknameComment>
                         <div id={x.userId}></div>
@@ -439,8 +398,7 @@ function FeedDetailContainer() {
                           {myData.userId === x.userId ? (
                             <StMenuBtn
                               id={x.commentId}
-                              onClick={displayCardMenu}
-                            >
+                              onClick={displayCardMenu}>
                               <FontAwesomeIcon
                                 style={{ pointerEvents: "none" }}
                                 icon={faEllipsisVertical}
@@ -488,10 +446,7 @@ function FeedDetailContainer() {
 }
 
 export default FeedDetailContainer;
-const StWhite = styled.div`
-  /* display: flex; */
-  background-color: yellow;
-`;
+
 const StTotalWrap = styled.div`
   display: flex;
   margin-top: 60px;
@@ -633,25 +588,6 @@ const StMBTI = styled.div`
   @media only screen and (max-width: 500px) {
     font-size: 12px;
     margin-left: 1px;
-  }
-`;
-const StFollowBtn = styled.button`
-  background: none;
-  border: none;
-  margin-left: auto;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  color: #ff6d53;
-  transition: ease 0.1s;
-  :hover {
-    color: #ffafa1;
-  }
-  cursor: pointer;
-  @media only screen and (max-width: 500px) {
-    font-size: 14px;
-    -webkit-tap-highlight-color: transparent;
   }
 `;
 

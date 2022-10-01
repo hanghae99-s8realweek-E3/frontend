@@ -25,8 +25,14 @@ function MainContainer() {
 
   const firstLoginCheck = window.localStorage.getItem("firstLogin");
   const bannerSlide = [
-    process.env.PUBLIC_URL + `/images/banner1.png`,
-    process.env.PUBLIC_URL + `/images/banner2.png`,
+    {
+      src: process.env.PUBLIC_URL + `/images/banner1.png`,
+      alt: "배너 1 미믹 사용 설명서 탭하면 해당 페이지로 이동합니다.",
+    },
+    {
+      src: process.env.PUBLIC_URL + `/images/banner2.png`,
+      alt: "배너 2 미믹 설문조사 참여하기 탭하면 해당 페이지로 이동합니다.",
+    },
   ];
   const locationLink = [
     "https://www.16personalities.com/ko",
@@ -64,7 +70,7 @@ function MainContainer() {
       {firstLoginCheck !== null ? <WelcomeForm /> : <></>}
 
       <StContainer>
-        <StHeadTitle>
+        <StHeadTitle tabIndex="0">
           {myData !== undefined ? myData.nickname : "미믹"} 님!
           <br />
           오늘은 누구를 따라해볼까요?
@@ -83,17 +89,18 @@ function MainContainer() {
             pagination={{ clickable: true }}
             height={200}>
             {bannerSlide.map((elem, idx) => (
-              <SwiperSlide key={idx} style={SwiperImageCSSData}>
+              <SwiperSlide tabIndex="0" key={idx} style={SwiperImageCSSData}>
                 <SildeBannerImage
-                  src={elem}
+                  src={elem.src}
                   onClick={() => moveToBannerPage(idx)}
+                  alt={elem.alt}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
         </BannerSlideBox>
         <PostSlideBox>
-          <SildeTitle>오늘의 베스트 미믹!</SildeTitle>
+          <SildeTitle tabIndex="0">오늘의 베스트 미믹!</SildeTitle>
 
           {/* 슬라이드 목록 구간 */}
           {/* 해결 과제로서... 기능 구현 문제 찾기, 빈 슬라이드를 어떻게 해결할지?*/}
@@ -107,6 +114,7 @@ function MainContainer() {
               scrollbar={{ draggable: true }}>
               {mainState.data?.challenge.map((elem, idx) => (
                 <SwiperSlide
+                  tabIndex="0"
                   key={idx}
                   style={SwiperPostCSSData}
                   id={elem.todoId}
@@ -149,6 +157,7 @@ function MainContainer() {
                         작성자.
                       </div> */}
                       <div
+                        aria-hidden="true"
                         style={{
                           fontSize: "12px",
                           fontWeight: "500",
@@ -167,6 +176,7 @@ function MainContainer() {
                           fontSize: "12px",
                           pointerEvents: "none",
                         }}
+                        aria-label="댓글 수"
                         icon={faMessage}
                       />
                       <StCountSpan
@@ -181,6 +191,7 @@ function MainContainer() {
                           fontSize: "12px",
                           pointerEvents: "none",
                         }}
+                        aria-label="도전 수"
                         icon={faStar}
                       />
                       <StCountSpan color={"#919191"}>
@@ -197,7 +208,9 @@ function MainContainer() {
         </PostSlideBox>
 
         <InfomationSlideBox>
-          <SildeTitle>심심풀이에 이런 테스트들은 어때요?</SildeTitle>
+          <SildeTitle tabIndex="0">
+            심심풀이에 이런 테스트들은 어때요?
+          </SildeTitle>
 
           {/* 슬라이드 목록 구간 */}
           <Swiper
@@ -211,11 +224,13 @@ function MainContainer() {
             <SwiperSlide
               id="0"
               onClick={moveToPageNewTab}
-              style={SwiperTestCardCSSData}>
+              style={SwiperTestCardCSSData}
+              tabIndex="0">
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="300px"
                   src={process.env.PUBLIC_URL + `/images/testImage0.jpg`}
+                  aria-hidden="true"
                 />
               </PostImageBox>
               <PostText>
@@ -227,11 +242,13 @@ function MainContainer() {
             <SwiperSlide
               id="1"
               onClick={moveToPageNewTab}
-              style={SwiperTestCardCSSData}>
+              style={SwiperTestCardCSSData}
+              tabIndex="0">
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="190px"
                   src={process.env.PUBLIC_URL + `/images/testImage1.jpg`}
+                  aria-hidden="true"
                 />
               </PostImageBox>
               <PostText>
@@ -243,11 +260,13 @@ function MainContainer() {
             <SwiperSlide
               id="2"
               onClick={moveToPageNewTab}
-              style={SwiperTestCardCSSData}>
+              style={SwiperTestCardCSSData}
+              tabIndex="0">
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="250px"
                   src={process.env.PUBLIC_URL + `/images/testImage2.jpg`}
+                  aria-hidden="true"
                 />
               </PostImageBox>
               <PostText>
@@ -259,11 +278,13 @@ function MainContainer() {
             <SwiperSlide
               id="3"
               onClick={moveToPageNewTab}
-              style={SwiperTestCardCSSData}>
+              style={SwiperTestCardCSSData}
+              tabIndex="0">
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="210px"
                   src={process.env.PUBLIC_URL + `/images/testImage3.jpg`}
+                  aria-hidden="true"
                 />
               </PostImageBox>
               <PostText>
@@ -275,11 +296,13 @@ function MainContainer() {
             <SwiperSlide
               id="4"
               onClick={moveToPageNewTab}
-              style={SwiperTestCardCSSData}>
+              style={SwiperTestCardCSSData}
+              tabIndex="0">
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="180px"
                   src={process.env.PUBLIC_URL + `/images/testImage4.jpg`}
+                  aria-hidden="true"
                 />
               </PostImageBox>
               <PostText>
