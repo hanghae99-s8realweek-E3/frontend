@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Button from "../../../utils/button";
 
 function TestForm() {
-  const [questionState, setQuestionState] = useState("0");
+  const [questionState, setQuestionState] = useState(0);
   const [btnValue, setBtnValue] = useState("");
   const randomNumber = Math.floor(Math.random() * 3);
 
@@ -108,164 +107,221 @@ function TestForm() {
       content: "설명\n설명\n설명\n설명",
     },
   ];
-  console.log(resultMBTI.mbti);
+  // console.log(resultMBTI.mbti);
 
   const GoToFirstQ = (e) => {
     e.preventDefault();
-    if (questionState !== "0") {
-      return setQuestionState("0");
+    if (questionState !== 0) {
+      return setQuestionState(0);
     } else {
-      return setQuestionState("1");
+      return setQuestionState(1);
     }
   };
-  console.log(questionState);
+  // console.log(questionState);
 
   const onClickSaveValue = (e) => {
-    const { value } = e.target;
+    e.preventDefault();
+    // console.log(e.target.value);
+    const {value } = e.target;
     setBtnValue(btnValue + value);
+    setQuestionState(questionState + 1);
   };
+  
+  // process.env.PUBLIC_URL + `/images/TestThumbnail.svg`
 
   const onClickGoToMain = (e) => {
-    setQuestionState("0");
+    setQuestionState(0);
     setBtnValue("");
   };
 
-  const onSubmitGoToNextQuestion = (e) => {
-    e.preventDefault();
-    if (questionState === "1") {
-      return setQuestionState("2");
-    } else if (questionState === "2") {
-      return setQuestionState("3");
-    } else if (questionState === "3") {
-      return setQuestionState("4");
-    } else if (questionState === "4") {
-      return setQuestionState("5");
-    } else if (questionState === "5") {
-      return setQuestionState("0");
-    }
-  };
+  // const onSubmitGoToNextQuestion = (e) => {
+  //   e.preventDefault();
+  //   if (questionState === 1) {
+  //     return setQuestionState(2);
+  //   } else if (questionState === 2") {
+  //     return setQuestionState("3");
+  //   } else if (questionState === "3") {
+  //     return setQuestionState("4");
+  //   } else if (questionState === "4") {
+  //     return setQuestionState("5");
+  //   } else if (questionState === "5") {
+  //     return setQuestionState("0");
+  //   }
+  // };
+  console.log(questionState)
+  // console.log(btnValue);
+  // console.log(resultMBTI.filter((x) => x.mbti === btnValue));
 
-  console.log(btnValue);
-  console.log(resultMBTI.filter((x) => x.mbti === btnValue));
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+  //   script.async = true;
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-    script.async = true;
+  //   document.body.appendChild(script);
 
-    document.body.appendChild(script);
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  // useEffect(() => {
+  //   createKakaoButton();
+  // }, []);
 
-  useEffect(() => {
-    createKakaoButton();
-  }, []);
+  // const createKakaoButton = () => {
+  //   // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
+  //   if (window.Kakao) {
+  //     const kakao = window.Kakao;
 
-  const createKakaoButton = () => {
-    // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
-    if (window.Kakao) {
-      const kakao = window.Kakao;
+  //     // 중복 initialization 방지
+  //     if (!kakao.isInitialized()) {
+  //       // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
+  //       kakao.init(process.env.REACT_APP_KAKAO_KEY);
+  //     }
 
-      // 중복 initialization 방지
-      if (!kakao.isInitialized()) {
-        // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        kakao.init(process.env.REACT_APP_KAKAO_KEY);
-      }
-
-      kakao.Link.createDefaultButton({
-        // Render 부분 id=kakao-link-btn 을 찾아 그부분에 렌더링을 합니다
-        container: "#kakao-link-btn",
-        objectType: "feed",
-        content: {
-          title: "타이틀",
-          description: "#리액트 #카카오 #공유버튼",
-          imageUrl: "IMAGE_URL", // i.e. process.env.FETCH_URL + '/logo.png'
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
-          },
-        },
-        social: {
-          likeCount: 77,
-          commentCount: 55,
-          sharedCount: 333,
-        },
-        buttons: [
-          {
-            title: "웹으로 보기",
-            link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
-            },
-          },
-          {
-            title: "앱으로 보기",
-            link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
-            },
-          },
-        ],
-      });
-    }
-  };
+  //     kakao.Link.createDefaultButton({
+  //       // Render 부분 id=kakao-link-btn 을 찾아 그부분에 렌더링을 합니다
+  //       container: "#kakao-link-btn",
+  //       objectType: "feed",
+  //       content: {
+  //         title: "타이틀",
+  //         description: "#리액트 #카카오 #공유버튼",
+  //         imageUrl: "IMAGE_URL", // i.e. process.env.FETCH_URL + '/logo.png'
+  //         link: {
+  //           mobileWebUrl: window.location.href,
+  //           webUrl: window.location.href,
+  //         },
+  //       },
+  //       social: {
+  //         likeCount: 77,
+  //         commentCount: 55,
+  //         sharedCount: 333,
+  //       },
+  //       buttons: [
+  //         {
+  //           title: "웹으로 보기",
+  //           link: {
+  //             mobileWebUrl: window.location.href,
+  //             webUrl: window.location.href,
+  //           },
+  //         },
+  //         {
+  //           title: "앱으로 보기",
+  //           link: {
+  //             mobileWebUrl: window.location.href,
+  //             webUrl: window.location.href,
+  //           },
+  //         },
+  //       ],
+  //     });
+  //   }
+  // };
 
   return (
     <StOutLineDiv>
-      {questionState === "0" ? (<div>
-        <text>
-          <p>초간단</p> 
-              MBTI 테스트
-        </text>
-
-        <text>5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?</text>
-        <Button _onClick={GoToFirstQ} _bgColor="#ff6d53">테스트 시작</Button>
-        </div>) : (
+      {questionState === 0 ? 
+      <div>
+      <StTextWarpA>
+          <div><StTextA>초간단</StTextA></div> 
+          <StTextAAA><StTextAA>MBTI </StTextAA>테스트</StTextAAA>
+      </StTextWarpA>
+        <img src={process.env.PUBLIC_URL + `/images/TestThumbnail.svg`} />
+        <StTextWarpB>
+          <StTextB>5초만에 알아보는 나의 성향!</StTextB>
+          <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
+        </StTextWarpB>
+        <StButtonA onClick={GoToFirstQ} >시작하기</StButtonA>
+      </div> : (
         <div>
-          {questionState === "1" ? (
+          {questionState === 1 ? (
             <StQuestionContainer>
-            
                 <StChoiceBtnDiv>
-                  <div>{listMBTI.one[randomNumber].title}</div>
-                  <div>{listMBTI.one[randomNumber].type}</div>
-                  <form onSubmit={onSubmitGoToNextQuestion}>
-                    <Button _onClick={onClickSaveValue}>{listMBTI.one[randomNumber].sortA}</Button>
-                    <Button>{listMBTI.one[randomNumber].sortB}</Button>
-                  </form>
+                <StQ>Q</StQ>
+                  <StQuestionText>{listMBTI.one[randomNumber].title}</StQuestionText>
+                  <StWarpStChoiceBtn>
+                    <StChoiceBtn value="E" onClick={onClickSaveValue}>
+                    <StChoice>A</StChoice>
+                    <StChoiceText>
+                    {listMBTI.one[randomNumber].sortA}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                    
+                    <StChoiceBtn value="I" onClick={onClickSaveValue}>
+                    <StChoice>B</StChoice>
+                    <StChoiceText>{listMBTI.one[randomNumber].sortB}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                  </StWarpStChoiceBtn>
                 </StChoiceBtnDiv>
               
             </StQuestionContainer>
-          ) : questionState === "2" ? (
-            <StChoiceBtnDiv>
-                  <div>{listMBTI.two[randomNumber].title}</div>
-                  <div>{listMBTI.two[randomNumber].type}</div>
-                  <form onSubmit={onSubmitGoToNextQuestion}>
-                    <button onClick={onClickSaveValue}>{listMBTI.two[randomNumber].sortA}</button>
-                    <button>{listMBTI.two[randomNumber].sortB}</button>
-                  </form>
+          ) : questionState === 2 ? (
+            <StQuestionContainer>
+                <StChoiceBtnDiv>
+                <StQ>Q</StQ>
+                  <StQuestionText>{listMBTI.two[randomNumber].title}</StQuestionText>
+                  <StWarpStChoiceBtn>
+                    <StChoiceBtn value="S" onClick={onClickSaveValue}>
+                    <StChoice>A</StChoice>
+                    <StChoiceText>
+                    {listMBTI.two[randomNumber].sortA}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                    
+                    <StChoiceBtn value="N" onClick={onClickSaveValue}>
+                    <StChoice>B</StChoice>
+                    <StChoiceText>{listMBTI.two[randomNumber].sortB}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                  </StWarpStChoiceBtn>
                 </StChoiceBtnDiv>
-          ) : questionState === "3" ? (
-            <StChoiceBtnDiv>
-                  <div>{listMBTI.three[randomNumber].title}</div>
-                  <div>{listMBTI.three[randomNumber].type}</div>
-                  <form onSubmit={onSubmitGoToNextQuestion}>
-                    <button onClick={onClickSaveValue}>{listMBTI.three[randomNumber].sortA}</button>
-                    <button>{listMBTI.three[randomNumber].sortB}</button>
-                  </form>
+              
+            </StQuestionContainer>
+          ) : questionState === 3 ? (
+            <StQuestionContainer>
+                <StChoiceBtnDiv>
+                <StQ>Q</StQ>
+                  <StQuestionText>{listMBTI.three[randomNumber].title}</StQuestionText>
+                  <StWarpStChoiceBtn>
+                    <StChoiceBtn value="F" onClick={onClickSaveValue}>
+                    <StChoice>A</StChoice>
+                    <StChoiceText>
+                    {listMBTI.three[randomNumber].sortA}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                    
+                    <StChoiceBtn value="T" onClick={onClickSaveValue}>
+                    <StChoice>B</StChoice>
+                    <StChoiceText>{listMBTI.three[randomNumber].sortB}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                  </StWarpStChoiceBtn>
                 </StChoiceBtnDiv>
-          ) : questionState === "4" ? (
-            <StChoiceBtnDiv>
-                  <div>{listMBTI.four[randomNumber].title}</div>
-                  <div>{listMBTI.four[randomNumber].type}</div>
-                  <form onSubmit={onSubmitGoToNextQuestion}>
-                    <button onClick={onClickSaveValue}>{listMBTI.four[randomNumber].sortA}</button>
-                    <button>{listMBTI.four[randomNumber].sortB}</button>
-                  </form>
+              
+            </StQuestionContainer>
+          ) : questionState === 4 ? (
+            <StQuestionContainer>
+                <StChoiceBtnDiv>
+                <StQ>Q</StQ>
+                  <StQuestionText>{listMBTI.four[randomNumber].title}</StQuestionText>
+                  <StWarpStChoiceBtn>
+                    <StChoiceBtn value="P" onClick={onClickSaveValue}>
+                    <StChoice>A</StChoice>
+                    <StChoiceText>
+                    {listMBTI.four[randomNumber].sortA}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                    
+                    <StChoiceBtn value="J" onClick={onClickSaveValue}>
+                    <StChoice>B</StChoice>
+                    <StChoiceText>{listMBTI.four[randomNumber].sortB}
+                    </StChoiceText>
+                    </StChoiceBtn>
+                  </StWarpStChoiceBtn>
                 </StChoiceBtnDiv>
-          ) : questionState === "5" ? (
+              
+            </StQuestionContainer>
+          ) : questionState === 5 ? (
             <div>
               <h1>당신의 MBTI는</h1>
               <h2>{btnValue}</h2>
@@ -297,17 +353,148 @@ function TestForm() {
 export default TestForm;
 
 const StOutLineDiv = styled.div`
-  background-color: #919191;
+  background-color: #FFFFFF;
   margin-top: 60px;
-  height: 100vh;
+  margin-bottom: 150px;
+  height: 80vh;
   display: flex;
   flex-direction: column;
 `;
 
 const StChoiceBtnDiv = styled.div`
+  /* background-color:yellow; */
   display: flex;
   flex-direction: column;
   justify-content:center;
 `;
 const StQuestionContainer = styled.div``;
 
+const StButtonA = styled.button`
+  background: #FF6D53;
+  border-radius: 6px;
+  border:none;
+  width: 450px;
+  height: 70px;
+  margin-top: 30px ;
+  color:#FFFFFF;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  cursor: pointer;
+`
+
+const StTextA = styled.div`
+/* background-color:green; */
+  font-weight: 400;
+  font-size: 47px;
+  line-height: 64px;
+`
+const StTextAA = styled.span`
+  color:#FF6D53;
+  font-weight: 600;
+  font-size: 47px;
+  line-height: 64px;
+`
+
+const StTextAAA = styled.div`
+  /* background-color:green; */
+  font-weight: 400;
+  font-size: 47px;
+  line-height: 64px;
+`
+
+const StTextB = styled.div`
+  /* background-color:green; */
+  font-weight: 500;
+font-size: 24px;
+line-height: 36px;
+
+`
+const StTextC = styled.div`
+ /* background-color:yellow; */
+  font-weight: 300;
+font-size: 24px;
+line-height: 36px;
+`
+
+const StTextWarpA = styled.div`
+  margin:20px auto 20px auto;
+`
+
+const StTextWarpB = styled.div`
+  margin:20px auto 20px auto;
+`
+
+const StQ = styled.div`
+/* background-color:skyblue; */
+  width: 135px;
+height: 72px;
+font-weight: 700;
+font-size: 72px;
+line-height: 72px;
+font-family: 'GmarketSans';
+font-style: normal;
+margin:100px auto 30px auto;
+color: #FF6D53;
+`
+
+const StQuestionText = styled.div`
+/* background-color:green; */
+width: 360px;
+/* height: 72px; */
+font-weight: 400;
+font-size: 24px;
+line-height: 36px;
+margin:10px auto 50px auto;
+height:150px;
+`
+
+const StWarpStChoiceBtn = styled.div`
+  display:flex;
+  flex-direction: row;
+  padding-left:20px;
+  padding-right:20px;
+`
+
+const StChoiceBtn =styled.button`
+  width:217px;
+  height:344px;
+  border-radius: 10px;
+  background: none;
+  margin: auto;
+  cursor: pointer;
+  transition: ease 0.2s;
+  :hover {
+    background-color:#FF6D53;
+    & > div {
+      color:white;
+    }
+  }
+
+`
+
+const StChoice = styled.div`
+/* background-color: blue; */
+  width: 127px;
+  height: 42px;
+  font-weight: 600;
+  font-family: 'GmarketSans';
+font-size: 42px;
+line-height: 42px;
+margin: 20px auto 70px auto;
+color: #FF6D53;
+pointer-events:none;
+
+`
+
+const StChoiceText = styled.div`
+/* background-color:darkblue; */
+height:120px;
+font-weight: 300;
+font-size: 20px;
+line-height: 30px;
+margin: 20px auto 70px auto;
+pointer-events:none;
+
+
+`
