@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { getSetUpMyTodoFetch } from "../../../app/modules/setUpTodoSlice";
 import { settingTodayDate } from "../../../utils/commonFunc";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
   const [menuModal, setMenuModal] = useState(false);
@@ -49,6 +50,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           setLoading(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
@@ -77,6 +79,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           setLoading(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         alert(
           "미믹 도전을 취소하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
@@ -98,6 +101,7 @@ function SetUpToDoCard({ data, hideState, isTodayChallenge }) {
           setLoading(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         alert(
           "제안한 미믹을 삭제하는 데에 실패했습니다. 잠시 후 다시 시도해주세요."

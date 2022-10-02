@@ -1,12 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
+import * as Sentry from "@sentry/react";
 
 const initialState = {
   message: "",
   errorMessage: "",
   token: "",
-  userInfo: {}
-}
+  userInfo: {},
+};
 //예시
 // dispatch(postSignUpFetch(payload))
 // payload값이 서버에 payload를 전달하지 않더라도, 경로를 만들기 위해서 사용하는 경우도 있다 (예시-/api/todoLists/:todoId), ('api url /${payload.id값}' , payload값은 필요한 경우만 사용한다.)
@@ -18,38 +19,39 @@ const initialState = {
 //       //get,delete요청에서 /:postid같은 경우랑 일반적인 /follow같은 경우의 차이점에 대해서 생각하고 있어야한다. 전자는 payload생각~~ `await axios.delete(server_url + `/api/posts/${value}`요런거,
 //       const response = await instance.post("/accounts/login", payload);
 //       return thunkAPI.fulfillWithValue(response.data);
-      
+
 //     } catch (error) {
 //       return thunkAPI.rejectWithValue(error.response.data);
 //     }
 //   }
 // );
 
-// 프로필 정보 받아올 시에 사용되는 thunk action creater 
+// 프로필 정보 받아올 시에 사용되는 thunk action creater
 export const getMyPageFetch = createAsyncThunk(
-  'users/getMyPageFetch',
+  "users/getMyPageFetch",
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.get("/accounts")
+      const response = await instance.get("/accounts");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const accountsSlice = createSlice({
-  name:"accounts",
+  name: "accounts",
   initialState,
-  reducers:{
+  reducers: {
     resetSuccessMessage: (state, action) => {
-      const newState = {...state };
+      const newState = { ...state };
       newState.message = "";
       newState.errorMessage = "";
       return newState;
-    }
-  },  
-  extraReducers: builder => { 
+    },
+  },
+  extraReducers: (builder) => {
     // builder.addCase(postLoginFetch.pending, (state, action) => {
     //   state = action.payload;
     //   return state;
@@ -69,21 +71,21 @@ const accountsSlice = createSlice({
     //   alert(newState);
     //   return newState;
     // });
-    
+
     // getMyPageFetch Creater 작동 시 적용되는 내용들
-    builder.addCase(getMyPageFetch.pending , (state, action)=> {
+    builder.addCase(getMyPageFetch.pending, (state, action) => {
       return state;
-    })
-    builder.addCase(getMyPageFetch.fulfilled, (state,action)=> {
-      const newState = {...state}
+    });
+    builder.addCase(getMyPageFetch.fulfilled, (state, action) => {
+      const newState = { ...state };
       newState.userInfo = action.payload.userInfo;
       return newState;
-    })
-    builder.addCase(getMyPageFetch.rejected, (state,action)=> {
+    });
+    builder.addCase(getMyPageFetch.rejected, (state, action) => {
       const newState = { ...state };
       newState.errorMessage = action.payload.errorMessage;
       return newState;
-    })
+    });
 
     // // 소셜로그인 카카오
     // builder.addCase(getKakaoLoginFetch.pending, (state, action) => {
@@ -109,7 +111,7 @@ const accountsSlice = createSlice({
     //   return state;
 
     // });
-  }
-})
+  },
+});
 
 export default accountsSlice;

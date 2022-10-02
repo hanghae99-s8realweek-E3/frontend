@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance, { preInstance } from "./instance";
+import * as Sentry from "@sentry/react";
 // import { setCookie } from "../../utils/cookie";
 
 const initialState = {
@@ -22,6 +23,7 @@ export const getTodoListsFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -40,6 +42,7 @@ export const getTodoListsChallengeFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -58,6 +61,7 @@ export const getTodoListsCommentFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.data);
     }
   }
@@ -76,6 +80,7 @@ export const getMbtiTodoListsFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -98,6 +103,7 @@ export const getMbtiTodoListsChallengeFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -120,6 +126,7 @@ export const getMbtiTodoListsCommentFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -138,6 +145,7 @@ export const getSelectMBTITodoFetch = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

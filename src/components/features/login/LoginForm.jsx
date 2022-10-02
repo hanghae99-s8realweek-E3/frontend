@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
 // import InputCard from "../../common/InputCard";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function LoginForm() {
           navigate("/");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
       }

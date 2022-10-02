@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
+import * as Sentry from "@sentry/react";
 
 const initialState = {
   message: "",
@@ -14,6 +15,7 @@ export const postFeedDetailFetch = createAsyncThunk(
       const response = await instance.post(`/mytodos/${payload}/challenged`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -26,6 +28,7 @@ export const getFeedDetailFetch = createAsyncThunk(
       const response = await instance.get(`/todolists/${payload.todoId}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }

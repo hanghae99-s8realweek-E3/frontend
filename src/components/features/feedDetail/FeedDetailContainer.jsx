@@ -14,6 +14,7 @@ import {
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function FeedDetailContainer() {
   const inputRef = useRef();
@@ -95,6 +96,7 @@ function FeedDetailContainer() {
           setMenuModal(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
@@ -112,6 +114,7 @@ function FeedDetailContainer() {
           return navigate("/setuptodo");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert(
           "도전하기 설정에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
@@ -138,6 +141,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert("댓글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
@@ -205,7 +209,10 @@ function FeedDetailContainer() {
                 <StTitle>미믹 성장 등급</StTitle>
                 <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} alt ="미콩 이미지" />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                    alt="미콩 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미콩</StExplainName>
                     <StExplainContentWrap>
@@ -220,7 +227,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`} alt ="미알 이미지" />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미알.png`}
+                    alt="미알 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미알</StExplainName>
                     <StExplainContent>
@@ -233,7 +243,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} alt ="미돌 이미지" />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                    alt="미돌 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미돌</StExplainName>
                     <StExplainContent>
@@ -247,7 +260,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} alt ="미킹 이미지" />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                    alt="미킹 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미킹</StExplainName>
                     <StExplainContent>
@@ -279,12 +295,9 @@ function FeedDetailContainer() {
                       detailState.data.todoInfo.profile !== "none"
                         ? detailState.data.todoInfo.profile
                         : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
-                        
                     }
-                    alt ="프로필 이미지"
+                    alt="프로필 이미지"
                     onError={changeMyOriginalImage}
-                    alt ="프로필 이미지"
-
                   />
                 </StProfileBox>
                 <StNickMBTIWarp>
@@ -302,28 +315,28 @@ function FeedDetailContainer() {
                       src={process.env.PUBLIC_URL + `/images/미콩.png`}
                       width="59.38"
                       height="71"
-                      alt ="미콩 이미지"
+                      alt="미콩 이미지"
                     />
                   ) : cardImg < 6 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미알.png`}
                       width="59.38"
                       height="71"
-                      alt ="미알 이미지"
+                      alt="미알 이미지"
                     />
                   ) : cardImg < 8 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미돌.png`}
                       width="59.38"
                       height="71"
-                      alt ="미돌 이미지"
+                      alt="미돌 이미지"
                     />
                   ) : (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미킹.png`}
                       width="59.38"
                       height="71"
-                      alt ="미킹 이미지"
+                      alt="미킹 이미지"
                     />
                   )}
                 </StGradeImageBox>
@@ -339,7 +352,9 @@ function FeedDetailContainer() {
                       ? gradeList[2]
                       : gradeList[3]}
                   </StGradeWrod>
-                  <StGradeExplain alt ="클릭시 등급 설명 창" onClick={gradeChangeModalState}>
+                  <StGradeExplain
+                    alt="클릭시 등급 설명 창"
+                    onClick={gradeChangeModalState}>
                     미믹등급
                   </StGradeExplain>
                 </StGradeWrap>

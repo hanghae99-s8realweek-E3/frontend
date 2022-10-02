@@ -7,7 +7,7 @@ import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import * as Sentry from "@sentry/react";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
@@ -103,6 +103,7 @@ function ProfileModifyForm() {
           navigate("/mypage");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         alert("프로필 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
@@ -128,6 +129,7 @@ function ProfileModifyForm() {
           setLoading(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         alert(
           "프로필 이미지 변경에 실패했습니다.\n파일 용량 또는 확장자를 확인해주시거나\n잠시 후, 다시 시도해 주십시오."
         );

@@ -1,10 +1,11 @@
 //호진 담당
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { emailFormat, passwordFormat } from "../../../utils/reqList";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 const SignUpForm = () => {
   //hook
@@ -73,8 +74,10 @@ const SignUpForm = () => {
         }
       } catch (error) {
         if (error.response.data.errorMessage === "이미 가입된 이메일입니다.") {
+          Sentry.captureException(error.response.data);
           return alert("입력하신 이메일은 이미 가입된 이메일입니다.");
         }
+        Sentry.captureException(error.response.data);
         return alert(
           "이메일로 인증 번호를 보내는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
@@ -98,6 +101,7 @@ const SignUpForm = () => {
           return alert("인증에 성공했습니다.");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert(
           "인증에 실패했습니다.\n인증번호를 재확인하신 후, 다시 시도해주세요."
         );
@@ -159,10 +163,12 @@ const SignUpForm = () => {
           error.response.data.errorMessage ===
           "이메일 인증이 완료되지 않았습니다."
         ) {
+          Sentry.captureException(error.response.data);
           return alert(
             "이메일 인증이 완료되지 않았습니다.\n이메일 인증 후 다시 시도해주십시오."
           );
         } else {
+          Sentry.captureException(error.response.data);
           return alert(
             "회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오."
           );

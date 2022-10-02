@@ -1,7 +1,6 @@
 //대연
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +12,7 @@ import {
   StBackGroundCloseDiv,
   StShadowBackgroundDiv,
 } from "../interface/styledCommon";
-import Grade from "./Grade";
+import * as Sentry from "@sentry/react";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
@@ -62,6 +61,7 @@ function ProfileCard({ profileData }) {
         setFollow("팔로우");
       }
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
@@ -137,7 +137,10 @@ function ProfileCard({ profileData }) {
               <StTitle>미믹 성장 등급</StTitle>
               <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} alt ="미콩 이미지"/>
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                  alt="미콩 이미지"
+                />
                 <StExplain>
                   <StExplainName>미콩</StExplainName>
                   <StExplainContentWrap>
@@ -152,7 +155,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`}alt ="미알 이미지" />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미알.png`}
+                  alt="미알 이미지"
+                />
                 <StExplain>
                   <StExplainName>미알</StExplainName>
                   <StExplainContent>
@@ -163,7 +169,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} alt ="미돌 이미지" />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                  alt="미돌 이미지"
+                />
                 <StExplain>
                   <StExplainName>미돌</StExplainName>
                   <StExplainContent>
@@ -177,7 +186,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} alt ="미킹 이미지" />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                  alt="미킹 이미지"
+                />
                 <StExplain>
                   <StExplainName>미킹</StExplainName>
                   <StExplainContent>
@@ -230,28 +242,28 @@ function ProfileCard({ profileData }) {
           {profileData.userInfo?.mimicCounts < 4 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미콩.png`}
-              alt ="미콩 이미지"
+              alt="미콩 이미지"
               width="59.38"
               height="71"
             />
           ) : profileData.userInfo?.mimicCounts < 6 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미알.png`}
-              alt ="미알 이미지"
+              alt="미알 이미지"
               width="59.38"
               height="71"
             />
           ) : profileData.userInfo?.mimicCounts < 8 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미돌.png`}
-              alt ="미돌 이미지"
+              alt="미돌 이미지"
               width="59.38"
               height="71"
             />
           ) : (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미킹.png`}
-              alt ="미킹 이미지"
+              alt="미킹 이미지"
               width="59.38"
               height="71"
             />
@@ -260,8 +272,10 @@ function ProfileCard({ profileData }) {
       </StTotalWrap>
       <StFollowGradeWrap>
         {/* <StMbtiFollowFollowingWrap> */}
-        <StFollowWrap aria-label="누르면 팔로워 페이지로 이동합니다" onClick={goFollow}>
-          <StFollowWord >팔로워</StFollowWord>
+        <StFollowWrap
+          aria-label="누르면 팔로워 페이지로 이동합니다"
+          onClick={goFollow}>
+          <StFollowWord>팔로워</StFollowWord>
           <StFollowNumber>
             {window.location.pathname === "/mypage"
               ? profileData.userInfo.follower
@@ -269,7 +283,9 @@ function ProfileCard({ profileData }) {
           </StFollowNumber>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingWord aria-label="누르면 팔로잉 페이지로 이동합니다">팔로잉</StFollowingWord>
+          <StFollowingWord aria-label="누르면 팔로잉 페이지로 이동합니다">
+            팔로잉
+          </StFollowingWord>
           <StFollowingNumber>
             {window.location.pathname === "/mypage"
               ? profileData.userInfo.following
@@ -280,11 +296,14 @@ function ProfileCard({ profileData }) {
           {/* <Grade></Grade> */}
           <StGradebox>
             <StGradeWord>등급</StGradeWord>
-            <StWhatGrade src={process.env.PUBLIC_URL + `/images/grade.png`} alt ="누르면 등급 설명창이 나옵니다" />
+            <StWhatGrade
+              src={process.env.PUBLIC_URL + `/images/grade.png`}
+              alt="누르면 등급 설명창이 나옵니다"
+            />
           </StGradebox>
           <StGradeNumber>
             {profileData.userInfo.mimicCounts < 4
-              ? gradeWordList[0] 
+              ? gradeWordList[0]
               : profileData.userInfo.mimicCounts < 6
               ? gradeWordList[1]
               : profileData.userInfo.mimicCounts < 8

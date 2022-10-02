@@ -4,6 +4,7 @@ import styled from "styled-components";
 import instance from "../../../app/modules/instance";
 import LoadingContainer from "../../../utils/loadingState";
 import { passwordFormat } from "../../../utils/reqList";
+import * as Sentry from "@sentry/react";
 
 function ChangePWContainer() {
   const [inputData, setInputData] = useState({
@@ -56,11 +57,13 @@ function ChangePWContainer() {
           error.response.data.errorMessage ===
           "아이디 또는 비밀번호가 올바르지 않습니다."
         ) {
+          Sentry.captureException(error.response.data);
           return alert(
             "현재 비밀번호가 올바르지 않습니다.\n수정 후, 다시 시도해주세요."
           );
         }
         setLoading(false);
+        Sentry.captureException(error.response.data);
         return alert(
           "비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
@@ -86,6 +89,7 @@ function ChangePWContainer() {
               placeholder="비밀번호 입력"
               value={inputData.password}
               onChange={changeInputPassWord}
+              maxLength={20}
             />
             <StErrorMessage>
               {inputData.password.length === 0 || inputData.password.length <= 8
@@ -103,6 +107,7 @@ function ChangePWContainer() {
               placeholder="변경할 비밀번호 입력"
               value={inputData.newPassword}
               onChange={changeInputPassWord}
+              maxLength={20}
             />
             <StCommonInput
               type="password"
@@ -110,6 +115,7 @@ function ChangePWContainer() {
               placeholder="변경할 비밀번호 재입력"
               value={inputData.confirmPassword}
               onChange={changeInputPassWord}
+              maxLength={20}
             />
           </div>
           <StErrorMessage>
