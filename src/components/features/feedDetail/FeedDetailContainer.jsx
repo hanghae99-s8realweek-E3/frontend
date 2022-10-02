@@ -29,21 +29,14 @@ function FeedDetailContainer() {
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
   const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
   const detailState = useSelector((state) => state.detail);
-  console.log(detailState);
-  console.log(detailState.data.comments?.map((x) => x.challengeCounts));
-  console.log(detailState.data.comments?.map((x) => x.todoCounts));
+
   const arrA = detailState.data.comments?.map((x) => x.challengeCounts);
   const arrB = detailState.data.comments?.map((x) => x.todoCounts);
-  console.log(arrA);
-  console.log(arrB);
-  console.log(arrA?.map((x, y) => x + arrB[y])); // [6, 8, 10, 12,]
   const cardImg =
     detailState.data.todoInfo?.challengeCounts +
     detailState.data.todoInfo?.todoCounts;
   const comment = arrA?.map((x, y) => x + arrB[y]);
-  console.log(comment);
-  console.log(comment?.map((x, idx) => x));
-  console.log(cardImg);
+
   // const cardImg = detailState.data.todoInfo?.challengeCounts + detailState.data.todoInfo?.todoCounts
   // const comment =  detailState.data.comments?.map((x) => x.challengeCounts) + detailState.data.comments?.map((x) => x.todoCounts)
   //옵셔널 체이닝 해제했을 때
