@@ -294,7 +294,7 @@ function FeedDetailContainer() {
                     src={
                       detailState.data.todoInfo.profile !== "none"
                         ? detailState.data.todoInfo.profile
-                        : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                        : process.env.PUBLIC_URL + "/images/Placeholder.svg"
                     }
                     alt="프로필 이미지"
                     onError={changeMyOriginalImage}
@@ -393,7 +393,8 @@ function FeedDetailContainer() {
                             src={
                               x.profile !== "none"
                                 ? x.profile
-                                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                : process.env.PUBLIC_URL +
+                                  "/images/Placeholder.svg"
                             }
                             onError={changeMyOriginalImage}
                           />
@@ -446,7 +447,7 @@ function FeedDetailContainer() {
                   src={
                     detailState.data.loginUserProfile !== "none"
                       ? detailState.data.loginUserProfile
-                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                      : process.env.PUBLIC_URL + "/images/Placeholder.svg"
                   }
                 />
               </StProfileBox>

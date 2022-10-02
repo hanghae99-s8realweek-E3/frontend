@@ -118,7 +118,10 @@ function MainContainer() {
                   key={idx}
                   style={SwiperPostCSSData}
                   id={elem.todoId}
-                  onClick={moveToFeedPage}>
+                  onClick={moveToFeedPage}
+                  aria-label={
+                    elem.todo + ", 탭하면 상세 피드 페이지로 이동합니다."
+                  }>
                   <span
                     style={{
                       fontSize: "46px",
@@ -136,7 +139,8 @@ function MainContainer() {
                       marginRight: "10%",
                       height: "14vh",
                       pointerEvents: "none",
-                    }}>
+                    }}
+                    aria-hidden="true">
                     {elem.todo}
                   </div>
                   <div
@@ -169,31 +173,34 @@ function MainContainer() {
                       </div>
                     </div>
                     <StStatusBox>
-                      <FontAwesomeIcon
-                        style={{
-                          margin: "0 4px",
-                          color: "#919191",
-                          fontSize: "12px",
-                          pointerEvents: "none",
-                        }}
-                        aria-label="댓글 수"
-                        icon={faMessage}
-                      />
+                      <label aria-label="댓글 수">
+                        <FontAwesomeIcon
+                          style={{
+                            margin: "0 4px",
+                            color: "#919191",
+                            fontSize: "12px",
+                            pointerEvents: "none",
+                          }}
+                          icon={faMessage}
+                        />
+                      </label>
                       <StCountSpan
                         color={"#919191"}
                         style={{ marginRight: "10px" }}>
                         {elem.commentCounts}
                       </StCountSpan>
-                      <FontAwesomeIcon
-                        style={{
-                          margin: "0 0 0 0",
-                          color: "#919191",
-                          fontSize: "12px",
-                          pointerEvents: "none",
-                        }}
-                        aria-label="도전 수"
-                        icon={faStar}
-                      />
+                      <label aria-label="도전 수">
+                        <FontAwesomeIcon
+                          style={{
+                            margin: "0 0 0 0",
+                            color: "#919191",
+                            fontSize: "12px",
+                            pointerEvents: "none",
+                          }}
+                          aria-label="도전 수"
+                          icon={faStar}
+                        />
+                      </label>
                       <StCountSpan color={"#919191"}>
                         {elem.challengedCounts}
                       </StCountSpan>
@@ -225,7 +232,10 @@ function MainContainer() {
               id="0"
               onClick={moveToPageNewTab}
               style={SwiperTestCardCSSData}
-              tabIndex="0">
+              tabIndex="0"
+              aria-label={
+                "[16 Personalities] MBTI 검사의 근본!, 탭 하면 해당 테스트 페이지로 이동합니다."
+              }>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="300px"
@@ -233,8 +243,10 @@ function MainContainer() {
                   aria-hidden="true"
                 />
               </PostImageBox>
-              <PostText>
-                <span style={{ fontWeight: "700" }}>[16 Personalities]</span>{" "}
+              <PostText aria-hidden="true">
+                <span style={{ fontWeight: "700", pointerEvents: "none" }}>
+                  [16 Personalities]
+                </span>{" "}
                 MBTI 검사의 근본!
               </PostText>
             </SwiperSlide>
@@ -243,7 +255,10 @@ function MainContainer() {
               id="1"
               onClick={moveToPageNewTab}
               style={SwiperTestCardCSSData}
-              tabIndex="0">
+              tabIndex="0"
+              aria-label={
+                "[푸망XDB손해보험] 약속BTI 테스트, 탭 하면 해당 테스트 페이지로 이동합니다."
+              }>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="190px"
@@ -251,8 +266,10 @@ function MainContainer() {
                   aria-hidden="true"
                 />
               </PostImageBox>
-              <PostText>
-                <span style={{ fontWeight: "700" }}>[푸망XDB손해보험]</span>{" "}
+              <PostText aria-hidden="true">
+                <span style={{ fontWeight: "700", pointerEvents: "none" }}>
+                  [푸망XDB손해보험]
+                </span>{" "}
                 약속BTI 테스트
               </PostText>
             </SwiperSlide>
@@ -261,7 +278,10 @@ function MainContainer() {
               id="2"
               onClick={moveToPageNewTab}
               style={SwiperTestCardCSSData}
-              tabIndex="0">
+              tabIndex="0"
+              aria-label={
+                "[glam] 연애 능력치 테스트, 탭 하면 해당 테스트 페이지로 이동합니다."
+              }>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="250px"
@@ -269,9 +289,11 @@ function MainContainer() {
                   aria-hidden="true"
                 />
               </PostImageBox>
-              <PostText>
-                <span style={{ fontWeight: "700" }}>[glam]</span> 연애 능력치
-                테스트
+              <PostText aria-hidden="true">
+                <span style={{ fontWeight: "700", pointerEvents: "none" }}>
+                  [glam]
+                </span>{" "}
+                연애 능력치 테스트
               </PostText>
             </SwiperSlide>
 
@@ -279,7 +301,10 @@ function MainContainer() {
               id="3"
               onClick={moveToPageNewTab}
               style={SwiperTestCardCSSData}
-              tabIndex="0">
+              tabIndex="0"
+              aria-label={
+                "[케이테스트] 2022 버전 퍼스널 컬러 테스트, 탭 하면 해당 테스트 페이지로 이동합니다."
+              }>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="210px"
@@ -287,9 +312,11 @@ function MainContainer() {
                   aria-hidden="true"
                 />
               </PostImageBox>
-              <PostText>
-                <span style={{ fontWeight: "700" }}>[케이테스트]</span> 2022
-                버전 퍼스널 컬러 테스트
+              <PostText aria-hidden="true">
+                <span style={{ fontWeight: "700", pointerEvents: "none" }}>
+                  [케이테스트]
+                </span>{" "}
+                2022 버전 퍼스널 컬러 테스트
               </PostText>
             </SwiperSlide>
 
@@ -297,7 +324,10 @@ function MainContainer() {
               id="4"
               onClick={moveToPageNewTab}
               style={SwiperTestCardCSSData}
-              tabIndex="0">
+              tabIndex="0"
+              aria-label={
+                "[Doda] 수랑의 성향 검사, 탭 하면 해당 테스트 페이지로 이동합니다."
+              }>
               <PostImageBox width="170px" height="110px">
                 <SildeImage
                   width="180px"
@@ -305,9 +335,11 @@ function MainContainer() {
                   aria-hidden="true"
                 />
               </PostImageBox>
-              <PostText>
-                <span style={{ fontWeight: "700" }}>[Doda]</span> 수랑의 성향
-                검사
+              <PostText aria-hidden="true">
+                <span style={{ fontWeight: "700", pointerEvents: "none" }}>
+                  [Doda]
+                </span>{" "}
+                수랑의 성향 검사
               </PostText>
             </SwiperSlide>
           </Swiper>
@@ -404,7 +436,7 @@ const SildeImage = styled.img`
   pointer-events: none;
 `;
 
-const SildeTitle = styled.h4`
+const SildeTitle = styled.label`
   font-size: 20px;
   text-align: left;
 

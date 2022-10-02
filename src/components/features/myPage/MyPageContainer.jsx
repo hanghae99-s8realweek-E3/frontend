@@ -66,10 +66,16 @@ function MyPageContainer() {
               paddingBottom: "25px",
             }}>
             <StMyPageMenu>나의 정보</StMyPageMenu>
-            <StMyPageButton onClick={changeMyProfileData}>
+            <StMyPageButton
+              onClick={changeMyProfileData}
+              aria-label="프로필 변경, 누르면 프로필 변경 페이지로 이동합니다.">
               프로필 변경
             </StMyPageButton>
-            <StMyPageButton onClick={moveToActivity}>나의 활동</StMyPageButton>
+            <StMyPageButton
+              onClick={moveToActivity}
+              aria-label="나의 활동, 누르면 나의 활동 페이지로 이동합니다.">
+              나의 활동
+            </StMyPageButton>
           </div>
 
           <StCommonBorder />
@@ -80,15 +86,23 @@ function MyPageContainer() {
               flexDirection: "column",
             }}>
             <StMyPageMenu>설정</StMyPageMenu>
-            <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
+            <StMyPageButton
+              onClick={logOutToSite}
+              aria-label="로그아웃, 누르면 미믹에서 로그아웃 됩니다.">
+              로그아웃
+            </StMyPageButton>
             {myData?.provider === "kakao" ? (
               <></>
             ) : (
-              <StMyPageButton onClick={changeMyPasswordData}>
+              <StMyPageButton
+                onClick={changeMyPasswordData}
+                aria-label="비밀번호 변경, 누르면 비밀번호 변경 페이지로 이동합니다.">
                 비밀번호 변경
               </StMyPageButton>
             )}
-            <StMyPageButton onClick={moveToHelpDeskPage}>
+            <StMyPageButton
+              onClick={moveToHelpDeskPage}
+              aria-label="고객센터, 누르면 고객센터 페이지로 이동합니다.">
               고객센터
             </StMyPageButton>
           </div>

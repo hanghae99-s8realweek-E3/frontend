@@ -24,7 +24,8 @@ function ChallengeCard({ data }) {
   // 이용 시, <ChallengeCard data={객체값} />로 작성해줄 것
   return (
     <StChallengeCardDiv
-      background={data.isChallenged === true ? "#DDDDDD" : "#ffffff"}>
+      background={data.isChallenged === true ? "#DDDDDD" : "#ffffff"}
+      tabIndex="0">
       <StCommonRowBox
         width="100%"
         height="100%"
@@ -32,7 +33,8 @@ function ChallengeCard({ data }) {
         style={{ textAlign: "left" }}
         onClick={moveToFeedDetail}>
         <StChallengeNameSpan
-          color={data.isChallenged === true ? "#B8B8B8" : "#000000"}>
+          color={data.isChallenged === true ? "#B8B8B8" : "#000000"}
+          aria-label={data.todoInfo.todo}>
           {data.todoInfo.todo.length > 30
             ? `${data.todoInfo.todo.substring(0, 27)}...`
             : data.todoInfo.todo}
@@ -46,20 +48,24 @@ function ChallengeCard({ data }) {
                 marginRight: "5px",
                 lineHeight: "32px",
               }}>
-              <FontAwesomeIcon
-                style={{
-                  margin: "0 4px",
-                  color: data.isChallenged === true ? "#B8B8B8" : "#909090",
-                }}
-                icon={faMessage}
-              />
+              <label aria-label="댓글 수">
+                <FontAwesomeIcon
+                  style={{
+                    margin: "0 4px",
+                    color: data.isChallenged === true ? "#B8B8B8" : "#909090",
+                  }}
+                  icon={faMessage}
+                />
+              </label>
               <StCountSpan
                 color={data.isChallenged === true ? "#B8B8B8" : "#909090"}>
                 {data.todoInfo.commentCounts}
               </StCountSpan>
             </StCommonRowBox>
             <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <Challenge />
+              <label aria-label="도전 수">
+                <Challenge />
+              </label>
               <StCountSpan
                 color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
                 style={{ marginRight: "4px" }}>

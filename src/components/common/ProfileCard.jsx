@@ -215,7 +215,7 @@ function ProfileCard({ profileData }) {
             src={
               profileData.userInfo.profile !== "none"
                 ? profileData.userInfo.profile
-                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                : process.env.PUBLIC_URL + "/images/Placeholder.svg"
             }
             onError={changeMyOriginalImage}
             alt="프로필 이미지"

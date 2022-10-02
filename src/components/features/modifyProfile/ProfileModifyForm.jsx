@@ -174,7 +174,7 @@ function ProfileModifyForm() {
               <StMyImagePreview
                 src={
                   userState.userInfo.profile === "none"
-                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                    ? process.env.PUBLIC_URL + "/images/Placeholder.svg"
                     : `${userState.userInfo.profile}`
                 }
                 htmlFor="inputImage"
@@ -189,7 +189,7 @@ function ProfileModifyForm() {
                 onChange={changeImageFiles}
               />
             </StMyImageBox>
-            <StChangeImageBtn htmlFor="inputImage">
+            <StChangeImageBtn htmlFor="inputImage" aria-hidden="true">
               이미지 변경
             </StChangeImageBtn>
             <StInfoImgText>파일 제한: 10MB 미만의 jpg, jpeg, png</StInfoImgText>
@@ -199,6 +199,7 @@ function ProfileModifyForm() {
             <StCommonLabel>나의 정보</StCommonLabel>
             <StCommonInput
               type="text"
+              placeholder="닉네임 입력"
               value={changeProfile.nickname}
               onChange={changeInputData}
             />
@@ -206,7 +207,9 @@ function ProfileModifyForm() {
           <StCommonBorder />
           <StInputSettingBox>
             <StCommonLabel>나의 MBTI</StCommonLabel>
-            <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
+            <StSelectMBTIBtn
+              onClick={toggleMBTISelectPopUp}
+              aria-label={`${changeProfile.mbti === ""}`}>
               {changeProfile.mbti === "" || changeProfile.mbti === null
                 ? "선택하기"
                 : changeProfile.mbti}
@@ -215,7 +218,8 @@ function ProfileModifyForm() {
           <StCommonBorder />
           <StCommonButton
             margin="54px auto"
-            onClick={submitModifyMyProfileData}>
+            onClick={submitModifyMyProfileData}
+            aria-label="확인 버튼, 누르면 프로필 내용을 수정합니다.">
             확인
           </StCommonButton>
         </StContainer>
@@ -277,7 +281,7 @@ const StMyImageBox = styled.div`
 const StMyImagePreview = styled.label`
   background-image: ${(props) =>
     `url(${props.src})` ||
-    `url("https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg")`};
+    `url(process.env.PUBLIC_URL + "/images/Placeholder.svg")`};
   background-repeat: no-repeat;
   background-size: auto 144px;
   background-position: center;
