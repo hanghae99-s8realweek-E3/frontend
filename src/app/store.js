@@ -17,4 +17,5 @@ export const store = configureStore({
     setuptodos: setUpTodosSlice.reducer,
     main: mainSlice.reducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });

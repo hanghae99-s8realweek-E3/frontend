@@ -17,7 +17,6 @@ import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
-  console.log(card);
   // 첫 화면 진입시 challenge로 값을 지정
   const [todoTab, setTodoTab] = useState("도전");
   const [prevClick, setPrevClick] = useState(null);
@@ -47,9 +46,9 @@ function UserProfileContainer() {
   // }, []);
   useEffect(() => {
     setLoading(true);
-    async function loading(){
-    await dispatch(getOthersTodoFetch(params));
-    setLoading(false)
+    async function loading() {
+      await dispatch(getOthersTodoFetch(params));
+      setLoading(false);
     }
     loading();
   }, []);
@@ -140,8 +139,7 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortDate}
-                      >
+                        onClick={sortDate}>
                         최신순
                       </StDate>
                       <StDateLine />
@@ -149,8 +147,7 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortComment}
-                      >
+                        onClick={sortComment}>
                         댓글순
                       </StComment>
                       <StCommentLine />
@@ -158,8 +155,7 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortChallenge}
-                      >
+                        onClick={sortChallenge}>
                         도전순
                       </StChallenge>
                       <StChallengeLine />
@@ -267,7 +263,6 @@ const StTopWrap = styled.div`
   margin-top: 60px;
   /* padding-bottom: 31.5px; */
   background-color: #ffffff;
-
 `;
 const StTodoTopLine = styled.div`
   display: flex;

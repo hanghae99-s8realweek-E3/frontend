@@ -77,6 +77,10 @@ function ProfileCard({ profileData }) {
   // onError={
   //   (this.src = this.src.replace(/\/resizingMimic\//, "/mimic"))
   // }
+  const changeMyOriginalImage = (event) => {
+    event.target.src = event.target.src.replace(/\/resizingMimic\//, "/mimic/");
+  };
+
   return (
     <>
       {modalState === true ? (
@@ -104,10 +108,9 @@ function ProfileCard({ profileData }) {
                 <br />
                 색다른 재미를 느끼실 수 있을거에요!
               </StText>
-              <img
-                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
+              <StMBTIBoardImg
+                src={process.env.PUBLIC_URL + `/images/matchingBoard.svg`}
                 alt="MBTI matching List Images"
-                style={{ width: "324px", margin: "5px 0" }}
               />
             </StContent>
           </StModalContainer>
@@ -202,6 +205,7 @@ function ProfileCard({ profileData }) {
                 ? profileData.userInfo.profile
                 : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
             }
+            onError={changeMyOriginalImage}
             alt="프로필 이미지"
           />
         </StImageBox>
@@ -209,7 +213,8 @@ function ProfileCard({ profileData }) {
           <StNickName>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
             <StMbti>{profileData.userInfo.mbti}</StMbti>
-            {window.location.pathname === `/otherspage/${params.userId}` ? (
+            {window.location.pathname === `/otherspage/${params.userId}` &&
+            myData.userId !== params.userId ? (
               <StFollowBtn onClick={changeFollowState}>
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
@@ -638,7 +643,7 @@ const StText = styled.p`
   font-weight: 500;
   color: #919191;
   margin: 0;
-  margin-bottom: 42px;
+  margin-bottom: 10px;
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -648,16 +653,18 @@ const StText = styled.p`
 const StModalContainer = styled.div`
   background: #ffffff;
   border-radius: 6px;
+  position: absolute;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 10vh 5%;
   width: 90%;
   height: 620px;
   box-sizing: border-box;
+  z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: 18px;
-    height: 750x;
-    margin: 7vh auto;
+    height: 530px;
+    margin: 7vh 5%;
   }
 `;
 const StTitle = styled.div`
@@ -817,7 +824,7 @@ const StGradeModalContainer = styled.div`
   background: white;
   border-radius: 6px;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 5vh auto;
   width: 450px;
   height: 750px;
   box-sizing: border-box;
@@ -825,5 +832,13 @@ const StGradeModalContainer = styled.div`
     width: 324px;
     margin: 18px;
     height: 660px;
+  }
+`;
+
+const StMBTIBoardImg = styled.img`
+  width: 400px;
+  margin: 5px 0;
+  @media screen and (max-width: 500px) {
+    width: 320px;
   }
 `;
