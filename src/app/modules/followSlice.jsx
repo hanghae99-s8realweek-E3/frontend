@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
+import * as Sentry from "@sentry/react";
 
 const initialState = {
   data: [],
@@ -15,6 +16,7 @@ export const getMyPageFollowFetch = createAsyncThunk(
       const response = await instance.get(`/follows/${payload.userId}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

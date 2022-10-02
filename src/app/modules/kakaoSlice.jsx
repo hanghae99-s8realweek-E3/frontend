@@ -1,6 +1,3 @@
-import axios from "axios";
-
-
 // export const api = axios.create({
 //   baseURL: "/api/accounts/auth/kakao/callback",
 //   // withCredentials: false,

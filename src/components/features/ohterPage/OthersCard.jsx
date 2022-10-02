@@ -13,6 +13,7 @@ import instance from "../../../app/modules/instance";
 import { useDispatch } from "react-redux";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../../utils/token";
+import * as Sentry from "@sentry/react";
 
 function OthersCard({ data }) {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ function OthersCard({ data }) {
           dispatch(getOthersTodoFetch({ userId: data.userId }));
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         alert("미믹 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };

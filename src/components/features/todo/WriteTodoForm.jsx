@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function WriteTodoForm() {
   const navigate = useNavigate();
@@ -93,6 +94,7 @@ function WriteTodoForm() {
           navigate("/setuptodo");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         return alert("미믹 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }

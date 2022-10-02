@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { preInstance } from "./instance";
+import * as Sentry from "@sentry/react";
 
 const initialState = {
   message: "",
@@ -13,6 +14,7 @@ export const getMainFetch = createAsyncThunk(
       const response = await preInstance.get("/todolists/ranking");
       return thunkAPI.fulfillWithValue(response.data.data);
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

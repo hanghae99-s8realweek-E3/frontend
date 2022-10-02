@@ -8,9 +8,10 @@ import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
+import * as Sentry from "@sentry/react";
 
 function DetailCard({ data }) {
   const [menuModal, setMenuModal] = useState(false);
@@ -32,6 +33,7 @@ function DetailCard({ data }) {
           navigate("/todolists");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         alert("미믹을 삭제하는 데에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };

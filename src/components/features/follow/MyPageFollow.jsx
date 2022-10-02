@@ -7,6 +7,7 @@ import instance from "../../../app/modules/instance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { decodeMyTokenData } from "../../../utils/token";
+import * as Sentry from "@sentry/react";
 
 function MyPageFollow() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ function MyPageFollow() {
           setSearchList([]);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert(
           "언팔로우 처리에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
