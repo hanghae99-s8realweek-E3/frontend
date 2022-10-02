@@ -76,7 +76,9 @@ function ProfileModifyForm() {
       myData.nickname === changeProfile.nickname &&
       myData.mbti === changeProfile.mbti
     ) {
-      alert("프로필 변경 사항이 없습니다.\n수정 후, 버튼을 눌러주십시오.");
+      return alert(
+        "프로필 변경 사항이 없습니다.\n수정 후, 버튼을 눌러주십시오."
+      );
     }
     if (
       changeProfile.nickname.length === 0 ||

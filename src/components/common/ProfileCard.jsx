@@ -108,10 +108,9 @@ function ProfileCard({ profileData }) {
                 <br />
                 색다른 재미를 느끼실 수 있을거에요!
               </StText>
-              <img
-                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
+              <StMBTIBoardImg
+                src={process.env.PUBLIC_URL + `/images/matchingBoard.svg`}
                 alt="MBTI matching List Images"
-                style={{ width: "324px", margin: "5px 0" }}
               />
             </StContent>
           </StModalContainer>
@@ -640,7 +639,7 @@ const StText = styled.p`
   font-weight: 500;
   color: #919191;
   margin: 0;
-  margin-bottom: 42px;
+  margin-bottom: 10px;
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -650,16 +649,18 @@ const StText = styled.p`
 const StModalContainer = styled.div`
   background: #ffffff;
   border-radius: 6px;
+  position: absolute;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 10vh 5%;
   width: 90%;
   height: 620px;
   box-sizing: border-box;
+  z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: 18px;
-    height: 750x;
-    margin: 7vh auto;
+    height: 530px;
+    margin: 7vh 5%;
   }
 `;
 const StTitle = styled.div`
@@ -827,5 +828,13 @@ const StGradeModalContainer = styled.div`
     width: 324px;
     margin: 18px;
     height: 660px;
+  }
+`;
+
+const StMBTIBoardImg = styled.img`
+  width: 400px;
+  margin: 5px 0;
+  @media screen and (max-width: 500px) {
+    width: 320px;
   }
 `;

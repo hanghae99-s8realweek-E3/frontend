@@ -58,7 +58,7 @@ function Header() {
         <StBackBtn type="button" onClick={moveToPrevPage}>
           <img
             style={{
-              height: "12px",
+              height: "16px",
               pointerEvents: "none",
             }}
             src={process.env.PUBLIC_URL + `/images/back.png`}
@@ -67,7 +67,12 @@ function Header() {
         </StBackBtn>
       )}
       {window.location.pathname === "/" ? (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
           <LogoImage
             src={process.env.PUBLIC_URL + `/images/Logo.svg`}
             aria-hidden="true"
@@ -130,7 +135,7 @@ const StBackBtn = styled.button`
 `;
 
 const LogoImage = styled.img`
-  height: 18px;
+  height: 20px;
 `;
 
 const HeaderText = styled.div`

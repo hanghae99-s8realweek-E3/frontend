@@ -1,6 +1,6 @@
 import { StCommonColumnBox, StCommonRowBox } from "../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { tokenChecker } from "../../utils/token";
@@ -58,12 +58,10 @@ function ChallengeCard({ data }) {
               </StCountSpan>
             </StCommonRowBox>
             <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <FontAwesomeIcon
-                style={{
-                  margin: "0 0 0 0",
-                  color: data.isChallenged === true ? "#B8B8B8" : "#909090",
-                }}
-                icon={faStar}
+              <StChallengeIcon
+                aria-label="도전 수"
+                color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
+                src={process.env.PUBLIC_URL + `/images/Challenge.svg`}
               />
               <StCountSpan
                 color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
@@ -107,6 +105,10 @@ const StChallengeCardDiv = styled.div`
     color: #ffffff;
   }
 
+  &:hover svg {
+    fill: #ffffff;
+  }
+
   &:hover path {
     color: #ffffff;
   }
@@ -140,4 +142,11 @@ const StCountSpan = styled.span`
   color: ${(props) => props.color};
 
   margin: 0 8px;
+`;
+
+const StChallengeIcon = styled.img`
+  margin: 0;
+  height: 17px;
+  width: 17px;
+  color: ${(props) => props.color};
 `;
