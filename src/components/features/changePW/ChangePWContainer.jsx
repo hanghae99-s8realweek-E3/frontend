@@ -52,8 +52,18 @@ function ChangePWContainer() {
           navigate("/mypage");
         }
       } catch (error) {
+        if (
+          error.response.data.errorMessage ===
+          "아이디 또는 비밀번호가 올바르지 않습니다."
+        ) {
+          return alert(
+            "현재 비밀번호가 올바르지 않습니다.\n수정 후, 다시 시도해주세요."
+          );
+        }
         setLoading(false);
-        alert("비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        return alert(
+          "비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요."
+        );
       }
     };
     modifyPassword();
