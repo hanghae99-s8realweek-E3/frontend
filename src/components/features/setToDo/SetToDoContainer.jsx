@@ -553,7 +553,6 @@ const StNotifyNoSettingBox = styled.div`
 
   margin: 5px 20px;
 
-  cursor: pointer;
   @media screen and (max-width: 500px) {
     width: 90%;
     height: 80px;

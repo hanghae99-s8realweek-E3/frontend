@@ -52,6 +52,7 @@ function WithdrawContainer() {
           type="password"
           placeholder="비밀번호를 입력"
           ref={passwordRef}
+          maxLength={20}
         />
         <StCommonButton>떠나기</StCommonButton>
       </StWithDrawForm>

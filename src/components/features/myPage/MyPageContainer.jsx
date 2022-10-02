@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMyPageFetch } from "../../../app/modules/accountsSlice";
 import LoadingContainer from "../../../utils/loadingState";
-import { tokenChecker } from "../../../utils/token";
-import Grade from "../../common/Grade";
+import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
 import ProfileCard from "../../common/ProfileCard";
 
 function MyPageContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const myData = decodeMyTokenData();
 
   useEffect(() => {
     dispatch(getMyPageFetch());
@@ -58,7 +58,6 @@ function MyPageContainer() {
           <ProfileCard profileData={accountsState} />
 
           <StCommonBorder />
-          {/* <Grade/> */}
 
           <div
             style={{
@@ -82,9 +81,13 @@ function MyPageContainer() {
             }}>
             <StMyPageMenu>설정</StMyPageMenu>
             <StMyPageButton onClick={logOutToSite}>로그아웃</StMyPageButton>
-            <StMyPageButton onClick={changeMyPasswordData}>
-              비밀번호 변경
-            </StMyPageButton>
+            {myData?.provider === "kakao" ? (
+              <></>
+            ) : (
+              <StMyPageButton onClick={changeMyPasswordData}>
+                비밀번호 변경
+              </StMyPageButton>
+            )}
             <StMyPageButton onClick={moveToHelpDeskPage}>
               고객센터
             </StMyPageButton>
