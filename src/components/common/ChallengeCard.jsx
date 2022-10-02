@@ -4,6 +4,7 @@ import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { tokenChecker } from "../../utils/token";
+import { ReactComponent as Challenge } from "../../images/Challenge.svg";
 
 function ChallengeCard({ data }) {
   const navigate = useNavigate();
@@ -58,11 +59,7 @@ function ChallengeCard({ data }) {
               </StCountSpan>
             </StCommonRowBox>
             <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <StChallengeIcon
-                aria-label="도전 수"
-                color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
-                src={process.env.PUBLIC_URL + `/images/Challenge.svg`}
-              />
+              <Challenge />
               <StCountSpan
                 color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
                 style={{ marginRight: "4px" }}>
@@ -105,12 +102,14 @@ const StChallengeCardDiv = styled.div`
     color: #ffffff;
   }
 
-  &:hover svg {
-    fill: #ffffff;
-  }
-
   &:hover path {
     color: #ffffff;
+    stroke: #ffffff;
+  }
+
+  &:hover svg {
+    color: #aaaaaa;
+    stroke: #ffffff;
   }
 
   @media screen and (max-width: 500px) {
