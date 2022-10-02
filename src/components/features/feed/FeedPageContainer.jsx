@@ -154,7 +154,6 @@ function FeedPageContainer() {
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -170,9 +169,11 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("최신순");
@@ -195,18 +196,18 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("댓글순");
     setSelectSort(!selectSort);
-
   };
   //도전순 정렬
   const sortChallenge = (e) => {
-
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -222,9 +223,11 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("도전순");
@@ -240,7 +243,6 @@ function FeedPageContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {selectSort === true ? (
-          
           <StShadowBackgroundDiv>
             <StBackGroundCloseDiv onClick={toggleSortPopUp} />
             <StPopupBox>
@@ -251,6 +253,7 @@ function FeedPageContainer() {
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortDate}
+                  alt="최신순으로 피드를 정렬합니다"
                 >
                   최신순
                 </StDate>
@@ -260,6 +263,7 @@ function FeedPageContainer() {
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortComment}
+                  alt="최신순으로 피드를 정렬합니다"
                 >
                   댓글순
                 </StComment>
@@ -269,15 +273,15 @@ function FeedPageContainer() {
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortChallenge}
+                  alt="최신순으로 피드를 정렬합니다"
                 >
                   도전순
                 </StChallenge>
                 <StChallengeLine />
                 <StCommonBar />
               </StSort>
-            </StPopupBox> 
+            </StPopupBox>
           </StShadowBackgroundDiv>
-
         ) : (
           <></>
         )}
@@ -309,7 +313,7 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/unCheck.png`}
                   width="17"
                   height="17"
-                  alt="AppearImg"
+                  alt="도전완료 가리기 버튼 해제"
                 />
               ) : (
                 <StChallengeImg
@@ -317,7 +321,7 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/check.png`}
                   width="17"
                   height="17"
-                  alt="AppearImg"
+                  alt="도전완료 가리기 버튼 적용"
                 />
               )}
               <StChallengeWord>도전완료 가리기</StChallengeWord>
@@ -330,7 +334,7 @@ function FeedPageContainer() {
                 src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                 width="12"
                 height="6"
-                alt="ToggleImg"
+                alt="최신순 댓글순 도전순 정렬 토글입니다"
               />
             </StToggleImgWrap>
           </StWrap>
