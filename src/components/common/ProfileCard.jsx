@@ -668,11 +668,12 @@ const StModalContainer = styled.div`
   padding: 25px;
   margin: 10vh 5%;
   width: 90%;
-  height: 75vh;
+  height: auto;
   box-sizing: border-box;
   z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
+    height:auto;
   }
 `;
 const StTitle = styled.div`
@@ -842,8 +843,8 @@ const StGradeModalContainer = styled.div`
   padding: 25px;
   margin: auto;
   width: 450px;
-  height: 60vh;
-  margin-top: 20vh;
+  height: auto;
+  margin-top: 12.5vh;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;

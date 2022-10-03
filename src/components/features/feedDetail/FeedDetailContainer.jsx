@@ -840,13 +840,10 @@ const StGradeModalContainer = styled.div`
   padding: 25px;
   margin: 10vh auto;
   width: 450px;
-  height: 750px;
+  height: auto;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: auto;
-    height: 60vh;
-    margin-top:20vh;
   }
 `;
 
