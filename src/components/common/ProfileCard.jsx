@@ -230,7 +230,13 @@ function ProfileCard({ profileData }) {
                   : "언팔로우"}
               </StFollowBtn>
             ) : (
-              <StInfo tabIndex={4}aria-label="버튼을 누르면 궁합 알아보기 창이 나타납니다" onClick={changeModalState}>궁합 알아보기</StInfo>
+              <StInfo
+                tabIndex={4}
+                aria-label="버튼을 누르면 궁합 알아보기 창이 나타납니다"
+                onClick={changeModalState}
+              >
+                궁합 알아보기
+              </StInfo>
             )}
           </StMmtiFollowWrap>
         </StNoImageWrap>
@@ -273,7 +279,10 @@ function ProfileCard({ profileData }) {
       <StFollowGradeWrap>
         {/* <StMbtiFollowFollowingWrap> */}
         <StFollowWrap onClick={goFollow}>
-          <StFollowWord tabIndex={7} aria-label="누르면 팔로워 페이지로 이동합니다">
+          <StFollowWord
+            tabIndex={7}
+            aria-label="누르면 팔로워 페이지로 이동합니다"
+          >
             팔로워
           </StFollowWord>
           <StFollowNumber>
@@ -283,7 +292,10 @@ function ProfileCard({ profileData }) {
           </StFollowNumber>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingWord tabIndex={8}aria-label="누르면 팔로잉 페이지로 이동합니다">
+          <StFollowingWord
+            tabIndex={8}
+            aria-label="누르면 팔로잉 페이지로 이동합니다"
+          >
             팔로잉
           </StFollowingWord>
           <StFollowingNumber>
@@ -472,10 +484,10 @@ const StFollowNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowWord = styled.div`
@@ -547,10 +559,10 @@ const StGradeNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowingNumber = styled.div`
@@ -560,10 +572,10 @@ const StFollowingNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowingWord = styled.div`
@@ -611,7 +623,7 @@ const StInfo = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 14.4px;
-    font-size: 11px;
+    font-size: 12px;
   }
 `;
 
@@ -648,7 +660,7 @@ const StContent = styled.div`
       font-size: 24px;
       margin-top: 8px;
       margin-bottom: 9px;
-        }
+    }
   }
 `;
 const StText = styled.p`
@@ -676,7 +688,7 @@ const StModalContainer = styled.div`
   z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
-    height:auto;
+    height: auto;
   }
 `;
 const StTitle = styled.div`

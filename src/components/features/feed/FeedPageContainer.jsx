@@ -326,11 +326,15 @@ function FeedPageContainer() {
                   tabIndex={1}
                 />
               )}
-              <StChallengeWord  aria-hidden="true" >도전완료 가리기</StChallengeWord>
+              <StChallengeWord aria-hidden="true">
+                도전완료 가리기
+              </StChallengeWord>
             </StChallengeWrap>
             <StToggleImgWrap>
               {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-              <StToggle onClick={toggleSortPopUp} aria-hidden="true">{sortState}</StToggle>
+              <StToggle onClick={toggleSortPopUp} aria-hidden="true">
+                {sortState}
+              </StToggle>
               <StToggleImg
                 onClick={toggleSortPopUp}
                 src={process.env.PUBLIC_URL + `/images/Toggle.png`}
@@ -352,10 +356,20 @@ function FeedPageContainer() {
                   feedCard
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
+                      <ChallengeCard
+                        id={it.todoId}
+                        data={it}
+                        key={idx}
+                        tabIndex={5}
+                      />
                     ))
                 : feedCard?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
+                    <ChallengeCard
+                      id={it.todoId}
+                      data={it}
+                      key={idx}
+                      tabIndex={5}
+                    />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
@@ -365,16 +379,32 @@ function FeedPageContainer() {
                 ? searchList
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5} />
+                      <ChallengeCard
+                        id={it.todoId}
+                        data={it}
+                        key={idx}
+                        tabIndex={5}
+                      />
                     ))
                 : searchList?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
+                    <ChallengeCard
+                      id={it.todoId}
+                      data={it}
+                      key={idx}
+                      tabIndex={5}
+                    />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
           )}
         </>
-        <StSelectMbti tabIndex={6} aria-label="MBTI를 선택하는 버튼입니다" onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+        <StSelectMbti
+          tabIndex={6}
+          aria-label="버튼을 누르면 MBTI를 선택하는 페이지로 이동합니다."
+          onClick={moveToSelectMBTI}
+        >
+          MBTI 선택
+        </StSelectMbti>
       </StTotalWrap>
     </>
   );
@@ -428,7 +458,7 @@ const StChallengeWord = styled.div`
     align-items: center;
     width: 175px;
     margin: 0px;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 const StToggleImgWrap = styled.div`
@@ -455,7 +485,7 @@ const StToggle = styled.div`
     width: 100.09px;
     margin: 0px 8px 0px 0px;
     text-align: end;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 const StToggleImg = styled.img`
