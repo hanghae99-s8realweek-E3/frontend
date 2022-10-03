@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function TestForm() {
   const [questionState, setQuestionState] = useState(0);
   const [btnValue, setBtnValue] = useState("");
   const randomNumber = Math.floor(Math.random() * 3);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (questionState === 5) {
@@ -189,7 +191,7 @@ function TestForm() {
       mbti: "ESFP",
       mbtiTitle: "연예인",
       content:
-        "연예인형 사람은 이들은 순간의 흥분되는 감정이나 상황에 쉽게 빠져들며, 주위 사람들 역시 그런 느낌을 만끽하기를 원합니다.\n또한, 사교적이고 활동적이며 수용력이 강하고 친절하며 낙천적입니다.\n어떤 상황이든 잘 적응하고 현실적이고 실제적인 유형입니다.\n주위의 사람이나 일어나는 일에 대하여 관심이 많으며 사람이나 사물을 다루는 사실적인 상식이 풍부합니다.\n때로는 수다스럽고, 진지함이 결여되거나 마무리를 등한시하는 경향이 있으나, 어떤 조직체나 공동체에서 밝고 재미있는 분위기 조성 역할을 잘합니다.",
+        "연예인형 사람은 이들은 순간의 흥분되는 감정이나 상황에 쉽게 빠져들며, 주위 사람들 역시 그런 느낌을 만끽하기를 원합니다.\n\n또한, 사교적이고 활동적이며 수용력이 강하고 친절하며 낙천적입니다. 어떤 상황이든 잘 적응하고 현실적이고 실제적인 유형입니다.\n\n주위의 사람이나 일어나는 일에 대하여 관심이 많으며 사람이나 사물을 다루는 사실적인 상식이 풍부합니다.\n\n때로는 수다스럽고, 진지함이 결여되거나 마무리를 등한시하는 경향이 있으나, 어떤 조직체나 공동체에서 밝고 재미있는 분위기 조성 역할을 잘합니다.",
       image: process.env.PUBLIC_URL + `/images/testImages/ESFP.svg`,
     },
     {
@@ -259,16 +261,33 @@ function TestForm() {
   };
 
   const onClickShared = () => {
-    window.navigator.share({
-      title: "초간단 MBTI 테스트!",
-      text: "5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?",
-      url: "",
-    });
+    if (
+      window.navigator.platform.indexOf("Mac") !== -1 ||
+      (window.navigator.platform.indexOf("Android") !== -1 &&
+        window.navigator.userAgent.indexOf("KAKAO") !== -1)
+    ) {
+      return window.navigator.clipboard
+        .writeText("https://todaysmimic.today/test")
+        .then(() => alert("주소가 클립보드에 복사됐습니다!"))
+        .catch(() =>
+          alert("죄송합니다, 해당 플랫폼은 공유 기능을 지원하지 않습니다.")
+        );
+    } else {
+      return window.navigator.share({
+        title: "초간단 MBTI 테스트!",
+        text: "5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?",
+        url: "",
+      });
+    }
   };
 
   const onClickGoToMain = (e) => {
     setQuestionState(0);
     setBtnValue("");
+  };
+
+  const moveToMainPage = () => {
+    navigate("/");
   };
 
   return (
@@ -292,6 +311,15 @@ function TestForm() {
             <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
           </StTextWarpB>
           <StStartBtn onClick={GoToFirstQ} aria-label="테스트시작하기">시작하기</StStartBtn>
+          <p
+            style={{
+              fontSize: "11px",
+              marginBottom: "30px",
+              color: "#979797",
+            }}>
+            본 테스트의 결과 내용은
+            뚝딱뉴스(https://ddnews.co.kr/category/mbti/)에서 발췌했습니다.
+          </p>
         </div>
       ) : (
         <div>
@@ -495,6 +523,12 @@ function TestForm() {
                 <StLastBtn onClick={onClickShared}>테스트 공유하기</StLastBtn>
                 <StLastBtn onClick={onClickGoToMain}>테스트 다시하기</StLastBtn>
               </StLastBtnWarp>
+              <StLastBtn
+                style={{ marginBottom: "40px" }}
+                onClick={moveToMainPage}
+                aria-label="메인으로 이동 버튼, 누르면 메인 화면으로 이동합니다.">
+                메인 화면으로 이동
+              </StLastBtn>
             </div>
           ) : (
             <></>
@@ -548,7 +582,7 @@ const StStartBtn = styled.button`
   font-weight: 500;
   font-size: 22px;
   line-height: 32px;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   cursor: pointer;
   @media only screen and (max-width: 500px) {
     width: 90%;
@@ -772,7 +806,7 @@ const StLastBtnWarp = styled.div`
   gap: 2rem;
   margin: auto;
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   justify-content: space-evenly;
   @media only screen and (max-width: 500px) {
     width: 200px;
@@ -856,5 +890,35 @@ const StWaitingDiv = styled.div`
   flex-direction: column;
   @media only screen and (max-width: 500px) {
     width: 360px;
+  }
+`;
+
+const StCommonButton = styled.div`
+  background: #ff6d53;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+
+  border-radius: 6px;
+  margin: ${(props) => props.margin || "25px"};
+
+  width: 90%;
+  height: 60px;
+
+  cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
+    margin: 18px;
   }
 `;
