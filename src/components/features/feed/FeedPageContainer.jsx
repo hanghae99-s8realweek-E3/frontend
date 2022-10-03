@@ -420,10 +420,10 @@ const StChallengeWord = styled.div`
   margin-right: 235px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  color: #313131;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 175px;
@@ -444,10 +444,10 @@ const StToggle = styled.div`
   margin-right: 8px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  color: #313131;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
