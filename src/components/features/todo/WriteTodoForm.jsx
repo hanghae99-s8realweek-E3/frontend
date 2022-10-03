@@ -70,12 +70,12 @@ function WriteTodoForm() {
       );
     }
 
-    if (todo.todo.trim().length < 10) {
-      return alert("10자 이상 작성해 주세요.");
+    if (todo.todo.trim().length < 5) {
+      return alert("5자 이상 작성해 주세요.");
     }
 
-    if (todo.todo.length < 10) {
-      return alert("10자 이상 작성해 주세요.");
+    if (todo.todo.length < 5) {
+      return alert("5자 이상 작성해 주세요.");
     }
 
     if (todo.todo.length > 30) {
@@ -121,7 +121,7 @@ function WriteTodoForm() {
             tabIndex="1"
           />
           <StTextCount
-            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}
+            color={30 - todo.todo.length < 5 ? "#ff6d53" : "#979797"}
             aria-label="작성 가능한 남은 글자 수"
             tabIndex="2">
             {30 - todo.todo.length}
