@@ -209,18 +209,20 @@ function ProfileCard({ profileData }) {
                 : process.env.PUBLIC_URL + "/images/Placeholder.svg"
             }
             onError={changeMyOriginalImage}
-            alt="프로필 이미지"
+            alt="사용자가 등록한 프로필 이미지, 등록하지 않았다면 일반 이미지가 나타납니다"
+            tabIndex={1}
           />
         </StImageBox>
         <StNoImageWrap>
-          <StNickName>{profileData.userInfo.nickname}</StNickName>
+          <StNickName tabIndex={2}>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
-            <StMbti>{profileData.userInfo.mbti}</StMbti>
+            <StMbti tabIndex={3}>{profileData.userInfo.mbti}</StMbti>
             {window.location.pathname === `/otherspage/${params.userId}` &&
             myData.userId !== params.userId ? (
               <StFollowBtn
                 aria-label="버튼을 누르면 팔로우 또는 언팔로우를 할 수 있습니다"
                 onClick={changeFollowState}
+                tabIndex={5}
               >
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
@@ -228,7 +230,7 @@ function ProfileCard({ profileData }) {
                   : "언팔로우"}
               </StFollowBtn>
             ) : (
-              <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+              <StInfo tabIndex={4}aria-label="버튼을 누르면 궁합 알아보기 창이 나타납니다" onClick={changeModalState}>궁합 알아보기</StInfo>
             )}
           </StMmtiFollowWrap>
         </StNoImageWrap>
@@ -239,6 +241,7 @@ function ProfileCard({ profileData }) {
               alt="미콩 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
           ) : profileData.userInfo?.mimicCounts < 6 ? (
             <StImage
@@ -246,6 +249,7 @@ function ProfileCard({ profileData }) {
               alt="미알 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
           ) : profileData.userInfo?.mimicCounts < 8 ? (
             <StImage
@@ -253,6 +257,7 @@ function ProfileCard({ profileData }) {
               alt="미돌 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
           ) : (
             <StImage
@@ -260,6 +265,7 @@ function ProfileCard({ profileData }) {
               alt="미킹 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
           )}
         </StGradeImageBox>
@@ -267,7 +273,7 @@ function ProfileCard({ profileData }) {
       <StFollowGradeWrap>
         {/* <StMbtiFollowFollowingWrap> */}
         <StFollowWrap onClick={goFollow}>
-          <StFollowWord aria-label="누르면 팔로워 페이지로 이동합니다">
+          <StFollowWord tabIndex={7} aria-label="누르면 팔로워 페이지로 이동합니다">
             팔로워
           </StFollowWord>
           <StFollowNumber>
@@ -277,7 +283,7 @@ function ProfileCard({ profileData }) {
           </StFollowNumber>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingWord aria-label="누르면 팔로잉 페이지로 이동합니다">
+          <StFollowingWord tabIndex={8}aria-label="누르면 팔로잉 페이지로 이동합니다">
             팔로잉
           </StFollowingWord>
           <StFollowingNumber>
@@ -293,6 +299,7 @@ function ProfileCard({ profileData }) {
             <StWhatGrade
               src={process.env.PUBLIC_URL + `/images/grade.png`}
               alt="누르면 등급 설명창이 나옵니다"
+              tabIndex={9}
             />
           </StGradebox>
           <StGradeNumber>
@@ -390,7 +397,6 @@ const StNickName = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
-  line-height: 32px;
   color: #000000;
   margin-left: 16px;
   text-align: left;
@@ -582,8 +588,8 @@ const StFollowBtn = styled.div`
   -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin: 0px;
-    font-size: 13px;
+    margin-left: 9px;
+    font-size: 12px;
   }
 `;
 const StInfo = styled.div`
