@@ -73,11 +73,13 @@ function LoginForm() {
         <StForm onSubmit={submitLoginData}>
           <StEmail> 이메일 </StEmail>
           <StEmailInput
-            name="email"
+            name= "email"
             // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제
             value={userData.email}
             placeholder="abcdef@gmail.com"
             onChange={onChange}
+            // aria-hidden = "true"
+            // aria-label="이메일 입력란 입니다"
           />
           {/* <InputCard
           name="email"
@@ -93,6 +95,7 @@ function LoginForm() {
             value={userData.password}
             placeholder="비밀번호 입력"
             onChange={onChange}
+            // aria-label= "비밀번호 입력란 입니다"
           />
           {/* <InputCard
           name="password"
@@ -102,9 +105,9 @@ function LoginForm() {
           onChange={onChange}
         /> */}
           <StIncorrect>{modal}</StIncorrect>
-          <StLoginBtn type="submit">로그인</StLoginBtn>
+          <StLoginBtn aria-label= "올바른 계정을 입력하고 버튼을 클릭하면 메인 페이지로 이동합니다" type="submit">로그인</StLoginBtn>
         </StForm>
-        <StSignupBtn onClick={moveToSignUp}>회원가입</StSignupBtn>
+        <StSignupBtn aria-label= "버튼을 클릭하면 회원가입 페이지로 이동합니다" onClick={moveToSignUp}>회원가입</StSignupBtn>
       </StTotalWrap>
     </>
   );

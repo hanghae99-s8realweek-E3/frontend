@@ -23,25 +23,16 @@ function ProfileCard({ profileData }) {
   const myData = decodeMyTokenData();
   const [modalState, setModalState] = useState(false);
   const [gradeModalState, setGradeModalState] = useState(false);
-  // const gradeList = ["미콩", "미알", "미돌", "미킹"];
-  // const [gradeState, setGradeState] = useState(gradeList[0]);
-
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
 
   // const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    // window.location.pathname === "/otherspage" ?
-    // navigate(`/follows/${params.userId}`)
-    // :
     navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    // window.location.pathname === "/otherspage" ?
-    // navigate(`/follows/${params.userId}`)
-    // :
     navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
 
@@ -110,7 +101,7 @@ function ProfileCard({ profileData }) {
               </StText>
               <StMBTIBoardImg
                 src={process.env.PUBLIC_URL + `/images/matchingBoard.svg`}
-                alt="MBTI matching List Images"
+                alt="MBTI matching List Images입니다"
               />
             </StContent>
           </StModalContainer>
@@ -227,7 +218,10 @@ function ProfileCard({ profileData }) {
             <StMbti>{profileData.userInfo.mbti}</StMbti>
             {window.location.pathname === `/otherspage/${params.userId}` &&
             myData.userId !== params.userId ? (
-              <StFollowBtn onClick={changeFollowState}>
+              <StFollowBtn
+                aria-label="버튼을 누르면 팔로우 또는 언팔로우를 할 수 있습니다"
+                onClick={changeFollowState}
+              >
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
                   ? "팔로우"
@@ -272,10 +266,10 @@ function ProfileCard({ profileData }) {
       </StTotalWrap>
       <StFollowGradeWrap>
         {/* <StMbtiFollowFollowingWrap> */}
-        <StFollowWrap
-          aria-label="누르면 팔로워 페이지로 이동합니다"
-          onClick={goFollow}>
-          <StFollowWord>팔로워</StFollowWord>
+        <StFollowWrap onClick={goFollow}>
+          <StFollowWord aria-label="누르면 팔로워 페이지로 이동합니다">
+            팔로워
+          </StFollowWord>
           <StFollowNumber>
             {window.location.pathname === "/mypage"
               ? profileData.userInfo.follower
@@ -376,15 +370,6 @@ const StProfileImg = styled.img`
     height: 57.6px;
   }
 `;
-// const StNoImageWrap = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   @media screen and (max-width: 500px) {
-//     align-items: center;
-//     margin: 0 0 0 16px;
-//   }
-// `;
 const StNoImageWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -450,7 +435,7 @@ const StMbti = styled.div`
   /* line-height: 32px; */
   text-align: left;
   color: #979797;
-  margin-left: 19px;
+  margin-left: 16px;
   @media screen and (max-width: 500px) {
     /* align-items: flex-start; */
     text-align: left;
@@ -652,8 +637,9 @@ const StContent = styled.div`
   @media screen and (max-width: 500px) {
     & > h2 {
       font-size: 24px;
-      line-height: 30px;
-    }
+      margin-top: 8px;
+      margin-bottom: 9px;
+        }
   }
 `;
 const StText = styled.p`
@@ -662,7 +648,7 @@ const StText = styled.p`
   font-weight: 500;
   color: #919191;
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 51px;
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -676,14 +662,11 @@ const StModalContainer = styled.div`
   padding: 25px;
   margin: 10vh 5%;
   width: 90%;
-  height: 620px;
+  height: 75vh;
   box-sizing: border-box;
   z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 530px;
-    margin: 7vh 5%;
   }
 `;
 const StTitle = styled.div`
@@ -695,21 +678,17 @@ const StTitle = styled.div`
   line-height: 34px;
   color: #313131;
   margin-bottom: 6px;
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+  }
 `;
-// const StText = styled.div`
-//   text-align: center;
-//   font-family: "IBM Plex Sans KR";
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 16px;
-//   line-height: 34px;
-//   color: #919191;
-//   margin-bottom: 39px;
-// `;
 const StIconExplainWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 12px;
+  @media screen and (max-width: 500px) {
+    margin: 0 0 0 25px;
+  }
 `;
 const StIcon = styled.img`
   display: flex;
@@ -720,6 +699,8 @@ const StIcon = styled.img`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 7px;
+    height: 84.24px;
+    width: 72px;
   }
 `;
 const StExplain = styled.div`
@@ -728,6 +709,10 @@ const StExplain = styled.div`
   margin-top: 12px;
   margin-left: 42px;
   text-align: start;
+  @media screen and (max-width: 500px) {
+    margin-left: 30px;
+    margin-top: 5px;
+  }
 `;
 const StExplainName = styled.div`
   display: flex;
@@ -737,11 +722,17 @@ const StExplainName = styled.div`
   font-size: 20px;
   line-height: 30px;
   color: #ff6d53;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StExplainContentWrap = styled.div`
   display: flex;
   margin-top: 8px;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    margin: 0px;
+  }
 `;
 const StExplainContent = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -843,14 +834,13 @@ const StGradeModalContainer = styled.div`
   background: white;
   border-radius: 6px;
   padding: 25px;
-  margin: 5vh auto;
+  margin: auto;
   width: 450px;
-  height: 750px;
+  height: 75vh;
+  margin-top: 12.5vh;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 660px;
   }
 `;
 
@@ -858,6 +848,7 @@ const StMBTIBoardImg = styled.img`
   width: 400px;
   margin: 5px 0;
   @media screen and (max-width: 500px) {
-    width: 320px;
+    width: 288px;
+    height: 266px;
   }
 `;
