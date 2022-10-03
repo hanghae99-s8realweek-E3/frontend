@@ -310,7 +310,7 @@ function TestForm() {
             <StTextB>5초만에 알아보는 나의 성향!</StTextB>
             <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
           </StTextWarpB>
-          <StStartBtn onClick={GoToFirstQ}>시작하기</StStartBtn>
+          <StStartBtn onClick={GoToFirstQ} aria-label="테스트시작하기">시작하기</StStartBtn>
           <p
             style={{
               fontSize: "11px",
@@ -331,11 +331,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(-30%) translateY(-45%)"
+                    alt="일번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.one[randomNumber].title}
                 </StQuestionText>
@@ -364,11 +365,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(50%) translateY(-45%)"
+                    alt="이번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.two[randomNumber].title}
                 </StQuestionText>
@@ -397,11 +399,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(180%) translateY(-45%)"
+                    alt="삼번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.three[randomNumber].title}
                 </StQuestionText>
@@ -434,11 +437,12 @@ function TestForm() {
                         ? "translate(260%) translateY(-45%)"
                         : "translate(330%) translateY(-45%)"
                     }
+                    alt="사번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.four[randomNumber].title}
                 </StQuestionText>
