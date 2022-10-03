@@ -52,7 +52,7 @@ function WriteTodoForm() {
       navigate("/modifyprofile");
     }
     //페이지 렌더링 시 textarea안에 커서가 가게끔하기 위하여
-    todoRef.current.focus();
+    // todoRef.current.focus();
   }, []);
 
   // 글자칠때마다 줄 늘어남
@@ -107,20 +107,23 @@ function WriteTodoForm() {
     <>
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
-        <StMbti>{getMbti.mbti}</StMbti>
+        <StMbti tabIndex="0" aria-label="내가 만드는 미믹 내용" >{getMbti.mbti}</StMbti>
         <StLine></StLine>
         <StWriteTodoForm onSubmit={submitTodoData}>
           <StWriteTodoTextArea
             // onInput={handleResizeHeight}
-            ref={todoRef}
-            placeholder="내가만드는 TO DO내용"
+            // ref={todoRef}
+            placeholder="내가 만드는 미믹 내용"
             maxLength={30}
             name="todo"
             value={todo.todo}
             onChange={onChange}
+            tabIndex="1"
           />
           <StTextCount
-            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}>
+            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}
+            aria-label="작성 가능한 남은 글자 수"
+            tabIndex="2">
             {30 - todo.todo.length}
           </StTextCount>
           {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
@@ -130,7 +133,7 @@ function WriteTodoForm() {
             {200 - todo.todo.length}
           </StTextCount>
         </span> */}
-          <Stbutton type="submit">등록하기</Stbutton>
+          <Stbutton tabIndex="3" type="submit" aria-label="누르면 미믹이 등록됩니다">등록하기</Stbutton>
         </StWriteTodoForm>
       </StTotalWrap>
     </>
@@ -148,7 +151,6 @@ const StMbti = styled.span`
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
-  line-height: 32px;
   color: #979797;
 `;
 const StLine = styled.div`
