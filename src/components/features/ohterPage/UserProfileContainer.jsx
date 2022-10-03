@@ -13,6 +13,7 @@ import {
 import LoadingContainer from "../../../utils/loadingState";
 import ProfileCard from "../../common/ProfileCard";
 import { StBackGroundCloseDiv } from "../../interface/styledCommon";
+import ErrorPageContainer from "../error/ErrorPageContainer";
 import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
@@ -116,17 +117,13 @@ function UserProfileContainer() {
             </StTopWrap>
             <StTodoTopLine></StTodoTopLine>
             <StTodoWrap>
-              <StChallengeTodo id="도전" onClick={ChallengeState}>
+              <StChallengeTodo id="도전"aria-label="누르면 도전한 미믹이 나타납니다" onClick={ChallengeState}>
                 도전한 미믹
               </StChallengeTodo>
-              <StSuggestionTodo id="제안" onClick={SuggestState}>
+              <StSuggestionTodo id="제안" aria-label="누르면 제안한 미믹이 나타납니다" onClick={SuggestState}>
                 제안한 미믹
               </StSuggestionTodo>
             </StTodoWrap>
-            {/* <StLineWrap>
-            <StMiddleLeftLine></StMiddleLeftLine>
-            <StMiddleRightLine></StMiddleRightLine>
-          </StLineWrap> */}
 
             <StBottomWrap>
               {selectSort === true ? (
@@ -139,7 +136,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortDate}>
+                        onClick={sortDate}
+                        aria-label="누르면 최신순으로 피드를 정렬합니다">
                         최신순
                       </StDate>
                       <StDateLine />
@@ -147,7 +145,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortComment}>
+                        onClick={sortComment}
+                        aria-label="누르면 댓글순으로 피드를 정렬합니다">
                         댓글순
                       </StComment>
                       <StCommentLine />
@@ -155,7 +154,8 @@ function UserProfileContainer() {
                         style={{
                           color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                         }}
-                        onClick={sortChallenge}>
+                        onClick={sortChallenge}
+                        aria-label="누르면 도전순으로 피드를 정렬합니다">
                         도전순
                       </StChallenge>
                       <StChallengeLine />
@@ -166,7 +166,7 @@ function UserProfileContainer() {
               ) : (
                 <></>
               )}
-              <StToggle onClick={toggleSortPopUp}>
+              <StToggle onClick={toggleSortPopUp} aria-label = "누르면 정렬 최신순 댓글순 도전순 토글이 나타납니다">
                 {sortState}
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
@@ -177,13 +177,6 @@ function UserProfileContainer() {
 
               <StTodayMyCardWrap>
                 {todoTab === "도전" ? (
-                  // card.challengedTodos?.map((it, idx) => (
-                  //   <ChallengeCard
-                  //     id={it.todoId}
-                  //     data={it}
-                  //     key={idx}
-                  //   ></ChallengeCard>
-                  // ))
                   sortState === sortList[0] ? (
                     card.challengedTodos?.map((elem, index) => (
                       <OthersCard data={elem} key={index} />
@@ -228,14 +221,7 @@ function UserProfileContainer() {
                     <></>
                   )
                 ) : (
-                  // card.createdTodo?.map((it, idx) => (
-                  //   <ChallengeCard
-                  //     id={it.todoId}
-                  //     data={it}
-                  //     key={idx}
-                  //   ></ChallengeCard>
-                  // ))
-                  <>다시한번 시도해주세요</>
+                  <ErrorPageContainer/>
                 )}
               </StTodayMyCardWrap>
             </StBottomWrap>

@@ -34,15 +34,15 @@ function LoginSelect() {
 
   return (
     <StTotalWrap>
-      <StTopMsg>
+      <StTopMsg aria-hidden = "true">
         로그인 후 더 많은
         <br /> MBTI를 따라해봐요!
       </StTopMsg>
-      <StHashMsg>#어느누군가 #하루 #따라하기</StHashMsg>
-      <StKakaoLoginBtn onClick={goKakaoLogin}>
+      <StHashMsg aria-hidden = "true">#어느누군가 #하루 #따라하기</StHashMsg>
+      <StKakaoLoginBtn aria-label= "버튼을 누르면 카카오로그인 페이지로 이동합니다" onClick={goKakaoLogin}>
         카카오계정 로그인
       </StKakaoLoginBtn>
-      <StNormalLoginBtn onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
+      <StNormalLoginBtn aria-label= "버튼을 누르면 로그인 페이지로 이동합니다"onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
     </StTotalWrap>
   );
 }
