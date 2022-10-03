@@ -9,90 +9,90 @@ function TestForm() {
   const listMBTI = {
     one: [
       {
-        title: "문제1번-1:길가다가 모르는 사람이 갑자기 말을 걸며 다가온다",
+        title: "길가다가 모르는 사람이 갑자기 말을 걸며 다가온다",
         type: "EvsI",
-        sortA: "E → (음 무슨일이시지?) 대화를 나눈다",
-        sortB: "I → (저 사람 뭐지?) 무시하고 간다",
+        sortA: "(음 무슨일이시지?) 대화를 나눈다",
+        sortB: "(저 사람 뭐지?) 무시하고 간다",
       },
       {
         title:
-          "문제1번-2:테마파크에서 친구들과 신나게 하루종일 놀고 나온 당신. 이제 뭘 할까?",
+          "테마파크에서 친구들과 신나게 하루종일 놀고 나온 당신. 이제 뭘 할까?",
         type: "EvsI",
-        sortA: "E → 아, 잘 놀았다~ 야, 2차 가야지, 2차! 더 놀자!",
-        sortB: "I → 아, 잘 놀았다~ 이제 집가서 혼자 쉬어야지~",
+        sortA: "아, 잘 놀았다~ 야, 2차 가야지, 2차! 더 놀자!",
+        sortB: "아, 잘 놀았다~ 이제 집가서 혼자 쉬어야지~",
       },
       {
-        title: "문제1번-3:곧 있을 할로윈, 친구가 이태원에 가자고 하는데?",
+        title: "곧 있을 할로윈, 친구가 이태원에 가자고 하는데?",
         type: "EvsI",
         sortA:
-          "E → 일단 분장부터 장소랑 놀 곳까지 다 정해서 그날 하루 날잡을 각오한다.",
+          "일단 분장부터 장소랑 놀 곳까지 다 정해서 그날 하루 날잡을 각오한다.",
         sortB:
-          "I → 야, 코로나 아직 안 끝났어.. 집에서 조촐하게 파티하자고 한다.",
+          "야, 코로나 아직 안 끝났어.. 집에서 조촐하게 파티하자고 한다.",
       },
     ],
     two: [
       {
-        title: "문제2번-1:비행기 타기 전 드는 생각?",
+        title: "비행기 타기 전 드는 생각?",
         type: "SvsN",
-        sortA: "S -> 우왕 기내식 맛있겠다~",
-        sortB: "N -> 아 비행기 떨어지면 어떡하냐^^",
+        sortA: "우왕 기내식 맛있겠다~",
+        sortB: "아 비행기 떨어지면 어떡하냐^^",
       },
       {
-        title: "문제2번-2:한강에서 멍때리기 대회에 참가했다.",
+        title: "한강에서 멍때리기 대회에 참가했다.",
         type: "SvsN",
-        sortA: "S -> 크러시 급의 멍때리기를 시전한다.",
-        sortB: "N -> 아, 나는 무리. 계속 온갖 생각이 든다.",
+        sortA: "크러시 급의 멍때리기를 시전한다.",
+        sortB: "아, 나는 무리. 계속 온갖 생각이 든다.",
       },
       {
-        title: "문제2번-3:모르는 번호에서 '자니...?'라는 문자가 왔을 때?",
+        title: "모르는 번호에서 '자니...?'라는 문자가 왔을 때?",
         type: "SvsN",
-        sortA: "S -> 일단 차단부터 박고 간다.",
+        sortA: "일단 차단부터 박고 간다.",
         sortB:
-          "N -> 그동안 스쳐왔던 전남친/전여친의 전화번호를 떠올리다 전화를 걸어본다.",
+          "그동안 스쳐왔던 전남친/전여친의 전화번호를 떠올리다 전화를 걸어본다.",
       },
     ],
     three: [
       {
-        title: "문제3번-1:나 차 사고 났어...",
+        title: "나 차 사고 났어...",
         type: "FvsT",
-        sortA: "F → 진짜? 다친 데는 없고? 괜찮아?",
-        sortB: "T → 보험은 들었어? 사고 보장은 돼?",
+        sortA: "진짜? 다친 데는 없고? 괜찮아?",
+        sortB: "보험은 들었어? 사고 보장은 돼?",
       },
       {
-        title: "문제3번-2:사람들이 너 싫어해!",
+        title: "사람들이 너 싫어해!",
         type: "FvsT",
-        sortA: "F → 왜 날 싫어하지? 내가 뭘 잘못했나..ㅠㅠ",
-        sortB: "T → 알바 아님 어쩔티비? 내 탓이야?",
+        sortA: "왜 날 싫어하지? 내가 뭘 잘못했나..ㅠㅠ",
+        sortB: "알바 아님 어쩔티비? 내 탓이야?",
       },
       {
         title:
-          "문제3번-3:정말 잘한 것 같아! 열심히 안 한 것 같으면서도 다 했네? 재능 있네!",
+          "정말 잘한 것 같아! 열심히 안 한 것 같으면서도 다 했네? 재능 있네!",
         type: "FvsT",
-        sortA: "F → 아니 재능이라니.. 열심히 안했다고? 아닌데ㅠㅠ",
-        sortB: "T → 아, 그치, 열심히 했지.. (하, 겁나 열심히 했다..)",
+        sortA: "아니 재능이라니.. 열심히 안했다고? 아닌데ㅠㅠ",
+        sortB: "아, 그치, 열심히 했지.. (하, 겁나 열심히 했다..)",
       },
     ],
     four: [
       {
         title:
-          "문제4번-1:곧 규제가 풀리는 해외 여행! 슬슬 계획을 세워보려는데..",
+          "곧 규제가 풀리는 해외 여행! 슬슬 계획을 세워보려는데..",
         type: "PvsJ",
         sortA:
-          "P → 아, 믿을 건 내 머리지! 대충 이러면 되겠지 머릿 속으로만 구상한다.",
+          "아, 믿을 건 내 머리지! 대충 이러면 되겠지 머릿 속으로만 구상한다.",
         sortB:
-          "J → 일단 구글 지도, 어스토리 등등 온갖 도구와 정보를 수집해서 나만의 계획을 완성한다.",
+          "일단 구글 지도, 어스토리 등등 온갖 도구와 정보를 수집해서 나만의 계획을 완성한다.",
       },
       {
-        title: "문제4번-2:친구에게 온 카톡, '우리 지금 보자..'라는 내용.",
+        title: "친구에게 온 카톡, '우리 지금 보자..'라는 내용.",
         type: "PvsJ",
-        sortA: "P → '헐, 너무 좋지! 지금 갈게~!' 하고 바로 나갈 준비를 한다.",
-        sortB: "J → 카톡 소리를 들었지만 그런 거 없다. 쿨하게 무시한다.",
+        sortA: "'헐, 너무 좋지! 지금 갈게~!' 하고 바로 나갈 준비를 한다.",
+        sortB: "카톡 소리를 들었지만 그런 거 없다. 쿨하게 무시한다.",
       },
       {
-        title: "문제4번-3:작업해야할 사항이 있는데, 마감이 2주 정도 남아있다.",
+        title: "작업해야할 사항이 있는데, 마감이 2주 정도 남아있다.",
         type: "PvsJ",
-        sortA: "P → 아, 뭐, 2주나 남았네? 아휴~ 널널하지~ 놀자, 놀아~~",
-        sortB: "J → 아, 완전... 2주 밖에 안 남았네; 언제 다하냐;",
+        sortA: "아, 뭐, 2주나 남았네? 아휴~ 널널하지~ 놀자, 놀아~~",
+        sortB: "아, 완전... 2주 밖에 안 남았네; 언제 다하냐;",
       },
     ],
   };
@@ -232,6 +232,13 @@ function TestForm() {
 
   // process.env.PUBLIC_URL + `/images/TestThumbnail.svg`
 
+  const onClickShared = () => {
+    navigator.share({
+      title:"mbti",
+      url:"",
+    });
+  }
+
   const onClickGoToMain = (e) => {
     setQuestionState(0);
     setBtnValue("");
@@ -267,12 +274,12 @@ function TestForm() {
               <StTextAA>MBTI </StTextAA>테스트
             </StTextAAA>
           </StTextWarpA>
-          <img src={process.env.PUBLIC_URL + `/images/TestThumbnail.svg`} />
+          <StStartImage src={process.env.PUBLIC_URL + `/images/TestThumbnail.svg`} alt="초간단 MBTI 테스트! 5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?"/>
           <StTextWarpB>
             <StTextB>5초만에 알아보는 나의 성향!</StTextB>
             <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
           </StTextWarpB>
-          <StButtonA onClick={GoToFirstQ}>시작하기</StButtonA>
+          <StStartBtn onClick={GoToFirstQ}>시작하기</StStartBtn>
         </div>
       ) : (
         <div>
@@ -382,7 +389,7 @@ function TestForm() {
                   .slice()
                   .map((elem, index) => {
                   return  <div key={index}>
-                            <img src={elem.image}/>
+                            <StmbtiImage src={elem.image} />
                             <Stmbti>{elem.mbti}</Stmbti>
                             <StmbtiTitle>{elem.mbtiTitle}</StmbtiTitle>
                             <StLine></StLine>
@@ -391,7 +398,7 @@ function TestForm() {
                   })}
               </h3>
               <StLastBtnWarp>
-                <StLastBtn onClick={onClickGoToMain}>테스트 공유하기</StLastBtn>
+                <StLastBtn >테스트 공유하기</StLastBtn>
                 <StLastBtn onClick={onClickGoToMain}>테스트 다시하기</StLastBtn>
               </StLastBtnWarp>
             </div>
@@ -413,6 +420,9 @@ const StOutLineDiv = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StChoiceBtnDiv = styled.div`
@@ -420,10 +430,21 @@ const StChoiceBtnDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
-const StQuestionContainer = styled.div``;
+const StQuestionContainer = styled.div`
+/* background-color:tomato; */
+`;
 
-const StButtonA = styled.button`
+const StStartImage = styled.img`
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+  }
+`
+
+const StStartBtn = styled.button`
   background: #ff6d53;
   border-radius: 6px;
   border: none;
@@ -435,6 +456,9 @@ const StButtonA = styled.button`
   font-size: 22px;
   line-height: 32px;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 330px;
+  }
 `;
 
 const StTextA = styled.div`
@@ -442,6 +466,9 @@ const StTextA = styled.div`
   font-weight: 400;
   font-size: 47px;
   line-height: 64px;
+  @media only screen and (max-width: 500px) {
+    
+  }
 `;
 const StTextAA = styled.span`
   color: #ff6d53;
@@ -500,13 +527,22 @@ const StQuestionText = styled.div`
   line-height: 36px;
   margin: 10px auto 50px auto;
   height: 150px;
+  @media only screen and (max-width: 500px) {
+    font-size: 20px;
+    width:300px;
+    height:100px;
+  }
 `;
 
 const StWarpStChoiceBtn = styled.div`
+  /* background-color:green; */
   display: flex;
   flex-direction: row;
   padding-left: 20px;
   padding-right: 20px;
+  @media only screen and (max-width: 500px) {
+
+  }
 `;
 
 const StChoiceBtn = styled.button`
@@ -523,6 +559,14 @@ const StChoiceBtn = styled.button`
       color: white;
     }
   }
+  @media only screen and (max-width: 500px)  {
+    width: 150px;
+    height:30vh;
+    :hover{
+      color:none
+    }
+  }
+
 `;
 
 const StChoice = styled.div`
@@ -536,6 +580,9 @@ const StChoice = styled.div`
   margin: 20px auto 70px auto;
   color: #ff6d53;
   pointer-events: none;
+  @media only screen and (max-width: 500px) {
+  
+}
 `;
 
 const StChoiceText = styled.div`
@@ -546,6 +593,10 @@ const StChoiceText = styled.div`
   line-height: 30px;
   margin: 20px auto 70px auto;
   pointer-events: none;
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+}
+
 `;
 
 const Stmbti = styled.div`
@@ -556,6 +607,9 @@ const Stmbti = styled.div`
   line-height: 52px;
   color: #FF6D53;
   margin: auto;
+  @media only screen and (max-width: 500px) {
+    font-size: 40px;
+}
 
 `
 const StmbtiTitle = styled.div`
@@ -565,6 +619,10 @@ font-weight: 500;
 font-size: 25px;
 line-height: 38px;
 margin :auto;
+@media only screen and (max-width: 500px) {
+  font-size: 20px;
+
+}
 
 `
 
@@ -576,6 +634,9 @@ right: 26px;
 top: 655px;
 background: #C7C7C7;
 transform: matrix(1, 0, 0, -1, 0, 0);
+@media only screen and (max-width: 500px) {
+  width:300px;
+}
 `
 
 
@@ -588,6 +649,11 @@ line-height: 32px;
 letter-spacing: -0.05em;
 width:310px;
 margin:auto;
+@media only screen and (max-width: 500px) {
+  font-size: 16px;
+  line-height: 20px;
+  width:280px;
+}
 `
 
 const StLastBtnWarp = styled.div`
@@ -596,6 +662,10 @@ const StLastBtnWarp = styled.div`
   flex-direction:row;
   margin: auto;
   justify-content: space-evenly;
+  @media only screen and (max-width: 500px) {
+    width:200px;
+    gap:20px;
+}
 
   
 `
@@ -614,8 +684,7 @@ gap: 14.25px;
 border: 2px solid #FF6D53;
 border-radius: 56.9832px;
 flex: none;
-order: 0;
-flex-grow: 0;
+
 cursor: pointer;
 transition: ease 0.2s;
   :hover {
@@ -624,6 +693,15 @@ transition: ease 0.2s;
       color: white;
     }
   }
+  @media only screen and (max-width: 500px) {
+    padding:8px;
+}
 `
 
-
+const StmbtiImage = styled.img`
+  width:80%;
+  height:80%;
+  @media only screen and (max-width: 500px) {
+  
+}
+`
