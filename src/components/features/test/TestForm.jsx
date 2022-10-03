@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 function TestForm() {
@@ -9,90 +9,90 @@ function TestForm() {
   const listMBTI = {
     one: [
       {
-        title: "문제1번-1:길가다가 모르는 사람이 갑자기 말을 걸며 다가온다",
+        title: "길가다가 모르는 사람이 갑자기 말을 걸며 다가온다",
         type: "EvsI",
-        sortA: "E → (음 무슨일이시지?) 대화를 나눈다",
-        sortB: "I → (저 사람 뭐지?) 무시하고 간다",
+        sortA: "(음 무슨일이시지?) 대화를 나눈다",
+        sortB: "(저 사람 뭐지?) 무시하고 간다",
       },
       {
         title:
-          "문제1번-2:테마파크에서 친구들과 신나게 하루종일 놀고 나온 당신. 이제 뭘 할까?",
+          "테마파크에서 친구들과 신나게 하루종일 놀고 나온 당신. 이제 뭘 할까?",
         type: "EvsI",
-        sortA: "E → 아, 잘 놀았다~ 야, 2차 가야지, 2차! 더 놀자!",
-        sortB: "I → 아, 잘 놀았다~ 이제 집가서 혼자 쉬어야지~",
+        sortA: "아, 잘 놀았다~ 야, 2차 가야지, 2차! 더 놀자!",
+        sortB: "아, 잘 놀았다~ 이제 집가서 혼자 쉬어야지~",
       },
       {
-        title: "문제1번-3:곧 있을 할로윈, 친구가 이태원에 가자고 하는데?",
+        title: "곧 있을 할로윈, 친구가 이태원에 가자고 하는데?",
         type: "EvsI",
         sortA:
-          "E → 일단 분장부터 장소랑 놀 곳까지 다 정해서 그날 하루 날잡을 각오한다.",
+          "일단 분장부터 장소랑 놀 곳까지 다 정해서 그날 하루 날잡을 각오한다.",
         sortB:
-          "I → 야, 코로나 아직 안 끝났어.. 집에서 조촐하게 파티하자고 한다.",
+          "야, 코로나 아직 안 끝났어.. 집에서 조촐하게 파티하자고 한다.",
       },
     ],
     two: [
       {
-        title: "문제2번-1:비행기 타기 전 드는 생각?",
+        title: "비행기 타기 전 드는 생각?",
         type: "SvsN",
-        sortA: "S -> 우왕 기내식 맛있겠다~",
-        sortB: "N -> 아 비행기 떨어지면 어떡하냐^^",
+        sortA: "우왕 기내식 맛있겠다~",
+        sortB: "아 비행기 떨어지면 어떡하냐^^",
       },
       {
-        title: "문제2번-2:한강에서 멍때리기 대회에 참가했다.",
+        title: "한강에서 멍때리기 대회에 참가했다.",
         type: "SvsN",
-        sortA: "S -> 크러시 급의 멍때리기를 시전한다.",
-        sortB: "N -> 아, 나는 무리. 계속 온갖 생각이 든다.",
+        sortA: "크러시 급의 멍때리기를 시전한다.",
+        sortB: "아, 나는 무리. 계속 온갖 생각이 든다.",
       },
       {
-        title: "문제2번-3:모르는 번호에서 '자니...?'라는 문자가 왔을 때?",
+        title: "모르는 번호에서 '자니...?'라는 문자가 왔을 때?",
         type: "SvsN",
-        sortA: "S -> 일단 차단부터 박고 간다.",
+        sortA: "일단 차단부터 박고 간다.",
         sortB:
-          "N -> 그동안 스쳐왔던 전남친/전여친의 전화번호를 떠올리다 전화를 걸어본다.",
+          "그동안 스쳐왔던 전남친/전여친의 전화번호를 떠올리다 전화를 걸어본다.",
       },
     ],
     three: [
       {
-        title: "문제3번-1:나 차 사고 났어...",
+        title: "나 차 사고 났어...",
         type: "FvsT",
-        sortA: "F → 진짜? 다친 데는 없고? 괜찮아?",
-        sortB: "T → 보험은 들었어? 사고 보장은 돼?",
+        sortA: "진짜? 다친 데는 없고? 괜찮아?",
+        sortB: "보험은 들었어? 사고 보장은 돼?",
       },
       {
-        title: "문제3번-2:사람들이 너 싫어해!",
+        title: "사람들이 너 싫어해!",
         type: "FvsT",
-        sortA: "F → 왜 날 싫어하지? 내가 뭘 잘못했나..ㅠㅠ",
-        sortB: "T → 알바 아님 어쩔티비? 내 탓이야?",
+        sortA: "왜 날 싫어하지? 내가 뭘 잘못했나..ㅠㅠ",
+        sortB: "알바 아님 어쩔티비? 내 탓이야?",
       },
       {
         title:
-          "문제3번-3:정말 잘한 것 같아! 열심히 안 한 것 같으면서도 다 했네? 재능 있네!",
+          "정말 잘한 것 같아! 열심히 안 한 것 같으면서도 다 했네? 재능 있네!",
         type: "FvsT",
-        sortA: "F → 아니 재능이라니.. 열심히 안했다고? 아닌데ㅠㅠ",
-        sortB: "T → 아, 그치, 열심히 했지.. (하, 겁나 열심히 했다..)",
+        sortA: "아니 재능이라니.. 열심히 안했다고? 아닌데ㅠㅠ",
+        sortB: "아, 그치, 열심히 했지.. (하, 겁나 열심히 했다..)",
       },
     ],
     four: [
       {
         title:
-          "문제4번-1:곧 규제가 풀리는 해외 여행! 슬슬 계획을 세워보려는데..",
+          "곧 규제가 풀리는 해외 여행! 슬슬 계획을 세워보려는데..",
         type: "PvsJ",
         sortA:
-          "P → 아, 믿을 건 내 머리지! 대충 이러면 되겠지 머릿 속으로만 구상한다.",
+          "아, 믿을 건 내 머리지! 대충 이러면 되겠지 머릿 속으로만 구상한다.",
         sortB:
-          "J → 일단 구글 지도, 어스토리 등등 온갖 도구와 정보를 수집해서 나만의 계획을 완성한다.",
+          "일단 구글 지도, 어스토리 등등 온갖 도구와 정보를 수집해서 나만의 계획을 완성한다.",
       },
       {
-        title: "문제4번-2:친구에게 온 카톡, '우리 지금 보자..'라는 내용.",
+        title: "친구에게 온 카톡, '우리 지금 보자..'라는 내용.",
         type: "PvsJ",
-        sortA: "P → '헐, 너무 좋지! 지금 갈게~!' 하고 바로 나갈 준비를 한다.",
-        sortB: "J → 카톡 소리를 들었지만 그런 거 없다. 쿨하게 무시한다.",
+        sortA: "'헐, 너무 좋지! 지금 갈게~!' 하고 바로 나갈 준비를 한다.",
+        sortB: "카톡 소리를 들었지만 그런 거 없다. 쿨하게 무시한다.",
       },
       {
-        title: "문제4번-3:작업해야할 사항이 있는데, 마감이 2주 정도 남아있다.",
+        title: "작업해야할 사항이 있는데, 마감이 2주 정도 남아있다.",
         type: "PvsJ",
-        sortA: "P → 아, 뭐, 2주나 남았네? 아휴~ 널널하지~ 놀자, 놀아~~",
-        sortB: "J → 아, 완전... 2주 밖에 안 남았네; 언제 다하냐;",
+        sortA: "아, 뭐, 2주나 남았네? 아휴~ 널널하지~ 놀자, 놀아~~",
+        sortB: "아, 완전... 2주 밖에 안 남았네; 언제 다하냐;",
       },
     ],
   };
@@ -101,78 +101,113 @@ function TestForm() {
     {
       number: 1,
       mbti: "ISFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"용감한 수호자",
+      content: "주변 사람을 보호할 준비가 되어 있는 헌신적이고 따뜻한 수호자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISFJ.svg`
     },
     {
       number: 2,
       mbti: "ISTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"현실주의자",
+      content: "사실을 중시하는 믿음직한 현실주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISTJ.svg`    
     },
     {
       number: 3,
       mbti: "INFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"옹호자",
+      content: "차분하고 신비한 분위기를 풍기는 성격으로, 다른 사람에게 의욕을 불어넣는 이상주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INFJ.svg`
     },
     {
       number: 4,
       mbti: "INTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"전략가",
+      content: "모든 일에 대해 계획을 세우며 상상력이 풍부한 전략가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INTJ.svg`
     },
     {
       number: 5,
       mbti: "ISTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"장인",
+      content: "대담하면서도 현실적인 성격으로, 모든 종류의 도구를 자유자재로 다루는 장인입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISTP.svg`
     },
     {
       number: 6,
       mbti: "ISFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"모험가",
+      content: "항상 새로운 경험을 추구하는 유연하고 매력 넘치는 예술가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISFP.svg`
     },
     {
       number: 7,
       mbti: "INFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"중재자",
+      content: "항상 선을 행할 준비가 되어 있는 부드럽고 친절한 이타주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INFP.svg`
     },
     {
       number: 8,
       mbti: "INTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"논리술사",
+      content: "지식을 끝없이 갈망하는 혁신적인 발명가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INTP.svg`
     },
     {
       number: 9,
       mbti: "ESTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"사업가",
+      content: "위험을 기꺼이 감수하는 성격으로, 영리하고 에너지 넘치며 관찰력이 뛰어난 사업가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESTP.svg`
     },
     {
       number: 10,
       mbti: "ESFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"연예인",
+      content: "즉흥적이고 넘치는 에너지와 열정으로 주변 사람을 즐겁게 하는 연예인입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESFP.svg`
     },
     {
       number: 11,
       mbti: "ENFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"활동가",
+      content: "열정적이고 창의적인 성격으로, 긍정적으로 삶을 바라보는 사교적이면서도 자유로운 영혼입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENFP.svg`
     },
     {
       number: 12,
       mbti: "ENTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"변론가",
+      content: "지적 도전을 즐기는 영리하고 호기심이 많은 사색가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENTP.svg`
     },
     {
       number: 13,
       mbti: "ESTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"경영자",
+      content: "사물과 사람을 관리하는 데 뛰어난 능력을 지닌 경영자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESTJ.svg`
     },
-    { number: 14, mbti: "ESFJ", content: "설명\n설명\n설명\n설명" },
+    { number: 14, 
+      mbti: "ESFJ", 
+      mbtiTitle:"집정관",
+      content: "배려심이 넘치고 항상 다른 사람을 도울 준비가 되어 있는 성격으로, 인기가 많고 사교성 높은 마당발입니다.", 
+      image:process.env.PUBLIC_URL + `/images/testImages/ESFJ.svg`
+    },
     {
       number: 15,
       mbti: "ENFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"선도자",
+      content: "청중을 사로잡고 의욕을 불어넣는 카리스마 넘치는 지도자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENFJ.svg`
     },
     {
       number: 16,
       mbti: "ENTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"통솔자",
+      content: "항상 문제 해결 방법을 찾아내는 성격으로, 대담하고 상상력이 풍부하며 의지가 강력한 지도자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENTJ.svg`
     },
   ];
   // console.log(resultMBTI.mbti);
@@ -197,6 +232,13 @@ function TestForm() {
 
   // process.env.PUBLIC_URL + `/images/TestThumbnail.svg`
 
+  const onClickShared = () => {
+    navigator.share({
+      title:"mbti",
+      url:"",
+    });
+  }
+
   const onClickGoToMain = (e) => {
     setQuestionState(0);
     setBtnValue("");
@@ -220,71 +262,6 @@ function TestForm() {
   // console.log(btnValue);
   // console.log(resultMBTI.filter((x) => x.mbti === btnValue));
 
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-  //   script.async = true;
-
-  //   document.body.appendChild(script);
-
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   createKakaoButton();
-  // }, []);
-
-  // const createKakaoButton = () => {
-  //   // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
-  //   if (window.Kakao) {
-  //     const kakao = window.Kakao;
-
-  //     // 중복 initialization 방지
-  //     if (!kakao.isInitialized()) {
-  //       // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-  //       kakao.init(process.env.REACT_APP_KAKAO_KEY);
-  //     }
-
-  //     kakao.Link.createDefaultButton({
-  //       // Render 부분 id=kakao-link-btn 을 찾아 그부분에 렌더링을 합니다
-  //       container: "#kakao-link-btn",
-  //       objectType: "feed",
-  //       content: {
-  //         title: "타이틀",
-  //         description: "#리액트 #카카오 #공유버튼",
-  //         imageUrl: "IMAGE_URL", // i.e. process.env.FETCH_URL + '/logo.png'
-  //         link: {
-  //           mobileWebUrl: window.location.href,
-  //           webUrl: window.location.href,
-  //         },
-  //       },
-  //       social: {
-  //         likeCount: 77,
-  //         commentCount: 55,
-  //         sharedCount: 333,
-  //       },
-  //       buttons: [
-  //         {
-  //           title: "웹으로 보기",
-  //           link: {
-  //             mobileWebUrl: window.location.href,
-  //             webUrl: window.location.href,
-  //           },
-  //         },
-  //         {
-  //           title: "앱으로 보기",
-  //           link: {
-  //             mobileWebUrl: window.location.href,
-  //             webUrl: window.location.href,
-  //           },
-  //         },
-  //       ],
-  //     });
-  //   }
-  // };
-
   return (
     <StOutLineDiv>
       {questionState === 0 ? (
@@ -297,12 +274,12 @@ function TestForm() {
               <StTextAA>MBTI </StTextAA>테스트
             </StTextAAA>
           </StTextWarpA>
-          <img src={process.env.PUBLIC_URL + `/images/TestThumbnail.svg`} />
+          <StStartImage src={process.env.PUBLIC_URL + `/images/TestThumbnail.svg`} alt="초간단 MBTI 테스트! 5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?"/>
           <StTextWarpB>
             <StTextB>5초만에 알아보는 나의 성향!</StTextB>
             <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
           </StTextWarpB>
-          <StButtonA onClick={GoToFirstQ}>시작하기</StButtonA>
+          <StStartBtn onClick={GoToFirstQ}>시작하기</StStartBtn>
         </div>
       ) : (
         <div>
@@ -404,23 +381,26 @@ function TestForm() {
             </StQuestionContainer>
           ) : questionState === 5 ? (
             <div>
-              <h1>당신의 MBTI는</h1>
-              <h2>{btnValue}</h2>
+            
+              {/* <h2>{btnValue}</h2> */}
               <h3>
                 {resultMBTI
                   .filter((x) => x.mbti === btnValue)
                   .slice()
-                  .map((elem) => {
-                    return <div>{elem.content}</div>;
+                  .map((elem, index) => {
+                  return  <div key={index}>
+                            <StmbtiImage src={elem.image} />
+                            <Stmbti>{elem.mbti}</Stmbti>
+                            <StmbtiTitle>{elem.mbtiTitle}</StmbtiTitle>
+                            <StLine></StLine>
+                            <StContent  >{elem.content}</StContent>
+                          </div>;
                   })}
               </h3>
-              <button onClick={onClickGoToMain}>다시하기</button>
-              <div>
-                {/* Kakao share button */}
-                <button id="kakao-link-btn">
-                  <img src="/icons/kakao.png" alt="kakao-share-icon" />
-                </button>
-              </div>
+              <StLastBtnWarp>
+                <StLastBtn >테스트 공유하기</StLastBtn>
+                <StLastBtn onClick={onClickGoToMain}>테스트 다시하기</StLastBtn>
+              </StLastBtnWarp>
             </div>
           ) : (
             <></>
@@ -440,6 +420,9 @@ const StOutLineDiv = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
 
 const StChoiceBtnDiv = styled.div`
@@ -447,10 +430,21 @@ const StChoiceBtnDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media only screen and (max-width: 500px) {
+    width: 360px;
+  }
 `;
-const StQuestionContainer = styled.div``;
+const StQuestionContainer = styled.div`
+/* background-color:tomato; */
+`;
 
-const StButtonA = styled.button`
+const StStartImage = styled.img`
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+  }
+`
+
+const StStartBtn = styled.button`
   background: #ff6d53;
   border-radius: 6px;
   border: none;
@@ -462,6 +456,9 @@ const StButtonA = styled.button`
   font-size: 22px;
   line-height: 32px;
   cursor: pointer;
+  @media only screen and (max-width: 500px) {
+    width: 330px;
+  }
 `;
 
 const StTextA = styled.div`
@@ -469,6 +466,9 @@ const StTextA = styled.div`
   font-weight: 400;
   font-size: 47px;
   line-height: 64px;
+  @media only screen and (max-width: 500px) {
+    
+  }
 `;
 const StTextAA = styled.span`
   color: #ff6d53;
@@ -527,13 +527,22 @@ const StQuestionText = styled.div`
   line-height: 36px;
   margin: 10px auto 50px auto;
   height: 150px;
+  @media only screen and (max-width: 500px) {
+    font-size: 20px;
+    width:300px;
+    height:100px;
+  }
 `;
 
 const StWarpStChoiceBtn = styled.div`
+  /* background-color:green; */
   display: flex;
   flex-direction: row;
   padding-left: 20px;
   padding-right: 20px;
+  @media only screen and (max-width: 500px) {
+
+  }
 `;
 
 const StChoiceBtn = styled.button`
@@ -550,6 +559,14 @@ const StChoiceBtn = styled.button`
       color: white;
     }
   }
+  @media only screen and (max-width: 500px)  {
+    width: 150px;
+    height:30vh;
+    :hover{
+      color:none
+    }
+  }
+
 `;
 
 const StChoice = styled.div`
@@ -563,6 +580,9 @@ const StChoice = styled.div`
   margin: 20px auto 70px auto;
   color: #ff6d53;
   pointer-events: none;
+  @media only screen and (max-width: 500px) {
+  
+}
 `;
 
 const StChoiceText = styled.div`
@@ -573,4 +593,115 @@ const StChoiceText = styled.div`
   line-height: 30px;
   margin: 20px auto 70px auto;
   pointer-events: none;
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+}
+
 `;
+
+const Stmbti = styled.div`
+  font-family: 'Gmarket Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 52px;
+  color: #FF6D53;
+  margin: auto;
+  @media only screen and (max-width: 500px) {
+    font-size: 40px;
+}
+
+`
+const StmbtiTitle = styled.div`
+  font-family: 'IBM Plex Sans KR';
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+line-height: 38px;
+margin :auto;
+@media only screen and (max-width: 500px) {
+  font-size: 20px;
+
+}
+
+`
+
+const StLine = styled.hr`
+width: 400px;
+height: 1px;
+left: 24px;
+right: 26px;
+top: 655px;
+background: #C7C7C7;
+transform: matrix(1, 0, 0, -1, 0, 0);
+@media only screen and (max-width: 500px) {
+  width:300px;
+}
+`
+
+
+const StContent = styled.div`
+font-family: 'IBM Plex Sans KR';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 32px;
+letter-spacing: -0.05em;
+width:310px;
+margin:auto;
+@media only screen and (max-width: 500px) {
+  font-size: 16px;
+  line-height: 20px;
+  width:280px;
+}
+`
+
+const StLastBtnWarp = styled.div`
+  width:400px;
+  display:flex;
+  flex-direction:row;
+  margin: auto;
+  justify-content: space-evenly;
+  @media only screen and (max-width: 500px) {
+    width:200px;
+    gap:20px;
+}
+
+  
+`
+
+const StLastBtn = styled.button`
+box-sizing: border-box;
+
+justify-content: center;
+align-items: center;
+padding: 7.12291px 28.4916px;
+gap: 14.25px;
+
+  background: #FFFFFF;
+/* Scarlet */
+
+border: 2px solid #FF6D53;
+border-radius: 56.9832px;
+flex: none;
+
+cursor: pointer;
+transition: ease 0.2s;
+  :hover {
+    background-color: #ff6d53;
+    & > div {
+      color: white;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    padding:8px;
+}
+`
+
+const StmbtiImage = styled.img`
+  width:80%;
+  height:80%;
+  @media only screen and (max-width: 500px) {
+  
+}
+`
