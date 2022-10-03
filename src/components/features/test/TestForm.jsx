@@ -227,7 +227,6 @@ function TestForm() {
       image: process.env.PUBLIC_URL + `/images/testImages/ENTJ.svg`,
     },
   ];
-  // console.log(resultMBTI.mbti);
 
   const GoToFirstQ = (e) => {
     e.preventDefault();
@@ -237,21 +236,22 @@ function TestForm() {
       return setQuestionState(1);
     }
   };
-  // console.log(questionState);
 
   const onClickSaveValue = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
     const { value } = e.target;
     setBtnValue(btnValue + value);
     setQuestionState(questionState + 1);
   };
 
-  // process.env.PUBLIC_URL + `/images/TestThumbnail.svg`
 
   const onClickShared = () => {
-    navigator.share({
-      title: "mbti",
+    if (window.navigator.platform === "MacIntel") {
+      return alert("죄송합니다, 해당 플랫폼은 공유 기능을 지원하지 않습니다")
+    }
+    window.navigator.share({
+      title: "초간단 MBTI 테스트!",
+      text:"5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?",
       url: "",
     });
   };
@@ -260,24 +260,6 @@ function TestForm() {
     setQuestionState(0);
     setBtnValue("");
   };
-
-  // const onSubmitGoToNextQuestion = (e) => {
-  //   e.preventDefault();
-  //   if (questionState === 1) {
-  //     return setQuestionState(2);
-  //   } else if (questionState === 2") {
-  //     return setQuestionState("3");
-  //   } else if (questionState === "3") {
-  //     return setQuestionState("4");
-  //   } else if (questionState === "4") {
-  //     return setQuestionState("5");
-  //   } else if (questionState === "5") {
-  //     return setQuestionState("0");
-  //   }
-  // };
-  console.log(questionState);
-  // console.log(btnValue);
-  // console.log(resultMBTI.filter((x) => x.mbti === btnValue));
 
   return (
     <StOutLineDiv>
@@ -459,7 +441,7 @@ function TestForm() {
                   })}
               </h3>
               <StLastBtnWarp>
-                <StLastBtn>테스트 공유하기</StLastBtn>
+                <StLastBtn onClick={onClickShared}>테스트 공유하기</StLastBtn>
                 <StLastBtn onClick={onClickGoToMain}>테스트 다시하기</StLastBtn>
               </StLastBtnWarp>
             </div>
