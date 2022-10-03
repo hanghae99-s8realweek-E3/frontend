@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 function TestForm() {
@@ -101,78 +101,113 @@ function TestForm() {
     {
       number: 1,
       mbti: "ISFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"용감한 수호자",
+      content: "주변 사람을 보호할 준비가 되어 있는 헌신적이고 따뜻한 수호자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISFJ.svg`
     },
     {
       number: 2,
       mbti: "ISTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"현실주의자",
+      content: "사실을 중시하는 믿음직한 현실주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISTJ.svg`    
     },
     {
       number: 3,
       mbti: "INFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"옹호자",
+      content: "차분하고 신비한 분위기를 풍기는 성격으로, 다른 사람에게 의욕을 불어넣는 이상주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INFJ.svg`
     },
     {
       number: 4,
       mbti: "INTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"전략가",
+      content: "모든 일에 대해 계획을 세우며 상상력이 풍부한 전략가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INTJ.svg`
     },
     {
       number: 5,
       mbti: "ISTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"장인",
+      content: "대담하면서도 현실적인 성격으로, 모든 종류의 도구를 자유자재로 다루는 장인입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISTP.svg`
     },
     {
       number: 6,
       mbti: "ISFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"모험가",
+      content: "항상 새로운 경험을 추구하는 유연하고 매력 넘치는 예술가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ISFP.svg`
     },
     {
       number: 7,
       mbti: "INFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"중재자",
+      content: "항상 선을 행할 준비가 되어 있는 부드럽고 친절한 이타주의자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INFP.svg`
     },
     {
       number: 8,
       mbti: "INTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"논리술사",
+      content: "지식을 끝없이 갈망하는 혁신적인 발명가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/INTP.svg`
     },
     {
       number: 9,
       mbti: "ESTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"사업가",
+      content: "위험을 기꺼이 감수하는 성격으로, 영리하고 에너지 넘치며 관찰력이 뛰어난 사업가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESTP.svg`
     },
     {
       number: 10,
       mbti: "ESFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"연예인",
+      content: "즉흥적이고 넘치는 에너지와 열정으로 주변 사람을 즐겁게 하는 연예인입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESFP.svg`
     },
     {
       number: 11,
       mbti: "ENFP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"활동가",
+      content: "열정적이고 창의적인 성격으로, 긍정적으로 삶을 바라보는 사교적이면서도 자유로운 영혼입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENFP.svg`
     },
     {
       number: 12,
       mbti: "ENTP",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"변론가",
+      content: "지적 도전을 즐기는 영리하고 호기심이 많은 사색가입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENTP.svg`
     },
     {
       number: 13,
       mbti: "ESTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"경영자",
+      content: "사물과 사람을 관리하는 데 뛰어난 능력을 지닌 경영자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ESTJ.svg`
     },
-    { number: 14, mbti: "ESFJ", content: "설명\n설명\n설명\n설명" },
+    { number: 14, 
+      mbti: "ESFJ", 
+      mbtiTitle:"집정관",
+      content: "배려심이 넘치고 항상 다른 사람을 도울 준비가 되어 있는 성격으로, 인기가 많고 사교성 높은 마당발입니다.", 
+      image:process.env.PUBLIC_URL + `/images/testImages/ESFJ.svg`
+    },
     {
       number: 15,
       mbti: "ENFJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"선도자",
+      content: "청중을 사로잡고 의욕을 불어넣는 카리스마 넘치는 지도자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENFJ.svg`
     },
     {
       number: 16,
       mbti: "ENTJ",
-      content: "설명\n설명\n설명\n설명",
+      mbtiTitle:"통솔자",
+      content: "항상 문제 해결 방법을 찾아내는 성격으로, 대담하고 상상력이 풍부하며 의지가 강력한 지도자입니다.",
+      image:process.env.PUBLIC_URL + `/images/testImages/ENTJ.svg`
     },
   ];
   // console.log(resultMBTI.mbti);
@@ -219,71 +254,6 @@ function TestForm() {
   console.log(questionState);
   // console.log(btnValue);
   // console.log(resultMBTI.filter((x) => x.mbti === btnValue));
-
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-  //   script.async = true;
-
-  //   document.body.appendChild(script);
-
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   createKakaoButton();
-  // }, []);
-
-  // const createKakaoButton = () => {
-  //   // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
-  //   if (window.Kakao) {
-  //     const kakao = window.Kakao;
-
-  //     // 중복 initialization 방지
-  //     if (!kakao.isInitialized()) {
-  //       // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-  //       kakao.init(process.env.REACT_APP_KAKAO_KEY);
-  //     }
-
-  //     kakao.Link.createDefaultButton({
-  //       // Render 부분 id=kakao-link-btn 을 찾아 그부분에 렌더링을 합니다
-  //       container: "#kakao-link-btn",
-  //       objectType: "feed",
-  //       content: {
-  //         title: "타이틀",
-  //         description: "#리액트 #카카오 #공유버튼",
-  //         imageUrl: "IMAGE_URL", // i.e. process.env.FETCH_URL + '/logo.png'
-  //         link: {
-  //           mobileWebUrl: window.location.href,
-  //           webUrl: window.location.href,
-  //         },
-  //       },
-  //       social: {
-  //         likeCount: 77,
-  //         commentCount: 55,
-  //         sharedCount: 333,
-  //       },
-  //       buttons: [
-  //         {
-  //           title: "웹으로 보기",
-  //           link: {
-  //             mobileWebUrl: window.location.href,
-  //             webUrl: window.location.href,
-  //           },
-  //         },
-  //         {
-  //           title: "앱으로 보기",
-  //           link: {
-  //             mobileWebUrl: window.location.href,
-  //             webUrl: window.location.href,
-  //           },
-  //         },
-  //       ],
-  //     });
-  //   }
-  // };
 
   return (
     <StOutLineDiv>
@@ -404,23 +374,26 @@ function TestForm() {
             </StQuestionContainer>
           ) : questionState === 5 ? (
             <div>
-              <h1>당신의 MBTI는</h1>
-              <h2>{btnValue}</h2>
+            
+              {/* <h2>{btnValue}</h2> */}
               <h3>
                 {resultMBTI
                   .filter((x) => x.mbti === btnValue)
                   .slice()
-                  .map((elem) => {
-                    return <div>{elem.content}</div>;
+                  .map((elem, index) => {
+                  return  <div key={index}>
+                            <img src={elem.image}/>
+                            <Stmbti>{elem.mbti}</Stmbti>
+                            <StmbtiTitle>{elem.mbtiTitle}</StmbtiTitle>
+                            <StLine></StLine>
+                            <StContent  >{elem.content}</StContent>
+                          </div>;
                   })}
               </h3>
-              <button onClick={onClickGoToMain}>다시하기</button>
-              <div>
-                {/* Kakao share button */}
-                <button id="kakao-link-btn">
-                  <img src="/icons/kakao.png" alt="kakao-share-icon" />
-                </button>
-              </div>
+              <StLastBtnWarp>
+                <StLastBtn onClick={onClickGoToMain}>테스트 공유하기</StLastBtn>
+                <StLastBtn onClick={onClickGoToMain}>테스트 다시하기</StLastBtn>
+              </StLastBtnWarp>
             </div>
           ) : (
             <></>
@@ -574,3 +547,83 @@ const StChoiceText = styled.div`
   margin: 20px auto 70px auto;
   pointer-events: none;
 `;
+
+const Stmbti = styled.div`
+  font-family: 'Gmarket Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 52px;
+  color: #FF6D53;
+  margin: auto;
+
+`
+const StmbtiTitle = styled.div`
+  font-family: 'IBM Plex Sans KR';
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+line-height: 38px;
+margin :auto;
+
+`
+
+const StLine = styled.hr`
+width: 400px;
+height: 1px;
+left: 24px;
+right: 26px;
+top: 655px;
+background: #C7C7C7;
+transform: matrix(1, 0, 0, -1, 0, 0);
+`
+
+
+const StContent = styled.div`
+font-family: 'IBM Plex Sans KR';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 32px;
+letter-spacing: -0.05em;
+width:310px;
+margin:auto;
+`
+
+const StLastBtnWarp = styled.div`
+  width:400px;
+  display:flex;
+  flex-direction:row;
+  margin: auto;
+  justify-content: space-evenly;
+
+  
+`
+
+const StLastBtn = styled.button`
+box-sizing: border-box;
+
+justify-content: center;
+align-items: center;
+padding: 7.12291px 28.4916px;
+gap: 14.25px;
+
+  background: #FFFFFF;
+/* Scarlet */
+
+border: 2px solid #FF6D53;
+border-radius: 56.9832px;
+flex: none;
+order: 0;
+flex-grow: 0;
+cursor: pointer;
+transition: ease 0.2s;
+  :hover {
+    background-color: #ff6d53;
+    & > div {
+      color: white;
+    }
+  }
+`
+
+
