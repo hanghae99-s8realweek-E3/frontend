@@ -17,11 +17,14 @@ function FQAAccordionCard({ title, content }) {
 
   return (
     <>
-      <StFAQAccordTitle onClick={toggleToAccordianCard}>
+      <StFAQAccordTitle
+        onClick={toggleToAccordianCard}
+        aria-label={`${title}, 누르면 해당 내용을 펼칠 수 있습니다.`}>
         {title}
         <StArrowIcon
           src={process.env.PUBLIC_URL + `/images/Toggle.png`}
           transform={openState === true ? "rotateZ(180deg)" : "rotateZ(0deg)"}
+          aria-hidden={true}
         />
       </StFAQAccordTitle>
       <StFQAAccordionBox
@@ -31,7 +34,8 @@ function FQAAccordionCard({ title, content }) {
       {content === fqaList[2].content ? (
         <StWithdrawButton
           display={openState === true ? "block" : "none"}
-          onClick={moveToWithdrawPage}>
+          onClick={moveToWithdrawPage}
+          aria-label="누르면 회원 탈퇴 화면으로 이동합니다.">
           탈퇴하기
         </StWithdrawButton>
       ) : null}

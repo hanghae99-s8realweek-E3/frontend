@@ -45,7 +45,10 @@ function ActivityContainer() {
         <>
           {popUpState === true ? (
             <StShadowBackgroundDiv>
-              <StBackGroundCloseDiv onClick={changePopUpState} />
+              <StBackGroundCloseDiv
+                onClick={changePopUpState}
+                aria-label="닫기 버튼, 누르면 정렬 변경창을 닫습니다."
+              />
               <StPopupBox>
                 <StSlideDiv />
                 {sortList?.map((elem, index) => (
@@ -53,7 +56,8 @@ function ActivityContainer() {
                     <StSortListBtn
                       onClick={changeFeedListSort}
                       value={index}
-                      color={sortState === elem ? "#FF6D53" : "#909090"}>
+                      color={sortState === elem ? "#FF6D53" : "#909090"}
+                      aria-label={`${elem} 버튼, 누르면 ${elem}으로 피드 목록을 정렬합니다.`}>
                       {elem}
                     </StSortListBtn>
                     <StCommonBorder margin="0 25px" width="90%" />
@@ -70,19 +74,29 @@ function ActivityContainer() {
           {selectTab === "challenge" ? (
             <>
               <StTapBox>
-                <StActiveTapButton value="challenge" onClick={selectTabMenu}>
+                <StActiveTapButton
+                  value="challenge"
+                  onClick={selectTabMenu}
+                  aria-label="도전한 미믹, 누르면 도전한 미믹 목록이 출력됩니다.">
                   도전한 미믹
                 </StActiveTapButton>
-                <StTapButton value="making" onClick={selectTabMenu}>
+                <StTapButton
+                  value="making"
+                  onClick={selectTabMenu}
+                  aria-label="제안한 미믹, 누르면 제안한 미믹 목록이 출력됩니다.">
                   제안한 미믹
                 </StTapButton>
               </StTapBox>
-              <StSortBtn type="button" onClick={changePopUpState}>
-                <div>{sortState}</div>
+              <StSortBtn
+                type="button"
+                onClick={changePopUpState}
+                aria-label={`정렬 버튼, 현재 ${sortState}으로 목록이 정렬되어 있습니다. 누르면 정렬을 변경할 수 있습니다.`}>
+                <div aria-hidden="true">{sortState}</div>
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                   alt="sort list button"
                   style={{ margin: "0 0 0 8px" }}
+                  aria-hidden="true"
                 />
               </StSortBtn>
 
@@ -113,19 +127,29 @@ function ActivityContainer() {
           ) : selectTab === "making" ? (
             <>
               <StTapBox>
-                <StTapButton value="challenge" onClick={selectTabMenu}>
+                <StTapButton
+                  value="challenge"
+                  onClick={selectTabMenu}
+                  aria-label="도전한 미믹, 누르면 도전한 미믹 목록이 출력됩니다.">
                   도전한 미믹
                 </StTapButton>
-                <StActiveTapButton value="making" onClick={selectTabMenu}>
+                <StActiveTapButton
+                  value="making"
+                  onClick={selectTabMenu}
+                  aria-label="제안한 미믹, 누르면 제안한 미믹 목록이 출력됩니다.">
                   제안한 미믹
                 </StActiveTapButton>
               </StTapBox>
-              <StSortBtn type="button" onClick={changePopUpState}>
-                <div>{sortState}</div>
+              <StSortBtn
+                type="button"
+                onClick={changePopUpState}
+                aria-label={`정렬 버튼, 현재 ${sortState}으로 목록이 정렬되어 있습니다. 누르면 정렬을 변경할 수 있습니다.`}>
+                <div aria-hidden="true">{sortState}</div>
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                   alt="sort list button"
                   style={{ margin: "0 0 0 8px" }}
+                  aria-hidden="true"
                 />
               </StSortBtn>
 

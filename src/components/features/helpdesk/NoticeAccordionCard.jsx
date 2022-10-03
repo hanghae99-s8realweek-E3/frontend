@@ -17,18 +17,23 @@ function NoticeAccordionCard({ title, date, content }) {
 
   return (
     <>
-      <StNoticeDiv onClick={toggleToAccordianCard}>
+      <StNoticeDiv
+        onClick={toggleToAccordianCard}
+        aria-label={`${title}, ${content}`}>
         <h3>{title}</h3>
         <p>{date}</p>
       </StNoticeDiv>
       <StNoticeAccordionBox
+        tapIndex="0"
         display={openState === true ? "flex" : "none"}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {content === noticeList[2].content ? (
+      {content === noticeList[1].content ? (
         <StMovePageButton
           display={openState === true ? "block" : "none"}
-          onClick={moveToUpdatePage}>
+          onClick={moveToUpdatePage}
+          tapIndex="0"
+          aria-label="누르면 2022년 10월 3일 업데이트 안내 사항으로 이동합니다.">
           업데이트 사항 보기
         </StMovePageButton>
       ) : null}
@@ -38,9 +43,19 @@ function NoticeAccordionCard({ title, date, content }) {
 
 export default NoticeAccordionCard;
 
-const StNoticeDiv = styled.div`
+const StNoticeDiv = styled.button`
+  background: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   text-align: left;
 
+  outline: none;
+  border: none;
+
+  width: 100%;
   cursor: pointer;
 
   & > h3 {

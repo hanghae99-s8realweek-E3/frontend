@@ -129,7 +129,9 @@ function ChangePWContainer() {
               ? "변경할 비밀번호와 내용이 일치하지 않습니다."
               : "　"}
           </StErrorMessage>
-          <StCommonButton>확인</StCommonButton>
+          <StCommonButton aria-label="확인 버튼, 누르면 비밀번호를 수정합니다.">
+            확인
+          </StCommonButton>
         </form>
       </StContainer>
     </>

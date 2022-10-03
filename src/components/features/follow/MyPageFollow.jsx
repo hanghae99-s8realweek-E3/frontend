@@ -131,7 +131,8 @@ function MyPageFollow() {
                             <StProfileImg
                               src={
                                 x.profile === "none"
-                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  ? process.env.PUBLIC_URL +
+                                    "/images/Placeholder.svg"
                                   : x.profile
                               }
                             />
@@ -156,7 +157,8 @@ function MyPageFollow() {
                             <StProfileImg
                               src={
                                 x.profile === "none"
-                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  ? process.env.PUBLIC_URL +
+                                    "/images/Placeholder.svg"
                                   : x.profile
                               }
                             />
@@ -216,7 +218,8 @@ function MyPageFollow() {
                             <StProfileImg
                               src={
                                 x.profile === "none"
-                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  ? process.env.PUBLIC_URL +
+                                    "/images/Placeholder.svg"
                                   : x.profile
                               }
                             />
@@ -249,7 +252,8 @@ function MyPageFollow() {
                             <StProfileImg
                               src={
                                 x.profile === "none"
-                                  ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                  ? process.env.PUBLIC_URL +
+                                    "/images/Placeholder.svg"
                                   : x.profile
                               }
                             />

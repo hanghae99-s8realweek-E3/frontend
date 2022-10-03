@@ -29,10 +29,16 @@ function HelpDeskContainer() {
         {selectTab === "notice" ? (
           <>
             <StTapBox>
-              <StActiveTapButton value="notice" onClick={selectTabMenu}>
+              <StActiveTapButton
+                value="notice"
+                onClick={selectTabMenu}
+                aria-label="공지사항, 누르면 공지사항 미믹 목록이 출력됩니다.">
                 공지사항
               </StActiveTapButton>
-              <StTapButton value="faq" onClick={selectTabMenu}>
+              <StTapButton
+                value="faq"
+                onClick={selectTabMenu}
+                aria-label="FAQ, 누르면 FAQ 미믹 목록이 출력됩니다.">
                 FAQ
               </StTapButton>
             </StTapBox>
@@ -44,22 +50,34 @@ function HelpDeskContainer() {
                 content={noticeList[0].content}
               />
               <StCommonBorder />
+              <NoticeAccordionCard
+                title={noticeList[1].title}
+                date={noticeList[1].date}
+                content={noticeList[1].content}
+              />
+              <StCommonBorder />
             </div>
           </>
         ) : selectTab === "faq" ? (
           <>
             <StTapBox>
-              <StTapButton value="notice" onClick={selectTabMenu}>
+              <StTapButton
+                value="notice"
+                onClick={selectTabMenu}
+                aria-label="공지사항, 누르면 공지사항 미믹 목록이 출력됩니다.">
                 공지사항
               </StTapButton>
-              <StActiveTapButton value="faq" onClick={selectTabMenu}>
+              <StActiveTapButton
+                value="faq"
+                onClick={selectTabMenu}
+                aria-label="FAQ, 누르면 FAQ 미믹 목록이 출력됩니다.">
                 FAQ
               </StActiveTapButton>
             </StTapBox>
 
             <div>
               <StFAQTitleBox>
-                <h2>자주 묻는 질문 TOP 3</h2>
+                <h2 tapIndex="0">자주 묻는 질문 TOP 3</h2>
                 {/* <button type="button" onClick={notifyNowMaking}>
                   더보기
                 </button> */}
@@ -69,12 +87,14 @@ function HelpDeskContainer() {
                 <FQAAccordionCard
                   title={fqaList[0].title}
                   content={fqaList[0].content}
+                  aria-label={`${fqaList[0].title}, 누르면 내용을 펼칠 수 있습니다.`}
                 />
                 <StCommonBorder />
 
                 <FQAAccordionCard
                   title={fqaList[1].title}
                   content={fqaList[1].content}
+                  aria-label={`${fqaList[1].title}, 누르면 내용을 펼칠 수 있습니다.`}
                 />
                 <StCommonBorder />
 
@@ -82,21 +102,29 @@ function HelpDeskContainer() {
                   <FQAAccordionCard
                     title={fqaList[3].title}
                     content={fqaList[3].content}
+                    aria-label={`${fqaList[3].title}, 누르면 내용을 펼칠 수 있습니다.`}
                   />
                 ) : (
                   <FQAAccordionCard
                     title={fqaList[2].title}
                     content={fqaList[2].content}
+                    aria-label={`${fqaList[2].title}, 누르면 내용을 펼칠 수 있습니다.`}
                   />
                 )}
                 <StCommonBorder />
               </StFAQAccordionList>
 
               <StContactBox>
-                <p className="uptext">다른 궁금하신 게 있으실까요?</p>
+                <p className="uptext" tapIndex="0">
+                  다른 궁금하신 게 있으실까요?
+                </p>
                 <p className="downtext">
                   미믹에 직접{" "}
-                  <span onClick={moveToGoogleFormPage}>문의하기</span>
+                  <button
+                    onClick={moveToGoogleFormPage}
+                    aria-label="문의하기, 누르면 문의사항을 작성하기 위한 구글 폼 페이지로 이동합니다.">
+                    문의하기
+                  </button>
                 </p>
               </StContactBox>
             </div>
@@ -218,16 +246,22 @@ const StContactBox = styled.div`
     color: #979797;
     margin: 4px 0;
   }
-  & > p > span {
+  & > p > button {
+    background: none;
+
     font-size: 16px;
     text-decoration: underline;
     line-height: 16px;
     color: #000000;
+
+    border: none;
+    outline: none;
+
     cursor: pointer;
   }
 
   transition: ease 0.1s;
-  & > p > span:hover {
+  & > p > button:hover {
     color: #8e8e8e;
   }
 

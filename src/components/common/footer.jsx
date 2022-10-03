@@ -36,7 +36,8 @@ function Footer() {
             window.location.pathname === "/teaser"
               ? "#FF6D53"
               : "#313131"
-          }>
+          }
+          aria-label="홈 이동 버튼, 누르면 메인 페이지로 이동합니다.">
           <div>
             <StBtnImage
               src={
@@ -46,6 +47,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/HomeActive.svg`
                   : process.env.PUBLIC_URL + `/images/Home.svg`
               }
+              aria-hidden="true"
             />
           </div>
           홈
@@ -59,7 +61,8 @@ function Footer() {
             window.location.pathname === `/selectmbtifeed`
               ? "#FF6D53"
               : "#313131"
-          }>
+          }
+          aria-label="피드 이동 버튼, 누르면 피드 목록 페이지로 이동합니다.">
           <div>
             <StBtnImage
               src={
@@ -70,6 +73,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/FeedActive.svg`
                   : process.env.PUBLIC_URL + `/images/Feed.svg`
               }
+              aria-hidden="true"
             />
           </div>
           피드
@@ -81,7 +85,8 @@ function Footer() {
             window.location.pathname === "/mytodos"
               ? "#FF6D53"
               : "#313131"
-          }>
+          }
+          aria-label="미믹 이동 버튼, 누르면 미믹 페이지로 이동합니다.">
           <div>
             <StBtnImage
               src={
@@ -90,6 +95,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/MimicActive.svg`
                   : process.env.PUBLIC_URL + `/images/Mimic.svg`
               }
+              aria-hidden="true"
             />
           </div>
           미믹
@@ -108,7 +114,8 @@ function Footer() {
             window.location.pathname === "/withdraw"
               ? "#FF6D53"
               : "#313131"
-          }>
+          }
+          aria-label="마이 페이지 이동 버튼, 누르면 마이 페이지로 이동합니다.">
           <div>
             <StBtnImage
               src={
@@ -124,6 +131,7 @@ function Footer() {
                   ? process.env.PUBLIC_URL + `/images/MyActive.svg`
                   : process.env.PUBLIC_URL + `/images/My.svg`
               }
+              aria-hidden="true"
             />
           </div>
           MY
