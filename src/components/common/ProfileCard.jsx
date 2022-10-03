@@ -484,7 +484,7 @@ const StFollowNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5e5c5c;
+  color: #5E5C5C;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
@@ -559,7 +559,7 @@ const StGradeNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5e5c5c;
+  color: #5E5C5C;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
@@ -572,7 +572,7 @@ const StFollowingNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5e5c5c;
+  color: #5E5C5C;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
