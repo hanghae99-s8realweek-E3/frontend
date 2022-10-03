@@ -844,8 +844,9 @@ const StGradeModalContainer = styled.div`
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 660px;
+    margin: auto;
+    height: 60vh;
+    margin-top:20vh;
   }
 `;
 
@@ -872,6 +873,9 @@ const StTitle = styled.div`
   line-height: 34px;
   color: #313131;
   margin-bottom: 6px;
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+  }
 `;
 const StText = styled.p`
   text-align: center;
@@ -890,6 +894,9 @@ const StIconExplainWrap = styled.div`
   flex-direction: row;
   margin-bottom: 12px;
   text-align: start;
+  @media screen and (max-width: 500px) {
+    margin: 0 0 0 25px;
+  }
 `;
 const StIcon = styled.img`
   display: flex;
@@ -900,6 +907,8 @@ const StIcon = styled.img`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 7px;
+    height: 84.24px;
+    width: 72px;
   }
 `;
 const StExplain = styled.div`
@@ -907,6 +916,10 @@ const StExplain = styled.div`
   flex-direction: column;
   margin-top: 12px;
   margin-left: 42px;
+  @media screen and (max-width: 500px) {
+    margin-left: 30px;
+    margin-top: 5px;
+  }
 `;
 const StExplainName = styled.div`
   display: flex;
@@ -916,11 +929,17 @@ const StExplainName = styled.div`
   font-size: 20px;
   line-height: 30px;
   color: #ff6d53;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StExplainContentWrap = styled.div`
   display: flex;
   margin-top: 8px;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    margin: 0px;
+  }
 `;
 const StExplainContent = styled.div`
   font-family: "IBM Plex Sans KR";

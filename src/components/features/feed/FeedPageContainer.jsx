@@ -326,11 +326,11 @@ function FeedPageContainer() {
                   tabIndex={1}
                 />
               )}
-              <StChallengeWord tabIndex={2} >도전완료 가리기</StChallengeWord>
+              <StChallengeWord  aria-hidden="true" >도전완료 가리기</StChallengeWord>
             </StChallengeWrap>
             <StToggleImgWrap>
               {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-              <StToggle onClick={toggleSortPopUp} tabIndex={3}>{sortState}</StToggle>
+              <StToggle onClick={toggleSortPopUp} aria-hidden="true">{sortState}</StToggle>
               <StToggleImg
                 onClick={toggleSortPopUp}
                 src={process.env.PUBLIC_URL + `/images/Toggle.png`}

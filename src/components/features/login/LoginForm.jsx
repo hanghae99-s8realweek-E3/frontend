@@ -71,7 +71,7 @@ function LoginForm() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         <StForm onSubmit={submitLoginData}>
-          <StEmail> 이메일 </StEmail>
+          <StEmail aria-hidden="true"> 이메일 </StEmail>
           <StEmailInput
             tabIndex={1}
             name="email"
@@ -79,6 +79,7 @@ function LoginForm() {
             value={userData.email}
             placeholder="abcdef@gmail.com"
             onChange={onChange}
+            aria-placeholder="안녕"
             // aria-hidden = "true"
             // aria-label="이메일 입력란 입니다"
           />
@@ -89,7 +90,7 @@ function LoginForm() {
           placeholder="abcdef@gmail.com"
           onChange={onChange}
         /> */}
-          <StPassword> 비밀번호 </StPassword>
+          <StPassword aria-hidden="true"> 비밀번호 </StPassword>
           <StPasswordInput
             tabIndex={2}
             name="password"
@@ -217,5 +218,9 @@ const StSignupBtn = styled.div`
   color: #000000;
   cursor: pointer;
   margin: 0px 0px 439px auto;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: auto;
+  }
 `;
 export default LoginForm;
