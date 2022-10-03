@@ -468,11 +468,12 @@ const StFollowWrap = styled.div`
 const StFollowNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 16px;
   }
@@ -481,7 +482,7 @@ const StFollowWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;
@@ -530,7 +531,7 @@ const StGradeWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;
@@ -542,11 +543,12 @@ const StWhatGrade = styled.img`
 const StGradeNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 16px;
   }
@@ -554,11 +556,12 @@ const StGradeNumber = styled.div`
 const StFollowingNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 16px;
   }
@@ -567,7 +570,7 @@ const StFollowingWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;

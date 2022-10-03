@@ -133,7 +133,7 @@ function WriteTodoForm() {
             {200 - todo.todo.length}
           </StTextCount>
         </span> */}
-          <Stbutton tabIndex="3" type="submit" aria-label="누르면 미믹이 등록됩니다">등록하기</Stbutton>
+          <Stbutton tabIndex="3" type="submit" aria-label="누르면 미믹이 등록됩니다">제안할래요!</Stbutton>
         </StWriteTodoForm>
       </StTotalWrap>
     </>
@@ -149,7 +149,7 @@ const StMbti = styled.span`
   margin: 108.33px 0px 9px 27px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 24px;
   color: #979797;
 `;
@@ -172,7 +172,7 @@ const StWriteTodoTextArea = styled.textarea`
   height: 100px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
   color: #979797;
@@ -203,7 +203,7 @@ const Stbutton = styled.button`
 `;
 
 const StTextCount = styled.div`
-  color: ${(props) => props.color};
+  color: #C7C7C7;
   margin-left: auto;
   margin-right: 25px;
   font-size: 24px;
