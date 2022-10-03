@@ -259,9 +259,6 @@ function TestForm() {
   };
 
   const onClickShared = () => {
-    if (window.navigator.platform === "MacIntel") {
-      return alert("죄송합니다, 해당 플랫폼은 공유 기능을 지원하지 않습니다");
-    }
     window.navigator.share({
       title: "초간단 MBTI 테스트!",
       text: "5초만에 알아보는 나의 성향! 과연 내 MBTI는 무엇일까?",
@@ -294,7 +291,7 @@ function TestForm() {
             <StTextB>5초만에 알아보는 나의 성향!</StTextB>
             <StTextC>과연 내 MBTI는 무엇일까?</StTextC>
           </StTextWarpB>
-          <StStartBtn onClick={GoToFirstQ}>시작하기</StStartBtn>
+          <StStartBtn onClick={GoToFirstQ} aria-label="테스트시작하기">시작하기</StStartBtn>
         </div>
       ) : (
         <div>
@@ -306,11 +303,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(-30%) translateY(-45%)"
+                    alt="일번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.one[randomNumber].title}
                 </StQuestionText>
@@ -339,11 +337,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(50%) translateY(-45%)"
+                    alt="이번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.two[randomNumber].title}
                 </StQuestionText>
@@ -372,11 +371,12 @@ function TestForm() {
                   <StProgressIcon
                     src={process.env.PUBLIC_URL + `/images/Placeholder.svg`}
                     transform="translateX(180%) translateY(-45%)"
+                    alt="삼번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.three[randomNumber].title}
                 </StQuestionText>
@@ -409,11 +409,12 @@ function TestForm() {
                         ? "translate(260%) translateY(-45%)"
                         : "translate(330%) translateY(-45%)"
                     }
+                    alt="사번 문제 화면"
                   />
                 </StProgressGauge>
               </StProgressBar>
               <StChoiceBtnDiv>
-                <StQ>Q</StQ>
+                <StQ aria-label="질문시작">Q</StQ>
                 <StQuestionText>
                   {listMBTI.four[randomNumber].title}
                 </StQuestionText>
