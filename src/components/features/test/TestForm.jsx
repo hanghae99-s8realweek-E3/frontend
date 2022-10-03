@@ -282,7 +282,7 @@ function TestForm() {
   return (
     <StOutLineDiv>
       {questionState === 0 ? (
-        <div>
+        <div style={{ height: "100%" }}>
           <StTextWarpA>
             <div>
               <StTextA>초간단</StTextA>
@@ -477,7 +477,7 @@ export default TestForm;
 const StOutLineDiv = styled.div`
   background-color: #ffffff;
   margin-top: 60px;
-  height: 100vh;
+  height: 120vh;
   display: flex;
   flex-direction: column;
   @media only screen and (max-width: 500px) {
