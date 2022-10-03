@@ -314,7 +314,7 @@ function FeedPageContainer() {
                   width="17"
                   height="17"
                   alt="도전완료 가리기 버튼 해제"
-                  tabIndex="0"
+                  tabIndex={1}
                 />
               ) : (
                 <StChallengeImg
@@ -323,21 +323,21 @@ function FeedPageContainer() {
                   width="17"
                   height="17"
                   alt="도전완료 가리기 버튼 적용"
-                  tabIndex="0"
+                  tabIndex={1}
                 />
               )}
-              <StChallengeWord tabIndex="1" >도전완료 가리기</StChallengeWord>
+              <StChallengeWord tabIndex={2} >도전완료 가리기</StChallengeWord>
             </StChallengeWrap>
             <StToggleImgWrap>
               {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-              <StToggle onClick={toggleSortPopUp} tabIndex="2">{sortState}</StToggle>
+              <StToggle onClick={toggleSortPopUp} tabIndex={3}>{sortState}</StToggle>
               <StToggleImg
                 onClick={toggleSortPopUp}
                 src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                 width="12"
                 height="6"
                 alt="최신순 댓글순 도전순 정렬 토글입니다"
-                tabIndex="2"
+                tabIndex={4}
               />
             </StToggleImgWrap>
           </StWrap>
@@ -345,17 +345,17 @@ function FeedPageContainer() {
 
         <>
           {searchList.length === 0 ? (
-            <StTodayMyCardWrap tabIndex="5">
+            <StTodayMyCardWrap>
               {checkOn === true
                 ? //isChallenged가 true이면 화면에 띄우면 안된다.
                   //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
                   feedCard
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex="5"/>
+                      <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
                     ))
                 : feedCard?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex="4"/>
+                    <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
@@ -365,16 +365,16 @@ function FeedPageContainer() {
                 ? searchList
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} />
+                      <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5} />
                     ))
                 : searchList?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                    <ChallengeCard id={it.todoId} data={it} key={idx} tabIndex={5}/>
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
           )}
         </>
-        <StSelectMbti aria-label="MBTI를 선택하는 버튼입니다" onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+        <StSelectMbti tabIndex={6} aria-label="MBTI를 선택하는 버튼입니다" onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
       </StTotalWrap>
     </>
   );
