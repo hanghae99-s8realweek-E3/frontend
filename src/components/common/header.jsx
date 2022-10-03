@@ -7,7 +7,10 @@ function Header() {
 
   // 이전 페이지로 이동
   function moveToPrevPage() {
-    navigate(-1);
+    if (window.location.pathname === "/test") {
+      return navigate("/");
+    }
+    return navigate(-1);
   }
 
   function changeHeaderName() {

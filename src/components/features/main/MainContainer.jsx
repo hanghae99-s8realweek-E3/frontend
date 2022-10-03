@@ -65,6 +65,10 @@ function MainContainer() {
     }
   }
 
+  function moveToTestPage() {
+    navigate("/test");
+  }
+
   return (
     <>
       {firstLoginCheck !== null ? <WelcomeForm /> : <></>}
@@ -99,6 +103,24 @@ function MainContainer() {
             ))}
           </Swiper>
         </BannerSlideBox>
+
+        <div style={{ width: "90%", margin: "20px auto" }}>
+          <SildeTitle
+            tabIndex="0"
+            style={{
+              fontSize: "18px",
+              marginBottom: "0",
+            }}>
+            MBTI가 어색하거나 생소한 당신에게!
+          </SildeTitle>
+          <StCommonButton
+            margin="6px auto 0 auto"
+            onClick={moveToTestPage}
+            aria-label="MBTI 테스트 버튼, 누르면 MBTI 테스트 화면으로 이동합니다.">
+            미믹의 MBTI 테스트 하러 가기
+          </StCommonButton>
+        </div>
+
         <PostSlideBox>
           <SildeTitle tabIndex="0">오늘의 베스트 미믹!</SildeTitle>
 
@@ -521,6 +543,36 @@ const StCountSpan = styled.span`
   color: ${(props) => props.color};
   pointer-events: none;
   margin: 0 4px;
+`;
+
+const StCommonButton = styled.div`
+  background: #ff6d53;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+
+  border-radius: 6px;
+  margin: ${(props) => props.margin || "25px"};
+
+  width: 90%;
+  height: 60px;
+
+  cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    background: #ffa595;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    height: 50px;
+    margin: 18px;
+  }
 `;
 
 // legacy - 이런 것을 사용해본 적도 있었다거나, 참고할 만했던 내용들 기록.
