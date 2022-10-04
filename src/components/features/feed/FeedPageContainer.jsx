@@ -18,9 +18,6 @@ import LoadingContainer from "../../../utils/loadingState";
 import detailSlice, {
   resetFeedDetailData,
 } from "../../../app/modules/detailSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
 // check uncheck
 
 function FeedPageContainer() {
@@ -54,26 +51,6 @@ function FeedPageContainer() {
   // console.log(card.length);
   // console.log(mbti);
 
-  //feedCard.length 이슈 아래 주석 참조 mbti선택후 다른 페이지 이동후 다시 피드페이지 들어왔을 때 선택했던 mbti가 나타남
-  // 첫 렌더링시 토큰/토큰x 에 따라 스토어에서 각각 리듀서 실행
-  // useEffect(() => {
-  //   console.log(mbti);
-  //   // if ( feedCard.length === 0 && tokenChecker() === true) {
-  //   if (tokenChecker() === true && mbti === undefined){
-  //     dispatch(getTodoListsFetch(true));
-  //   } else
-  //   dispatch(getTodoListsFetch(false));
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(mbti);
-  //   // if ( feedCard.length === 0 && tokenChecker() === true) {
-  //     if (tokenChecker() === true && mbti === undefined) {
-  //         dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-  //   } else
-  //   dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-  // }, []);
-
   //처음 로딩될때 로그인/미로로그인 mbti의 유무에 따라서 렌더링
   useEffect(() => {
     setLoading(true);
@@ -94,17 +71,6 @@ function FeedPageContainer() {
       setLoading(false);
     }
     loading();
-    // else if (mbti === undefined) {
-    //   dispatch(getTodoListsFetch(false));
-    //   setInterval(() => {
-    //     setLoading(false);
-    //   }, 100);
-    //   // dispatch(getMbtiTodoListsFetch({ login: false, mbti: mbti }));
-    // } else if (mbti !== undefined)
-    //   dispatch(getMbtiTodoListsFetch({ login: true, mbti: mbti }));
-    // setInterval(() => {
-    //   setLoading(false);
-    // }, 100);
   }, []);
 
   // 처음에 화면 렌더링될 때는 의미없는 렌더링, mbti 선택후 렌더링될 때 유효함
@@ -125,16 +91,6 @@ function FeedPageContainer() {
     }
     loading();
   }, [mbti]);
-
-  // useEffect(() => {
-  //   if (Object.keys(followState).length !== 0) {
-  //     if (followTab === true) {
-  //       setSearchList(followState.follower);
-  //     } else if (followTab === false) {
-  //       setSearchList(followState.following);
-  //     }
-  //   }
-  // }, [followTab, followState]);
 
   //checkOn의  초기값은 false로 설정
   const [checkOn, checkOff] = useState(false);
@@ -285,7 +241,6 @@ function FeedPageContainer() {
         ) : (
           <></>
         )}
-
         <StTopWrap>
           {/* <StSearchBarBox>
             <form onSubmit={searchData}>
@@ -303,7 +258,6 @@ function FeedPageContainer() {
               </StSearchBtn>
             </form>
           </StSearchBarBox> */}
-
           <StWrap>
             <StChallengeWrap>
               {/* 거짓이면 체크안한거 참이면 체크한거 */}
@@ -313,8 +267,8 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/unCheck.png`}
                   width="17"
                   height="17"
-                  alt="도전완료 가리기 버튼 해제"
-                  tabIndex={1}
+                  alt="누르면 도전완료된 피드는 나타나지 않습니다"
+                  tabIndex={0}
                 />
               ) : (
                 <StChallengeImg
@@ -322,8 +276,8 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/check.png`}
                   width="17"
                   height="17"
-                  alt="도전완료 가리기 버튼 적용"
-                  tabIndex={1}
+                  alt="누르면 현재 보이지않는 도전완료된 피드가 나타납니다"
+                  tabIndex={0}
                 />
               )}
               <StChallengeWord aria-hidden="true">
@@ -341,7 +295,7 @@ function FeedPageContainer() {
                 width="12"
                 height="6"
                 alt="최신순 댓글순 도전순 정렬 토글입니다"
-                tabIndex={4}
+                tabIndex={0}
               />
             </StToggleImgWrap>
           </StWrap>
@@ -351,16 +305,14 @@ function FeedPageContainer() {
           {searchList.length === 0 ? (
             <StTodayMyCardWrap>
               {checkOn === true
-                ? //isChallenged가 true이면 화면에 띄우면 안된다.
-                  //아래식이 isChallenged:true를 가지고있다를  어떻게 표현해야하는가
-                  feedCard
+                ? feedCard
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
                       <ChallengeCard
                         id={it.todoId}
                         data={it}
                         key={idx}
-                        tabIndex={5}
+                        tabIndex={1}
                       />
                     ))
                 : feedCard?.map((it, idx) => (
@@ -368,7 +320,7 @@ function FeedPageContainer() {
                       id={it.todoId}
                       data={it}
                       key={idx}
-                      tabIndex={5}
+                      tabIndex={1}
                     />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
@@ -383,7 +335,7 @@ function FeedPageContainer() {
                         id={it.todoId}
                         data={it}
                         key={idx}
-                        tabIndex={5}
+                        tabIndex={1}
                       />
                     ))
                 : searchList?.map((it, idx) => (
@@ -391,7 +343,7 @@ function FeedPageContainer() {
                       id={it.todoId}
                       data={it}
                       key={idx}
-                      tabIndex={5}
+                      tabIndex={1}
                     />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
@@ -399,7 +351,7 @@ function FeedPageContainer() {
           )}
         </>
         <StSelectMbti
-          tabIndex={6}
+          tabIndex={0}
           aria-label="버튼을 누르면 MBTI를 선택하는 페이지로 이동합니다."
           onClick={moveToSelectMBTI}
         >
@@ -417,7 +369,6 @@ const StTopWrap = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 30px;
-  /* padding-bottom: 10px; */
   margin: 45px 0px 0px;
   background-color: #edecec;
   width: 500px;
@@ -631,27 +582,19 @@ const StCommonBar = styled.div`
 `;
 
 const StSearchBarBox = styled.div`
-  /* background-color: blue; */
   display: flex;
-  /* position: relative; */
   align-items: center;
   opacity: 1;
   width: 450px;
   height: 55px;
   margin: auto;
-  /* border: 0px; */
-  /* border: 1px solid #919191;
-  border-radius: 6px; */
-
   @media only screen and (max-width: 500px) {
     width: 300px;
     margin-left: 15px;
-    /* margin-right: 15px; */
   }
 `;
 
 const StInput = styled.input`
-  /* background-color: burlywood; */
   padding-left: 20px;
   border: none;
   border-radius: 6px;
@@ -697,14 +640,6 @@ const StSearchBtn = styled.button`
   }
 `;
 
-const StTest = styled.div`
-  /* background-color: ; */
-  width: 500px;
-  height: 50px;
-  padding-top: 20px;
-  color: black;
-`;
-
 export const StBackGroundCloseDiv = styled.button`
   background: none;
   display: block;
@@ -717,7 +652,6 @@ export const StBackGroundCloseDiv = styled.button`
   width: 500px;
   height: 100%;
   z-index: 10;
-  /* cursor: pointer; */
   @media only screen and (max-width: 500px) {
     width: 360px;
   }

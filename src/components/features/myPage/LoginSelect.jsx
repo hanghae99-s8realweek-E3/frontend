@@ -1,32 +1,22 @@
 //대연
 import React from "react";
 import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
-// import { getKakaoLoginFetch } from '../../../app/modules/accountsSlice';
 import { KAKAO_AUTH_URL } from "../../../app/modules/kakaoSlice";
-import { useDispatch } from "react-redux";
-// import { getKakaoLoginFetch } from "../../../app/modules/accountsSlice";
 
 function LoginSelect() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation;
-  // const code = new URL(window.location.href).searchParams.get("code");
   const code = new URL(window.location.href).searchParams.get("code");
-
   //카카오 계정 로그인
   const goKakaoLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
-
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
       navigate("/mypage");
     }
   }, []);
-
   //일반 로그인 연동
   const goNormalLogin = () => {
     navigate("/login");
@@ -34,15 +24,25 @@ function LoginSelect() {
 
   return (
     <StTotalWrap>
-      <StTopMsg aria-hidden = "true">
+      <StTopMsg aria-hidden="true">
         로그인 후 더 많은
         <br /> MBTI를 따라해봐요!
       </StTopMsg>
-      <StHashMsg aria-hidden = "true">#어느누군가 #하루 #따라하기</StHashMsg>
-      <StKakaoLoginBtn role="button" tabIndex={1} aria-label= "버튼을 누르면 카카오계정 로그인 페이지로 이동합니다" onClick={goKakaoLogin}>
+      <StHashMsg aria-hidden="true">#어느누군가 #하루 #따라하기</StHashMsg>
+      <StKakaoLoginBtn
+        tabIndex={0}
+        aria-label="버튼을 누르면 카카오계정 로그인 페이지로 이동합니다"
+        onClick={goKakaoLogin}
+      >
         카카오계정 로그인
       </StKakaoLoginBtn>
-      <StNormalLoginBtn tabIndex={2}aria-label= "버튼을 누르면 이메일 로그인 페이지로 이동합니다"onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
+      <StNormalLoginBtn
+        tabIndex={0}
+        aria-label="버튼을 누르면 이메일 로그인 페이지로 이동합니다"
+        onClick={goNormalLogin}
+      >
+        이메일 로그인
+      </StNormalLoginBtn>
     </StTotalWrap>
   );
 }
@@ -75,7 +75,6 @@ const StHashMsg = styled.span`
   color: #979797;
   margin: 0px 0px 105px 0px;
 `;
-
 const StKakaoLoginBtn = styled.button`
   height: 70px;
   background: #ffd600;
@@ -99,31 +98,8 @@ const StKakaoLoginBtn = styled.button`
   }
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: auto ;
+    margin: auto;
     margin-bottom: 25px;
-  }
-`;
-
-const KaKaoBtn = styled.button`
-  height: 70px;
-  background: #f8e041;
-  border-radius: 6px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  margin-bottom: 24px;
-  > a {
-    padding: 17px 0;
-    font-weight: 400;
-    width: 100%;
-    color: #371f1e !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
   }
 `;
 const StNormalLoginBtn = styled.button`
@@ -142,12 +118,10 @@ const StNormalLoginBtn = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
   transition: ease 0.05s;
   &:hover {
     background: #ffa595;
   }
-
   @media screen and (max-width: 500px) {
     width: 324px;
     margin: auto;
