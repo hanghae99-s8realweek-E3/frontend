@@ -317,7 +317,7 @@ const StTopWrap = styled.div`
   flex-direction: column;
   padding-top: 30px;
   margin: 45px 0px 0px;
-  background-color: none;
+  background-color: white;
   width: 500px;
   position: fixed;
   @media screen and (max-width: 500px) {
@@ -327,7 +327,7 @@ const StTopWrap = styled.div`
 const StWrap = styled.div`
   display: flex;
   flex-direction: row;
-  background: none;
+  background: white;
 `;
 const StChallengeWrap = styled.div`
   display: flex;
