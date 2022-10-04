@@ -4,7 +4,7 @@ import {
   StCommonRowBox,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import * as Sentry from "@sentry/react";
+import { ReactComponent as Challenge } from "../../../images/Challenge.svg";
 
 function DetailCard({ data }) {
   const [menuModal, setMenuModal] = useState(false);
@@ -64,7 +65,7 @@ function DetailCard({ data }) {
         <></>
       )}
       <StChallengeCardDiv width="90%" id={data.todoId}>
-        <StCommonRowBox width="100%">
+        <StCommonRowBox width="100%" height="100%">
           {/* 내용 */}
           <StChallengeNameSpan>{data.todo}</StChallengeNameSpan>
           <StCommonColumnBox alignItems="center">
@@ -83,7 +84,8 @@ function DetailCard({ data }) {
             <StCommonRowBox style={{ marginTop: "auto" }}>
               <StCommonRowBox
                 alignItems="center"
-                style={{ marginLeft: "auto", marginRight: "5px" }}>
+                style={{ marginLeft: "auto", marginRight: "5px" }}
+                aria-label="댓글 수">
                 <FontAwesomeIcon
                   style={{ color: "#979797", margin: "0 4px" }}
                   icon={faMessage}
@@ -92,10 +94,11 @@ function DetailCard({ data }) {
               </StCommonRowBox>
 
               <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-                <FontAwesomeIcon
-                  style={{ color: "#979797", margin: "0 0 0 0" }}
-                  icon={faStar}
-                />
+                <label
+                  aria-label="도전 수"
+                  style={{ height: "18px", width: "18px" }}>
+                  <Challenge />
+                </label>
                 <StCountSpan style={{ marginRight: "4px" }}>
                   {data.challengedCounts}
                 </StCountSpan>
@@ -118,12 +121,13 @@ const StChallengeCardDiv = styled.div`
   align-items: center;
 
   width: ${(props) => props.width || "100%"};
+  height: 90px;
   border-radius: 6px;
   padding: 14px 20px;
   margin: 6px 25px;
 
   box-sizing: border-box;
-
+  box-shadow: 0px 0px 10px 0px rgba(220, 220, 220, 0.6);
   @media screen and (max-width: 500px) {
     width: 94%;
     margin: 12px 4%;
@@ -134,7 +138,7 @@ const StChallengeNameSpan = styled.span`
   display: flex;
   align-items: center;
 
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   text-align: left;
   color: #000000;
