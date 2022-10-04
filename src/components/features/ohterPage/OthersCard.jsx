@@ -4,7 +4,7 @@ import {
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { decodeMyTokenData } from "../../../utils/token";
 import * as Sentry from "@sentry/react";
+import { ReactComponent as Challenge } from "../../../images/Challenge.svg";
 
 function OthersCard({ data }) {
   const navigate = useNavigate();
@@ -119,6 +120,7 @@ function OthersCard({ data }) {
                     color: data.isChallenged === true ? "#B8B8B8" : "#909090",
                   }}
                   icon={faMessage}
+                  aria-label="댓글 수"
                 />
                 <StCountSpan
                   color={data.isChallenged === true ? "#B8B8B8" : "#909090"}>
@@ -126,13 +128,11 @@ function OthersCard({ data }) {
                 </StCountSpan>
               </StCommonRowBox>
               <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-                <FontAwesomeIcon
-                  style={{
-                    margin: "0",
-                    color: data.isChallenged === true ? "#B8B8B8" : "#909090",
-                  }}
-                  icon={faStar}
-                />
+                <label
+                  aria-label="도전 수"
+                  style={{ height: "20px", width: "20px" }}>
+                  <Challenge />
+                </label>
                 <StCountSpan
                   color={data.isChallenged === true ? "#B8B8B8" : "#909090"}
                   style={{ marginRight: "4px" }}>

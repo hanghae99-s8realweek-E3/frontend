@@ -63,7 +63,9 @@ function ChallengeCard({ data }) {
               </StCountSpan>
             </StCommonRowBox>
             <StCommonRowBox alignItems="center" style={{ marginLeft: "5px" }}>
-              <label aria-label="도전 수">
+              <label
+                aria-label="도전 수"
+                style={{ height: "20px", width: "20px" }}>
                 <Challenge />
               </label>
               <StCountSpan
@@ -95,6 +97,7 @@ const StChallengeCardDiv = styled.div`
   margin: 12px 25px;
 
   box-sizing: border-box;
+  box-shadow: 0px 0px 10px 0px rgba(220, 220, 220, 0.6);
   cursor: ${(props) => props.cursor || "pointer"};
 
   transition: ease 0.2s;
@@ -126,7 +129,7 @@ const StChallengeCardDiv = styled.div`
 `;
 
 const StChallengeNameSpan = styled.span`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: ${(props) => props.color};
   line-height: 32px;

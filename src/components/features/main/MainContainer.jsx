@@ -8,10 +8,11 @@ import WelcomeForm from "./WelcomeForm";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMainFetch } from "../../../app/modules/mainSlice";
-import { faMessage, faStar } from "@fortawesome/free-regular-svg-icons";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { decodeMyTokenData, tokenChecker } from "../../../utils/token";
+import { ReactComponent as Challenge } from "../../../images/Challenge.svg";
 
 function MainContainer() {
   const dispatch = useDispatch();
@@ -103,24 +104,6 @@ function MainContainer() {
             ))}
           </Swiper>
         </BannerSlideBox>
-
-        <div style={{ width: "90%", margin: "20px auto" }}>
-          <SildeTitle
-            tabIndex="0"
-            style={{
-              fontSize: "18px",
-              marginBottom: "0",
-            }}>
-            MBTI가 어색하거나 생소한 당신에게!
-          </SildeTitle>
-          <StCommonButton
-            margin="6px auto 0 auto"
-            onClick={moveToTestPage}
-            aria-label="MBTI 테스트 버튼, 누르면 MBTI 테스트 화면으로 이동합니다.">
-            미믹의 MBTI 테스트 하러 가기
-          </StCommonButton>
-        </div>
-
         <PostSlideBox>
           <SildeTitle tabIndex="0">오늘의 베스트 미믹!</SildeTitle>
 
@@ -132,7 +115,10 @@ function MainContainer() {
               width={150}
               slidesPerView={1}
               spaceBetween={12}
-              style={{ margin: "0.5rem 0" }}
+              style={{
+                padding: "5px",
+                height: window.innerWidth < 500 ? "270px" : "300px",
+              }}
               scrollbar={{ draggable: true }}>
               {mainState.data?.challenge.map((elem, idx) => (
                 <SwiperSlide
@@ -173,15 +159,6 @@ function MainContainer() {
                       pointerEvents: "none",
                     }}>
                     <div>
-                      {/* <div
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: "400",
-                          lineHeight: "15px",
-                          color: "#919191",
-                        }}>
-                        작성자.
-                      </div> */}
                       <div
                         aria-hidden="true"
                         style={{
@@ -211,17 +188,10 @@ function MainContainer() {
                         style={{ marginRight: "10px" }}>
                         {elem.commentCounts}
                       </StCountSpan>
-                      <label aria-label="도전 수">
-                        <FontAwesomeIcon
-                          style={{
-                            margin: "0 0 0 0",
-                            color: "#919191",
-                            fontSize: "12px",
-                            pointerEvents: "none",
-                          }}
-                          aria-label="도전 수"
-                          icon={faStar}
-                        />
+                      <label
+                        aria-label="도전 수"
+                        style={{ height: "18px", width: "18px" }}>
+                        <Challenge />
                       </label>
                       <StCountSpan color={"#919191"}>
                         {elem.challengedCounts}
@@ -235,6 +205,18 @@ function MainContainer() {
             <></>
           )}
         </PostSlideBox>
+
+        <StCommonButton
+          onClick={moveToTestPage}
+          tabIndex="0"
+          aria-label="MBTI 테스트 버튼, 누르면 MBTI 테스트 화면으로 이동합니다.">
+          <img
+            src={process.env.PUBLIC_URL + "/images/TestBanner.svg"}
+            alt=""
+            aria-hidden="true"
+            style={{ borderRadius: "6px", pointerEvents: "none" }}
+          />
+        </StCommonButton>
 
         <InfomationSlideBox>
           <SildeTitle tabIndex="0">
@@ -395,7 +377,7 @@ const StHeadTitle = styled.h1`
   text-align: left;
   font-size: 24px;
   font-weight: 500;
-  margin: 0 auto 20px 0;
+  margin: 0 auto 5px 0;
   @media screen and (max-width: 500px) {
     font-size: 18px;
   }
@@ -462,7 +444,7 @@ const SildeTitle = styled.label`
   font-size: 20px;
   text-align: left;
 
-  margin: 32px 0 20px 0;
+  margin: 32px 0 5px 0;
 `;
 
 const PostImageBox = styled.div`
@@ -515,26 +497,30 @@ const SwiperImageCSSData = {
 };
 
 const SwiperTestCardCSSData = {
+  background: "#ffffff",
   display: "flex",
   flexDirection: "column",
   margin: "0 0.5rem",
 
   width: "170px",
   height: "170px",
+  wordBreak: "break-all",
 
   borderRadius: "5px",
   cursor: "pointer",
 };
 
 const SwiperPostCSSData = {
-  background: "#F0F0F0",
+  background: "#ffffff",
   display: "flex",
   flexDirection: "column",
   textAlign: "left",
-  padding: "5%",
+  padding: "4%",
   borderRadius: "6px",
-  height: "50%",
+  height: "70%",
   cursor: "pointer",
+  boxShadow: "0px 0px 10px 0px rgba(220, 220, 220, 0.6)",
+  marginTop: "10px",
 };
 
 const StCountSpan = styled.span`
@@ -546,32 +532,20 @@ const StCountSpan = styled.span`
 `;
 
 const StCommonButton = styled.div`
-  background: #ff6d53;
+  display: block;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 22px;
   font-weight: 500;
-  color: #ffffff;
 
-  border-radius: 6px;
-  margin: ${(props) => props.margin || "25px"};
+  margin: 0 auto 10px auto;
 
-  width: 90%;
-  height: 60px;
+  width: 100%;
+  height: 100px;
 
   cursor: pointer;
-  transition: ease 0.1s;
-  &:hover {
-    background: #ffa595;
-  }
 
   @media screen and (max-width: 500px) {
     font-size: 18px;
     height: 50px;
-    margin: 18px;
   }
 `;
 

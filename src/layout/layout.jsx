@@ -6,9 +6,7 @@ function Layout({ children }) {
 
   function locationCheck() {
     if (
-      (window.location.pathname === `/todolists/${params.mbti}` ||
-        window.location.pathname === "/todolists" ||
-        window.location.pathname === `/otherspage/${params.userId}` ||
+      (window.location.pathname === `/otherspage/${params.userId}` ||
         window.location.pathname === `/activity`) === true
     )
       return true;
