@@ -1,4 +1,4 @@
-//대연 에러페이지가 과연 사용이될까..?
+//대연
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -30,8 +30,18 @@ function ErrorPageContainer() {
           불러올 수 없습니다.
         </StErrorMsg>
         <StBtnWrap>
-          <StBackBtn onClick={backPage}>다시 시도하기</StBackBtn>
-          <StMainBtn onClick={goMain}>홈으로 가기</StMainBtn>
+          <StBackBtn
+            aria-label="버튼은 누르면 이전 페이지로 돌아갑니다"
+            onClick={backPage}
+          >
+            이전으로
+          </StBackBtn>
+          <StMainBtn
+            aria-label="버튼을 누르면 메인 페이지로 돌아갑니다"
+            onClick={goMain}
+          >
+            홈으로 가기
+          </StMainBtn>
         </StBtnWrap>
       </TotalWrap>
     </>

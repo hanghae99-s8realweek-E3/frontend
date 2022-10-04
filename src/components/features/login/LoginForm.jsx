@@ -1,11 +1,10 @@
-// 대연 return 구문 쪽 주석 inputCard컴포넌트 이용보류
+// 대연 
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { passwordFormat, emailFormat } from "../../../utils/reqList";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
-// import InputCard from "../../common/InputCard";
 import LoadingContainer from "../../../utils/loadingState";
 import * as Sentry from "@sentry/react";
 
@@ -77,36 +76,19 @@ function LoginForm() {
             name="email"
             // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제
             value={userData.email}
-            placeholder="abcdef@gmail.com"
+            placeholder="이메일 입력란 입니다"
             onChange={onChange}
             aria-placeholder="안녕"
-            // aria-hidden = "true"
-            // aria-label="이메일 입력란 입니다"
           />
-          {/* <InputCard
-          name="email"
-          // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제
-          value={userData.email}
-          placeholder="abcdef@gmail.com"
-          onChange={onChange}
-        /> */}
           <StPassword aria-hidden="true"> 비밀번호 </StPassword>
           <StPasswordInput
             tabIndex={2}
             name="password"
             type="password" // 비밀번호 입력시 숫자 가려지게 하는 역할
             value={userData.password}
-            placeholder="비밀번호 입력"
+            placeholder="비밀번호 입력란 입니다"
             onChange={onChange}
-            // aria-label= "비밀번호 입력란 입니다"
           />
-          {/* <InputCard
-          name="password"
-          value={userData.password}
-          placeholder="비밀번호 입력"
-          type="password"
-          onChange={onChange}
-        /> */}
           <StIncorrect>{modal}</StIncorrect>
           <StLoginBtn
             tabIndex={3}

@@ -13,7 +13,6 @@ import {
 import LoadingContainer from "../../../utils/loadingState";
 import ProfileCard from "../../common/ProfileCard";
 import { StBackGroundCloseDiv } from "../../interface/styledCommon";
-import ErrorPageContainer from "../error/ErrorPageContainer";
 import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
@@ -31,7 +30,6 @@ function UserProfileContainer() {
   const params = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   // 탈퇴한 회원 피드 페이지로 이동
   useEffect(() => {
     if (params.userId === "none") {
@@ -39,12 +37,7 @@ function UserProfileContainer() {
       navigate("/todolists");
     }
   }, []);
-
   // 첫 렌더링 일때 userId 인자로 parmas사용
-
-  // useEffect(() => {
-  //   dispatch(getOthersTodoFetch(params));
-  // }, []);
   useEffect(() => {
     setLoading(true);
     async function loading() {
@@ -53,8 +46,7 @@ function UserProfileContainer() {
     }
     loading();
   }, []);
-
-  // 탭을 할 때마다 혅재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
+  // 탭을 할 때마다 현재 누른 탭의 글씨와 밑줄 색상은 ff6d53로 변하고 전의 탭은 글씨 색상 balck 밑줄 gray로 나타난다.
   useEffect(() => {
     let current = document.getElementById(todoTab);
     if (current !== null) {
@@ -62,7 +54,6 @@ function UserProfileContainer() {
       current.style.borderBottom = "2px solid";
       current.style.borderBottomColor = "#ff6d53";
     }
-
     if (prevClick !== null) {
       let prev = document.getElementById(prevClick);
       prev.style.color = "black";
@@ -70,17 +61,14 @@ function UserProfileContainer() {
     }
     setPrevClick(todoTab);
   }, [todoTab]);
-
   // 도전한 TO DO 누를때
   const ChallengeState = (e) => {
     return setTodoTab(e.target.id);
   };
-
   // 제안한 TO DO 누를때
   const SuggestState = (e) => {
     return setTodoTab(e.target.id);
   };
-
   // 최신순 정렬
   const sortDate = () => {
     dispatch(getTodoListsFetch());
@@ -108,17 +96,16 @@ function UserProfileContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {Object.keys(card).length === 0 ? (
-          // <LoadingContainer />
           <></>
         ) : (
           <>
             <StTopWrap>
-              <ProfileCard profileData={card} tabIndex={1} />
+              <ProfileCard profileData={card} tabIndex={0} />
             </StTopWrap>
             <StTodoTopLine></StTodoTopLine>
             <StTodoWrap>
               <StChallengeTodo
-                tabIndex={10}
+                tabIndex={0}
                 id="도전"
                 aria-label="누르면 도전한 미믹이 나타납니다"
                 onClick={ChallengeState}
@@ -126,7 +113,7 @@ function UserProfileContainer() {
                 도전한 미믹
               </StChallengeTodo>
               <StSuggestionTodo
-                tabIndex={11}
+                tabIndex={0}
                 id="제안"
                 aria-label="누르면 제안한 미믹이 나타납니다"
                 onClick={SuggestState}
@@ -134,7 +121,6 @@ function UserProfileContainer() {
                 제안한 미믹
               </StSuggestionTodo>
             </StTodoWrap>
-
             <StBottomWrap>
               {selectSort === true ? (
                 <StShadowBackgroundDiv>
@@ -180,7 +166,7 @@ function UserProfileContainer() {
                 <></>
               )}
               <StToggle
-                tabIndex={12}
+                tabIndex={0}
                 onClick={toggleSortPopUp}
                 aria-label="누르면 정렬 최신순 댓글순 도전순 토글이 나타납니다"
               >
@@ -192,7 +178,7 @@ function UserProfileContainer() {
                 />
               </StToggle>
 
-              <StTodayMyCardWrap tabIndex={13}>
+              <StTodayMyCardWrap tabIndex={0}>
                 {todoTab === "도전" ? (
                   sortState === sortList[0] ? (
                     card.challengedTodos?.map((elem, index) => (
@@ -238,7 +224,7 @@ function UserProfileContainer() {
                     <></>
                   )
                 ) : (
-                  <ErrorPageContainer />
+                  <></>
                 )}
               </StTodayMyCardWrap>
             </StBottomWrap>
@@ -251,20 +237,16 @@ function UserProfileContainer() {
 
 const StTotalWrap = styled.div`
   display: flex;
-  /* width: 500px; */
   flex-direction: column;
   justify-content: flex-start;
   @media screen and (max-width: 500px) {
     display: flex;
     width: 360px;
-    /* height: auto; */
   }
 `;
 const StTopWrap = styled.div`
-  /* display: flex; */
   flex-direction: column;
   margin-top: 60px;
-  /* padding-bottom: 31.5px; */
   background-color: #ffffff;
 `;
 const StTodoTopLine = styled.div`
@@ -275,7 +257,6 @@ const StTodoTopLine = styled.div`
   width: 500px;
   @media screen and (max-width: 500px) {
     width: 360px;
-    /* margin-bottom: 20px; */
   }
 `;
 const StTodoWrap = styled.div`
@@ -293,7 +274,6 @@ const StChallengeTodo = styled.div`
   display: flex;
   width: 225px;
   border-bottom: 2px solid #ff6d53;
-  /* width: 105px; */
   cursor: pointer;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
@@ -321,7 +301,6 @@ const StSuggestionTodo = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 32px;
-  /* color: #000000; */
   padding-bottom: 9px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
@@ -341,10 +320,8 @@ const StTodayMyCardWrap = styled.div`
 `;
 const StShadowBackgroundDiv = styled.div`
   background: rgba(0, 0, 0, 0.3);
-
   position: fixed;
   display: block;
-
   top: 0;
   width: 500px;
   height: 100%;
@@ -354,12 +331,10 @@ const StShadowBackgroundDiv = styled.div`
     text-align: center;
   }
 `;
-
 const StPopupBox = styled.div`
   background: #ffffff;
   position: absolute;
   width: 500px;
-  /* height: 683px; */
   height: 335px;
   box-shadow: 0px 2.66667px 26.6667px rgba(0, 0, 0, 0.25);
   border-radius: 21.3333px 21.3333px 0px 0px;

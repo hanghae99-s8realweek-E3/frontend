@@ -210,19 +210,18 @@ function ProfileCard({ profileData }) {
             }
             onError={changeMyOriginalImage}
             alt="사용자가 등록한 프로필 이미지, 등록하지 않았다면 일반 이미지가 나타납니다"
-            tabIndex={1}
           />
         </StImageBox>
         <StNoImageWrap>
-          <StNickName tabIndex={2}>{profileData.userInfo.nickname}</StNickName>
+          <StNickName>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
-            <StMbti tabIndex={3}>{profileData.userInfo.mbti}</StMbti>
+            <StMbti>{profileData.userInfo.mbti}</StMbti>
             {window.location.pathname === `/otherspage/${params.userId}` &&
             myData.userId !== params.userId ? (
               <StFollowBtn
                 aria-label="버튼을 누르면 팔로우 또는 언팔로우를 할 수 있습니다"
                 onClick={changeFollowState}
-                tabIndex={5}
+                tabIndex={0}
               >
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
@@ -231,7 +230,7 @@ function ProfileCard({ profileData }) {
               </StFollowBtn>
             ) : (
               <StInfo
-                tabIndex={4}
+                tabIndex={0}
                 aria-label="버튼을 누르면 궁합 알아보기 창이 나타납니다"
                 onClick={changeModalState}
               >
@@ -247,7 +246,6 @@ function ProfileCard({ profileData }) {
               alt="미콩 이미지"
               width="59.38"
               height="71"
-              tabIndex={6}
             />
           ) : profileData.userInfo?.mimicCounts < 6 ? (
             <StImage
@@ -255,7 +253,6 @@ function ProfileCard({ profileData }) {
               alt="미알 이미지"
               width="59.38"
               height="71"
-              tabIndex={6}
             />
           ) : profileData.userInfo?.mimicCounts < 8 ? (
             <StImage
@@ -263,7 +260,6 @@ function ProfileCard({ profileData }) {
               alt="미돌 이미지"
               width="59.38"
               height="71"
-              tabIndex={6}
             />
           ) : (
             <StImage
@@ -271,16 +267,14 @@ function ProfileCard({ profileData }) {
               alt="미킹 이미지"
               width="59.38"
               height="71"
-              tabIndex={6}
             />
           )}
         </StGradeImageBox>
       </StTotalWrap>
       <StFollowGradeWrap>
-        {/* <StMbtiFollowFollowingWrap> */}
         <StFollowWrap onClick={goFollow}>
           <StFollowWord
-            tabIndex={7}
+            tabIndex={0}
             aria-label="누르면 팔로워 페이지로 이동합니다"
           >
             팔로워
@@ -293,7 +287,7 @@ function ProfileCard({ profileData }) {
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
           <StFollowingWord
-            tabIndex={8}
+            tabIndex={0}
             aria-label="누르면 팔로잉 페이지로 이동합니다"
           >
             팔로잉
@@ -305,13 +299,12 @@ function ProfileCard({ profileData }) {
           </StFollowingNumber>
         </StFollowingWrap>
         <StGradeWrap onClick={gradeChangeModalState}>
-          {/* <Grade></Grade> */}
           <StGradebox>
             <StGradeWord>등급</StGradeWord>
             <StWhatGrade
               src={process.env.PUBLIC_URL + `/images/grade.png`}
               alt="누르면 등급 설명창이 나옵니다"
-              tabIndex={9}
+              tabIndex={0}
             />
           </StGradebox>
           <StGradeNumber>
@@ -324,7 +317,6 @@ function ProfileCard({ profileData }) {
               : gradeWordList[3]}
           </StGradeNumber>
         </StGradeWrap>
-        {/* </StMbtiFollowFollowingWrap> */}
       </StFollowGradeWrap>
     </>
   );
@@ -378,7 +370,6 @@ const StImage = styled.img`
     margin-left: 5px;
   }
 `;
-
 const StProfileImg = styled.img`
   height: 80px;
   width: 80px;
@@ -420,16 +411,6 @@ const StNickName = styled.div`
     font-size: 17px;
   }
 `;
-const StMbtiFollowFollowingWrap = styled.div`
-  display: flex;
-  margin-left: 20px;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    width: 230px;
-    font-size: 5px;
-    margin: 0px;
-  }
-`;
 const StFollowGradeWrap = styled.div`
   display: flex;
   flex-direction: row;
@@ -444,18 +425,15 @@ const StFollowGradeWrap = styled.div`
 `;
 const StMbti = styled.div`
   display: flex;
-  /* flex-direction: column; */
   width: 42px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
-  /* line-height: 32px; */
   text-align: left;
   color: #979797;
   margin-left: 16px;
   @media screen and (max-width: 500px) {
-    /* align-items: flex-start; */
     text-align: left;
     margin-left: 13.68px;
     font-size: 15px;
@@ -464,13 +442,10 @@ const StMbti = styled.div`
 const StFollowWrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* margin-left: 100px; */
-
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 100%;
-    /* margin-left: 50px; */
   }
   transition: ease 0.1s;
   &:hover div {
@@ -484,7 +459,7 @@ const StFollowNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
@@ -503,7 +478,6 @@ const StFollowingWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 55px;
-
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
@@ -515,12 +489,10 @@ const StFollowingWrap = styled.div`
     color: #8e8e8e;
   }
 `;
-
 const StGradeWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 55px;
-
   cursor: pointer;
   @media screen and (max-width: 500px) {
     align-items: center;
@@ -532,7 +504,6 @@ const StGradeWrap = styled.div`
     color: #8e8e8e;
   }
 `;
-
 const StGradebox = styled.div`
   display: flex;
   flex-direction: row;
@@ -559,7 +530,7 @@ const StGradeNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
@@ -572,7 +543,7 @@ const StFollowingNumber = styled.div`
   font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #5E5C5C;
+  color: #5e5c5c;
   margin-top: 3px;
   @media screen and (max-width: 500px) {
     font-size: 15px;
@@ -626,7 +597,6 @@ const StInfo = styled.div`
     font-size: 12px;
   }
 `;
-
 const StCloseButton = styled.button`
   background: none;
   display: block;
@@ -675,7 +645,6 @@ const StText = styled.p`
     margin-bottom: 20px;
   }
 `;
-
 const StModalContainer = styled.div`
   background: #ffffff;
   border-radius: 6px;
@@ -768,80 +737,9 @@ const StExplainContent = styled.div`
     font-size: 12px;
   }
 `;
-const StContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  @media screen and (max-width: 500px) {
-    width: 360px;
-    align-items: center;
-  }
-`;
-const StContainerIcon = styled.img`
-  display: flex;
-  width: 80px;
-  height: 80px;
-  margin: 18px 18px 18px 35px;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 500px) {
-    align-items: center;
-    margin-left: 20px;
-    width: 57.9px;
-    height: 57.9px;
-  }
-`;
-const StName = styled.div`
-  display: flex;
-  margin: 39.5px 0px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 32px;
-  color: #000000;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 500px) {
-    width: 40px;
-  }
-`;
-const StGradeBtn = styled.button`
-  display: flex;
-  width: 130px;
-  height: 36px;
-  font-family: "IBM Plex Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #000000;
-  background: none;
-  border: 1px solid black;
-  border-radius: 9999px;
-  margin: 40px 0px 40px 160px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  padding: 50px auto;
-  cursor: pointer;
-  @media screen and (max-width: 500px) {
-    width: 111px;
-    align-items: center;
-    margin-left: 90px;
-  }
-`;
-const StCommonBorder = styled.div`
-  height: 1px;
-  background: #bdc5cd;
-  @media screen and (max-width: 500px) {
-    width: 360px;
-    align-items: center;
-  }
-`;
 const StGradeModalTotalWrap = styled.div`
   flex-direction: column;
 `;
-
 const StGradeCloseButton = styled.button`
   background: none;
   display: block;
@@ -865,7 +763,6 @@ const StGradeModalContainer = styled.div`
     width: 324px;
   }
 `;
-
 const StMBTIBoardImg = styled.img`
   width: 400px;
   margin: 5px 0;
