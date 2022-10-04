@@ -154,7 +154,6 @@ function FeedPageContainer() {
   //최신순 댓글순 도전순 이미지 및 커서 클릭시 선택한 값에 따라 값 출력  토큰유무-> mbti유무
   // 1. 로그인을 했는지 안했는지 2.로그인을했으면 mbti를 설정했는지 안했는지
   const sortDate = (e) => {
-
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsFetch(false));
@@ -170,9 +169,11 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("최신순");
@@ -195,18 +196,18 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("댓글순");
     setSelectSort(!selectSort);
-
   };
   //도전순 정렬
   const sortChallenge = (e) => {
-
     if (tokenChecker() === false) {
       if (mbti === undefined) {
         dispatch(getTodoListsChallengeFetch(false));
@@ -222,9 +223,11 @@ function FeedPageContainer() {
         }
       }
     }
-    if(searchList.length !== 0){
+    if (searchList.length !== 0) {
       setSearchList(
-        feedCard.filter((elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1)
+        feedCard.filter(
+          (elem) => elem.todoInfo.todo.indexOf(inputContext) !== -1
+        )
       );
     }
     setSortState("도전순");
@@ -240,7 +243,6 @@ function FeedPageContainer() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         {selectSort === true ? (
-          
           <StShadowBackgroundDiv>
             <StBackGroundCloseDiv onClick={toggleSortPopUp} />
             <StPopupBox>
@@ -251,6 +253,7 @@ function FeedPageContainer() {
                     color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortDate}
+                  aria-label="누르면 최신순으로 피드를 정렬합니다"
                 >
                   최신순
                 </StDate>
@@ -260,6 +263,7 @@ function FeedPageContainer() {
                     color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortComment}
+                  aria-label="누르면 댓글순으로 피드를 정렬합니다"
                 >
                   댓글순
                 </StComment>
@@ -269,15 +273,15 @@ function FeedPageContainer() {
                     color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                   }}
                   onClick={sortChallenge}
+                  aria-label="누르면 도전순으로 피드를 정렬합니다"
                 >
                   도전순
                 </StChallenge>
                 <StChallengeLine />
                 <StCommonBar />
               </StSort>
-            </StPopupBox> 
+            </StPopupBox>
           </StShadowBackgroundDiv>
-
         ) : (
           <></>
         )}
@@ -309,7 +313,8 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/unCheck.png`}
                   width="17"
                   height="17"
-                  alt="AppearImg"
+                  alt="도전완료 가리기 버튼 해제"
+                  tabIndex={1}
                 />
               ) : (
                 <StChallengeImg
@@ -317,20 +322,26 @@ function FeedPageContainer() {
                   src={process.env.PUBLIC_URL + `/images/check.png`}
                   width="17"
                   height="17"
-                  alt="AppearImg"
+                  alt="도전완료 가리기 버튼 적용"
+                  tabIndex={1}
                 />
               )}
-              <StChallengeWord>도전완료 가리기</StChallengeWord>
+              <StChallengeWord aria-hidden="true">
+                도전완료 가리기
+              </StChallengeWord>
             </StChallengeWrap>
             <StToggleImgWrap>
               {/* 최신순 클릭시 아래에 정렬 bar 나옴 */}
-              <StToggle onClick={toggleSortPopUp}>{sortState}</StToggle>
+              <StToggle onClick={toggleSortPopUp} aria-hidden="true">
+                {sortState}
+              </StToggle>
               <StToggleImg
                 onClick={toggleSortPopUp}
                 src={process.env.PUBLIC_URL + `/images/Toggle.png`}
                 width="12"
                 height="6"
-                alt="ToggleImg"
+                alt="최신순 댓글순 도전순 정렬 토글입니다"
+                tabIndex={4}
               />
             </StToggleImgWrap>
           </StWrap>
@@ -345,10 +356,20 @@ function FeedPageContainer() {
                   feedCard
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} />
+                      <ChallengeCard
+                        id={it.todoId}
+                        data={it}
+                        key={idx}
+                        tabIndex={5}
+                      />
                     ))
                 : feedCard?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                    <ChallengeCard
+                      id={it.todoId}
+                      data={it}
+                      key={idx}
+                      tabIndex={5}
+                    />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
@@ -358,16 +379,32 @@ function FeedPageContainer() {
                 ? searchList
                     ?.filter((elem) => elem.isChallenged === false)
                     .map((it, idx) => (
-                      <ChallengeCard id={it.todoId} data={it} key={idx} />
+                      <ChallengeCard
+                        id={it.todoId}
+                        data={it}
+                        key={idx}
+                        tabIndex={5}
+                      />
                     ))
                 : searchList?.map((it, idx) => (
-                    <ChallengeCard id={it.todoId} data={it} key={idx} />
+                    <ChallengeCard
+                      id={it.todoId}
+                      data={it}
+                      key={idx}
+                      tabIndex={5}
+                    />
                   ))}
               <div className="hi" style={{ height: 80 }}></div>
             </StTodayMyCardWrap>
           )}
         </>
-        <StSelectMbti onClick={moveToSelectMBTI}>MBTI 선택</StSelectMbti>
+        <StSelectMbti
+          tabIndex={6}
+          aria-label="버튼을 누르면 MBTI를 선택하는 페이지로 이동합니다."
+          onClick={moveToSelectMBTI}
+        >
+          MBTI 선택
+        </StSelectMbti>
       </StTotalWrap>
     </>
   );
@@ -413,15 +450,15 @@ const StChallengeWord = styled.div`
   margin-right: 235px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  color: #313131;
   @media screen and (max-width: 500px) {
     align-items: center;
     width: 175px;
     margin: 0px;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 const StToggleImgWrap = styled.div`
@@ -437,10 +474,10 @@ const StToggle = styled.div`
   margin-right: 8px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
-  color: #000000;
+  color: #313131;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
@@ -448,7 +485,7 @@ const StToggle = styled.div`
     width: 100.09px;
     margin: 0px 8px 0px 0px;
     text-align: end;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 const StToggleImg = styled.img`

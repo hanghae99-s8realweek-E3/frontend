@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { noticeList } from "../../../utils/helpList";
 
 function NoticeAccordionCard({ title, date, content }) {
   const [openState, setOpenState] = useState(false);
@@ -8,25 +9,53 @@ function NoticeAccordionCard({ title, date, content }) {
     setOpenState(!openState);
   }
 
+  function moveToUpdatePage() {
+    window.open(
+      "https://develop-neoguri.notion.site/2022-10-02-3515887dc3d14e25a36b94c34b9e2835"
+    );
+  }
+
   return (
     <>
-      <StNoticeDiv onClick={toggleToAccordianCard}>
+      <StNoticeDiv
+        onClick={toggleToAccordianCard}
+        aria-label={`${title}, ${content}`}>
         <h3>{title}</h3>
         <p>{date}</p>
       </StNoticeDiv>
       <StNoticeAccordionBox
+        tapIndex="0"
         display={openState === true ? "flex" : "none"}
         dangerouslySetInnerHTML={{ __html: content }}
       />
+      {content === noticeList[1].content ? (
+        <StMovePageButton
+          display={openState === true ? "block" : "none"}
+          onClick={moveToUpdatePage}
+          tapIndex="0"
+          aria-label="누르면 2022년 10월 3일 업데이트 안내 사항으로 이동합니다.">
+          업데이트 사항 보기
+        </StMovePageButton>
+      ) : null}
     </>
   );
 }
 
 export default NoticeAccordionCard;
 
-const StNoticeDiv = styled.div`
+const StNoticeDiv = styled.button`
+  background: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   text-align: left;
 
+  outline: none;
+  border: none;
+
+  width: 100%;
   cursor: pointer;
 
   & > h3 {
@@ -72,6 +101,29 @@ const StNoticeAccordionBox = styled.div`
   margin: 0 auto 20px 5px;
 
   width: 100%;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+`;
+
+const StMovePageButton = styled.button`
+  background: none;
+
+  display: ${(props) => props.display || "none"};
+
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline;
+
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+
+  cursor: pointer;
+  transition: ease 0.1s;
+  &:hover {
+    color: #8e8e8e;
+  }
   @media screen and (max-width: 500px) {
     font-size: 12px;
   }

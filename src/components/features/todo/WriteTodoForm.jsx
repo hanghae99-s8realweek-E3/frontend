@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import instance from "../../../app/modules/instance";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function WriteTodoForm() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function WriteTodoForm() {
       navigate("/modifyprofile");
     }
     //페이지 렌더링 시 textarea안에 커서가 가게끔하기 위하여
-    todoRef.current.focus();
+    // todoRef.current.focus();
   }, []);
 
   // 글자칠때마다 줄 늘어남
@@ -69,12 +70,12 @@ function WriteTodoForm() {
       );
     }
 
-    if (todo.todo.trim().length < 10) {
-      return alert("10자 이상 작성해 주세요.");
+    if (todo.todo.trim().length < 5) {
+      return alert("5자 이상 작성해 주세요.");
     }
 
-    if (todo.todo.length < 10) {
-      return alert("10자 이상 작성해 주세요.");
+    if (todo.todo.length < 5) {
+      return alert("5자 이상 작성해 주세요.");
     }
 
     if (todo.todo.length > 30) {
@@ -93,6 +94,7 @@ function WriteTodoForm() {
           navigate("/setuptodo");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         return alert("미믹 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
@@ -105,20 +107,23 @@ function WriteTodoForm() {
     <>
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
-        <StMbti>{getMbti.mbti}</StMbti>
+        <StMbti tabIndex="0" aria-label="내가 만드는 미믹 내용" >{getMbti.mbti}</StMbti>
         <StLine></StLine>
         <StWriteTodoForm onSubmit={submitTodoData}>
           <StWriteTodoTextArea
             // onInput={handleResizeHeight}
-            ref={todoRef}
-            placeholder="내가만드는 TO DO내용"
+            // ref={todoRef}
+            placeholder="내가 만드는 미믹 내용"
             maxLength={30}
             name="todo"
             value={todo.todo}
             onChange={onChange}
+            tabIndex="1"
           />
           <StTextCount
-            color={30 - todo.todo.length < 10 ? "#ff6d53" : "#979797"}>
+            color={30 - todo.todo.length < 5 ? "#ff6d53" : "#979797"}
+            aria-label="작성 가능한 남은 글자 수"
+            tabIndex="2">
             {30 - todo.todo.length}
           </StTextCount>
           {/* 글자수가 200제한인데 10자 이하로 남았을 때 빨간색으로 알려줌
@@ -128,7 +133,7 @@ function WriteTodoForm() {
             {200 - todo.todo.length}
           </StTextCount>
         </span> */}
-          <Stbutton type="submit">등록하기</Stbutton>
+          <Stbutton tabIndex="3" type="submit" aria-label="누르면 미믹이 등록됩니다">제안할래요!</Stbutton>
         </StWriteTodoForm>
       </StTotalWrap>
     </>
@@ -144,9 +149,8 @@ const StMbti = styled.span`
   margin: 108.33px 0px 9px 27px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 24px;
-  line-height: 32px;
   color: #979797;
 `;
 const StLine = styled.div`
@@ -168,7 +172,7 @@ const StWriteTodoTextArea = styled.textarea`
   height: 100px;
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 32px;
   color: #979797;
@@ -199,7 +203,7 @@ const Stbutton = styled.button`
 `;
 
 const StTextCount = styled.div`
-  color: ${(props) => props.color};
+  color: #C7C7C7;
   margin-left: auto;
   margin-right: 25px;
   font-size: 24px;

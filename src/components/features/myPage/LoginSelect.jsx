@@ -34,15 +34,15 @@ function LoginSelect() {
 
   return (
     <StTotalWrap>
-      <StTopMsg>
+      <StTopMsg aria-hidden = "true">
         로그인 후 더 많은
         <br /> MBTI를 따라해봐요!
       </StTopMsg>
-      <StHashMsg>#어느누군가 #하루 #따라하기</StHashMsg>
-      <StKakaoLoginBtn onClick={goKakaoLogin}>
+      <StHashMsg aria-hidden = "true">#어느누군가 #하루 #따라하기</StHashMsg>
+      <StKakaoLoginBtn role="button" tabIndex={1} aria-label= "버튼을 누르면 카카오계정 로그인 페이지로 이동합니다" onClick={goKakaoLogin}>
         카카오계정 로그인
       </StKakaoLoginBtn>
-      <StNormalLoginBtn onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
+      <StNormalLoginBtn tabIndex={2}aria-label= "버튼을 누르면 이메일 로그인 페이지로 이동합니다"onClick={goNormalLogin}>이메일 로그인</StNormalLoginBtn>
     </StTotalWrap>
   );
 }
@@ -60,6 +60,10 @@ const StTopMsg = styled.div`
   line-height: 32px;
   color: #000000;
   margin: 218.33px 0px 15px 0px;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: 197px auto 16px;
+  }
 `;
 const StHashMsg = styled.span`
   height: 32px;
@@ -92,6 +96,11 @@ const StKakaoLoginBtn = styled.button`
   transition: ease 0.05s;
   &:hover {
     background: #ffe668;
+  }
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: auto ;
+    margin-bottom: 25px;
   }
 `;
 
@@ -137,6 +146,11 @@ const StNormalLoginBtn = styled.button`
   transition: ease 0.05s;
   &:hover {
     background: #ffa595;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: auto;
   }
 `;
 export default LoginSelect;

@@ -7,7 +7,10 @@ function Header() {
 
   // 이전 페이지로 이동
   function moveToPrevPage() {
-    navigate(-1);
+    if (window.location.pathname === "/test") {
+      return navigate("/");
+    }
+    return navigate(-1);
   }
 
   function changeHeaderName() {
@@ -58,24 +61,35 @@ function Header() {
         <StBackBtn type="button" onClick={moveToPrevPage}>
           <img
             style={{
-              height: "12px",
+              height: "16px",
               pointerEvents: "none",
             }}
             src={process.env.PUBLIC_URL + `/images/back.png`}
-            alt="button for move to previous page"
+            alt="이전 화면으로 돌아가기"
           />
         </StBackBtn>
       )}
       {window.location.pathname === "/" ? (
-        <div>
-          <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <LogoImage
+            src={process.env.PUBLIC_URL + `/images/Logo.svg`}
+            aria-hidden="true"
+          />
         </div>
       ) : (
         <HeaderText>
           {changeHeaderName() !== "none" ? (
             changeHeaderName()
           ) : (
-            <LogoImage src={process.env.PUBLIC_URL + `/images/Logo.svg`} />
+            <LogoImage
+              src={process.env.PUBLIC_URL + `/images/Logo.svg`}
+              aria-hidden="true"
+            />
           )}
         </HeaderText>
       )}
@@ -124,7 +138,7 @@ const StBackBtn = styled.button`
 `;
 
 const LogoImage = styled.img`
-  height: 18px;
+  height: 20px;
 `;
 
 const HeaderText = styled.div`

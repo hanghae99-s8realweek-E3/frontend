@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
 // import InputCard from "../../common/InputCard";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function LoginForm() {
           navigate("/");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         return setModal("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
@@ -69,13 +71,17 @@ function LoginForm() {
       {loading === true ? <LoadingContainer /> : <></>}
       <StTotalWrap>
         <StForm onSubmit={submitLoginData}>
-          <StEmail> 이메일 </StEmail>
+          <StEmail aria-hidden="true"> 이메일 </StEmail>
           <StEmailInput
+            tabIndex={1}
             name="email"
             // type="email" 을 넣었을 때 설정해 놓은 모달창이 아닌 type="email"의 alert창이 뜨는 문제
             value={userData.email}
             placeholder="abcdef@gmail.com"
             onChange={onChange}
+            aria-placeholder="안녕"
+            // aria-hidden = "true"
+            // aria-label="이메일 입력란 입니다"
           />
           {/* <InputCard
           name="email"
@@ -84,13 +90,15 @@ function LoginForm() {
           placeholder="abcdef@gmail.com"
           onChange={onChange}
         /> */}
-          <StPassword> 비밀번호 </StPassword>
+          <StPassword aria-hidden="true"> 비밀번호 </StPassword>
           <StPasswordInput
+            tabIndex={2}
             name="password"
             type="password" // 비밀번호 입력시 숫자 가려지게 하는 역할
             value={userData.password}
             placeholder="비밀번호 입력"
             onChange={onChange}
+            // aria-label= "비밀번호 입력란 입니다"
           />
           {/* <InputCard
           name="password"
@@ -100,9 +108,21 @@ function LoginForm() {
           onChange={onChange}
         /> */}
           <StIncorrect>{modal}</StIncorrect>
-          <StLoginBtn type="submit">로그인</StLoginBtn>
+          <StLoginBtn
+            tabIndex={3}
+            aria-label="올바른 계정을 입력하고 버튼을 누르면 메인 페이지로 이동합니다"
+            type="submit"
+          >
+            로그인
+          </StLoginBtn>
         </StForm>
-        <StSignupBtn onClick={moveToSignUp}>회원가입</StSignupBtn>
+        <StSignupBtn
+          tabIndex={4}
+          aria-label="버튼을 누르면 회원가입 페이지로 이동합니다"
+          onClick={moveToSignUp}
+        >
+          회원가입
+        </StSignupBtn>
       </StTotalWrap>
     </>
   );
@@ -198,5 +218,9 @@ const StSignupBtn = styled.div`
   color: #000000;
   cursor: pointer;
   margin: 0px 0px 439px auto;
+  @media screen and (max-width: 500px) {
+    width: 324px;
+    margin: auto;
+  }
 `;
 export default LoginForm;

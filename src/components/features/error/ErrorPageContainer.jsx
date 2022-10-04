@@ -47,7 +47,7 @@ const TotalWrap = styled.div`
 `;
 const StErrorImg = styled.img`
   border-radius: 5px;
-  margin-top: 222px;
+  margin-top: 200px;
   margin-bottom: 5px;
   @media only screen and (max-width: 500px) {
     margin-top: 160px;
@@ -73,7 +73,7 @@ const StErrorMsg = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
-  margin-bottom: 105px;
+  margin-bottom: 60px;
   text-align: center;
   color: #000000;
   @media only screen and (max-width: 500px) {
@@ -87,7 +87,6 @@ const StBtnWrap = styled.div`
   margin: 0 auto;
   gap: 26px;
   cursor: pointer;
-  
 `;
 const StBackBtn = styled.button`
   width: 162px;
@@ -101,7 +100,7 @@ const StBackBtn = styled.button`
   line-height: 26px;
   cursor: pointer;
   text-align: center;
-border: none;
+  border: none;
   color: #ffffff;
   @media only screen and (max-width: 500px) {
     font-size: 14px;
@@ -113,7 +112,7 @@ border: none;
 const StMainBtn = styled.button`
   width: 162px;
   height: 48.6px;
-  background:#FF6D53;;
+  background: #ff6d53;
   border-radius: 53.46px;
   border: none;
   font-family: "IBM Plex Sans KR";
@@ -127,7 +126,7 @@ const StMainBtn = styled.button`
     font-size: 14px;
     width: 116px;
 
-    height:36px ;
+    height: 36px;
   }
 `;
 export default ErrorPageContainer;

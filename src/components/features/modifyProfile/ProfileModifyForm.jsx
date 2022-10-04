@@ -7,6 +7,7 @@ import { tokenChecker, decodeMyTokenData } from "../../../utils/token";
 import { getOthersTodoFetch } from "../../../app/modules/mytodosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import * as Sentry from "@sentry/react";
 
 function ProfileModifyForm() {
   const myData = decodeMyTokenData();
@@ -75,7 +76,9 @@ function ProfileModifyForm() {
       myData.nickname === changeProfile.nickname &&
       myData.mbti === changeProfile.mbti
     ) {
-      alert("프로필 변경 사항이 없습니다.\n수정 후, 버튼을 눌러주십시오.");
+      return alert(
+        "프로필 변경 사항이 없습니다.\n수정 후, 버튼을 눌러주십시오."
+      );
     }
     if (
       changeProfile.nickname.length === 0 ||
@@ -100,6 +103,7 @@ function ProfileModifyForm() {
           navigate("/mypage");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         setLoading(false);
         alert("프로필 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
@@ -125,7 +129,10 @@ function ProfileModifyForm() {
           setLoading(false);
         }
       } catch (error) {
-        alert("프로필 이미지 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        Sentry.captureException(error.response.data);
+        alert(
+          "프로필 이미지 변경에 실패했습니다.\n파일 용량 또는 확장자를 확인해주시거나\n잠시 후, 다시 시도해 주십시오."
+        );
         setLoading(false);
       }
     };
@@ -167,7 +174,7 @@ function ProfileModifyForm() {
               <StMyImagePreview
                 src={
                   userState.userInfo.profile === "none"
-                    ? "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                    ? process.env.PUBLIC_URL + "/images/Placeholder.svg"
                     : `${userState.userInfo.profile}`
                 }
                 htmlFor="inputImage"
@@ -182,15 +189,17 @@ function ProfileModifyForm() {
                 onChange={changeImageFiles}
               />
             </StMyImageBox>
-            <StChangeImageBtn htmlFor="inputImage">
+            <StChangeImageBtn htmlFor="inputImage" aria-hidden="true">
               이미지 변경
             </StChangeImageBtn>
+            <StInfoImgText>파일 제한: 10MB 미만의 jpg, jpeg, png</StInfoImgText>
           </StMyProfileSec>
           <StCommonBorder />
           <StInputSettingBox>
             <StCommonLabel>나의 정보</StCommonLabel>
             <StCommonInput
               type="text"
+              placeholder="닉네임 입력"
               value={changeProfile.nickname}
               onChange={changeInputData}
             />
@@ -198,7 +207,9 @@ function ProfileModifyForm() {
           <StCommonBorder />
           <StInputSettingBox>
             <StCommonLabel>나의 MBTI</StCommonLabel>
-            <StSelectMBTIBtn onClick={toggleMBTISelectPopUp}>
+            <StSelectMBTIBtn
+              onClick={toggleMBTISelectPopUp}
+              aria-label={`${changeProfile.mbti === ""}`}>
               {changeProfile.mbti === "" || changeProfile.mbti === null
                 ? "선택하기"
                 : changeProfile.mbti}
@@ -207,7 +218,8 @@ function ProfileModifyForm() {
           <StCommonBorder />
           <StCommonButton
             margin="54px auto"
-            onClick={submitModifyMyProfileData}>
+            onClick={submitModifyMyProfileData}
+            aria-label="확인 버튼, 누르면 프로필 내용을 수정합니다.">
             확인
           </StCommonButton>
         </StContainer>
@@ -269,7 +281,7 @@ const StMyImageBox = styled.div`
 const StMyImagePreview = styled.label`
   background-image: ${(props) =>
     `url(${props.src})` ||
-    `url("https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg")`};
+    `url(process.env.PUBLIC_URL + "/images/Placeholder.svg")`};
   background-repeat: no-repeat;
   background-size: auto 144px;
   background-position: center;
@@ -291,7 +303,7 @@ const StChangeImageBtn = styled.label`
 
   border: none;
   outline: none;
-  margin-bottom: 69px;
+  margin-bottom: 20px;
 
   cursor: pointer;
   transition: ease 0.1s;
@@ -300,7 +312,26 @@ const StChangeImageBtn = styled.label`
   }
   @media screen and (max-width: 500px) {
     margin-top: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+  }
+`;
+
+const StInfoImgText = styled.div`
+  background: none;
+
+  font-size: 12px;
+  color: #979797;
+  font-weight: 500;
+
+  border: none;
+  outline: none;
+  margin-bottom: 37px;
+
+  transition: ease 0.1s;
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
+    margin-top: 10px;
+    margin-bottom: 40px;
   }
 `;
 

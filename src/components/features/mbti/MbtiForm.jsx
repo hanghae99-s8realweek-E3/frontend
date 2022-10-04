@@ -10,6 +10,7 @@ import {
   StBackGroundCloseDiv,
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
+import * as Sentry from "@sentry/react";
 
 const MbtiForm = () => {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const MbtiForm = () => {
           navigate("/");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert("MBTI 를 선택해주세요");
       }
     };

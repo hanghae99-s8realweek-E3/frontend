@@ -1,10 +1,11 @@
 //호진 담당
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { emailFormat, passwordFormat } from "../../../utils/reqList";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { preInstance } from "../../../app/modules/instance";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 const SignUpForm = () => {
   //hook
@@ -72,6 +73,11 @@ const SignUpForm = () => {
           return alert("입력하신 이메일로 인증 번호를 전송했습니다.");
         }
       } catch (error) {
+        if (error.response.data.errorMessage === "이미 가입된 이메일입니다.") {
+          Sentry.captureException(error.response.data);
+          return alert("입력하신 이메일은 이미 가입된 이메일입니다.");
+        }
+        Sentry.captureException(error.response.data);
         return alert(
           "이메일로 인증 번호를 보내는 데에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
@@ -95,7 +101,10 @@ const SignUpForm = () => {
           return alert("인증에 성공했습니다.");
         }
       } catch (error) {
-        return alert("인증에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        Sentry.captureException(error.response.data);
+        return alert(
+          "인증에 실패했습니다.\n인증번호를 재확인하신 후, 다시 시도해주세요."
+        );
       }
     };
     certificate();
@@ -150,15 +159,16 @@ const SignUpForm = () => {
         }
       } catch (error) {
         setLoading(false);
-        console.log(error.response);
         if (
           error.response.data.errorMessage ===
           "이메일 인증이 완료되지 않았습니다."
         ) {
+          Sentry.captureException(error.response.data);
           return alert(
             "이메일 인증이 완료되지 않았습니다.\n이메일 인증 후 다시 시도해주십시오."
           );
         } else {
+          Sentry.captureException(error.response.data);
           return alert(
             "회원가입에 실패했습니다. 잠시 후, 다시 시도해주십시오."
           );
@@ -182,7 +192,7 @@ const SignUpForm = () => {
         <StContainer>
           <StItem>
             <label>이메일</label>
-            <StInputWrap marginBottom="70px" marginTop="5px">
+            <StInputWrap marginBottom="60px" marginTop="5px">
               <StInput
                 onChange={onChangeSignupData}
                 type="text"
@@ -210,7 +220,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>인증번호</label>
-            <StInputWrap marginBottom="70px">
+            <StInputWrap marginBottom="75px">
               <StInput
                 type="text"
                 name="confirmNumber"
@@ -250,7 +260,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>비밀번호 확인</label>
-            <StInputWrap marginBottom="70px">
+            <StInputWrap marginBottom="60px">
               <StInput
                 onChange={onChangeSignupData}
                 type="password"
@@ -273,7 +283,7 @@ const SignUpForm = () => {
 
           <StItem>
             <label>닉네임</label>
-            <StInputWrap marginBottom="70px">
+            <StInputWrap marginBottom="60px">
               <StInput
                 onChange={onChangeSignupData}
                 type="nickname"
@@ -344,6 +354,7 @@ const StItem = styled.div`
 const StInputWrap = styled.div`
   margin-top: ${(props) => props.marginTop || "10px"};
   margin-bottom: ${(props) => props.marginBottom || "10px"};
+  width: 100%;
   @media only screen and (max-width: 500px) {
     width: 100%;
   }
@@ -352,10 +363,12 @@ const StInput = styled.input`
   /* background-color: red; */
   border: 1px solid #979797;
   border-radius: 6px;
-  width: 94%;
+  font-size: 18px;
+  width: 100%;
   height: 55px;
   position: absolute;
   padding-left: 10px;
+  box-sizing: border-box;
   ::placeholder {
     font-size: 18px;
     line-height: 18px;
@@ -373,7 +386,7 @@ const StInsideBtn = styled.button`
   margin-top: 10px;
   width: 100px;
   height: 32px;
-  right: 20px;
+  right: 8px;
   z-index: 1;
   background-color: white;
   border: none;
@@ -391,7 +404,7 @@ const StInsideBtn = styled.button`
 
 const StSignUpBtn = styled.button`
   height: 70px;
-  width: 465px;
+  width: 450px;
   left: 25px;
   right: 25px;
   top: 825px;

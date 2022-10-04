@@ -22,7 +22,10 @@ import Withdraw from "../pages/withdraw";
 import TestPage from "../pages/testPage";
 
 const FirstPage = ({ children }) => {
-  if (window.localStorage.getItem("firstEnter") === null) {
+  if (
+    window.localStorage.getItem("firstEnter") === null &&
+    window.localStorage.getItem("token") === null
+  ) {
     return <Navigate to="/welcomepage" />;
   }
   return children;
@@ -41,7 +44,7 @@ function Router() {
           }
         />
         <Route path="/activity" element={<Activity />} />
-        <Route path="/errorpage" element={<ErrorPage />} />
+        <Route path="/*" element={<ErrorPage />} />
         <Route path="/todolists" element={<Feed />} />
         <Route path="/todolists/:mbti" element={<Feed />} />
         {/* <Route path="/todolists?filter=challengedCounts" element={<Feed/>}/>

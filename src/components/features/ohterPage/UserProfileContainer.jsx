@@ -13,11 +13,11 @@ import {
 import LoadingContainer from "../../../utils/loadingState";
 import ProfileCard from "../../common/ProfileCard";
 import { StBackGroundCloseDiv } from "../../interface/styledCommon";
+import ErrorPageContainer from "../error/ErrorPageContainer";
 import OthersCard from "./OthersCard";
 
 function UserProfileContainer() {
   const card = useSelector((state) => state.mytodos.data);
-  console.log(card);
   // 첫 화면 진입시 challenge로 값을 지정
   const [todoTab, setTodoTab] = useState("도전");
   const [prevClick, setPrevClick] = useState(null);
@@ -47,9 +47,9 @@ function UserProfileContainer() {
   // }, []);
   useEffect(() => {
     setLoading(true);
-    async function loading(){
-    await dispatch(getOthersTodoFetch(params));
-    setLoading(false)
+    async function loading() {
+      await dispatch(getOthersTodoFetch(params));
+      setLoading(false);
     }
     loading();
   }, []);
@@ -113,21 +113,27 @@ function UserProfileContainer() {
         ) : (
           <>
             <StTopWrap>
-              <ProfileCard profileData={card} />
+              <ProfileCard profileData={card} tabIndex={1} />
             </StTopWrap>
             <StTodoTopLine></StTodoTopLine>
             <StTodoWrap>
-              <StChallengeTodo id="도전" onClick={ChallengeState}>
+              <StChallengeTodo
+                tabIndex={10}
+                id="도전"
+                aria-label="누르면 도전한 미믹이 나타납니다"
+                onClick={ChallengeState}
+              >
                 도전한 미믹
               </StChallengeTodo>
-              <StSuggestionTodo id="제안" onClick={SuggestState}>
+              <StSuggestionTodo
+                tabIndex={11}
+                id="제안"
+                aria-label="누르면 제안한 미믹이 나타납니다"
+                onClick={SuggestState}
+              >
                 제안한 미믹
               </StSuggestionTodo>
             </StTodoWrap>
-            {/* <StLineWrap>
-            <StMiddleLeftLine></StMiddleLeftLine>
-            <StMiddleRightLine></StMiddleRightLine>
-          </StLineWrap> */}
 
             <StBottomWrap>
               {selectSort === true ? (
@@ -141,6 +147,7 @@ function UserProfileContainer() {
                           color: sortState === "최신순" ? "#ff6d53" : "#8d8d8d",
                         }}
                         onClick={sortDate}
+                        aria-label="누르면 최신순으로 피드를 정렬합니다"
                       >
                         최신순
                       </StDate>
@@ -150,6 +157,7 @@ function UserProfileContainer() {
                           color: sortState === "댓글순" ? "#ff6d53" : "#8d8d8d",
                         }}
                         onClick={sortComment}
+                        aria-label="누르면 댓글순으로 피드를 정렬합니다"
                       >
                         댓글순
                       </StComment>
@@ -159,6 +167,7 @@ function UserProfileContainer() {
                           color: sortState === "도전순" ? "#ff6d53" : "#8d8d8d",
                         }}
                         onClick={sortChallenge}
+                        aria-label="누르면 도전순으로 피드를 정렬합니다"
                       >
                         도전순
                       </StChallenge>
@@ -170,7 +179,11 @@ function UserProfileContainer() {
               ) : (
                 <></>
               )}
-              <StToggle onClick={toggleSortPopUp}>
+              <StToggle
+                tabIndex={12}
+                onClick={toggleSortPopUp}
+                aria-label="누르면 정렬 최신순 댓글순 도전순 토글이 나타납니다"
+              >
                 {sortState}
                 <img
                   src={process.env.PUBLIC_URL + `/images/Toggle.png`}
@@ -179,15 +192,8 @@ function UserProfileContainer() {
                 />
               </StToggle>
 
-              <StTodayMyCardWrap>
+              <StTodayMyCardWrap tabIndex={13}>
                 {todoTab === "도전" ? (
-                  // card.challengedTodos?.map((it, idx) => (
-                  //   <ChallengeCard
-                  //     id={it.todoId}
-                  //     data={it}
-                  //     key={idx}
-                  //   ></ChallengeCard>
-                  // ))
                   sortState === sortList[0] ? (
                     card.challengedTodos?.map((elem, index) => (
                       <OthersCard data={elem} key={index} />
@@ -232,14 +238,7 @@ function UserProfileContainer() {
                     <></>
                   )
                 ) : (
-                  // card.createdTodo?.map((it, idx) => (
-                  //   <ChallengeCard
-                  //     id={it.todoId}
-                  //     data={it}
-                  //     key={idx}
-                  //   ></ChallengeCard>
-                  // ))
-                  <>다시한번 시도해주세요</>
+                  <ErrorPageContainer />
                 )}
               </StTodayMyCardWrap>
             </StBottomWrap>
@@ -267,7 +266,6 @@ const StTopWrap = styled.div`
   margin-top: 60px;
   /* padding-bottom: 31.5px; */
   background-color: #ffffff;
-
 `;
 const StTodoTopLine = styled.div`
   display: flex;

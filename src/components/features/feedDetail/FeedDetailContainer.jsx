@@ -14,6 +14,7 @@ import {
   StShadowBackgroundDiv,
 } from "../../interface/styledCommon";
 import LoadingContainer from "../../../utils/loadingState";
+import * as Sentry from "@sentry/react";
 
 function FeedDetailContainer() {
   const inputRef = useRef();
@@ -24,12 +25,21 @@ function FeedDetailContainer() {
   const [menuModal, setMenuModal] = useState(false);
   const [commentId, setCommentId] = useState("");
   const [gradeModalState, setGradeModalState] = useState(false);
-  const gradeList = ["미돌", "미알", "미콩", "미킹"];
-  const gradeWordList = ["Lv.1 미돌", "Lv.2 미알", "Lv.3 미콩", "Lv.4 미킹"];
+  const gradeList = ["미콩", "미알", "미돌", "미킹"];
+  const [gradeState, setGradeState] = useState(gradeList[0]);
+  const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
+  const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
   const detailState = useSelector((state) => state.detail);
+
+
+  const arrA = detailState.data.comments?.map((x) => x.challengeCounts);
+  const arrB = detailState.data.comments?.map((x) => x.todoCounts);
   const cardImg =
     detailState.data.todoInfo?.challengeCounts +
     detailState.data.todoInfo?.todoCounts;
+  const comment = arrA?.map((x, y) => x + arrB[y]);
+
+
   // const cardImg = detailState.data.todoInfo?.challengeCounts + detailState.data.todoInfo?.todoCounts
   // const comment =  detailState.data.comments?.map((x) => x.challengeCounts) + detailState.data.comments?.map((x) => x.todoCounts)
   //옵셔널 체이닝 해제했을 때
@@ -93,6 +103,7 @@ function FeedDetailContainer() {
           setMenuModal(false);
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert("댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
@@ -110,6 +121,7 @@ function FeedDetailContainer() {
           return navigate("/setuptodo");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert(
           "도전하기 설정에 실패했습니다. 잠시 후 다시 시도해주세요."
         );
@@ -136,6 +148,7 @@ function FeedDetailContainer() {
           return dispatch(getFeedDetailFetch({ todoId: params.todoId }));
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         return alert("댓글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
@@ -203,7 +216,10 @@ function FeedDetailContainer() {
                 <StTitle>미믹 성장 등급</StTitle>
                 <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                    alt="미콩 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미콩</StExplainName>
                     <StExplainContentWrap>
@@ -218,7 +234,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`} />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미알.png`}
+                    alt="미알 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미알</StExplainName>
                     <StExplainContent>
@@ -231,7 +250,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                    alt="미돌 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미돌</StExplainName>
                     <StExplainContent>
@@ -245,7 +267,10 @@ function FeedDetailContainer() {
                 </StIconExplainWrap>
 
                 <StIconExplainWrap>
-                  <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} />
+                  <StIcon
+                    src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                    alt="미킹 이미지"
+                  />
                   <StExplain>
                     <StExplainName>미킹</StExplainName>
                     <StExplainContent>
@@ -276,82 +301,87 @@ function FeedDetailContainer() {
                     src={
                       detailState.data.todoInfo.profile !== "none"
                         ? detailState.data.todoInfo.profile
-                        : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                        : process.env.PUBLIC_URL + "/images/Placeholder.svg"
                     }
+                    alt="프로필 이미지"
                     onError={changeMyOriginalImage}
                   />
                 </StProfileBox>
                 <StNickMBTIWarp>
                   <StNickname
-                    id={detailState.data.todoInfo.userId}
+                    id={detailState.data.todoInfo?.userId}
                     onClick={onClickGoToOtherspage}>
-                    {detailState.data.todoInfo.nickname}
+                    {detailState.data.todoInfo?.nickname}
                   </StNickname>
                   <StMBTI>{detailState.data.todoInfo.mbti}</StMBTI>
                 </StNickMBTIWarp>
 
                 <StGradeImageBox>
-                  {cardImg < 3 ? (
+                  {cardImg < 4 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미콩.png`}
                       width="59.38"
                       height="71"
+                      alt="미콩 이미지"
                     />
-                  ) : cardImg < 5 ? (
+                  ) : cardImg < 6 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미알.png`}
                       width="59.38"
                       height="71"
+                      alt="미알 이미지"
                     />
-                  ) : cardImg < 7 ? (
+                  ) : cardImg < 8 ? (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미돌.png`}
                       width="59.38"
                       height="71"
+                      alt="미돌 이미지"
                     />
-                  ) : cardImg < 9 ? (
+                  ) : (
                     <StImage
                       src={process.env.PUBLIC_URL + `/images/미킹.png`}
                       width="59.38"
                       height="71"
+                      alt="미킹 이미지"
                     />
-                  ) : (
-                    <></>
                   )}
                 </StGradeImageBox>
 
                 <StGradeWrap>
                   <StGradeWrod>
                     {" "}
-                    {cardImg < 3 ? (
-                      gradeList[0]
-                    ) : cardImg < 5 ? (
-                      gradeList[1]
-                    ) : cardImg < 7 ? (
-                      gradeList[2]
-                    ) : cardImg < 9 ? (
-                      gradeList[3]
-                    ) : (
-                      <></>
-                    )}
+                    {cardImg < 4
+                      ? gradeList[0]
+                      : cardImg < 6
+                      ? gradeList[1]
+                      : cardImg < 8
+                      ? gradeList[2]
+                      : gradeList[3]}
                   </StGradeWrod>
-                  <StGradeExplain onClick={gradeChangeModalState}>
+                  <StGradeExplain
+                    alt="클릭시 등급 설명 창"
+                    onClick={gradeChangeModalState}>
                     미믹등급
                   </StGradeExplain>
                 </StGradeWrap>
               </StUserIdBox>
 
               <StDetailCard>
-                <DetailCard data={detailState.data.todoInfo} />
+                <DetailCard data={detailState.data?.todoInfo} />
               </StDetailCard>
-              {detailState.data.isTodayDone === true ? (
+              {detailState.data.todoInfo.userId === myData.userId ? (
+                <StBtnNowChallenged>
+                  내가 만든 미믹은 도전할 수 없습니다.
+                </StBtnNowChallenged>
+              ) : detailState.data.isTodayDone === true ? (
                 <StBtnNowChallenged>
                   이미 오늘의 도전이 진행중입니다.
                 </StBtnNowChallenged>
               ) : (
                 <StBtnGoToChallenge
                   onClick={setMyTodayChallenge}
-                  id={detailState.data.todoInfo.todoId}>
+                  id={detailState.data.todoInfo?.todoId}>
                   도전할래요!
                 </StBtnGoToChallenge>
               )}
@@ -370,7 +400,8 @@ function FeedDetailContainer() {
                             src={
                               x.profile !== "none"
                                 ? x.profile
-                                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                                : process.env.PUBLIC_URL +
+                                  "/images/Placeholder.svg"
                             }
                             onError={changeMyOriginalImage}
                           />
@@ -383,17 +414,13 @@ function FeedDetailContainer() {
                         </StNicknameComment>
                         <div id={x.userId}></div>
                         <StCommentGrade>
-                          {x.challengeCounts + x.todoCounts < 3 ? (
-                            gradeWordList[0]
-                          ) : x.challengeCounts + x.todoCounts < 5 ? (
-                            gradeWordList[1]
-                          ) : x.challengeCounts + x.todoCounts < 7 ? (
-                            gradeWordList[2]
-                          ) : x.challengeCounts + x.todoCounts < 9 ? (
-                            gradeWordList[3]
-                          ) : (
-                            <></>
-                          )}
+                          {x.challengeCounts + x.todoCounts < 4
+                            ? gradeWordList[0]
+                            : x.challengeCounts + x.todoCounts < 6
+                            ? gradeWordList[1]
+                            : x.challengeCounts + x.todoCounts < 8
+                            ? gradeWordList[2]
+                            : gradeWordList[3]}
                         </StCommentGrade>
 
                         <StChangeDeleteBtn>
@@ -427,7 +454,7 @@ function FeedDetailContainer() {
                   src={
                     detailState.data.loginUserProfile !== "none"
                       ? detailState.data.loginUserProfile
-                      : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                      : process.env.PUBLIC_URL + "/images/Placeholder.svg"
                   }
                 />
               </StProfileBox>
@@ -813,12 +840,10 @@ const StGradeModalContainer = styled.div`
   padding: 25px;
   margin: 10vh auto;
   width: 450px;
-  height: 750px;
+  height: auto;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 660px;
   }
 `;
 
@@ -845,6 +870,9 @@ const StTitle = styled.div`
   line-height: 34px;
   color: #313131;
   margin-bottom: 6px;
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+  }
 `;
 const StText = styled.p`
   text-align: center;
@@ -863,6 +891,9 @@ const StIconExplainWrap = styled.div`
   flex-direction: row;
   margin-bottom: 12px;
   text-align: start;
+  @media screen and (max-width: 500px) {
+    margin: 0 0 0 25px;
+  }
 `;
 const StIcon = styled.img`
   display: flex;
@@ -873,6 +904,8 @@ const StIcon = styled.img`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 7px;
+    height: 84.24px;
+    width: 72px;
   }
 `;
 const StExplain = styled.div`
@@ -880,6 +913,10 @@ const StExplain = styled.div`
   flex-direction: column;
   margin-top: 12px;
   margin-left: 42px;
+  @media screen and (max-width: 500px) {
+    margin-left: 30px;
+    margin-top: 5px;
+  }
 `;
 const StExplainName = styled.div`
   display: flex;
@@ -889,11 +926,17 @@ const StExplainName = styled.div`
   font-size: 20px;
   line-height: 30px;
   color: #ff6d53;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StExplainContentWrap = styled.div`
   display: flex;
   margin-top: 8px;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    margin: 0px;
+  }
 `;
 const StExplainContent = styled.div`
   font-family: "IBM Plex Sans KR";

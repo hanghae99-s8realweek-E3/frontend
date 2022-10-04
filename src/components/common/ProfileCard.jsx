@@ -1,7 +1,6 @@
 //대연
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +12,7 @@ import {
   StBackGroundCloseDiv,
   StShadowBackgroundDiv,
 } from "../interface/styledCommon";
-import Grade from "./Grade";
+import * as Sentry from "@sentry/react";
 
 // 컴포넌트 다른곳에서 가져다 쓸 수 있게
 
@@ -24,24 +23,16 @@ function ProfileCard({ profileData }) {
   const myData = decodeMyTokenData();
   const [modalState, setModalState] = useState(false);
   const [gradeModalState, setGradeModalState] = useState(false);
-  // const gradeList = ["미콩", "미알", "미돌", "미킹"];
-  // const [gradeState, setGradeState] = useState(gradeList[0]);
-
   const gradeWordList = ["Lv.1 미콩", "Lv.2 미알", "Lv.3 미돌", "Lv.4 미킹"];
+
   // const [gradeWordState, setGradeeWordState] = useState(gradeWordList[0]);
 
   // 팔로우 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollow = () => {
-    // window.location.pathname === "/otherspage" ?
-    // navigate(`/follows/${params.userId}`)
-    // :
     navigate(`/follows/${profileData.userInfo.userId}`, { state: false });
   };
   // 팔로잉 버튼을 클릭했을 때 현재 ProfileCard.jsx 컴포넌트가 적용되어있는 위치에 따라서 다르게 작동
   const goFollowing = () => {
-    // window.location.pathname === "/otherspage" ?
-    // navigate(`/follows/${params.userId}`)
-    // :
     navigate(`/follows/${profileData.userInfo.userId}`, { state: true });
   };
 
@@ -61,6 +52,7 @@ function ProfileCard({ profileData }) {
         setFollow("팔로우");
       }
     } catch (error) {
+      Sentry.captureException(error.response.data);
       return alert("처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
@@ -107,10 +99,9 @@ function ProfileCard({ profileData }) {
                 <br />
                 색다른 재미를 느끼실 수 있을거에요!
               </StText>
-              <img
-                src={process.env.PUBLIC_URL + `/images/matchingBoard.png`}
-                alt="MBTI matching List Images"
-                style={{ width: "324px", margin: "5px 0" }}
+              <StMBTIBoardImg
+                src={process.env.PUBLIC_URL + `/images/matchingBoard.svg`}
+                alt="MBTI matching List Images입니다"
               />
             </StContent>
           </StModalContainer>
@@ -137,7 +128,10 @@ function ProfileCard({ profileData }) {
               <StTitle>미믹 성장 등급</StTitle>
               <StText>즐겁게 따라하고 미콩이를 성장시켜주세요!</StText>
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미콩.png`} />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미콩.png`}
+                  alt="미콩 이미지"
+                />
                 <StExplain>
                   <StExplainName>미콩</StExplainName>
                   <StExplainContentWrap>
@@ -152,7 +146,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미알.png`} />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미알.png`}
+                  alt="미알 이미지"
+                />
                 <StExplain>
                   <StExplainName>미알</StExplainName>
                   <StExplainContent>
@@ -163,7 +160,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미돌.png`} />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미돌.png`}
+                  alt="미돌 이미지"
+                />
                 <StExplain>
                   <StExplainName>미돌</StExplainName>
                   <StExplainContent>
@@ -177,7 +177,10 @@ function ProfileCard({ profileData }) {
               </StIconExplainWrap>
 
               <StIconExplainWrap>
-                <StIcon src={process.env.PUBLIC_URL + `/images/미킹.png`} />
+                <StIcon
+                  src={process.env.PUBLIC_URL + `/images/미킹.png`}
+                  alt="미킹 이미지"
+                />
                 <StExplain>
                   <StExplainName>미킹</StExplainName>
                   <StExplainContent>
@@ -203,62 +206,85 @@ function ProfileCard({ profileData }) {
             src={
               profileData.userInfo.profile !== "none"
                 ? profileData.userInfo.profile
-                : "https://mimicimagestorage.s3.ap-northeast-2.amazonaws.com/profile/placeHolderImage.jpg"
+                : process.env.PUBLIC_URL + "/images/Placeholder.svg"
             }
             onError={changeMyOriginalImage}
-            alt="dy"
+            alt="사용자가 등록한 프로필 이미지, 등록하지 않았다면 일반 이미지가 나타납니다"
+            tabIndex={1}
           />
         </StImageBox>
         <StNoImageWrap>
-          <StNickName>{profileData.userInfo.nickname}</StNickName>
+          <StNickName tabIndex={2}>{profileData.userInfo.nickname}</StNickName>
           <StMmtiFollowWrap>
-            <StMbti>{profileData.userInfo.mbti}</StMbti>
-            {window.location.pathname === `/otherspage/${params.userId}` ? (
-              <StFollowBtn onClick={changeFollowState}>
+            <StMbti tabIndex={3}>{profileData.userInfo.mbti}</StMbti>
+            {window.location.pathname === `/otherspage/${params.userId}` &&
+            myData.userId !== params.userId ? (
+              <StFollowBtn
+                aria-label="버튼을 누르면 팔로우 또는 언팔로우를 할 수 있습니다"
+                onClick={changeFollowState}
+                tabIndex={5}
+              >
                 {/* 현재 내가 이 유저를 팔로우 한 상태가 아니라면 팔로우 버튼 / 아니면 언팔로우 버튼 */}
                 {profileData.userInfo.isFollowed === false
                   ? "팔로우"
                   : "언팔로우"}
               </StFollowBtn>
             ) : (
-              <StInfo onClick={changeModalState}>궁합 알아보기</StInfo>
+              <StInfo
+                tabIndex={4}
+                aria-label="버튼을 누르면 궁합 알아보기 창이 나타납니다"
+                onClick={changeModalState}
+              >
+                궁합 알아보기
+              </StInfo>
             )}
           </StMmtiFollowWrap>
         </StNoImageWrap>
         <StGradeImageBox>
-          {profileData.userInfo.mimicCounts < 4 ? (
+          {profileData.userInfo?.mimicCounts < 4 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미콩.png`}
+              alt="미콩 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
-          ) : profileData.userInfo.mimicCounts < 6 ? (
+          ) : profileData.userInfo?.mimicCounts < 6 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미알.png`}
+              alt="미알 이미지"
               width="59.38"
               height="71"
+              tabIndex={6}
             />
-          ) : profileData.userInfo.mimicCounts < 8 ? (
+          ) : profileData.userInfo?.mimicCounts < 8 ? (
             <StImage
               src={process.env.PUBLIC_URL + `/images/미돌.png`}
+              alt="미돌 이미지"
               width="59.38"
               height="71"
-            />
-          ) : profileData.userInfo.mimicCounts < 10 ? (
-            <StImage
-              src={process.env.PUBLIC_URL + `/images/미킹.png`}
-              width="59.38"
-              height="71"
+              tabIndex={6}
             />
           ) : (
-            <></>
+            <StImage
+              src={process.env.PUBLIC_URL + `/images/미킹.png`}
+              alt="미킹 이미지"
+              width="59.38"
+              height="71"
+              tabIndex={6}
+            />
           )}
         </StGradeImageBox>
       </StTotalWrap>
       <StFollowGradeWrap>
         {/* <StMbtiFollowFollowingWrap> */}
         <StFollowWrap onClick={goFollow}>
-          <StFollowWord>팔로워</StFollowWord>
+          <StFollowWord
+            tabIndex={7}
+            aria-label="누르면 팔로워 페이지로 이동합니다"
+          >
+            팔로워
+          </StFollowWord>
           <StFollowNumber>
             {window.location.pathname === "/mypage"
               ? profileData.userInfo.follower
@@ -266,7 +292,12 @@ function ProfileCard({ profileData }) {
           </StFollowNumber>
         </StFollowWrap>
         <StFollowingWrap onClick={goFollowing}>
-          <StFollowingWord>팔로잉</StFollowingWord>
+          <StFollowingWord
+            tabIndex={8}
+            aria-label="누르면 팔로잉 페이지로 이동합니다"
+          >
+            팔로잉
+          </StFollowingWord>
           <StFollowingNumber>
             {window.location.pathname === "/mypage"
               ? profileData.userInfo.following
@@ -277,20 +308,20 @@ function ProfileCard({ profileData }) {
           {/* <Grade></Grade> */}
           <StGradebox>
             <StGradeWord>등급</StGradeWord>
-            <StWhatGrade src={process.env.PUBLIC_URL + `/images/grade.png`} />
+            <StWhatGrade
+              src={process.env.PUBLIC_URL + `/images/grade.png`}
+              alt="누르면 등급 설명창이 나옵니다"
+              tabIndex={9}
+            />
           </StGradebox>
           <StGradeNumber>
-            {profileData.userInfo.mimicCounts < 4 ? (
-              gradeWordList[0]
-            ) : profileData.userInfo.mimicCounts < 6 ? (
-              gradeWordList[1]
-            ) : profileData.userInfo.mimicCounts < 8 ? (
-              gradeWordList[2]
-            ) : profileData.userInfo.mimicCounts < 10 ? (
-              gradeWordList[3]
-            ) : (
-              <></>
-            )}
+            {profileData.userInfo.mimicCounts < 4
+              ? gradeWordList[0]
+              : profileData.userInfo.mimicCounts < 6
+              ? gradeWordList[1]
+              : profileData.userInfo.mimicCounts < 8
+              ? gradeWordList[2]
+              : gradeWordList[3]}
           </StGradeNumber>
         </StGradeWrap>
         {/* </StMbtiFollowFollowingWrap> */}
@@ -358,15 +389,6 @@ const StProfileImg = styled.img`
     height: 57.6px;
   }
 `;
-// const StNoImageWrap = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   @media screen and (max-width: 500px) {
-//     align-items: center;
-//     margin: 0 0 0 16px;
-//   }
-// `;
 const StNoImageWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -387,7 +409,6 @@ const StNickName = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
-  line-height: 32px;
   color: #000000;
   margin-left: 16px;
   text-align: left;
@@ -432,7 +453,7 @@ const StMbti = styled.div`
   /* line-height: 32px; */
   text-align: left;
   color: #979797;
-  margin-left: 19px;
+  margin-left: 16px;
   @media screen and (max-width: 500px) {
     /* align-items: flex-start; */
     text-align: left;
@@ -459,20 +480,21 @@ const StFollowWrap = styled.div`
 const StFollowNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;
@@ -521,7 +543,7 @@ const StGradeWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;
@@ -533,32 +555,34 @@ const StWhatGrade = styled.img`
 const StGradeNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowingNumber = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 32px;
   text-align: center;
-  color: #000000;
+  color: #5E5C5C;
+  margin-top: 3px;
   @media screen and (max-width: 500px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const StFollowingWord = styled.div`
   font-family: "IBM Plex Sans KR";
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 32px;
   text-align: center;
   color: #000000;
@@ -579,8 +603,8 @@ const StFollowBtn = styled.div`
   -webkit-tap-highlight-color: transparent;
   @media screen and (max-width: 500px) {
     align-items: center;
-    margin: 0px;
-    font-size: 13px;
+    margin-left: 9px;
+    font-size: 12px;
   }
 `;
 const StInfo = styled.div`
@@ -599,7 +623,7 @@ const StInfo = styled.div`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 14.4px;
-    font-size: 11px;
+    font-size: 12px;
   }
 `;
 
@@ -634,7 +658,8 @@ const StContent = styled.div`
   @media screen and (max-width: 500px) {
     & > h2 {
       font-size: 24px;
-      line-height: 30px;
+      margin-top: 8px;
+      margin-bottom: 9px;
     }
   }
 `;
@@ -644,7 +669,7 @@ const StText = styled.p`
   font-weight: 500;
   color: #919191;
   margin: 0;
-  margin-bottom: 42px;
+  margin-bottom: 51px;
   @media screen and (max-width: 500px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -654,16 +679,16 @@ const StText = styled.p`
 const StModalContainer = styled.div`
   background: #ffffff;
   border-radius: 6px;
+  position: absolute;
   padding: 25px;
-  margin: 10vh auto;
+  margin: 10vh 5%;
   width: 90%;
-  height: 620px;
+  height: auto;
   box-sizing: border-box;
+  z-index: 11;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 750x;
-    margin: 7vh auto;
+    height: auto;
   }
 `;
 const StTitle = styled.div`
@@ -675,21 +700,17 @@ const StTitle = styled.div`
   line-height: 34px;
   color: #313131;
   margin-bottom: 6px;
+  @media screen and (max-width: 500px) {
+    font-size: 24px;
+  }
 `;
-// const StText = styled.div`
-//   text-align: center;
-//   font-family: "IBM Plex Sans KR";
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 16px;
-//   line-height: 34px;
-//   color: #919191;
-//   margin-bottom: 39px;
-// `;
 const StIconExplainWrap = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 12px;
+  @media screen and (max-width: 500px) {
+    margin: 0 0 0 25px;
+  }
 `;
 const StIcon = styled.img`
   display: flex;
@@ -700,6 +721,8 @@ const StIcon = styled.img`
   @media screen and (max-width: 500px) {
     align-items: center;
     margin-left: 7px;
+    height: 84.24px;
+    width: 72px;
   }
 `;
 const StExplain = styled.div`
@@ -708,6 +731,10 @@ const StExplain = styled.div`
   margin-top: 12px;
   margin-left: 42px;
   text-align: start;
+  @media screen and (max-width: 500px) {
+    margin-left: 30px;
+    margin-top: 5px;
+  }
 `;
 const StExplainName = styled.div`
   display: flex;
@@ -717,11 +744,17 @@ const StExplainName = styled.div`
   font-size: 20px;
   line-height: 30px;
   color: #ff6d53;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const StExplainContentWrap = styled.div`
   display: flex;
   margin-top: 8px;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    margin: 0px;
+  }
 `;
 const StExplainContent = styled.div`
   font-family: "IBM Plex Sans KR";
@@ -823,13 +856,21 @@ const StGradeModalContainer = styled.div`
   background: white;
   border-radius: 6px;
   padding: 25px;
-  margin: 5vh auto;
+  margin: auto;
   width: 450px;
-  height: 750px;
+  height: auto;
+  margin-top: 12.5vh;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
     width: 324px;
-    margin: 18px;
-    height: 660px;
+  }
+`;
+
+const StMBTIBoardImg = styled.img`
+  width: 400px;
+  margin: 5px 0;
+  @media screen and (max-width: 500px) {
+    width: 288px;
+    height: 266px;
   }
 `;

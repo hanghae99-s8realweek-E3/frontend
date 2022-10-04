@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../../../app/modules/instance";
+import * as Sentry from "@sentry/react";
 
 function WithdrawContainer() {
   const passwordRef = useRef();
@@ -25,6 +26,7 @@ function WithdrawContainer() {
           navigate("/");
         }
       } catch (error) {
+        Sentry.captureException(error.response.data);
         alert("탈퇴 처리에 실패했습니다. 잠시 후 다시 시도해주세요.");
       }
     };
@@ -52,6 +54,7 @@ function WithdrawContainer() {
           type="password"
           placeholder="비밀번호를 입력"
           ref={passwordRef}
+          maxLength={20}
         />
         <StCommonButton>떠나기</StCommonButton>
       </StWithDrawForm>
