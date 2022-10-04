@@ -171,7 +171,7 @@ const FooterButtonBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5rem;
+  gap: 6rem;
 
   height: 100%;
 
