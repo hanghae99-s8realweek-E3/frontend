@@ -4,7 +4,7 @@
 
 # 항해 99 8기 3조 실전 프로젝트 - MIMIC!
 
-![제목 없음-6.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/63ebe40e-1a05-41d7-abb9-96ec876b1d1d/%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-6.jpg)
+![mimic.png](https://raw.githubusercontent.com/hanghae99-s8realweek-E3/frontend/main/public/images/ogimage.png)
 
 ---
 
